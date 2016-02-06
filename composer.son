@@ -1,0 +1,26 @@
+{
+    "name": "xepan/base",
+    "type": "library",
+    "description": "Base Appllication for xEpan Platform",
+    "homepage": "https://github.com/xepan/base",
+    "keywords": ["xEpan","SaaS","ERP"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xavoc Technocrats Pvt. Ltd.",
+            "email": "info@xavoc.com"
+        }
+    ],
+    "source": {
+        "url": "git@github.com:xepan/base.git",
+        "type": "git",
+        "reference": "origin/master"
+    },
+    "require": {
+        "atk4/atk4": ">=4.3",
+        "php": ">=5.5"
+    },
+    "autoload": {
+        "psr-0": { "autocomplete": "lib" }
+    }
+}
