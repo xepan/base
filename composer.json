@@ -5,7 +5,7 @@
     "homepage": "https://github.com/xepan/base",
     "keywords": ["xEpan","SaaS","ERP"],
     "license": "MIT",
-    "minimum-stability" : dev,
+    "minimum-stability" : "dev",
     "authors": [
         {
             "name": "Xavoc Technocrats Pvt. Ltd.",
