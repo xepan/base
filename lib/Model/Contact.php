@@ -25,7 +25,7 @@ class Model_Contact extends \Model_Table{
 		$this->addField('first_name');
 		$this->addField('last_name');
 
-		$this->hasMany('xepan\base\Contact_Email');
+		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
 
 	}
 }

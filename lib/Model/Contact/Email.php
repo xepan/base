@@ -23,7 +23,8 @@ class Model_Contact_Email extends \Model_Table{
 		$this->hasOne('xepan\base\Contact');
 
 		$this->addField('email')->mandatory(true);
-
+		
+		$this->addField('is_active')->type('boolean')->defaultValue(true);
 		$this->addField('is_valid')->type('boolean')->defaultValue(true); // Mark false if found hard bounced
 	}
 }
