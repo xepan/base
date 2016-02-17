@@ -11,17 +11,17 @@
 
 namespace xepan\base;
 
-class Menu_Bar extends \Menu_Advanced{
+class Menu_TopBar extends \Menu_Advanced{
 
 	public function addMenu($title, $class=null, $options=array())
     {
-        $m = $this->add('xepan\base\Menu_Bar',null,'SubMenu',['menu/menu']);
+        $m = $this->add('xepan\base\Menu_TopBar',null,'SubMenu',['menu/menu']);
         $m->set($title);
         return $m;
     }
 
     public function addItem($title, $action=null){
-    	$i = $this->add('xepan\base\Menu_Bar',null,'SubMenu',['menu/item']);
+    	$i = $this->add('xepan\base\Menu_TopBar',null,'SubMenu',['menu/item']);
 
         if (is_array($title)) {
 
