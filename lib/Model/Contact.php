@@ -24,7 +24,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		
 		$this->addField('first_name');
 		$this->addField('last_name');
-		$this->addField('type')->enum(['Admin','user']);
+		$this->addField('type');
 
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
 

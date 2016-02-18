@@ -24,5 +24,7 @@ class Model_User extends Model_Contact{
 
 		$user_j->addField('is_active')->type('boolean')->defaultValue(true);
 
+		$this->addCondition('type','user');
+
 	}
 }
