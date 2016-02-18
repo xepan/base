@@ -13,18 +13,19 @@
 
 namespace xepan\base;
 
-class Model_User extends Model_Contact{
+class Model_User extends \xepan\base\Model_Table{
+
+	public $table="user";
 
 	function init(){
 		parent::init();
 		
-		$user_j = $this->join('user.contact_id');
-		$user_j->addField('username');
-		$user_j->addField('password')->type('password');
+		$this->hasOne('xepan\base\Epan');
 
-		$user_j->addField('is_active')->type('boolean')->defaultValue(true);
+		$this->addField('username');
+		$this->addField('password')->type('password');
 
-		$this->addCondition('type','user');
+		$this->addField('is_active')->type('boolean')->defaultValue(true);
 
 	}
 }
