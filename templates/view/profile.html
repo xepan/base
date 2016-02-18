@@ -7,15 +7,20 @@
     <div class="main-box-body clearfix">
       <div class="profile-status"><i class="fa fa-circle"></i> Online</div><img alt="" src="img/samples/robert-300.jpg" class="profile-img img-responsive center-block"/>
       <div class="profile-label"><span class="label label-danger atk-form-row atk-form-field">{type}Admin{/type}</span></div>
-      <div class="profile-stars"><span>{post_id}Nick name{/post_id}</span></div>
+      <div class="profile-stars"><span>{post_id}Nick name{/}</span></div>
       <div class="profile-since">Contact since: Jan 2012</div>
     </div>
     <div>
       <div class="profile-contact">
         <ul class="fa-ul">
           <li><i class="fa-li fa"></i>Emails: 
-            <div>vaibhav@gmail.com</div>
-            <div>vaibhav@gmail.com</div>
+            <div>{Emails}
+              <div class="alert alert-danger">{$grid_buttons}</div>{header}{cols}{col}{$descr}{$sort}{/}{/}{/header}
+                {rows}{row}{cols}{col}
+              <div data-id="{$row_id}" {$tdparam}="{$tdparam}"> <span class="label label-danger">{$email}</span></div>{$content}
+              {/}{/}{/row}{/rows}{$not_found}
+              {/}
+            </div>
           </li>
           <li><i class="fa-li fa"></i>Phone No: 
             <div>9887012345</div>

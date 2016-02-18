@@ -10,7 +10,7 @@
       .profile-label
         span.label.label-danger.atk-form-row.atk-form-field {type}Admin{/type}
       .profile-stars
-        span Nick name
+        span {post_id}Nick name{/}
       .profile-since
         | Contact since: Jan 2012
     div
@@ -19,9 +19,17 @@
           li
             i.fa-li.fa
             | Emails: 
-            div vaibhav@gmail.com
-            div vaibhav@gmail.com
-
+            div
+              | {Emails}
+              div.alert.alert-danger
+                {$grid_buttons}
+              | {header}{cols}{col}{$descr}{$sort}{/}{/}{/header}
+              |   {rows}{row}{cols}{col}
+              div(data-id="{$row_id}" "{$tdparam}") 
+                span.label.label-danger {$email}
+              | {$content}
+              |{/}{/}{/row}{/rows}{$not_found}
+              | {/}
           li
             i.fa-li.fa.
             | Phone No: 
