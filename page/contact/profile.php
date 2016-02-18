@@ -17,18 +17,11 @@ class page_contact_profile extends \Page {
 	function init(){
 		parent::init();
 
-		
-		// $this->add('xepan\base\View_Profile')->setModel($this->api->auth->model);
+		$cols = $this->add('Columns');
+		$l = $cols->addColumn(3)->addStyle('width','30%');
+		$cols->addColumn(6);
 
-		$form = $this->add('Form');
-		$form->setLayout(['view/profile']);
-		$form->setModel($this->api->auth->model->reload(),['first_name','last_name','type']);
-
-		$form->onSubmit(function($f){
-			// return $f->displayError('first_name','HELLO');
-			$f->save();
-			return $f->js()->reload();
-		});
+		$l->add('xepan\base\View_Profile',['mode'=>'add'])->setModel('xepan\hr\Employee',['first_name','last_name','post_id']);
 		
 	}
 }

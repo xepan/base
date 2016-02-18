@@ -13,12 +13,27 @@ namespace xepan\base;
 
 class View_Profile extends \View{
 
-	function init(){
-		parent::init();
+	public $mode = 'view'; // add/edit
+
+	function setModel($model,$fields=null){
+		parent::setModel($model,$fields);
+		if($this->mode != 'view'){			
+			$form = $this->add('Form');
+			$form->setLayout(['view/profile']);
+			$form->setModel($this->model,$fields);
+
+			$form->onSubmit(function($f){
+				$f->save();
+				return $f->js()->reload();
+			});
+		}
 		
 	}
 
 	function defaultTemplate(){
-		return ['view/profile'];
+		if($this->mode=='view')
+			return ['view/profile'];
+		else
+			return parent::defaultTemplate();
 	}
 }
