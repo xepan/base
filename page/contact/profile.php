@@ -18,17 +18,22 @@ class page_contact_profile extends \Page {
 		parent::init();
 
 		$contact = $this->add('xepan\base\Model_Contact')->load($this->api->stickyGET('id'));
-		$this->add('xepan\base\View_Profile',['action'=>$this->api->stickyGET('action')?:'view'])->setModel($contact,['first_name','last_name','type']);
 
 		$d = $this->add('xepan\base\View_Document',
 				[
-					'action'=>'view', // add/edit
+					'action'=>$this->api->stickyGET('action')?:'view', // add/edit
 					'id_fields_in_view'=>'["all"]/["post_id","field2_id"]',
-					'allow_many_on_add' => false // Only visible if editinng
+					'allow_many_on_add' => false, // Only visible if editinng,
+					'view_template' => ['view/profile']
 				]
 			);
-		$d->setModel($contact,['view_field_here'],['edit_fields_here']);
-		$class_object  = $d->addMany('Emails_relation','on_spot','class_default_minicrud',['fields_grid','fields_form'],'class_options','template_for_class');
+		$d->setModel($contact,null,['first_name','last_name','type']);
+		
+		$emails_crud  = $d->addMany(
+			$contact->ref('Emails'),
+			$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/profile','Emails'],$view_fields=null,
+			$class='xepan\base\xCRUD',$options=null,$spot='Emails',$defaultTemplate=null,$fields=null
+			);
 		
 	}
 }
