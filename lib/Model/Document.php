@@ -13,7 +13,8 @@
 
 namespace xepan\base;
 
-class Model_Document extends \Model_Table{
+class Model_Document extends \xepan\base\Model_Table{
+	
 	public $table='document';
 
 	function init(){
