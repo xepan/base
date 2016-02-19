@@ -43,6 +43,7 @@ class View_Document extends \View{
 		else{
 			$this->form = $this->add('Form');
 			$this->form->setLayout($this->view_template);
+			$this->form->addSubmit('Save');
 		}
 	}
 
@@ -51,10 +52,22 @@ class View_Document extends \View{
 		$this->view_fields = $view_fields;
 		$this->form_fields = $form_fields;
 		
-		if($this->action=='view')
+		if($this->action=='view'){
 			$fields = $view_fields;
-		else
+		}
+		else{
 			$fields = $form_fields;
+			$m = $this->form->setModel($model,$this->form_fields);
+
+			/* Still NonEditable fields should show as on view mode */
+			
+			$view_fields = $view_fields?:$m->getActualFields();
+			$readonly_fields = array_diff($view_fields, $this->form_fields);
+			foreach ($readonly_fields as $fld) {
+				$this->form->layout->template->trySet($fld,$model[$fld]);
+			}
+			return $m;
+		}
 
 		return parent::setModel($model,$fields);
 	}
@@ -97,12 +110,14 @@ class View_Document extends \View{
 	function recursiveRender(){
 
 		if($this->action != 'view') {
-			$form = $this->form;
-			$form->setModel($this->model,$this->form_fields);
-
-			$form->onSubmit(function($f){				
+			$this->form->onSubmit(function($f){				
 				$f->save();
-				return $this->js()->reload(['id'=>$f->model->id,'action'=>'view']);
+				$js = 
+					[
+						// $this->js()->univ()->test('Saved'),
+						$this->js()->reload(['id'=>$f->model->id,'action'=>'view'])
+					];
+				return $js;
 			});	
 		}
 

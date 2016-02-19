@@ -27,13 +27,14 @@ class page_contact_profile extends \Page {
 					'view_template' => ['view/profile']
 				]
 			);
-		$d->setModel($contact,null,['first_name','last_name','type']);
+		$d->setModel($contact,null,['first_name','last_name']);
 		
 		$emails_crud  = $d->addMany(
 			$contact->ref('Emails'),
 			$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/profile','Emails'],$view_fields=null,
 			$class='xepan\base\xCRUD',$options=null,$spot='Emails',$defaultTemplate=null,$fields=null
 			);
+
 		
 	}
 }
