@@ -112,7 +112,7 @@ class View_Document extends \View{
 		if($this->action != 'view') {
 			$this->form->onSubmit(function($f){	
 				$f->save();
-				return $this->js(null,$this->js()->univ()->notify())->reload(['id'=>$f->model->id,'action'=>'view']);
+				return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->reload(['id'=>$f->model->id,'action'=>'view']);
 				return $js;
 			});	
 		}
