@@ -13,7 +13,7 @@ namespace xepan\base;
 
 class Grid extends \Grid{
 
-	public $template_option=null;
+	public $defaultTemplate=null;
 
 	function init(){
 		parent::init();
@@ -21,7 +21,7 @@ class Grid extends \Grid{
 	}
 
 	function defaultTemplate(){
-		if($this->template_option) return $this->template_option;
+		if($this->defaultTemplate) return $this->defaultTemplate;
 		return parent::defaultTemplate();
 	}
 	
