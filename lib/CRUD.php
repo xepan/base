@@ -1,7 +1,7 @@
 <?php
 namespace xepan\base;
 
-class xCRUD extends \CRUD{
+class CRUD extends \CRUD{
 	function init(){
 		parent::init();
 		

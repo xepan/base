@@ -17,18 +17,9 @@ class Grid extends \Grid{
 
 	function init(){
 		parent::init();
-		$this->addHook('formatRow',function($grid){
 
-            if($grid->hasColumn('delete')){
-                $grid->columns['delete']['descr']='<a class="table-link danger" href="#"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span></a>';
-            }
-            // if($grid->hasColumn('edit')){
-            // 	      $grid->columns['edit']['icon']='<i class="icon-'.
-            //         	$grid->columns['test ']['icon'].'"></i>';
-            //     // $grid->columns['edit']['descr']='<a class="table-link danger" href="#"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span></a>';
-            // }
-        });
 	}
+
 	function defaultTemplate(){
 		if($this->template_option) return $this->template_option;
 		return parent::defaultTemplate();
@@ -37,4 +28,17 @@ class Grid extends \Grid{
 	function precacheTemplate(){
 
 	}
+
+	function formatRow(){
+		
+	 //    $this->columns['edit']['icon'] = '<i class="x fa fa-pencil fa-inverse" ></i>&nbsp;';
+	 //    $this->columns['edit']['descr'] = "";
+		// // throw new \Exception($this->columns['edit']['icon']);
+	 //    parent::formatRow();
+
+	    $this->current_row_html['delete']= '<a class="table-link danger do-delete" href="#" data-id="'.$this->model->id.'"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span></a>';
+	    $this->current_row_html['edit']= '<a class="table-link pb_edit" href="#" data-id="'.$this->model->id.'"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span></a>';
+
+	}
+
 }
