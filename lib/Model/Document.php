@@ -20,7 +20,7 @@ class Model_Document extends \xepan\base\Model_Table{
 	function init(){
 		parent::init();
 		
-		$this->addField('type');
+		// $this->addField('type');
 
 	}
 }
