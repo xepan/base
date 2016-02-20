@@ -110,13 +110,9 @@ class View_Document extends \View{
 	function recursiveRender(){
 
 		if($this->action != 'view') {
-			$this->form->onSubmit(function($f){				
+			$this->form->onSubmit(function($f){	
 				$f->save();
-				$js = 
-					[
-						// $this->js()->univ()->test('Saved'),
-						$this->js()->reload(['id'=>$f->model->id,'action'=>'view'])
-					];
+				return $this->js(null,$this->js()->univ()->notify())->reload(['id'=>$f->model->id,'action'=>'view']);
 				return $js;
 			});	
 		}

@@ -8,13 +8,16 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();
 		$this->routePages('xepan_base');
-		$this->addLocation(array('template'=>'templates'));
+		$this->addLocation(array('template'=>'templates','js'=>'js'))
+        ->setBaseURL('../../vendor/xepan/base/');
+        ;
 
         $auth = $this->app->add('BasicAuth');
         $auth->setModel('xepan\base\User_Active','username','password');
         $auth->check();
 
         $this->app->epan = $auth->model->ref('epan_id');
+        $this->app->jui->addStaticInclude('xepan_jui');
 
 	}
 
