@@ -26,7 +26,8 @@ class Grid extends \Grid{
 	}
 	
 	function precacheTemplate(){
-
+		if($this->defaultTemplate) return;
+		return parent::precacheTemplate();
 	}
 
 	function formatRow(){
