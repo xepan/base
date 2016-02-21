@@ -11,4 +11,15 @@
 
 namespace xepan\base;
 
-class Model_Table extends \Model_Table{}
+class Model_Table extends \Model_Table{
+
+	function init(){
+		parent::init();
+
+		$this->addHook('afterAdd',function($e){			
+			if($e->hasElement('epan_id') && isset($e->app->epan->id)) {
+                $e->addCondition('epan_id',$e->app->epan->id);
+            }
+		});
+	}
+}

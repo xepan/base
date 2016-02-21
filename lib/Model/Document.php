@@ -17,9 +17,13 @@ class Model_Document extends \xepan\base\Model_Table{
 	
 	public $table='document';
 
+	public $status=[];
+	public $actions=[];
+
 	function init(){
 		parent::init();
 		
+		$this->addField('status')->enum($this->status);
 		$this->addField('type');
 
 	}
