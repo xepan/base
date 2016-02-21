@@ -13,36 +13,36 @@ namespace xepan\base;
 
 class View_Profile extends \View{
 
-	public $action = 'view'; // add/edit
+	public $document_view=null;
 
-	function setModel($model,$fields=null){
-		parent::setModel($model,$fields);
-		if($this->action != 'view'){			
-			$form = $this->add('Form');
-			$form->setLayout(['view/profile']);
-			$form->setModel($this->model,$fields);
+	function init(){
+		parent::init();
 
-			$form->onSubmit(function($f){
-				$f->save();
-				return $f->js()->reload(['id'=>$f->model->id,'action'=>'edit']);
-			});
-			if($this->model->loaded())
-				$form->layout->add('CRUD',[
-						'grid_class'=>'xepan\base\Grid',
-						'grid_options'=>['template_option'=>['view/profile','Emails']]
-						],'Emails')
-					->setModel($this->model->ref('Emails'));
-		}else{
-			$this->add('Grid',['show_header'=>false],'Emails',['view/profile','Emails'])->setModel($this->model->ref('Emails'),['email']);
-		}
+		// TODO : Check ACL here
 
+		$this->document_view = $this->add('xepan\base\View_Document',
+				[
+					'action'=>$this->api->stickyGET('action')?:'view', // add/edit
+					'id_fields_in_view'=>'["all"]/["post_id","field2_id"]',
+					'allow_many_on_add' => false, // Only visible if editinng,
+					'view_template' => ['view/profile']
+				]
+			);
 		
 	}
 
-	function defaultTemplate(){
-		if($this->action=='view')
-			return ['view/profile'];
-		else
-			return parent::defaultTemplate();
+	function setModel(Model_Contact $contact){
+		parent::setModel($contact);
+		$this->document_view->setModel($this->model,null,['first_name','last_name']);
+		if($this->model->loaded()){
+			$this->document_view->addMany(
+				$contact->ref('Emails'),
+				$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/profile','Emails'],$view_fields=null,
+				$class='xepan\base\CRUD',$options=['grid_options'=>['defaultTemplate'=>['view/profile','Emails']]],$spot='Emails',$defaultTemplate=null,$fields=null
+				);
+		}
+		return $this->model;
 	}
+
+	
 }
