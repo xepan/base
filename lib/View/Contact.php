@@ -11,7 +11,7 @@
 
 namespace xepan\base;
 
-class View_Profile extends \View{
+class View_Contact extends \View{
 
 	public $document_view=null;
 
