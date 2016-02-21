@@ -64,7 +64,7 @@ class View_Document extends \View{
 			$view_fields = $view_fields?:$m->getActualFields();
 			$readonly_fields = array_diff($view_fields, $this->form_fields);
 			foreach ($readonly_fields as $fld) {
-				$this->form->layout->template->trySet($fld,$model[$fld]);
+				@$this->form->layout->template->trySet($fld,$model[$fld]);
 			}
 			return $m;
 		}
@@ -75,7 +75,7 @@ class View_Document extends \View{
 	function addMany(
 			$model,
 			$view_class='xepan\base\Grid',$view_options=null,$view_spot='Content',$view_defaultTemplate=null,$view_fields=null,
-			$class='xepan\base\MicroCRUD',$options=null,$spot='Content',$defaultTemplate=null,$fields=null
+			$class='xepan\base\CRUD',$options=null,$spot='Content',$defaultTemplate=null,$fields=null
 		)
 	{
 
