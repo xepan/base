@@ -9,7 +9,7 @@ class Initiator extends \Controller_Addon {
 		parent::init();
 		$this->routePages('xepan_base');
 		$this->addLocation(array('template'=>'templates','js'=>'js'))
-        ->setBaseURL('../../vendor/xepan/base/');
+        ->setBaseURL('../vendor/xepan/base/');
         ;
 
         $this->app->today = date('Y-m-d');
