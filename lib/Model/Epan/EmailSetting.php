@@ -20,7 +20,7 @@ class Model_Epan_EmailSetting extends \Model_Table{
 
 	function init(){
 		parent::init();
-		// TODO : add all required fields for email
+		// TODO : add all required fields for email + can_use_in_mass_emails
 		
 		$this->addField('email_id');
 	}
