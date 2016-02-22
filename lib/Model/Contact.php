@@ -26,10 +26,19 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('last_name');
 		$this->addField('type');
 		$this->addField('is_active')->type('boolean')->defaultValue(true);
-		$this->addExpression('status')->set($this->dsql()->expr('IF([0]=1,"Active","InActive")',[$this->getElement('is_active')]));
+		$this->addField('address')->type('text');
 
+		$this->addField('city');
+		$this->addField('state');
+		$this->addField('country');
+		$this->addField('pin_code');
+
+		$this->addExpression('status')->set($this->dsql()->expr('IF([0]=1,"Active","InActive")',[$this->getElement('is_active')]));
+		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]));
 
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
+		$this->hasMany('xepan\base\Contact_Phone',null,null,'Phones');
+		$this->hasMany('xepan\base\Contact_Relation',null,null,'Relations');
 
 		$this->addExpression('email')->set($this->refSQL('Emails')->setLimit(1)->fieldQuery('email'));
 

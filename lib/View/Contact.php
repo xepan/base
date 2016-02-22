@@ -25,7 +25,7 @@ class View_Contact extends \View{
 					'action'=>$this->api->stickyGET('action')?:'view', // add/edit
 					'id_fields_in_view'=>'["all"]/["post_id","field2_id"]',
 					'allow_many_on_add' => false, // Only visible if editinng,
-					'view_template' => ['view/profile']
+					'view_template' => ['view/contact']
 				]
 			);
 		
@@ -37,8 +37,8 @@ class View_Contact extends \View{
 		if($this->model->loaded()){
 			$this->document_view->addMany(
 				$contact->ref('Emails'),
-				$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/profile','Emails'],$view_fields=null,
-				$class='xepan\base\CRUD',$options=['grid_options'=>['defaultTemplate'=>['view/profile','Emails']]],$spot='Emails',$defaultTemplate=null,$fields=null
+				$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/contact','Emails'],$view_fields=null,
+				$class='xepan\base\CRUD',$options=['grid_options'=>['defaultTemplate'=>['view/contact','Emails']]],$spot='Emails',$defaultTemplate=null,$fields=null
 				);
 		}
 		return $this->model;
