@@ -24,14 +24,14 @@ class Model_Document extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\Contact','created_by_id');
-		$this->hasOne('xepan\base\Contact','updated_by_id');
+		$this->hasOne('xepan\base\Contact','created_by_id')->editable(false);
+		$this->hasOne('xepan\base\Contact','updated_by_id')->editable(false);
 
-		$this->addField('status')->enum($this->status)->mandatory(true);
+		$this->addField('status')->enum($this->status)->mandatory(true)->editable(false);
 		$this->addField('type')->mandatory(true);
 
-		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
-		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
+		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
+		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
 
 	}
 }

@@ -26,8 +26,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('first_name');
 		$this->addField('last_name');
 		$this->addField('is_active')->type('boolean')->defaultValue(true);
-		$this->addField('address')->type('text');
 
+		$this->addField('address')->type('text');
 		$this->addField('city');
 		$this->addField('state');
 		$this->addField('country');
@@ -40,7 +40,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact_Phone',null,null,'Phones');
 		$this->hasMany('xepan\base\Contact_Relation',null,null,'Relations');
 
-		$this->addExpression('email')->set($this->refSQL('Emails')->setLimit(1)->fieldQuery('email'));
+		// $this->addExpression('email')->set($this->refSQL('Emails')->setLimit(1)->fieldQuery('email'));
 
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
-* description: Emails for Contact
+* description: Relations for Contact
 * 
 * @author : Gowrav Vishwakarma
 * @email : gowravvishwakarma@gmail.com, info@xavoc.com
@@ -11,12 +11,12 @@
 
 namespace xepan\base;
 
-class Model_Contact_Email extends Model_Contact_Info{
+class Model_Contact_Relation extends Model_Contact_Info{
 
 	function init(){
 		parent::init();
 			
-		$this->getElement('head')->enum(['Official','Personal']);
-		$this->addCondition('type','Email');		
+		$this->getElement('head')->enum(['Father','Mother','Other']);
+		$this->addCondition('type','Relation');
 	}
 }

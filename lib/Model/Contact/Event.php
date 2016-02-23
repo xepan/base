@@ -1,7 +1,7 @@
 <?php
 
 /**
-* description: Emails for Contact
+* description: Events for Contact
 * 
 * @author : Gowrav Vishwakarma
 * @email : gowravvishwakarma@gmail.com, info@xavoc.com
@@ -11,12 +11,12 @@
 
 namespace xepan\base;
 
-class Model_Contact_Email extends Model_Contact_Info{
+class Model_Contact_Event extends Model_Contact_Info{
 
 	function init(){
 		parent::init();
 			
-		$this->getElement('head')->enum(['Official','Personal']);
-		$this->addCondition('type','Email');		
+		$this->getElement('head')->enum(['DOB','Anniversary','Bla']);
+		$this->addCondition('type','Event');
 	}
 }
