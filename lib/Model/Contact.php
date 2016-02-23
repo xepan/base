@@ -21,10 +21,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan');
+		$this->addField('type');
 		
 		$this->addField('first_name');
 		$this->addField('last_name');
-		$this->addField('type');
 		$this->addField('is_active')->type('boolean')->defaultValue(true);
 		$this->addField('address')->type('text');
 

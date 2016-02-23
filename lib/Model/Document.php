@@ -23,8 +23,15 @@ class Model_Document extends \xepan\base\Model_Table{
 	function init(){
 		parent::init();
 		
-		$this->addField('status')->enum($this->status);
-		$this->addField('type');
+		$this->hasOne('xepan\base\Epan');
+		$this->hasOne('xepan\base\Contact','created_by_id');
+		$this->hasOne('xepan\base\Contact','updated_by_id');
+
+		$this->addField('status')->enum($this->status)->mandatory(true);
+		$this->addField('type')->mandatory(true);
+
+		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
+		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
 	}
 }
