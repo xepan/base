@@ -28,7 +28,7 @@ class Grid extends \Grid{
 	}
 	
 	function precacheTemplate(){
-		if($this->defaultTemplate) return;
+		if($this->defaultTemplate) return;		
 		return parent::precacheTemplate();
 	}
 
@@ -46,5 +46,35 @@ class Grid extends \Grid{
 		else
 			$this->current_row_html['delete']='';
 	}
+
+	function applyTDParams($field, &$row_template = null)
+    {
+        // data row template by default
+        if (!$row_template) {
+            $row_template = &$this->row_t;
+        }
+
+        // setting cell parameters (tdparam)
+        $tdparam = @$this->tdparam[$this->getCurrentIndex()][$field];
+        $tdparam_str = '';
+        if (is_array($tdparam)) {
+            if (is_array($tdparam['style'])) {
+                $tdparam_str .= 'style="';
+                foreach ($tdparam['style'] as $key=>$value) {
+                    $tdparam_str .= $key . ':' . $value . ';';
+                }
+                $tdparam_str .= '" ';
+                unset($tdparam['style']);
+            }
+
+            //walking and combining string
+            foreach ($tdparam as $id=>$value) {
+                $tdparam_str .= $id . '="' . $value . '" ';
+            }
+
+            // set TD param to appropriate row template
+            $row_template->trySet("tdparam_$field", trim($tdparam_str));
+        }
+    }
 
 }
