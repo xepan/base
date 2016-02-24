@@ -23,7 +23,7 @@ class View_Contact extends \View{
 		$this->document_view = $this->add('xepan\base\View_Document',
 				[
 					'action'=>$this->api->stickyGET('action')?:'view', // add/edit
-					'id_fields_in_view'=>'["all"]/["post_id","field2_id"]',
+					'id_fields_in_view'=>[],
 					'allow_many_on_add' => false, // Only visible if editinng,
 					'view_template' => ['view/contact']
 				]
@@ -40,6 +40,8 @@ class View_Contact extends \View{
 				$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/contact','Emails'],$view_fields=null,
 				$class='xepan\base\CRUD',$options=['grid_options'=>['defaultTemplate'=>['view/contact','Emails']]],$spot='Emails',$defaultTemplate=null,$fields=null
 				);
+		}else{
+			$this->document_view->template->set('Emails','No Emails');
 		}
 		return $this->model;
 	}
