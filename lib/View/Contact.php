@@ -41,7 +41,7 @@ class View_Contact extends \View{
 				$class='xepan\base\CRUD',$options=['grid_options'=>['defaultTemplate'=>['view/contact','Emails']]],$spot='Emails',$defaultTemplate=null,$fields=null
 				);
 		}else{
-			$this->document_view->template->set('Emails','No Emails');
+			$this->document_view->template->trySet('Emails','No Emails');
 		}
 		return $this->model;
 	}
