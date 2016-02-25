@@ -68,6 +68,7 @@ class View_Document extends \View{
 			foreach ($readonly_fields as $fld) {
 				@$this->form->layout->template->trySet($fld,$model[$fld]);
 			}
+			parent::setModel($model,$view_fields);			
 			return $m;
 		}
 
