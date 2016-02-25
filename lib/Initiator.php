@@ -25,14 +25,4 @@ class Initiator extends \Controller_Addon {
 
 	}
 
-	function installEvilVirus($white_list_pages=[])
-    {
-        if(in_array($this->app->page, $white_list_pages)) return;
-        $this->app->addHook('beforeObjectInit',function($o,$e){
-            $e->addHook('afterAdd',function($o,$e){
-                if(!$e instanceof xepan\base\Model_Table)return;
-                if($e->hasElement('epan_id'))$e->addCondition('epan_id',$this->app->epan->id);
-            });
-        });
-    }
 }

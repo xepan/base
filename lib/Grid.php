@@ -44,7 +44,7 @@ class Grid extends \Grid{
 		if($this->row_delete)
 		    $this->current_row_html['delete']= '<a class="table-link danger do-delete" href="#" data-id="'.$this->model->id.'"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span></a>';
 		else
-			$this->current_row_html['delete']='';
+		    $this->current_row_html['delete']= '<span class="table-link fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span>';
 	}
 
 	function applyTDParams($field, &$row_template = null)
