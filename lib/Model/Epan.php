@@ -25,4 +25,16 @@ class Model_Epan extends \Model_Table{
 		
 		$this->hasMany('xepan\base\Contact');
 	}
+
+	function addActivity($contact_id, $activity, $related_contact_id=null, $related_document_id=null, $details=null){
+		$activity = $this->add('xepan\base\Model_Activity');
+		$activity['conatc_id'] = $contact_id;
+		$activity['activity'] = $activity;
+		$activity['related_contact_id'] = $related_contact_id;
+		$activity['related_document_id'] = $related_document_id;
+		$activity['details'] = $details;
+
+		$activity->save();
+		return $activity;
+	}
 }
