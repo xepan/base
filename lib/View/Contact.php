@@ -25,7 +25,8 @@ class View_Contact extends \View{
 					'action'=>$this->api->stickyGET('action')?:'view', // add/edit
 					'id_fields_in_view'=>[],
 					'allow_many_on_add' => false, // Only visible if editinng,
-					'view_template' => ['view/contact']
+					'view_template' => ['view/contact'],
+					'id_field_on_reload'=>'contact_id'
 				]
 			);
 		

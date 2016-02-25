@@ -25,6 +25,7 @@ class View_Document extends \View{
 	public $form_fields=null;
 
 	public $form=null;
+	public $id_field_on_reload='id';
 
 	function defaultTemplate(){
 		if($this->action == 'view') 
@@ -112,7 +113,7 @@ class View_Document extends \View{
 		if($this->action != 'view') {
 			$this->form->onSubmit(function($f){	
 				$f->save();
-				return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->reload(['id'=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action)]);
+				return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->univ()->location($this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action)]));
 				return $js;
 			});	
 		}
