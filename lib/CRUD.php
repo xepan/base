@@ -29,5 +29,6 @@ class CRUD extends \CRUD{
 			parent::configureEdit($fields);
 		}
 	}
+	
 
 }
