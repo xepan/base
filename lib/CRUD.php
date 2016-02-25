@@ -16,6 +16,7 @@ class CRUD extends \CRUD{
 
 	protected function configureEdit($fields){
 		if($this->action_page){
+			$this->grid->addColumn('template','edit')->setTemplate(' ');
 			$this->grid->on('click','.pb_edit')->univ()->location(
 				[
 					$this->api->url($this->action_page),
