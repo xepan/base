@@ -40,6 +40,7 @@ class Menu_TopBar extends \Menu_Advanced{
                 $i->template->set('url',$url = $this->app->url($action));
                 if($url->isCurrent($this->highlight_subpages)){
                     $i->addClass('active');
+                    $i->owner->addClass('active');
                 }
             } else {
                 $i->on('click',$action);
