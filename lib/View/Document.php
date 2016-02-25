@@ -26,6 +26,7 @@ class View_Document extends \View{
 
 	public $form=null;
 	public $id_field_on_reload='id';
+	public $submit_button="Save";
 
 	function defaultTemplate(){
 		if($this->action == 'view') 
@@ -44,7 +45,7 @@ class View_Document extends \View{
 		else{
 			$this->form = $this->add('Form');
 			$this->form->setLayout($this->view_template);
-			$this->form->addSubmit('Save');
+			$this->form->addSubmit($this->submit_button);
 		}
 	}
 
