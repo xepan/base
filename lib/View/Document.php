@@ -89,7 +89,15 @@ class View_Document extends \View{
 		if($this->action != 'view') $owner = $this->form->layout;
 
 		$tmpl = [];
-		if(!${$view_prefix.'defaultTemplate'}) $tmpl = ['defaultTemplate'=>${$view_prefix.'defaultTemplate'}];
+		if(!${$view_prefix.'defaultTemplate'}) {
+			$tmpl = ['defaultTemplate'=>${$view_prefix.'defaultTemplate'}];
+			if($class == 'xepan\base\CRUD')
+				$tmpl = ['grid_options'=>$tmpl];
+		}
+
+		if(!${$view_prefix.'options'}){
+			${$view_prefix.'options'}=[];
+		}
 
 		$v= $owner->add(
 				${$view_prefix.'class'},
