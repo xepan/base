@@ -42,7 +42,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact_IM',null,null,'IMs');
 		$this->hasMany('xepan\base\Contact_Event',null,null,'Events');
 
-		$this->addExpression('email')->set($this->refSQL('Emails')->setLimit(1)->fieldQuery('value'));
+		$this->addExpression('email')->set(function($m,$q){
+			$x = $m->add('xepan\base\Model_Contact_Info',['table_alias'=>'one_email']);
+			return $x->addCondition('contact_id',$q->getField('id'))->setLimit(1)->fieldQuery('value');
+		});
 
 	}
 }
