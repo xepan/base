@@ -8,7 +8,8 @@ class CRUD extends \CRUD{
 	public $pass_acl=false;
 
 	protected function configureAdd($fields){
-		$this->add_button->addClass(' btn btn-primary pull-right');
+		if($this->add_button)
+			$this->add_button->addClass(' btn btn-primary pull-right');
 		if($this->action_page){
 			$this->add_button->setHTML('<i class="icon-plus"></i> Add '.htmlspecialchars($this->entity_name));
 			$this->add_button->js('click')->univ()->location($this->api->url($this->action_page,['action'=>'add']));
