@@ -88,9 +88,12 @@ class View_Document extends \View{
 		$owner = $this;
 		if($this->action != 'view') $owner = $this->form->layout;
 
+		$tmpl = [];
+		if(!${$view_prefix.'defaultTemplate'}) $tmpl = ['defaultTemplate'=>${$view_prefix.'defaultTemplate'}];
+
 		$v= $owner->add(
 				${$view_prefix.'class'},
-				${$view_prefix.'options'},
+				array_merge(${$view_prefix.'options'},$tmpl),
 				${$view_prefix.'spot'},
 				${$view_prefix.'defaultTemplate'}
 			);
