@@ -20,7 +20,7 @@ class View_Document extends \View{
 	public $id_fields_in_view=[];
 	public $allow_many_on_add=true;
 
-	public $many_to_show=[];
+	public $many=[];
 	public $view_fields=null;
 	public $form_fields=null;
 
@@ -28,23 +28,17 @@ class View_Document extends \View{
 	public $id_field_on_reload='id';
 	public $submit_button="Save";
 
-	function defaultTemplate(){
-		if($this->action == 'view') 
-			return $this->view_template;
-		
-		return parent::defaultTemplate();
-	}
-
-
 	function init(){
 		parent::init();
-		if(! $this->view_template) throw $this->exception("please provide template by 'view_template' option parameter");
+		// if(! $this->view_template) throw $this->exception("please provide template by 'view_template' option parameter");
 
 		if($this->action == 'view')
 			$this->form = new \Dummy();
 		else{
+			$ot = clone $this->template;
+			$this->template->loadTemplateFromString('{$Content}');
 			$this->form = $this->add('Form');
-			$this->form->setLayout($this->view_template);
+			$this->form->setLayout($ot);
 			$this->form->addSubmit($this->submit_button);
 		}
 	}
@@ -75,50 +69,22 @@ class View_Document extends \View{
 		return parent::setModel($model,$fields);
 	}
 
-	function addMany(
-			$model,
-			$view_class='xepan\base\Grid',$view_options=null,$view_spot='Content',$view_defaultTemplate=null,$view_fields=null,
-			$class='xepan\base\CRUD',$options=null,$spot='Content',$defaultTemplate=null,$fields=null
-		)
-	{
+	function addMany($entity,$options=null,$spot=null,$template=null) {
+		$class = 'xepan\hr\CRUD';
 
-		$view_prefix = '';
-		if($this->action=='view') $view_prefix='view_';
-
-		$owner = $this;
-		if($this->action != 'view') $owner = $this->form->layout;
-
-		// $tmpl = [];
-		// if(!${$view_prefix.'defaultTemplate'}) {
-		// 	$tmpl = ['defaultTemplate'=>${$view_prefix.'defaultTemplate'}];
-		// 	if($class == 'xepan\base\CRUD')
-		// 		$tmpl = ['grid_options'=>$tmpl];
-		// }
-
-		// if(!${$view_prefix.'options'}){
-		// 	${$view_prefix.'options'}=[];
-		// }
-
-		$v= $owner->add(
-				${$view_prefix.'class'},
-				${$view_prefix.'options'},
-				${$view_prefix.'spot'},
-				${$view_prefix.'defaultTemplate'}
-			);
-		$fields_2=null;
-		if($this->action == 'view'){
-			$fields_1 = $view_fields;
+		if($this->action=='view'){
+			$class='xepan\base\Grid';
+			if(!$options) $options=['defaultTemplate'=>$template];
+			$base = $this;
 		}else{
-			if(is_array($fields[0])){
-				$fields_1 = $fields[0];
-				$fields_2 = $fields[1];
-			}else{
-				$fields_1 = $fields[0];
-			}
+			if(!$options) $options=['grid_options'=>['defaultTemplate'=>$template]];
+			$base = $this->form->layout;
 		}
-		$v->setModel($model,$fields_1,$fields_2);
-		$this->many_to_show[] = $v;
-		return $v;
+
+		$template=null;
+		$v = $base->add($class,$options,$spot,$template);
+		return $this->many[$entity] = $v;
+		
 	}
 
 	function recursiveRender(){
