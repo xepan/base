@@ -20,15 +20,8 @@ class View_Contact extends \View{
 
 		// TODO : Check ACL here
 
-		$this->document_view = $this->add('xepan\base\View_Document',
-				[
-					'action'=>$this->api->stickyGET('action')?:'view', // add/edit
-					'id_fields_in_view'=>[],
-					'allow_many_on_add' => false, // Only visible if editinng,
-					'view_template' => ['view/contact'],
-					'id_field_on_reload'=>'contact_id'
-				]
-			);
+		$action = $this->api->stickyGET('action')?:'view';
+		$this->document_view = $this->add('xepan\base\View_Document',['action'=> $action,'id_field_on_reload'=>'contact_id'],null,['view/contact']);
 		
 	}
 
@@ -36,11 +29,8 @@ class View_Contact extends \View{
 		parent::setModel($contact);
 		$this->document_view->setModel($this->model,null,['first_name','last_name']);
 		if($this->model->loaded()){
-			$this->document_view->addMany(
-				$contact->ref('Emails'),
-				$view_class='xepan\base\Grid',$view_options=null,$view_spot='Emails',$view_defaultTemplate=['view/contact','Emails'],$view_fields=null,
-				$class='xepan\base\CRUD',$options=['grid_options'=>['defaultTemplate'=>['view/contact','Emails']]],$spot='Emails',$defaultTemplate=null,$fields=null
-				);
+			$e = $this->document_view->addMany('Emails',null,'Emails',['view/contact','Emails']);
+			$e->setModel($contact->ref('Emails'));
 		}else{
 			$this->document_view->template->trySet('Emails','No Emails');
 		}
