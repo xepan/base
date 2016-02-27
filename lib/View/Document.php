@@ -74,14 +74,11 @@ class View_Document extends \View{
 
 		if($this->action=='view'){
 			$class='xepan\base\Grid';
-			if(!$options) $options=['defaultTemplate'=>$template];
 			$base = $this;
 		}else{
-			if(!$options) $options=['grid_options'=>['defaultTemplate'=>$template]];
 			$base = $this->form->layout;
 		}
 
-		$template=null;
 		$v = $base->add($class,$options,$spot,$template);
 		return $this->many[$entity] = $v;
 		
