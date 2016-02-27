@@ -21,14 +21,9 @@ class Grid extends \Grid{
 		parent::init();
 
 	}
-
-	function defaultTemplate(){
-		if($this->defaultTemplate) return $this->defaultTemplate;
-		return parent::defaultTemplate();
-	}
 	
 	function precacheTemplate(){
-		if($this->defaultTemplate) return;		
+		if($this->template->template_file != 'grid') return;
 		return parent::precacheTemplate();
 	}
 
