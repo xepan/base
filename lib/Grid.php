@@ -16,11 +16,6 @@ class Grid extends \Grid{
 	public $row_delete=true;
     public $defaultTemplate = null;
 
-	function init(){
-		parent::init();
-
-	}
-
     function defaultTemplate(){
         if($this->defaultTemplate) return $this->defaultTemplate;
         return parent::defaultTemplate();
