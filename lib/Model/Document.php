@@ -27,7 +27,7 @@ class Model_Document extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\Contact','created_by_id')->editable(false);
 		$this->hasOne('xepan\base\Contact','updated_by_id')->editable(false);
 
-		$this->addField('status')->enum($this->status)->mandatory(true)->editable(false);
+		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 		$this->addField('type')->mandatory(true);
 
 		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
