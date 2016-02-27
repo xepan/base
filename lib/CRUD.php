@@ -7,6 +7,12 @@ class CRUD extends \CRUD{
 	public $action_page=null;
 	public $pass_acl=false;
 
+	function initializeTemplate($template_spot = null, $template_branch = null){
+		if(!$this->grid_options) $this->grid_options=[];
+			$this->grid_options['defaultTemplate']= $template_branch;
+		parent::initializeTemplate($template_spot, null);
+	}
+
 	protected function configureAdd($fields){
 		if($this->add_button)
 			$this->add_button->addClass(' btn btn-primary pull-right');
