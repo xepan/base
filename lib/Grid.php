@@ -12,8 +12,6 @@
 namespace xepan\base;
 
 class Grid extends \Grid{
-
-	public $defaultTemplate=null;
 	public $row_edit=true;
 	public $row_delete=true;
 
