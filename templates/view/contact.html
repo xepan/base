@@ -15,10 +15,9 @@
         <ul class="fa-ul">
           <li><i class="fa-li fa"></i>Emails: 
             <div>{Emails}
-              <div class="alert alert-danger">{$grid_buttons}</div>{header}{cols}{col}{$descr}{$sort}{/}{/}{/header}
+              <div class="pull-right">{$grid_buttons}</div>{header}{cols}{col}{$descr}{$sort}{/}{/}{/header}
                 {rows}{row}{cols}{col}
-              <div data-id="{$row_id}" {$tdparam}="{$tdparam}"> <span class="label label-danger">{$email}</span></div>{$content}
-              {/}{/}{/row}{/rows}{not_found}{$not_found_message}{/}
+              <div data-id="{$row_id}" {$tdparam}="{$tdparam}">{$value} {$edit} {$delete}</div>{/}{/}{/row}{/rows}{not_found}{$not_found_message}{/}
               {/}
             </div>
           </li>

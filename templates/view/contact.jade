@@ -21,13 +21,10 @@
             | Emails: 
             div
               | {Emails}
-              div.alert.alert-danger
-                {$grid_buttons}
+              .pull-right{$grid_buttons}
               | {header}{cols}{col}{$descr}{$sort}{/}{/}{/header}
               |   {rows}{row}{cols}{col}
-              div(data-id="{$row_id}" "{$tdparam}") 
-                span.label.label-danger {$email}
-              | {$content}
+              div(data-id="{$row_id}" "{$tdparam}") {$value} {$edit} {$delete}
               |{/}{/}{/row}{/rows}{not_found}{$not_found_message}{/}
               | {/}
           li
