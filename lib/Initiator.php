@@ -24,7 +24,7 @@ class Initiator extends \Controller_Addon {
                         $this->app->epan = $auth->model->ref('epan_id');
                         
                         $this->app->jui->addStaticInclude('xepan_jui');
-                        $this->api->js(true)->_selector('.sparkline')->sparkline();
+                        $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
                 }else{
                         $this->routePages('xepan');
                         $this->addLocation(array('template'=>'templates','js'=>'js'))
