@@ -17,7 +17,21 @@ class Initiator extends \Controller_Addon {
                         $this->app->today = date('Y-m-d');
                         $this->app->now   = date('Y-m-d H:i:s');
 
-                        $auth = $this->app->add('BasicAuth');
+                        $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
+                        $auth->addHook('createForm',function($a,$p){
+
+                            $p->add('HR');
+                            $f = $p->add('Form',null,null,['form/minimal']);
+                            $f->setLayout(['layout/xepanlogin','form_layout']);
+                            $f->addField('Line','username','Email address');
+                            $f->addField('Password','password','Password');
+                            // $cc = $f->add('Columns');
+                            // $cc->addColumn()->add('Button')->set('Log in')->addClass('atk-size-milli atk-swatch-green');
+                            // $cc->addColumn()->addClass('atk-align-right')->addField('Checkbox','remember_me','Remember me');
+                            $this->breakHook($f);
+
+                        });
+                        // $auth->form->setLayout(['layout/xepanlogin','form_layout']);
                         $auth->setModel('xepan\base\User_Active','username','password');
                         $auth->check();
 
