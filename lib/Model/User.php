@@ -25,6 +25,8 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addField('username');
 		$this->addField('password')->type('password');
 
+		$this->addField('scope')->enum(['Website','Editor','Admin','Both'])->defaultValue('Website');
+
 		$this->addField('is_active')->type('boolean')->defaultValue(true);
 
 	}

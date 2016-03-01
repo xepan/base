@@ -6,7 +6,7 @@ class Initiator extends \Controller_Addon {
 	public $addon_name = 'xepan_base';
 
 	function init(){
-		parent::init();
+		parent::init();        
 
                 if($this->app->is_admin){
                         $this->routePages('xepan_base');
@@ -31,8 +31,9 @@ class Initiator extends \Controller_Addon {
                             $this->breakHook($f);
 
                         });
-                        // $auth->form->setLayout(['layout/xepanlogin','form_layout']);
-                        $auth->setModel('xepan\base\User_Active','username','password');
+                        $user = $this->add('xepan\base\Model_User_Active');
+                        $user->addCondition('scope',['Admin','Both']);
+                        $auth->setModel($user,'username','password');
                         $auth->check();
 
                         $this->app->epan = $auth->model->ref('epan_id');
@@ -40,10 +41,11 @@ class Initiator extends \Controller_Addon {
                         $this->app->jui->addStaticInclude('xepan_jui');
                         $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
                 }else{
-                        $this->routePages('xepan');
+                        $this->routePages('xepan_');
                         $this->addLocation(array('template'=>'templates','js'=>'js'))
                         ->setBaseURL('./vendor/xepan/base/')
                         ;
+
 
                         $this->app->today = date('Y-m-d');
                         $this->app->now   = date('Y-m-d H:i:s');

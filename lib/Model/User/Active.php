@@ -16,8 +16,6 @@ class Model_User_Active extends Model_User{
 	function init(){
 		parent::init();
 		
-		$this->addCondition('is_active',true);		
-		// $this->debug();
-
+		$this->addCondition('is_active',true);
 	}
 }

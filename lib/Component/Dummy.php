@@ -16,6 +16,6 @@ class Component_Dummy extends \View{
 	
 	function init(){
 		parent::init();
-		$this->add('View')->set('Hello xEpan '.$this->options['text']);
+		$this->add('View')->set(($this->options['text']?:"Button").' '. rand(100,999))->js('click')->reload();
 	}
 }
