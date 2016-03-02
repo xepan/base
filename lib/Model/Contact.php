@@ -17,6 +17,9 @@ namespace xepan\base;
 class Model_Contact extends \xepan\base\Model_Table{
 	public $table='contact';
 
+	public $status=[];
+	public $actions=[];
+
 	function init(){
 		parent::init();
 
@@ -25,15 +28,14 @@ class Model_Contact extends \xepan\base\Model_Table{
 		
 		$this->addField('first_name');
 		$this->addField('last_name');
-		$this->addField('is_active')->type('boolean')->defaultValue(true);
 
 		$this->addField('address')->type('text');
 		$this->addField('city');
 		$this->addField('state');
 		$this->addField('country');
 		$this->addField('pin_code');
+		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 
-		$this->addExpression('status')->set($this->dsql()->expr('IF([0]=1,"Active","InActive")',[$this->getElement('is_active')]));
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]));
 
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
@@ -46,6 +48,18 @@ class Model_Contact extends \xepan\base\Model_Table{
 		// 	$x = $m->add('xepan\base\Model_Contact_Info',['table_alias'=>'one_email']);
 		// 	return $x->addCondition('contact_id',$q->getField('id'))->setLimit(1)->fieldQuery('value');
 		// });
+
+		$this->addExpression('emails_str')->set(function($m,$q){
+			$x = $m->add('xepan\base\Model_Contact_Email',['table_alias'=>'emails_str']);
+			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0],"<br/>")',[$x->getElement('value')]));
+		})->allowHTML(true);
+
+		$this->addExpression('contacts_str')->set(function($m,$q){
+			$x = $m->add('xepan\base\Model_Contact_Phone',['table_alias'=>'contacts_str']);
+			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0],"<br/>")',[$x->getElement('value')]));
+		})->allowHTML(true);
+
+
 
 	}
 }
