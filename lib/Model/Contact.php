@@ -32,6 +32,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('state');
 		$this->addField('country');
 		$this->addField('pin_code');
+		
+		$this->addField('organization');
+		$this->addField('post');
+		$this->addField('website');
 
 		$this->addExpression('status')->set($this->dsql()->expr('IF([0]=1,"Active","InActive")',[$this->getElement('is_active')]));
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]));
