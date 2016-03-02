@@ -36,6 +36,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('pin_code');
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 
+		$this->addField('organization');
+		$this->addField('post');
+		$this->addField('website');
+
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]));
 
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
