@@ -5,6 +5,7 @@ class CRUD extends \CRUD{
 	
 	public $grid_class='xepan\base\Grid';
 	public $action_page=null;
+	public $edit_page=null;
 	public $pass_acl=false;
 
 	function initializeTemplate($template_spot = null, $template_branch = null){
@@ -24,11 +25,11 @@ class CRUD extends \CRUD{
 	}
 
 	protected function configureEdit($fields){
-		if($this->action_page){
+		if($this->action_page || $this->edit_page){
 			$this->grid->addColumn('template','edit')->setTemplate(' ');
 			$this->grid->on('click','.pb_edit')->univ()->location(
 				[
-					$this->api->url($this->action_page),
+					$this->api->url($this->edit_page?:$this->action_page),
 					[
 						'action'=>'edit',
 						$this->model->table.'_id'=>$this->js()->_selectorThis()->closest('tr')->data('id')
