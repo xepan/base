@@ -11,7 +11,7 @@
 
 namespace xepan\base;
 
-class Model_Activity extends xepan\base\Model_Table{
+class Model_Activity extends Model_Table{
 	public $table='activity';
 
 	function init(){
