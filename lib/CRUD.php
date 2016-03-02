@@ -32,7 +32,7 @@ class CRUD extends \CRUD{
 					$this->api->url($this->edit_page?:$this->action_page),
 					[
 						'action'=>'edit',
-						$this->model->table.'_id'=>$this->js()->_selectorThis()->closest('tr')->data('id')
+						$this->model->table.'_id'=>$this->js()->_selectorThis()->closest('[data-id]')->data('id')
 					]
 				]
 			);
