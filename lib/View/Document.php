@@ -120,5 +120,15 @@ class View_Document extends \View{
 		return "<i class='fa fa-$icon status-$color'> $field</i>";
 	}
 
+	function format_date($fiels,$value,$m){
+		return date('d M Y',strtotime($value));
+	}
+
+	function format_datetime($fiels,$value,$m){
+		$date = "<h3>".date('d M Y',strtotime($value));
+		$time = "<small>".date('H:i:s',strtotime($value))."</small></h3>";
+		return $date.$time;
+	}
+
 
 }
