@@ -1,7 +1,8 @@
-#user-profile
+#user-profile.xepan-contact-profile
   .main-box.clearfix
     header.main-box-header.clearfix
-      h2 {name}Contact Name{/}
+      h2 {first_name}First Name{/} 
+      h2 {last_name}Last Name{/} 
     .main-box-body.clearfix
       .profile-status
         i.fa.fa-circle
@@ -18,6 +19,8 @@
         span Super User
       .profile-since
         | Contact since: Jan 2012
+      <hr/>
+      h2 Emails
       .profile-details
         {Emails}
         {rows}{row}
@@ -25,7 +28,8 @@
         {/}{/}
         {not_found_message}{/}
         {/}
-        <hr/>
+      h2 Phones
+      .profile-details
         {Phones}Phone Numbers
         ul
           li
@@ -64,7 +68,7 @@
           div
             span(title="website")
               i.fa.fa-globe.fa-lg &nbsp;
-              a(href="{website}{/}" target="_blank"){website}website{/}
+            |{website}website{/}
         .form-group
           label Address
           div
@@ -73,7 +77,7 @@
               |{address}address{/}<br/>city: {city}not found{/}<br/>state: {state}not found{/}<br/>country: {country}not found{/}<br/>pin code: {pin_code}not found{/}
       h2 IM Numbers
       .profile-details 
-        {im_numbers}
+        {IMs}
         div
           span(title="Skype")
             i.fa.fa-skype &nbsp;
@@ -86,7 +90,7 @@
         {/}
       h2 Events
       .profile-details 
-        {events}
+        {Events}
         div
           span(title="DOB")
             i.fa.fa-wish &nbsp;
@@ -94,7 +98,7 @@
         {/}
       h2 Relationship
       .profile-details 
-        {relationship}
+        {Relations}
         div
           span(title="Father")
             i.fa.fa-skype &nbsp;

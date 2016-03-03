@@ -1,14 +1,16 @@
 
-<div id="user-profile">
+<div id="user-profile" class="xepan-contact-profile">
   <div class="main-box clearfix">
     <header class="main-box-header clearfix">
-      <h2>{name}Contact Name{/}</h2>
+      <h2>{first_name}First Name{/} </h2>
+      <h2>{last_name}Last Name{/} </h2>
     </header>
     <div class="main-box-body clearfix">
       <div class="profile-status"><i class="fa fa-circle"></i> Online</div><img alt="" src="img/samples/scarlet-159.png" class="profile-img img-responsive center-block"/>
       <div class="profile-label"><span class="label label-danger">Admin</span></div>
       <div class="profile-stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><span>Super User</span></div>
-      <div class="profile-since">Contact since: Jan 2012</div>
+      <div class="profile-since">Contact since: Jan 2012</div><hr/>
+      <h2>Emails</h2>
       <div class="profile-details">
         {Emails}
         {rows}{row}
@@ -16,8 +18,9 @@
         {/}{/}
         {not_found_message}{/}
         {/}
-        <hr/>
-        {Phones}Phone Numbers
+      </div>
+      <h2>Phones</h2>
+      <div class="profile-details">{Phones}Phone Numbers
         <ul>
           <li><i class="fa-li"></i>9898989898</li>
           <li><i class="fa-li"></i>8559846603 </li>
@@ -41,7 +44,7 @@
         </div>
         <div class="form-group">
           <label>Website</label>
-          <div><span title="website"><i class="fa fa-globe fa-lg">&nbsp;</i><a href="{website}{/}" target="_blank">{website}website{/}</a></span></div>
+          <div><span title="website"><i class="fa fa-globe fa-lg">&nbsp;</i></span>{website}website{/}</div>
         </div>
         <div class="form-group">
           <label>Address</label>
@@ -51,20 +54,20 @@
       <h2>IM Numbers</h2>
       <div class="profile-details">
          
-        {im_numbers}
+        {IMs}
         <div><span title="Skype"><i class="fa fa-skype">&nbsp;<a href="wwww.xavoc.com" target="_blank">rksinha.btech </a></i></span></div>
         <div><span title="Whatsup"><i class="fa fa-whatsapp fa-phone">&nbsp;<a href="9090909090" target="_blank">8989787656 </a></i></span></div>{/}
       </div>
       <h2>Events</h2>
       <div class="profile-details">
          
-        {events}
+        {Events}
         <div><span title="DOB"><i class="fa fa-wish">&nbsp;</i></span>DOB:  225-July-1991         </div>{/}
       </div>
       <h2>Relationship</h2>
       <div class="profile-details">
          
-        {relationship}
+        {Relations}
         <div><span title="Father"><i class="fa fa-skype">&nbsp;</i></span>Father</div>{/}
       </div>
     </div>
