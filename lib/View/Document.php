@@ -69,6 +69,20 @@ class View_Document extends \View{
 		return parent::setModel($model,$fields);
 	}
 
+	function modelRender()
+    {
+    	foreach ($this->model->get() as $field => $value) {
+			if($this->owner->hasMethod('format_'.$field)){
+				$value = $this->owner->{'format_'.$field}($value,$this->model);
+			}elseif($this->owner->hasMethod('format_'.$this->model->getElement($field)->type())){
+				$value = $this->owner->{'format_'.$this->model->getElement($field)->type()}($field,$value,$this->model);
+			}elseif($this->hasMethod('format_'.$this->model->getElement($field)->type())){
+				$value = $this->{'format_'.$this->model->getElement($field)->type()}($field,$value,$this->model);
+			}
+			$this->template->trySetHTML($field,$value);
+		}
+    }
+
 	function addMany($entity,$options=null,$spot=null,$template=null) {
 		$class = 'xepan\hr\CRUD';
 
@@ -95,6 +109,25 @@ class View_Document extends \View{
 		}
 
 		return parent::recursiveRender();
+	}
+
+	// Formats
+	
+
+	function format_boolean($field,$value,$m){
+		$icon = $value?'check-circle':'times-circle';
+		$color = $value?'green':'red';
+		return "<i class='fa fa-$icon status-$color'> $field</i>";
+	}
+
+	function format_date($fiels,$value,$m){
+		return date('d M Y',strtotime($value));
+	}
+
+	function format_datetime($fiels,$value,$m){
+		$date = "<h3>".date('d M Y',strtotime($value));
+		$time = "<small>".date('H:i:s',strtotime($value))."</small></h3>";
+		return $date.$time;
 	}
 
 
