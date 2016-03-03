@@ -29,6 +29,7 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 		$this->addField('type')->mandatory(true);
+		$this->addField('sub_type')->system(true);
 
 		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
 		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
