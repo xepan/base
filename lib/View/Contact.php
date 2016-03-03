@@ -27,16 +27,28 @@ class View_Contact extends \View{
 
 	function setModel(Model_Contact $contact){
 		parent::setModel($contact);
-		$this->document_view->setModel($this->model,null,['name']);
+		$this->document_view->setModel($this->model,null,['first_name','last_name','address','city','state','country','pin_code','organization','post','website']);
 		if($this->model->loaded()){
 			$e = $this->document_view->addMany('Emails',null,'Emails',['view/addmany']);
 			$e->setModel($contact->ref('Emails'),['value']);
+			$e->template->tryDel('Pannel');
 
 			$phone = $this->document_view->addMany('Phones',null,'Phones',['view/addmany']);
 			$phone->setModel($contact->ref('Phones'),['value']);
-		}else{
-			$this->document_view->template->trySet('Emails','No Emails');
-			$this->document_view->template->trySet('Phones','No Phones');
+			$phone->template->tryDel('Pannel');
+
+			$im = $this->document_view->addMany('IMs',null,'IMs',['view/addmany']);
+			$im->setModel($contact->ref('IMs'),['value']);
+			$im->template->tryDel('Pannel');
+			
+			$event = $this->document_view->addMany('Events',null,'Events',['view/addmany']);
+			$event->setModel($contact->ref('Events'),['value']);
+			$event->template->tryDel('Pannel');
+
+			$relation = $this->document_view->addMany('Relations',null,'Relations',['view/addmany']);
+			$relation->setModel($contact->ref('Relations'),['value']);
+			$relation->template->tryDel('Pannel');
+
 		}
 		return $this->model;
 	}
