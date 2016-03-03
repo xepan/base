@@ -27,12 +27,16 @@ class View_Contact extends \View{
 
 	function setModel(Model_Contact $contact){
 		parent::setModel($contact);
-		$this->document_view->setModel($this->model,null,['first_name','last_name']);
+		$this->document_view->setModel($this->model,null,['name']);
 		if($this->model->loaded()){
-			$e = $this->document_view->addMany('Emails',null,'Emails',['view/contact','Emails']);
-			$e->setModel($contact->ref('Emails'));
+			$e = $this->document_view->addMany('Emails',null,'Emails',['view/addmany']);
+			$e->setModel($contact->ref('Emails'),['value']);
+
+			$phone = $this->document_view->addMany('Phones',null,'Phones',['view/addmany']);
+			$phone->setModel($contact->ref('Phones'),['value']);
 		}else{
 			$this->document_view->template->trySet('Emails','No Emails');
+			$this->document_view->template->trySet('Phones','No Phones');
 		}
 		return $this->model;
 	}
