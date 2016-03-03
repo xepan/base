@@ -1,99 +1,102 @@
 #user-profile
   .main-box.clearfix
     header.main-box-header.clearfix
-      h2.atk-form-row.atk-form-field {first_name}Foo{/first_name} {last_name}Bar{/last_name}
+      h2 {name}Contact Name{/}
     .main-box-body.clearfix
       .profile-status
         i.fa.fa-circle
         |  Online
-      img.profile-img.img-responsive.center-block(alt='', src='img/samples/robert-300.jpg')
+      img.profile-img.img-responsive.center-block(alt='', src='img/samples/scarlet-159.png')
       .profile-label
-        span.label.label-danger.atk-form-row.atk-form-field {type}Admin{/type}
+        span.label.label-danger Admin
       .profile-stars
-        span {post}Nick name{/}
+        i.fa.fa-star
+        i.fa.fa-star
+        i.fa.fa-star
+        i.fa.fa-star
+        i.fa.fa-star-o
+        span Super User
       .profile-since
         | Contact since: Jan 2012
-    div
-      .profile-contact
-        ul.fa-ul
+      .profile-details
+        {Emails}
+        {rows}{row}
+        {$header}
+        {/}{/}
+        {not_found_message}{/}
+        {/}
+        <hr/>
+        {phones}Phone Numbers
+        ul
           li
-            i.fa-li.fa
-            | Emails: 
-            div
-              | {Emails}
-              .pull-right{$grid_buttons}
-              | {header}{cols}{col}{$descr}{$sort}{/}{/}{/header}
-              |   {rows}{row}{cols}{col}
-              div(data-id="{$row_id}" "{$tdparam}") {$value} {$edit} {$delete}
-              |{/}{/}{/row}{/rows}{not_found}{$not_found_message}{/}
-              | {/}
+            i.fa-li
+            | 9898989898
           li
-            i.fa-li.fa.
-            | Phone No: 
-            div 9887012345
-            div 9887012345
+            i.fa-li
+            | 8559846603 
+          li
+            i.fa-li
+            | 8956434689
+        {/}
       .profile-message-btn.center-block.text-center
-        a.btn.btn-success(href='#')
-          i.fa.fa-envelope
-          | Send Email
-        a.btn.btn-success(href='#')
-          i.fa.fa-envelope
-          | Send Message 
-      div
-        .profile-details
-          ul.fa-ul
-            li
-              i.fa-li.fa
-              | Organization: 
-              div xavoc
-
-            li
-              i.fa-li.fa.
-              | Post: 
-              div @@@@@@@@
-            li
-              i.fa-li.fa.
-              | Website: 
-              div 
-                a(href='#') www.xavoc.com
-      div
-        .profile-im
-          h5 IM Numbers                               
-          ul.fa-ul
-            li
-              i.fa-li.fa
-              | Skype: 
-              span vaibhav.sharma.21
-
-            li
-              i.fa-li.fa.
-              | Whatsapp: 
-              span +919887012345
-      div
-        .profile-events
-          hr
-          h5 Events                               
-          ul.fa-ul
-            li
-              i.fa-li.fa
-              | DOB: 
-              span 21/12/91
-
-            li
-              i.fa-li.fa.
-              | Anaversery: 
-              span ------  
-      div
-        .profile-relation
-          hr
-          h5 Relationship                               
-          ul.fa-ul
-            li
-              i.fa-li.fa
-              | Fathers Name: 
-              span @@@@@@@
-
-            li
-              i.fa-li.fa.
-              | Mothers Name: 
-              span @@@@@@@
+        .btn-group.btn-group-sm(role="group")
+          button.btn.btn-primary(type="button" title="send email")
+            i.fa.fa-envelope
+            |&nbsp;Email
+          button.btn.btn-success(type="button" title="send message")
+            i.fa.fa-phone
+            |&nbsp;SMS
+      .profile-details
+        .form-group
+          label Organization
+          div
+            span(title="organization")
+              i.fa.fa-building.fa-lg &nbsp;
+            |{organization}organization{/}
+        .form-group
+          label Post
+          div
+            span(title="post")
+              i.fa.fa-user.fa-lg &nbsp;
+            |{post}post{/}
+        .form-group
+          label Website
+          div
+            span(title="website")
+              i.fa.fa-globe.fa-lg &nbsp;
+              a(href="{website}{/}" target="_blank"){website}website{/}
+        .form-group
+          label Address
+          div
+            span(title="address")
+              i.fa.fa-map-marker.fa-lg &nbsp;
+              |{address}address{/}<br/>city: {city}not found{/}<br/>state: {state}not found{/}<br/>country: {country}not found{/}<br/>pin code: {pin_code}not found{/}
+      h2 IM Numbers
+      .profile-details 
+        {im_numbers}
+        div
+          span(title="Skype")
+            i.fa.fa-skype &nbsp;
+              a(href="wwww.xavoc.com" target="_blank") rksinha.btech 
+        div
+          span(title="Whatsup")
+            i.fa.fa-whatsapp.fa-phone &nbsp;
+              a(href="9090909090" target="_blank") 8989787656 
+        
+        {/}
+      h2 Events
+      .profile-details 
+        {events}
+        div
+          span(title="DOB")
+            i.fa.fa-wish &nbsp;
+          |DOB:  225-July-1991         
+        {/}
+      h2 Relationship
+      .profile-details 
+        {relationship}
+        div
+          span(title="Father")
+            i.fa.fa-skype &nbsp;
+          | Father
+        {/}
