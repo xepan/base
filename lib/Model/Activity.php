@@ -25,6 +25,7 @@ class Model_Activity extends Model_Table{
 		$this->addField('activity');
 		$this->addField('details');
 		$this->addField('notify_to');
+		$this->addField('notification');
 
 		$this->addField('created_at')->type('datetime')->defaultValue($this->api->now);
 	}
