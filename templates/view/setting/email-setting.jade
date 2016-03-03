@@ -1,0 +1,119 @@
+.panel.panel-success 
+	.panel-heading
+		|Email Transport
+	.panel-body 
+		.col-lg-12
+			.row
+				.col-md-4
+					{$email_transport}
+					small.pull-left(style="width:100%") Email Transport
+.panel.panel-success
+	.panel-heading
+		| Connection Settings:
+	.panel-body
+		.col-lg-12
+			.row
+				.col-md-1
+					{$encryption}
+					small.pull-left Encryption
+				.col-md-3
+					{$email_host}
+					small.pull-left Email Host
+				.col-md-2
+					{$email_port}
+					small.pull-left Email Port
+				.col-md-3
+					{$email_username}
+					small.pull-left Email User Name
+				.col-md-3
+					{$email_password}
+					small.pull-left Email Password
+.panel.panel-success
+	.panel-heading
+		| Email Reply To Setting:
+	.panel-body
+		.col-lg-12
+			.row
+				.col-md-6
+					{$email_reply_to}
+					small.pull-left(style=" width:100%") Email Reply To
+				.col-md-6
+					{$email_reply_to_name}
+					small.pull-left(style=" width:100%") Email Reply To Name
+.panel.panel-success
+	.panel-heading
+		| Email From : Sender Setting:
+	.panel-body
+		.col-lg-12
+			.row
+				.col-md-3
+					{$from_email}
+					small.pull-left From Email
+				.col-md-3
+					{$from_name}
+					small.pull-left From Name
+				.col-md-3
+					{$sender_email}
+					small.pull-left Sender Email
+				.col-md-3
+					{$sender_name}
+					small.pull-left Sender Name
+.panel.panel-success
+	.panel-heading
+		| IMAP / POP3  Setting:
+	.panel-body
+		.col-lg-12
+			.row
+				.col-md-3
+					{$imap_email_host}
+					small.pull-left Email Host
+				.col-md-1
+					{$imap_email_port}
+					small.pull-left Email Port
+				.col-md-3
+					{$imap_email_username}
+					small.pull-left Email User Name
+				.col-md-3
+					{$imap_email_password}
+					small.pull-left Email Password
+				.col-md-2
+					{$imap_flags}
+					small.pull-left Flags
+.panel.panel-success
+	.panel-heading
+		|  Email Throtelling Settings:
+	.panel-body
+		.col-lg-12
+			.row
+				.col-md-4
+					{$smtp_auto_reconnect}
+					small.pull-left SMTP Auto Re Connect
+				.col-md-4
+					{$email_threshold}
+					small.pull-left Email Threshold
+				.col-md-4
+					{$emails_in_BCC}
+					small.pull-left Email BCC
+
+.panel.panel-success
+	.panel-heading
+		| Return Path / Bounce IMAP Settings:
+	.panel-body
+		.col-lg-12
+			.row
+				.col-md-3
+					{$bounce_imap_email_host}
+					small.pull-left Email Host
+				.col-md-1
+					{$bounce_imap_email_port}
+					small.pull-left Email Port
+				.col-md-3
+					{$return_path}
+					small.pull-left Email User Name
+				.col-md-3
+					{$bounce_imap_email_password}
+					small.pull-left Email Password
+				.col-lg-2
+					{$bounce_imap_flags}
+					small.pull-left Flags
+		.pull-right{$FormButtons}				
