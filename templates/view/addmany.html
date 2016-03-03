@@ -1,18 +1,19 @@
 
-<div id="{$_name}" class="xepan-micro-grid main-box clearfix atk-table atk-table-zebra atk-table-bordered {$class}">{Pannel}
+<div id="{$_name}" class="xepan-micro-grid clearfix atk-table atk-table-zebra atk-table-bordered {$class}">{Pannel}
   <header class="main-box-header clearfix atk-actions  {$class} ">
     <div style="100%" class="filter-block">
       <div class="pull-right">{$grid_buttons} </div>
       <div class="form-group pull-right xepan-filter-form"><span class="form-control pull-left">{$quick_search}</span></div>
     </div>
   </header>{/Pannel}
-  <div class="main-box-body clearfix table">
+  <div class="main-box-body clearfix">
     <table style="width:100%" class="table user-list table-hover">{header}{cols}{col}{/}{/}{/}
       <tbody>{rows}{row}
         <tr data-id="{$id}" class="{$odd_even} xepan-hasmany-row">{cols}
           <td>{$value}
-            <div class="xepan-hover-button actions">{edit}<a href="#" class="table-link"><i class="fa fa-pencil"></i></a>{/}
-              {delete}<a href="#" class="table-link danger"><i class="fa fa-trash-o"></i></a>{/}
+            <div class="xepan-hover-button actions">
+              {edit}{/}
+              {delete}{/}
             </div>
           </td>{/}
         </tr>{/}{/}

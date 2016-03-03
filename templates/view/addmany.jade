@@ -1,4 +1,4 @@
-.xepan-micro-grid.main-box.clearfix.atk-table.atk-table-zebra.atk-table-bordered(id="{$_name}" class="{$class}")
+.xepan-micro-grid.clearfix.atk-table.atk-table-zebra.atk-table-bordered(id="{$_name}" class="{$class}")
     {Pannel}
     header.main-box-header.clearfix.atk-actions(class=" {$class} ")
         div.filter-block( style="100%")
@@ -6,7 +6,7 @@
             .form-group.pull-right.xepan-filter-form
                 span(class="form-control pull-left")|{$quick_search}
     {/Pannel}
-    .main-box-body.clearfix.table
+    .main-box-body.clearfix
         table.table.user-list.table-hover(style="width:100%")
             {header}{cols}{col}{/}{/}{/}
             tbody
@@ -16,14 +16,8 @@
                     td
                       | {$value}
                       div.xepan-hover-button.actions
-                        {edit}
-                        a.table-link(href='#')
-                          i.fa.fa-pencil
-                        {/}
-                        {delete}
-                        a.table-link.danger(href='#')
-                          i.fa.fa-trash-o
-                        {/}
+                        {edit}{/}
+                        {delete}{/}
                     {/}
                 {/}{/}
                 {not_found}
