@@ -15,6 +15,11 @@ class Model_Table extends \Model_Table{
 
 	public $acl=false; // true/false/parent;
 
+	public $status=[];
+	public $action = [
+		'*'=>['view','edit','delete']
+	];
+
 	function init(){
 		parent::init();
 
