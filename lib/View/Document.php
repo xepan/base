@@ -125,8 +125,8 @@ class View_Document extends \View{
 	}
 
 	function format_datetime($fiels,$value,$m){
-		$date = "<h3>".date('d M Y',strtotime($value));
-		$time = "<small>".date('H:i:s',strtotime($value))."</small></h3>";
+		$date = "<div>".date('d M Y',strtotime($value));
+		$time = "<br/><small>".date('H:i:s',strtotime($value))."</small></div>";
 		return $date.$time;
 	}
 

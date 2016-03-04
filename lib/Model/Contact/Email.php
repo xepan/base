@@ -17,6 +17,7 @@ class Model_Contact_Email extends Model_Contact_Info{
 		parent::init();
 			
 		$this->getElement('head')->enum(['Official','Personal']);
-		$this->addCondition('type','Email');		
+		$this->addCondition('type','Email');
+		$this->is(['value|to_trim|required|email']);
 	}
 }
