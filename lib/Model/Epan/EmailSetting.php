@@ -18,6 +18,8 @@ class Model_Epan_EmailSetting extends Model_Table{
 	public $table='emailsetting';
 	public $title_field='email_id';
 
+	public $acl=false;
+
 	function init(){
 		parent::init();
 		// TODO : add all required fields for email + can_use_in_mass_emails

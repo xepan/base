@@ -11,7 +11,7 @@
       <thead>
         <tr>{cols}
           <th><span>User</span></th>
-          <th><span>Status</span></th>
+          <th> </th>
           <th></th>{/}    
         </tr>
       </thead>{/}
@@ -19,7 +19,7 @@
       <tbody>{rows}{row}
         <tr data-id="{$id}" class="{$odd_even}">{cols}
           <td>{avatar}<img alt="" src="{image}img/samples/scarlet-159.png{/}"/>{/}<a href="#user" class="user-link">{username}Scarlett Johansson{/}</a><span class="user-subhead">{scope}Admin{/}</span></td>
-          <td><span class="label label-success">{status}Inactive{/}</span></td>
+          <td>{action}Inactive{/}</td>
           <td style="width: 15%;">
             {$edit}
             {$delete}

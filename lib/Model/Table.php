@@ -13,23 +13,23 @@ namespace xepan\base;
 
 class Model_Table extends \Model_Table{
 
-	public $acl=false; // true/false/parent;
+	public $acl=true; // true/false/parent;
 
 	public $status=[];
-	public $action = [
+	public $actions = [
 		'*'=>['view','edit','delete']
 	];
 
 	function init(){
 		parent::init();
 
-		$this->add('Controller_Validator');
+		$this->add('xepan\base\Controller_Validator');
 
 		$this->addHook('afterAdd',function($e){			
 			if($e->hasElement('epan_id') && isset($e->app->epan->id)) {
-				// if(!isset($e->epan_condition_set)) // comment to mute
+				if(!isset($e->epan_condition_set)) // comment to mute
 	                $e->addCondition('epan_id',$e->app->epan->id);
-	            // $e->epan_condition_set = true;  // Comment to mute
+	            $e->epan_condition_set = true;  // Comment to mute
             }
 		});
 	}

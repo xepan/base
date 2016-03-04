@@ -18,6 +18,6 @@ class Model_Contact_Email extends Model_Contact_Info{
 			
 		$this->getElement('head')->enum(['Official','Personal']);
 		$this->addCondition('type','Email');
-		$this->is(['value|to_trim|required|email']);
+		$this->is(['value|unique_in_epan|to_trim|required|email']);
 	}
 }

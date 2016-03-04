@@ -15,8 +15,7 @@
                     {cols}
                     th
                       span User
-                    th
-                      span Status
+                    th 
                     th
                     {/}    
             {/}
@@ -33,7 +32,7 @@
                       a.user-link(href='#user') {username}Scarlett Johansson{/}
                       span.user-subhead {scope}Admin{/}
                     td
-                        span.label.label-success {status}Inactive{/}
+                        {action}Inactive{/}
                     td(style="width: 15%;")
                         {$edit}
                         {$delete}

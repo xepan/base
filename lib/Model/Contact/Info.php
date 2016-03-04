@@ -13,9 +13,12 @@ namespace xepan\base;
 
 class Model_Contact_Info extends Model_Table{
 	public $table='contact_info';
+	public $acl='parent';
 
 	function init(){
 		parent::init();
+
+		$this->hasOne('xepan\base\Epan');
 
 		$this->hasOne('xepan\base\Contact');
 
