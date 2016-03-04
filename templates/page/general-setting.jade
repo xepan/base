@@ -2,19 +2,19 @@
       .tabs-wrapper.profile-tabs
         ul.nav.nav-tabs
           li.active
-            a(data-toggle='tab', href='#tab-general_setting') Emails Setting
+            a(data-toggle='tab', href='#tab-user') User Managment 
           li
             a(data-toggle='tab', href='#tab-emails') Emails
-          //- li
-          //-   a(data-toggle='tab', href='#tab-documents') 
+          li
+            a(data-toggle='tab', href='#tab-general_setting') Emails Setting
           //- li
           //-   a(data-toggle='tab', href='#tab-chat') Personal
         .tab-content
-          #tab-general_setting.tab-pane.fade.in.active
+          #tab-user.tab-pane.fade.in.active 
+            {$usermanagment}
+          #tab-general_setting.tab-pane.clearfix.fade
             {general_setting}Please Save Basic Information First{/}
            #tab-emails.tab-pane.fade
             {$email}
-          //- #tab-documents.tab-pane.clearfix.fade
-          //-   {$document_view}
           //- #tab-chat.tab-pane.fade
           //-   {$personal_info}                       

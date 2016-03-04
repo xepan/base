@@ -27,7 +27,7 @@ class Model_User extends \xepan\base\Model_Table{
 
 		$this->addField('scope')->enum(['Website','Editor','Admin','Both'])->defaultValue('Website');
 
-		$this->addField('is_active')->type('boolean')->defaultValue(true);
+		$this->addField('status')->enum(['Active','Inactive'])->defaultValue('Active');
 
 	}
 }
