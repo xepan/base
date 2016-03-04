@@ -60,18 +60,5 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0],"<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true);
 
-
-		$this->addExpression('avatar','""')->allowHTML(true);
-		$this->addHook('afterLoad',function($m){
-			if(!$m['image_id']){
-				$m['avatar'] = "<div class='namebadge' style='position:relative; max-width:50px;float:left'>".$m['first_name'].' '.$m['last_name']."</div>";
-			}
-		});
-
-		if(!isset($this->app->avatar_loaded)){
-			$this->app->js(true)->_load('jquery.nameBadges')->_selector('.namebadge')->nameBadge(['size'=>45,'middlename'=>false,'uppercase'=>true,'border'=>['width'=>1]]);
-			$this->app->avatar_loaded = true;
-		}
-
 	}
 }
