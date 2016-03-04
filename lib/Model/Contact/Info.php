@@ -11,7 +11,7 @@
 
 namespace xepan\base;
 
-class Model_Contact_Info extends \Model_Table{
+class Model_Contact_Info extends Model_Table{
 	public $table='contact_info';
 
 	function init(){
