@@ -16,7 +16,7 @@ class Model_Contact_Phone extends Model_Contact_Info{
 	function init(){
 		parent::init();
 			
-		$this->getElement('head')->enum(['Work','Personal','Mobile']);
+		$this->getElement('head')->enum(['Official','Personal','Mobile']);
 		$this->addCondition('type','Phone');
 	}
 }
