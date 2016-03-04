@@ -32,7 +32,7 @@ class Initiator extends \Controller_Addon {
 
                         });
                         $user = $this->add('xepan\base\Model_User_Active');
-                        $user->addCondition('scope',['Admin','Both']);
+                        $user->addCondition('type',['Admin','Both']);
                         $auth->setModel($user,'username','password');
                         $auth->check();
 

@@ -13,7 +13,7 @@
 
 namespace xepan\base;
 
-class Model_Epan_EmailSetting extends \Model_Table{
+class Model_Epan_EmailSetting extends Model_Table{
 
 	public $table='emailsetting';
 	public $title_field='email_id';

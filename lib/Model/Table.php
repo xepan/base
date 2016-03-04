@@ -13,6 +13,8 @@ namespace xepan\base;
 
 class Model_Table extends \Model_Table{
 
+	public $acl=false; // true/false/parent;
+
 	function init(){
 		parent::init();
 
