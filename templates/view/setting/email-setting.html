@@ -1,78 +1,190 @@
 
-<div class="panel panel-success"> 
-  <div class="panel-heading">Email Transport</div>
-  <div class="panel-body"> 
-    <div class="col-lg-12">
+<div class="main-box clearfix">
+  <div style="margin:auto!important" class="row xepan-push">
+    <div class="col-lg-12"> 
+      <h3>Email Transport:</h3>
       <div class="row">
-        <div class="col-md-4">{$email_transport}<small style="width:100%" class="pull-left">Email Transport</small></div>
+        <div class="col-lg-12"> 
+          <div class="col-lg-4 xepan-push"><strong>Email Transport:</strong>
+            <div class="row"></div>
+            <cite>{$email_transport}</cite>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-heading">Connection Settings:</div>
-  <div class="panel-body">
-    <div class="col-lg-12">
+  <div style="margin:auto!important" class="row xepan-push">
+    <div class="col-lg-12"> 
+      <h3>Connection Settings:</h3>
       <div class="row">
-        <div class="col-md-1">{$encryption}<small class="pull-left">Encryption</small></div>
-        <div class="col-md-3">{$email_host}<small class="pull-left">Email Host</small></div>
-        <div class="col-md-2">{$email_port}<small class="pull-left">Email Port</small></div>
-        <div class="col-md-3">{$email_username}<small class="pull-left">Email User Name</small></div>
-        <div class="col-md-3">{$email_password}<small class="pull-left">Email Password</small></div>
+        <div class="col-lg-12 atk-push">
+          <div class="row">
+            <div class="col-lg-1"><strong>Encryption:</strong></div>
+            <div class="col-lg-3"> <strong>Email Host:</strong></div>
+            <div class="col-lg-2"> <strong>Email Port:</strong></div>
+            <div class="col-lg-3"> <strong>Email User Name:</strong></div>
+            <div class="col-lg-3"> <strong>Email Password:</strong></div>
+          </div>
+          <div class="row">	  
+            <div class="col-lg-1">
+              <cite>{$encryption}</cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$email_host}</cite>
+            </div>
+            <div class="col-lg-2">
+              <cite>{$email_port}</cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$email_username}       </cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$email_password}</cite>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-heading">Email Reply To Setting:</div>
-  <div class="panel-body">
-    <div class="col-lg-12">
+  <div style="margin:auto!important" class="row xepan-push">
+    <div class="col-lg-12"> 
+      <h3>Email Reply To Setting:</h3>
       <div class="row">
-        <div class="col-md-6">{$email_reply_to}<small style=" width:100%" class="pull-left">Email Reply To</small></div>
-        <div class="col-md-6">{$email_reply_to_name}<small style=" width:100%" class="pull-left">Email Reply To Name</small></div>
+        <div class="col-lg-12 atk-push">
+          <div class="row">
+            <div class="col-lg-4"><strong>Email Reply To:</strong></div>
+            <div class="col-lg-4"> <strong>Email Reply To Name:</strong></div>
+          </div>
+          <div class="row">	  
+            <div class="col-lg-4">
+              <cite>{$email_reply_to}</cite>
+            </div>
+            <div class="col-lg-4"> 
+              <cite>{$email_reply_to_name}</cite>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-heading">Email From : Sender Setting:</div>
-  <div class="panel-body">
-    <div class="col-lg-12">
+  <div style="margin:auto!important" class="row xepan-push">
+    <div class="col-lg-12"> 
+      <h3>Email From : Sender Setting:</h3>
       <div class="row">
-        <div class="col-md-3">{$from_email}<small class="pull-left">From Email</small></div>
-        <div class="col-md-3">{$from_name}<small class="pull-left">From Name</small></div>
-        <div class="col-md-3">{$sender_email}<small class="pull-left">Sender Email</small></div>
-        <div class="col-md-3">{$sender_name}<small class="pull-left">Sender Name</small></div>
+        <div class="col-lg-12 atk-push">
+          <div class="row">
+            <div class="col-lg-3"><strong>From Email:</strong></div>
+            <div class="col-lg-3"> <strong>From Name:</strong></div>
+            <div class="col-lg-3"> <strong>Sender Email:</strong></div>
+            <div class="col-lg-3"> <strong>Sender Name:</strong></div>
+          </div>
+          <div class="row">	  
+            <div class="col-lg-3">
+              <cite>{$from_email}</cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$from_name}</cite>
+            </div>
+            <div class="col-lg-3">
+              <cite>{$sender_email}  </cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$sender_name}  </cite>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-heading">IMAP / POP3  Setting:</div>
-  <div class="panel-body">
-    <div class="col-lg-12">
+  <div style="margin:auto!important" class="row xepan-push">
+    <div class="col-lg-12"> 
+      <h3>IMAP / POP3  Setting:</h3>
       <div class="row">
-        <div class="col-md-3">{$imap_email_host}<small class="pull-left">Email Host</small></div>
-        <div class="col-md-1">{$imap_email_port}<small class="pull-left">Email Port</small></div>
-        <div class="col-md-3">{$imap_email_username}<small class="pull-left">Email User Name</small></div>
-        <div class="col-md-3">{$imap_email_password}<small class="pull-left">Email Password</small></div>
-        <div class="col-md-2">{$imap_flags}<small class="pull-left">Flags</small></div>
+        <div class="col-lg-12 atk-push">
+          <div class="row">
+            <div class="col-lg-2"><strong>Email Host:</strong></div>
+            <div class="col-lg-2"> <strong>Email Port:</strong></div>
+            <div class="col-lg-3"> <strong>Email User Name:</strong></div>
+            <div class="col-lg-3"> <strong>Email Password:</strong></div>
+            <div class="col-lg-2"> <strong>Flags:</strong></div>
+          </div>
+          <div class="row">	  
+            <div class="col-lg-2">
+              <cite>{$imap_email_host}</cite>
+            </div>
+            <div class="col-lg-2"> 
+              <cite>{$imap_email_port}</cite>
+            </div>
+            <div class="col-lg-3">
+              <cite>{$imap_email_username}  </cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$imap_email_password}  </cite>
+            </div>
+            <div class="col-lg-2"> 
+              <cite>{$imap_flags}  </cite>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-heading"> Email Throtelling Settings:</div>
-  <div class="panel-body">
-    <div class="col-lg-12">
+  <div style="margin:auto!important" class="row xepan-push">
+    <div class="col-lg-12"> 
+      <h3>Email Throtelling Settings:</h3>
       <div class="row">
-        <div class="col-md-4">{$smtp_auto_reconnect}<small class="pull-left">SMTP Auto Re Connect</small></div>
-        <div class="col-md-4">{$email_threshold}<small class="pull-left">Email Threshold</small></div>
-        <div class="col-md-4">{$emails_in_BCC}<small class="pull-left">Email BCC</small></div>
+        <div class="col-lg-12 atk-push">
+          <div class="row">
+            <div class="col-lg-4"><strong>SMTP Auto Re Connect:</strong></div>
+            <div class="col-lg-4"> <strong>Email Threshold:</strong></div>
+            <div class="col-lg-4"> <strong>Email BCC:</strong></div>
+          </div>
+          <div class="row">	  
+            <div class="col-lg-4">
+              <cite>{$smtp_auto_reconnect}</cite>
+            </div>
+            <div class="col-lg-4"> 
+              <cite>{$email_threshold}</cite>
+            </div>
+            <div class="col-lg-4">
+              <cite>{$emails_in_BCC}  </cite>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel-heading">Return Path / Bounce IMAP Settings:</div>
-  <div class="panel-body">
-    <div class="col-lg-12">
+  <div style="margin:auto!important" class="row xepan-push-large">
+    <div class="col-lg-12"> 
+      <h3>Return Path / Bounce IMAP Settings:</h3>
       <div class="row">
-        <div class="col-md-3">{$bounce_imap_email_host}<small class="pull-left">Email Host</small></div>
-        <div class="col-md-1">{$bounce_imap_email_port}<small class="pull-left">Email Port</small></div>
-        <div class="col-md-3">{$return_path}<small class="pull-left">Email User Name</small></div>
-        <div class="col-md-3">{$bounce_imap_email_password}<small class="pull-left">Email Password</small></div>
-        <div class="col-lg-2">{$bounce_imap_flags}<small class="pull-left">Flags</small></div>
+        <div class="col-lg-12 atk-push">
+          <div class="row">
+            <div class="col-lg-2"><strong>Email Host:</strong></div>
+            <div class="col-lg-2"> <strong>Email Port:</strong></div>
+            <div class="col-lg-3"> <strong>Email User Name:</strong></div>
+            <div class="col-lg-3"> <strong>Email Password:</strong></div>
+            <div class="col-lg-2"> <strong>Flags:</strong></div>
+          </div>
+          <div class="row">	  
+            <div class="col-lg-2">
+              <cite>{$bounce_imap_email_host}</cite>
+            </div>
+            <div class="col-lg-2"> 
+              <cite>{$bounce_imap_email_port}</cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$return_path}</cite>
+            </div>
+            <div class="col-lg-3"> 
+              <cite>{$bounce_imap_email_password}</cite>
+            </div>
+            <div class="col-lg-2"> 
+              <cite>{$bounce_imap_flags}</cite>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="pull-right">{$FormButtons}				</div>
   </div>
 </div>

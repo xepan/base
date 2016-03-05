@@ -1,112 +1,153 @@
-.panel.panel-success 
-	.panel-heading
-		|Email Transport
-	.panel-body 
-		.col-lg-12
+.main-box.clearfix
+	.row.xepan-push(style="margin:auto!important")
+		.col-lg-12  
+			h3 Email Transport:
 			.row
-				.col-md-4
-					{$email_transport}
-					small.pull-left(style="width:100%") Email Transport
-	.panel-heading
-		| Connection Settings:
-	.panel-body
-		.col-lg-12
+				.col-lg-12  
+					.col-lg-4.xepan-push
+						strong Email Transport:
+						.row
+						cite {$email_transport}
+
+	.row.xepan-push(style="margin:auto!important")
+		.col-lg-12  
+			h3 Connection Settings:
 			.row
-				.col-md-1
-					{$encryption}
-					small.pull-left Encryption
-				.col-md-3
-					{$email_host}
-					small.pull-left Email Host
-				.col-md-2
-					{$email_port}
-					small.pull-left Email Port
-				.col-md-3
-					{$email_username}
-					small.pull-left Email User Name
-				.col-md-3
-					{$email_password}
-					small.pull-left Email Password
-	.panel-heading
-		| Email Reply To Setting:
-	.panel-body
-		.col-lg-12
+				.col-lg-12.atk-push
+					.row
+						.col-lg-1
+							strong Encryption:
+						.col-lg-3  
+							strong Email Host:
+						.col-lg-2  
+							strong Email Port:
+						.col-lg-3  
+							strong Email User Name:
+						.col-lg-3  
+							strong Email Password:
+					.row	  
+						.col-lg-1
+							cite {$encryption}
+						.col-lg-3  
+							cite {$email_host}
+						.col-lg-2
+							cite {$email_port}
+						.col-lg-3  
+							cite {$email_username}       
+						.col-lg-3  
+							cite {$email_password}
+
+	.row.xepan-push(style="margin:auto!important")
+		.col-lg-12  
+			h3 Email Reply To Setting:
 			.row
-				.col-md-6
-					{$email_reply_to}
-					small.pull-left(style=" width:100%") Email Reply To
-				.col-md-6
-					{$email_reply_to_name}
-					small.pull-left(style=" width:100%") Email Reply To Name
-	.panel-heading
-		| Email From : Sender Setting:
-	.panel-body
-		.col-lg-12
+				.col-lg-12.atk-push
+					.row
+						.col-lg-4
+							strong Email Reply To:
+						.col-lg-4  
+							strong Email Reply To Name:
+					.row	  
+						.col-lg-4
+							cite {$email_reply_to}
+						.col-lg-4  
+							cite {$email_reply_to_name}
+
+	.row.xepan-push(style="margin:auto!important")
+		.col-lg-12  
+			h3 Email From : Sender Setting:
 			.row
-				.col-md-3
-					{$from_email}
-					small.pull-left From Email
-				.col-md-3
-					{$from_name}
-					small.pull-left From Name
-				.col-md-3
-					{$sender_email}
-					small.pull-left Sender Email
-				.col-md-3
-					{$sender_name}
-					small.pull-left Sender Name
-	.panel-heading
-		| IMAP / POP3  Setting:
-	.panel-body
-		.col-lg-12
+				.col-lg-12.atk-push
+					.row
+						.col-lg-3
+							strong From Email:
+						.col-lg-3  
+							strong From Name:
+						.col-lg-3  
+							strong Sender Email:
+						.col-lg-3  
+							strong Sender Name:
+					.row	  
+						.col-lg-3
+							cite {$from_email}
+						.col-lg-3  
+							cite {$from_name}
+						.col-lg-3
+							cite {$sender_email}  
+						.col-lg-3  
+							cite {$sender_name}  
+
+	.row.xepan-push(style="margin:auto!important")
+		.col-lg-12  
+			h3 IMAP / POP3  Setting:
 			.row
-				.col-md-3
-					{$imap_email_host}
-					small.pull-left Email Host
-				.col-md-1
-					{$imap_email_port}
-					small.pull-left Email Port
-				.col-md-3
-					{$imap_email_username}
-					small.pull-left Email User Name
-				.col-md-3
-					{$imap_email_password}
-					small.pull-left Email Password
-				.col-md-2
-					{$imap_flags}
-					small.pull-left Flags
-	.panel-heading
-		|  Email Throtelling Settings:
-	.panel-body
-		.col-lg-12
+				.col-lg-12.atk-push
+					.row
+						.col-lg-2
+							strong Email Host:
+						.col-lg-2 
+							strong Email Port:
+						.col-lg-3  
+							strong Email User Name:
+						.col-lg-3  
+							strong Email Password:
+						.col-lg-2  
+							strong Flags:
+					.row	  
+						.col-lg-2
+							cite {$imap_email_host}
+						.col-lg-2  
+							cite {$imap_email_port}
+						.col-lg-3
+							cite {$imap_email_username}  
+						.col-lg-3  
+							cite {$imap_email_password}  
+						.col-lg-2  
+							cite {$imap_flags}  
+	.row.xepan-push(style="margin:auto!important")
+		.col-lg-12  
+			h3 Email Throtelling Settings:
 			.row
-				.col-md-4
-					{$smtp_auto_reconnect}
-					small.pull-left SMTP Auto Re Connect
-				.col-md-4
-					{$email_threshold}
-					small.pull-left Email Threshold
-				.col-md-4
-					{$emails_in_BCC}
-					small.pull-left Email BCC
-	.panel-heading
-		| Return Path / Bounce IMAP Settings:
-	.panel-body
-		.col-lg-12
+				.col-lg-12.atk-push
+					.row
+						.col-lg-4
+							strong SMTP Auto Re Connect:
+						.col-lg-4 
+							strong Email Threshold:
+						.col-lg-4 
+							strong Email BCC:
+					.row	  
+						.col-lg-4
+							cite {$smtp_auto_reconnect}
+						.col-lg-4  
+							cite {$email_threshold}
+						.col-lg-4
+							cite {$emails_in_BCC}  
+
+	.row.xepan-push-large(style="margin:auto!important")
+		.col-lg-12  
+			h3 Return Path / Bounce IMAP Settings:
 			.row
-				.col-md-3
-					{$bounce_imap_email_host}
-					small.pull-left Email Host
-				.col-md-1
-					{$bounce_imap_email_port}
-					small.pull-left Email Port
-				.col-md-3
-					{$return_path}
-					small.pull-left Email User Name
-				.col-md-3
-					{$bounce_imap_email_password}
-					small.pull-left Email Password
-				.col-lg-2
-					{$bounce_imap_flags}
-					small.pull-left Flags
-		.pull-right{$FormButtons}				
+				.col-lg-12.atk-push
+					.row
+						.col-lg-2
+							strong Email Host:
+						.col-lg-2 
+							strong Email Port:
+						.col-lg-3 
+							strong Email User Name:
+						.col-lg-3 
+							strong Email Password:
+						.col-lg-2 
+							strong Flags:
+					.row	  
+						.col-lg-2
+							cite {$bounce_imap_email_host}
+						.col-lg-2 
+							cite {$bounce_imap_email_port}
+						.col-lg-3 
+							cite {$return_path}
+						.col-lg-3 
+							cite {$bounce_imap_email_password}
+						.col-lg-2 
+							cite {$bounce_imap_flags}
