@@ -23,6 +23,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 	function init(){
 		parent::init();
 		// TODO : add all required fields for email + can_use_in_mass_emails
+		$this->hasOne('xepan\base\Epan','epan_id');
 		$this->addField('email_transport')->setValueList(array('SmtpTransport'=>'SMTP','SendmailTransport'=>'SendMail','MailTransport'=>'PHP Mail function'))->defaultValue('smtp');
 		$this->addField('is_support_email')->type('boolean')->defaultValue(false);
 
@@ -67,6 +68,8 @@ class Model_Epan_EmailSetting extends Model_Table{
 		$this->addField('denied_email_body')->type('text');
 
 		$this->addField('footer')->type('text');
+
+		$this->hasMany('xepan\hr\Email_Permission','emailsetting',null,'EmailPermissions');
 
 
 

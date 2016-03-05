@@ -20,8 +20,8 @@ class Model_Epan extends \Model_Table{
 		$this->hasOne('xepan\base\Epan_Category');		
 		$this->addField('name')->mandatory(true)->hint('Identification for your epan');
 
-		$this->hasMany('Epan_InstalledApplication',null,null,'InstalledApplications');
-		$this->hasMany('Epan_EmailSetting',null,null,'EmailSettings');
+		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
+		$this->hasMany('xepan\base\Epan_EmailSetting',null,null,'EmailSettings');
 		
 		$this->hasMany('xepan\base\Contact');
 	}
