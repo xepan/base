@@ -39,7 +39,8 @@ class View_Document extends \View{
 			$this->template->loadTemplateFromString('{$Content}');
 			$this->form = $this->add('Form');
 			$this->form->setLayout($ot);
-			$this->form->addSubmit($this->submit_button);
+			if($this->submit_button)
+				$this->form->addSubmit($this->submit_button);
 		}
 	}
 

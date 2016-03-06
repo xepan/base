@@ -8,7 +8,7 @@ class page_general_email extends \Page{
 
 		$email_setting= $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadBy('id',$this->api->stickyGET('emailsetting_id'));
 		
-		$email_view=$this->add('xepan\hr\View_Document',['action'=>$action],null,['view/setting/email-setting']);
+		$email_view=$this->add('xepan\hr\View_Document',['action'=>$action,'submit_button'=>''],null,['view/setting/email-setting']);
 		$email_view->setModel($email_setting,[
 												'email_transport','encryption',
 												'email_host','email_port',
@@ -40,6 +40,19 @@ class page_general_email extends \Page{
 												'bounce_imap_flags'
 											]
 							);
+		$this->form = $email_view->form;
 
+	}
+
+	function render(){
+		$this->js(true)->_load('wizard')
+			->_Selector('.wizard')
+			->wizard()
+			;
+		
+		$this->js('finished',$this->form->js()->submit())->_selector('.wizard');
+
+		$this->app->jui->addStylesheet('compiled/wizard');
+		parent::render();
 	}
 }

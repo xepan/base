@@ -16,8 +16,7 @@ class page_test extends \Page {
 
 	function init(){
 		parent::init();
-		$this->app->layout->destroy();
-		$this->app->add('Layout_Fluid');
-		$this->add('View')->set("Hello");
+		
+		$this->add('xepan\communication\Controller_ReadEmail');
 	}
 }

@@ -71,7 +71,9 @@ class Model_Epan_EmailSetting extends Model_Table{
 
 		$this->hasMany('xepan\hr\Email_Permission','emailsetting',null,'EmailPermissions');
 
-
+		// $this->is([
+		// 	'email_host|required'
+		// 	]);
 
 		
 	}
