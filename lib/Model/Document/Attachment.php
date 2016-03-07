@@ -14,13 +14,13 @@ namespace xepan\base;
 
 class Model_Document_Attachment extends Model_Table{
 	
-	public $table='attachemt';
+	public $table='attachment';
 	public $acl = false;
 
 	function init(){
 		parent::init();
 		
 		$this->hasOne('xepan\base\Document','document_id');
-		$this->add('filestore\File','file_id');
+		$this->add('filestore\Field_File','file_id');
 	}
 }
