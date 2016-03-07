@@ -24,15 +24,17 @@ class Model_Document extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\Contact','created_by_id')->editable(false);
-		$this->hasOne('xepan\base\Contact','updated_by_id')->editable(false);
+		$this->hasOne('xepan\base\Contact','created_by_id')->system(true);
+		$this->hasOne('xepan\base\Contact','updated_by_id')->system(true);
 
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 		$this->addField('type')->mandatory(true);
 		$this->addField('sub_type')->system(true);
 
-		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
-		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now)->editable(false);
+		$this->hasMany('xepan\base\Document_Attachment','document_id',null,'Attachments');
+
+		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);//->system(true);
+		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);//->system(true);
 
 	}
 }
