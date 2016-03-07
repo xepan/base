@@ -25,12 +25,13 @@ class View_Document extends \View{
 	public $form_fields=null;
 
 	public $form=null;
-	public $id_field_on_reload='id';
+	public $id_field_on_reload=null;
 	public $submit_button="Save";
 
 	function init(){
 		parent::init();
-		// if(! $this->view_template) throw $this->exception("please provide template by 'view_template' option parameter");
+
+		if(!$this->id_field_on_reload) throw $this->exception("Please provice 'id_field_on_reload'");
 
 		if($this->action == 'view')
 			$this->form = new \Dummy();
@@ -84,11 +85,11 @@ class View_Document extends \View{
 		}
     }
 
-	function addMany($entity,$options=null,$spot=null,$template=null) {
-		$class = 'xepan\hr\CRUD';
+	function addMany($entity,$options=null,$spot=null,$template=null,$view_class=null,$form_class=null) {
+		$class = $form_class?:'xepan\hr\CRUD';
 
 		if($this->action=='view'){
-			$class='xepan\base\Grid';
+			$class= $view_class?:'xepan\base\Grid';
 			$base = $this;
 		}else{
 			$base = $this->form->layout;
