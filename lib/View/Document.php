@@ -31,7 +31,6 @@ class View_Document extends \View{
 	function init(){
 		parent::init();
 
-		if(!$this->id_field_on_reload) throw $this->exception("Please provice 'id_field_on_reload'");
 
 		if($this->action == 'view')
 			$this->form = new \Dummy();
@@ -43,6 +42,10 @@ class View_Document extends \View{
 			if($this->submit_button)
 				$this->form->addSubmit($this->submit_button);
 		}
+	}
+
+	function setIdField($id_field_on_reload){
+		$this->id_field_on_reload = $id_field_on_reload;
 	}
 
 	function setModel($model,$view_fields=null,$form_fields=null){
@@ -102,6 +105,7 @@ class View_Document extends \View{
 
 	function recursiveRender(){
 
+		if(!$this->id_field_on_reload) throw $this->exception("Please provice 'id_field_on_reload'");
 		if($this->action != 'view') {
 			$this->form->onSubmit(function($f){	
 				$f->save();
