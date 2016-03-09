@@ -24,6 +24,9 @@ class Model_Epan extends \Model_Table{
 		$this->hasMany('xepan\base\Epan_EmailSetting',null,null,'EmailSettings');
 		
 		$this->hasMany('xepan\base\Contact');
+
+		$this->addHook('beforeSave',$this);
+		$this->addHook('beforeDelete',$this);
 	}
 
 	function addActivity($contact_id, $activity, $related_contact_id=null, $related_document_id=null, $details=null){
@@ -36,5 +39,27 @@ class Model_Epan extends \Model_Table{
 
 		$activity->save();
 		return $activity;
+	}
+
+	function beforeSave($m){
+		
+		$epan_old=$this->add('xepan\base\Model_Epan');
+		
+		if($this->loaded())
+			$epan_old->addCondition('id','<>',$this->id);
+		$epan_old->tryLoadAny();
+
+		if($epan_old['name'] == $this['name'])
+			throw $this->exception('Epan Name is Allready Exist');
+	}
+
+
+	function beforeDelete($m){
+		$install_comp_count = $m->ref('InstalledApplications')->count()->getOne();
+		$email_setting_count = $m->ref('EmailSettings')->count()->getOne();
+		$contact_count = $m->ref('xepan\base\Contact')->count()->getOne();
+		
+		if($install_comp_count or $email_setting_count or $contact_count)
+			throw $this->exception('Cannot Delete,first delete InstalledApplications,EmailSettings, Contacts ');	
 	}
 }
