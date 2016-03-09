@@ -44,6 +44,15 @@ class View_Document extends \View{
 		}
 	}
 
+	function add($class,$options=null,$spot=null,$template=null){
+		if($this->form instanceof \Form){
+			return $this->form->layout->add($class,$options,$spot,$template);
+		}
+
+		return parent::add($class,$options,$spot,$template);
+
+	}
+
 	function setIdField($id_field_on_reload){
 		$this->id_field_on_reload = $id_field_on_reload;
 	}
