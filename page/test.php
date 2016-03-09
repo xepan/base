@@ -16,7 +16,15 @@ class page_test extends \Page {
 
 	function init(){
 		parent::init();
-		
-		$this->add('xepan\communication\Controller_ReadEmail');
+		$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting')
+								->addCondition('imap_email_password','not',null);
+
+		foreach ($email_settings as $email_setting) {
+			$cont = $this->add('xepan\communication\Controller_ReadEmail',['email_setting'=>$email_setting]);
+			$mbs = $cont->getMailBoxes();
+			foreach ($mbs as $mb) {
+				var_dump($cont->fetch($mb));
+			}
+		}
 	}
 }
