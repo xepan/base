@@ -45,7 +45,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 		$this->addField('imap_email_username')->caption('Username');
 		$this->addField('imap_email_password')->type('password')->caption('Password');
 		$this->addField('imap_flags')->mandatory(true)->defaultValue('/imap/ssl/novalidate-cert')->caption('Flags');
-		
+		$this->addField('is_imap_enabled')->type('boolean')->defaultValue(true);
 		$this->addField('bounce_imap_email_host')->caption('Host');
 		$this->addField('bounce_imap_email_port')->caption('Port');
 		$this->addField('return_path')->Caption('Username / Email');
