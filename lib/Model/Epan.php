@@ -24,6 +24,7 @@ class Model_Epan extends \Model_Table{
 		$this->hasMany('xepan\base\Epan_EmailSetting',null,null,'EmailSettings');
 		
 		$this->hasMany('xepan\base\Contact');
+		$this->hasMany('xepan\base\User',null,null,'Users');
 
 		$this->addHook('beforeSave',$this);
 		$this->addHook('beforeDelete',$this);
@@ -58,8 +59,9 @@ class Model_Epan extends \Model_Table{
 		$install_comp_count = $m->ref('InstalledApplications')->count()->getOne();
 		$email_setting_count = $m->ref('EmailSettings')->count()->getOne();
 		$contact_count = $m->ref('xepan\base\Contact')->count()->getOne();
+		$user_count = $m->ref('Users')->count()->getOne();
 		
-		if($install_comp_count or $email_setting_count or $contact_count)
-			throw $this->exception('Cannot Delete,first delete InstalledApplications,EmailSettings, Contacts ');	
+		if($install_comp_count or $email_setting_count or $contact_count or $user_count)
+			throw $this->exception('Cannot Delete,first delete InstalledApplications,EmailSettings, Contacts And Users');	
 	}
 }
