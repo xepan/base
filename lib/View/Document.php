@@ -18,6 +18,7 @@ class View_Document extends \View{
 	public $view_template = null;
 	public $action='view'; // add/edit
 	public $id_fields_in_view=[];
+	public $deref_fields_in_form=[];
 	public $allow_many_on_add=true;
 
 	public $many=[];
@@ -73,6 +74,15 @@ class View_Document extends \View{
 			
 			$view_fields = $view_fields?:$m->getActualFields();
 			$readonly_fields = array_diff($view_fields, $this->form_fields?:[]);
+
+			// remove derefrenced_fields
+			$remove_tag=[];
+			foreach ($readonly_fields as $key=>$rf) {
+				if( in_array($rf.'_id', $fields) && !in_array($rf.'_id', $this->deref_fields_in_form)){
+					unset($readonly_fields[$key]);
+				}
+			}
+
 			foreach ($readonly_fields as $fld) {
 				@$this->form->layout->template->trySetHTML($fld,$model[$fld]);
 			}
