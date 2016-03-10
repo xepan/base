@@ -60,8 +60,8 @@ class View_Document extends \View{
 
 	function setModel($model,$view_fields=null,$form_fields=null){
 		
-		$this->view_fields = $view_fields;
-		$this->form_fields = $form_fields;
+		$this->view_fields = $view_fields?:$m->getActualFields();
+		$this->form_fields = $form_fields?:$m->getActualFields();
 		
 		if($this->action=='view'){
 			$fields = $view_fields;
@@ -71,8 +71,6 @@ class View_Document extends \View{
 			$m = $this->form->setModel($model,$this->form_fields);
 
 			/* Still NonEditable fields should show as on view mode */
-			
-			$view_fields = $view_fields?:$m->getActualFields();
 			$readonly_fields = array_diff($view_fields, $this->form_fields?:[]);
 
 			// remove derefrenced_fields
