@@ -31,19 +31,19 @@ class page_test extends \Page {
 		// echo "<pre>";
 		$email_array = json_decode($email,true);
 
-		// print_r($email_array['from']);
+		// print_r($email_array);
 		// exit;
 		$btn=$this->add('Button')->set('Save Emails');
 		$btn->onClick(function()use($email_array){
 			$email_model=$this->add('xepan\communication\Model_Communication');	
-			$email_model['uid']=json_encode($email_array['uid']);
+			$email_model['uid']=$email_array['uid'];
 			$email_model['from_raw']=json_encode($email_array['from']);
 			$email_model['to_raw']=json_encode($email_array['to']);
 			$email_model['cc_raw']=json_encode($email_array['cc']);
 			$email_model['bcc_raw']=json_encode($email_array['bcc']);
 			$email_model['flags']=json_encode($email_array['flags']);
 			// $email_model['bcc_raw']=json_encode($email_array['attachment']);
-			$email_model['title']=json_encode($email_array['subject']);
+			$email_model['title']=$email_array['subject'];
 			$email_model['description']=json_encode($email_array['body']);
 			$email_model->save();
 			return $this->js()->reload();
