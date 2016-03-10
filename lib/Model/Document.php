@@ -19,6 +19,7 @@ class Model_Document extends \xepan\base\Model_Table{
 
 	public $status=[];
 	public $actions=[];
+	public $acl=true;
 
 	function init(){
 		parent::init();

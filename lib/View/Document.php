@@ -45,7 +45,7 @@ class View_Document extends \View{
 	}
 
 	function add($class,$options=null,$spot=null,$template=null){
-		if($this->form instanceof \Form){
+		if($class instanceof \AbstractView && $this->form instanceof \Form){
 			return $this->form->layout->add($class,$options,$spot,$template);
 		}
 
