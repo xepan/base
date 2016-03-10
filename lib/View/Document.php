@@ -45,7 +45,7 @@ class View_Document extends \View{
 	}
 
 	function add($class,$options=null,$spot=null,$template=null){
-		if($this->form instanceof \Form){
+		if($class instanceof \AbstractView && $this->form instanceof \Form){
 			return $this->form->layout->add($class,$options,$spot,$template);
 		}
 
@@ -74,7 +74,7 @@ class View_Document extends \View{
 			$view_fields = $view_fields?:$m->getActualFields();
 			$readonly_fields = array_diff($view_fields, $this->form_fields?:[]);
 			foreach ($readonly_fields as $fld) {
-				@$this->form->layout->template->trySet($fld,$model[$fld]);
+				@$this->form->layout->template->trySetHTML($fld,$model[$fld]);
 			}
 			parent::setModel($model,$view_fields);			
 			return $m;
