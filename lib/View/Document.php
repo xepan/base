@@ -102,7 +102,12 @@ class View_Document extends \View{
 				$value = $this->{'format_'.$this->model->getElement($field)->type()}($field,$value,$this->model);
 			}
 			$this->template->trySetHTML($field,$value);
+			if(strpos($field,'_id')!==false && !in_array($field, $this->id_fields_in_view)){
+				if($this->template->hasTag($field))
+					$this->template[$field]='';
+			}
 		}
+
     }
 
 	function addMany($entity,$options=null,$spot=null,$template=null,$view_class=null,$form_class=null) {
