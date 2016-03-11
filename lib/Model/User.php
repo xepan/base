@@ -55,4 +55,8 @@ class Model_User extends \xepan\base\Model_Table{
 	}
 
 	function beforeDelete($m){}
+
+	function isSuperUser(){
+		return $this['scope']=='SuperUser';
+	}
 }
