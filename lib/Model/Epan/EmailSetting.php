@@ -51,7 +51,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 		$this->addField('return_path')->Caption('Username / Email');
 		
 		$this->addField('bounce_imap_email_password')->type('password')->caption('Password');
-		$this->addField('bounce_imap_flags')->mandatory(true)/*->defaultValue('/imap/ssl/novalidate-cert')*/->caption('Flags');
+		$this->addField('bounce_imap_flags')->mandatory(true)->defaultValue('/imap/ssl/novalidate-cert')->caption('Flags');
 
 		$this->addField('smtp_auto_reconnect')->type('int')/*->hint('Auto Reconnect by n number of emails')*/;
 		$this->addField('email_threshold')->type('int')/*->hint('Threshold To send emails with this Email Configuration PER MINUTE')*/;
@@ -62,7 +62,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 
 		$this->addField('auto_reply')->type('boolean');
 		$this->addField('email_subject')->group('ar~12');
-		$this->addField('email_body')->type('text');
+		$this->addField('email_body')->type('text')->display(['form'=>'xepan\base\RichText']);
 
 		$this->addField('denied_email_subject');
 		$this->addField('denied_email_body')->type('text');

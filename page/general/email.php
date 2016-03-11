@@ -24,7 +24,8 @@ class page_general_email extends \Page{
 												'emails_in_BCC','bounce_imap_email_host',
 												'bounce_imap_email_port','return_path',
 												'bounce_imap_email_password',
-												'bounce_imap_flags'
+												'bounce_imap_flags','auto_reply','email_subject',
+												'email_body'
 											],
 											[
 												'email_transport','encryption',
@@ -39,7 +40,8 @@ class page_general_email extends \Page{
 												'emails_in_BCC','bounce_imap_email_host',
 												'bounce_imap_email_port','return_path',
 												'bounce_imap_email_password',
-												'bounce_imap_flags'
+												'bounce_imap_flags','auto_reply','email_subject',
+												'email_body'
 											]
 							);
 		$this->form = $email_view->form;

@@ -26,6 +26,11 @@
 					.badge.badge-primary 5
 					| Managing Bounce Emails
 					span.chevron
+			li(data-target="#step6")
+				span
+					.badge.badge-primary 6
+					| Auto Reply Mail Content
+					span.chevron
 		.actions
 			button.btn.btn-default.btn-mini.btn-prev(type="button")
 				i.icon-arrow-left Prev
@@ -190,3 +195,25 @@
 										cite {$bounce_imap_email_password}
 									.col-lg-2 
 										cite {$bounce_imap_flags}
+			.step-pane(id="step6")
+				.row.xepan-push-large(style="margin:auto!important")
+					.col-lg-12  
+						h3 Auto Reply Mail :
+						.row
+							.col-lg-12.atk-push
+								.row
+									.col-lg-6
+										strong Auto Reply:
+									.col-lg-6 
+										strong Auto Mail Subject:
+								.row
+									.col-lg-12 
+										strong Auto mail Body:
+								.row
+									.col-lg-6
+										cite {$auto_reply}
+									.col-lg-6 
+										cite {$email_subject}
+								.row
+									.col-lg-12 
+										cite {$email_body}

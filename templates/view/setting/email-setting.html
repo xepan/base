@@ -12,6 +12,8 @@
           <div class="badge badge-primary">4</div>Thresholds<span class="chevron"></span></span></li>
       <li data-target="#step5"><span>
           <div class="badge badge-primary">5</div>Managing Bounce Emails<span class="chevron"></span></span></li>
+      <li data-target="#step6"><span>
+          <div class="badge badge-primary">6</div>Auto Reply Mail Content<span class="chevron"></span></span></li>
     </ul>
     <div class="actions">
       <button type="button" class="btn btn-default btn-mini btn-prev"><i class="icon-arrow-left">Prev</i></button>
@@ -212,6 +214,37 @@
                   </div>
                   <div class="col-lg-2"> 
                     <cite>{$bounce_imap_flags}</cite>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="step6" class="step-pane">
+        <div style="margin:auto!important" class="row xepan-push-large">
+          <div class="col-lg-12"> 
+            <h3>Auto Reply Mail :</h3>
+            <div class="row">
+              <div class="col-lg-12 atk-push">
+                <div class="row">
+                  <div class="col-lg-6"><strong>Auto Reply:</strong></div>
+                  <div class="col-lg-6"> <strong>Auto Mail Subject:</strong></div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12"> <strong>Auto mail Body:</strong></div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <cite>{$auto_reply}</cite>
+                  </div>
+                  <div class="col-lg-6"> 
+                    <cite>{$email_subject}</cite>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12"> 
+                    <cite>{$email_body}</cite>
                   </div>
                 </div>
               </div>
