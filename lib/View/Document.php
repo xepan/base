@@ -60,8 +60,8 @@ class View_Document extends \View{
 
 	function setModel($model,$view_fields=null,$form_fields=null){
 		
-		$this->view_fields = $view_fields?:$m->getActualFields();
-		$this->form_fields = $form_fields?:$m->getActualFields();
+		$this->view_fields = $view_fields;
+		$this->form_fields = $form_fields;
 		
 		if($this->action=='view'){
 			$fields = $view_fields;
