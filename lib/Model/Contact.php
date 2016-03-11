@@ -37,7 +37,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 
 		$this->addField('organization');
-		$this->addField('post');
+		$this->addField('employee_post')->caption('Post');
 		$this->addField('website');
 
 		$this->add('filestore/Field_Image','image_id')->allowHTML(true);
