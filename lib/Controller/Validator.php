@@ -10,6 +10,13 @@ class Controller_Validator extends \Controller_Validator{
         parent::init();
         $this->is_mb=false;
     }
+
+    function rule_required($a)
+    {
+        if ($a==='' || $a===false || $a===null) {
+            return $this->fail('must not be empty');
+        }
+    }
 	
 	function rule_unique($a,$field){
 
@@ -36,6 +43,18 @@ class Controller_Validator extends \Controller_Validator{
                 ->getOne();
 
         if($result !== null) return $this->fail('Value "{{arg1}}" already exists', $a);
+    }
+
+    function rule_max_in_epan($a,$field){
+         $q = clone $this->owner->dsql();
+
+        $result = $q
+                ->where($field, $a)
+                ->where($q->getField('id'),'<>', $this->owner->id)
+                ->where($q->expr('[0] = [1]',[$this->owner->getElement('epan_id'),$this->app->epan->id]))
+                ->field($q->expr('MAX([0]',[$field]))
+                ->getOne();
+        if($a <= $result) $this->fail('Value "{{arg1}}" is not maximum',$a);
     }
 
     function mb_str_to_lower($a)
