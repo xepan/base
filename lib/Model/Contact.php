@@ -61,8 +61,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		})->allowHTML(true);
 
 		$this->is([
-				'first_name|to_upper_words',
-				'last_name|to_upper_words'
+				'first_name|to_trim|to_upper_words',
+				'last_name|to_trim|to_upper_words'
 			]);
 
 	}
