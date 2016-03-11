@@ -70,6 +70,7 @@ class View_Document extends \View{
 			$fields = $form_fields;
 			$m = $this->form->setModel($model,$this->form_fields);
 
+			$view_fields = $view_fields?:$m->getActualFields();
 			/* Still NonEditable fields should show as on view mode */
 			$readonly_fields = array_diff($view_fields, $this->form_fields?:[]);
 
