@@ -30,29 +30,28 @@ class Model_User extends \xepan\base\Model_Table{
 
 		$this->addField('username');
 		$this->addField('password')->type('password');
-
 		$this->addField('type');
 		$this->addField('scope')->enum(['WebsiteUser','AdminUser','SuperUser'])->defaultValue('WebsiteUser');
 
 		$this->addField('status')->enum(['Active','Inactive'])->defaultValue('Active');
 		$this->addCondition('type','User');
 
-		$this->addHook('beforeSave',$this);
-		$this->addHook('beforeDelete',$this);
+		// $this->addHook('beforeSave',$this);
+		// $this->addHook('beforeDelete',$this);
 
 	}
 
-	function beforeSave($m){
+	// function beforeSave($m){
 		
-		$old_user=$this->add('xepan\base\Model_User');
+	// 	$old_user=$this->add('xepan\base\Model_User');
 		
-		if($this->loaded())
-			$old_user->addCondition('id','<>',$this->id);
-		$old_user->tryLoadAny();
+	// 	if($this->loaded())
+	// 		$old_user->addCondition('id','<>',$this->id);
+	// 	$old_user->tryLoadAny();
 
-		if($old_user['name'] == $this['name'])
-			throw $this->exception('User Name is Allready Taken');
-	}
+	// 	if($old_user['name'] == $this['name'])
+	// 		throw $this->exception('User Name is Allready Taken');
+	// }
 
 	function beforeDelete($m){}
 
