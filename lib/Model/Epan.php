@@ -31,9 +31,9 @@ class Model_Epan extends \Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContacts']);
 		$this->addHook('beforeDelete',[$this,'deleteUsers']);
 
-		$this->is([
-				'name|unique|to_trim|required'
-			]);
+		// $this->is([
+		// 		'name|unique|to_trim|required'
+		// 	]);
 	}
 
 	function addActivity($contact_id, $activity, $related_contact_id=null, $related_document_id=null, $details=null){
