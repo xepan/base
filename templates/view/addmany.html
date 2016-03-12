@@ -10,7 +10,8 @@
     <table style="width:100%" class="table user-list table-hover">{header}{cols}{col}{/}{/}{/}
       <tbody>{rows}{row}
         <tr data-id="{$id}" class="{$odd_even} xepan-hasmany-row">{cols}
-          <td>{$value}
+          <td style="position:relative;">
+            <p class="margin-reset padding-reset">{$value}</p>
             <div class="xepan-hover-button actions">
               {edit}{/}
               {delete}{/}
