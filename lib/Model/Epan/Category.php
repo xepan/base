@@ -18,20 +18,12 @@ class Model_Epan_Category extends \Model_Table{
 
 		$this->addField('name')->mandatory(true)->hint('Identification for Category');
 		$this->hasMany('Epan');
-	
-		$this->addHook('beforeSave',$this);
-		$this->addHook('beforeDelete',$this);
-	}
-
-	function beforeSave($m){
-		$epancat_old=$this->add('xepan\base\Model_Epan_Category');
 		
-		if($this->loaded())
-			$epancat_old->addCondition('id','<>',$this->id);
-		$epancat_old->tryLoadAny();
-
-		if($epancat_old['name'] == $this['name'])
-			throw $this->exception('Epan Name is Allready Exist');
+		$this->is([
+				'name|unique|to_trim|required'
+			]);
+		
+		$this->addHook('beforeDelete',$this);
 	}
 
 

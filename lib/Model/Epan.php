@@ -26,8 +26,14 @@ class Model_Epan extends \Model_Table{
 		$this->hasMany('xepan\base\Contact');
 		$this->hasMany('xepan\base\User',null,null,'Users');
 
-		$this->addHook('beforeSave',$this);
-		$this->addHook('beforeDelete',$this);
+		$this->addHook('beforeDelete',[$this,'deleteAllEmailSettings']);
+		$this->addHook('beforeDelete',[$this,'deleteInstallApplications']);
+		$this->addHook('beforeDelete',[$this,'deleteContacts']);
+		$this->addHook('beforeDelete',[$this,'deleteUsers']);
+
+		$this->is([
+				'name|unique|to_trim|required'
+			]);
 	}
 
 	function addActivity($contact_id, $activity, $related_contact_id=null, $related_document_id=null, $details=null){
@@ -42,26 +48,19 @@ class Model_Epan extends \Model_Table{
 		return $activity;
 	}
 
-	function beforeSave($m){
-		
-		$epan_old=$this->add('xepan\base\Model_Epan');
-		
-		if($this->loaded())
-			$epan_old->addCondition('id','<>',$this->id);
-		$epan_old->tryLoadAny();
-
-		if($epan_old['name'] == $this['name'])
-			throw $this->exception('Epan Name is Allready Exist');
+	function deleteEmailSettings(){
+		$this->ref('EmailSettings')->deleteAll();
 	}
 
+	function deleteInstallApplications(){
+		$this->ref('InstalledApplications')->deleteAll();
+	}
 
-	function beforeDelete($m){
-		$install_comp_count = $m->ref('InstalledApplications')->count()->getOne();
-		$email_setting_count = $m->ref('EmailSettings')->count()->getOne();
-		$contact_count = $m->ref('xepan\base\Contact')->count()->getOne();
-		$user_count = $m->ref('Users')->count()->getOne();
-		
-		if($install_comp_count or $email_setting_count or $contact_count or $user_count)
-			throw $this->exception('Cannot Delete,first delete InstalledApplications,EmailSettings, Contacts And Users');	
+	function deleteContacts(){
+		$this->ref('xepan\base\Contact')->deleteAll();
+	}
+
+	function deleteUsers(){
+		$this->ref('Users')->deleteAll();
 	}
 }

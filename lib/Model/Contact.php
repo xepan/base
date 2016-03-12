@@ -60,10 +60,31 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true);
 
+		$this->addHook('beforeDelete',[$this,'deleteContactEmails']);
+		$this->addHook('beforeDelete',[$this,'deleteContactPhones']);
+		$this->addHook('beforeDelete',[$this,'deleteContactRelations']);
+		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
+		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
+
 		$this->is([
 				'first_name|to_trim|to_upper_words',
 				'last_name|to_trim|to_upper_words'
 			]);
+	}
 
+	function deleteContactEmails(){
+		$this->ref('Emails')->deleteAll();
+	}
+	function deleteContactPhones(){
+		$this->ref('Phones')->deleteAll();
+	}
+	function deleteContactRelations(){
+		$this->ref('Relations')->deleteAll();
+	} 
+	function deleteContactIMs(){
+		$this->ref('IMs')->deleteAll();
+	}
+	function deleteContactEvents(){
+		$this->ref('Events')->deleteAll();
 	}
 }

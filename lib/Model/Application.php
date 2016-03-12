@@ -21,5 +21,9 @@ class Model_Application extends \Model_Table{
 		$this->addField('name')->mandatory(true)->hint('Identification of xEpan Application');
 
 		$this->hasMany('Epan_InstalledApplication',null,null,'Installations');
+
+		$this->is([
+				'name|unique|to_trim|required'
+			]);
 	}
 }
