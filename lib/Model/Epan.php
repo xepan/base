@@ -11,7 +11,7 @@
 
 namespace xepan\base;
 
-class Model_Epan extends \Model_Table{
+class Model_Epan extends \xepan\base\Model_Table{
 	public $table='epan';
 
 	function init(){

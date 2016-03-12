@@ -10,7 +10,7 @@
 
 namespace xepan\base;
 
-class Model_Epan_Category extends \Model_Table{
+class Model_Epan_Category extends \xepan\base\Model_Table{
 	public $table='epan_category';
 
 	function init(){
@@ -19,9 +19,9 @@ class Model_Epan_Category extends \Model_Table{
 		$this->addField('name')->mandatory(true)->hint('Identification for Category');
 		$this->hasMany('Epan');
 		
-		// $this->is([
-		// 		'name|unique|to_trim|required'
-		// 	]);
+		$this->is([
+				'name|unique|to_trim|required'
+			]);
 		
 		$this->addHook('beforeDelete',$this);
 	}
