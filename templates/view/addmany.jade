@@ -13,11 +13,11 @@
                 {rows}{row}
                 tr(class="{$odd_even} xepan-hasmany-row" data-id="{$id}")
                     {cols}
-                    td
-                      | {$value}
-                      div.xepan-hover-button.actions
-                        {edit}{/}
-                        {delete}{/}
+                    td(style="position:relative;")
+                        p.margin-reset.padding-reset {$value}
+                        div.xepan-hover-button.actions
+                            {edit}{/}
+                            {delete}{/}
                     {/}
                 {/}{/}
                 {not_found}
