@@ -12,7 +12,7 @@ class page_general_email extends \Page{
 
 		$email_view->setIdField('emailsetting_id');
 		$email_view->setModel($email_setting,[
-												'email_transport','encryption',
+												'email_transport','name','encryption',
 												'email_host','email_port',
 												'email_username','email_password',
 												'email_reply_to','email_reply_to_name',
@@ -28,7 +28,7 @@ class page_general_email extends \Page{
 												'email_body'
 											],
 											[
-												'email_transport','encryption',
+												'email_transport','name','encryption',
 												'email_host','email_port',
 												'email_username','email_password',
 												'email_reply_to','email_reply_to_name',

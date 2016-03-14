@@ -16,7 +16,6 @@ namespace xepan\base;
 class Model_Epan_EmailSetting extends Model_Table{
 
 	public $table='emailsetting';
-	public $title_field='email_id';
 
 	public $acl=false;
 
@@ -24,6 +23,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 		parent::init();
 		// TODO : add all required fields for email + can_use_in_mass_emails
 		$this->hasOne('xepan\base\Epan','epan_id');
+		$this->addField('name');
 		$this->addField('email_transport')->setValueList(array('SmtpTransport'=>'SMTP','SendmailTransport'=>'SendMail','MailTransport'=>'PHP Mail function'))->defaultValue('smtp');
 		$this->addField('is_support_email')->type('boolean')->defaultValue(false);
 
@@ -69,7 +69,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 
 		$this->addField('footer')->type('text');
 
-		$this->hasMany('xepan\hr\Email_Permission','emailsetting',null,'EmailPermissions');
+		$this->hasMany('xepan\hr\Post_Email_Association','emailsetting_id',null,'EmailAssociation');
 
 		// $this->is([
 		// 	'email_host|required'
