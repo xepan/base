@@ -38,7 +38,7 @@ class Menu_SideBar extends \Menu_Advanced{
         if ($action) {
             if (is_string($action) || is_array($action) || $action instanceof URL) {
                 $i->template->set('url',$url = $this->app->url($action));
-                if($url->isCurrent($this->highlight_subpages)){
+                if($url->isCurrent()){
                     $i->addClass('active');
                 }
             } else {
