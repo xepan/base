@@ -5,11 +5,13 @@ namespace xepan\base;
 class Controller_Tool_Optionhelper extends \AbstractController {
 
 	public $model=null;
+	public $options =null ;
 
 	function init(){
 		parent::init();
 
-		$this->options = $this->owner->options;
+		if(!$this->options)
+			$this->options = $this->owner->options;
 		
 		if(is_string($this->model))
 			throw $this->exception("Please specify model object not model string")
@@ -21,17 +23,7 @@ class Controller_Tool_Optionhelper extends \AbstractController {
 
 		if($this->model === null) throw $this->exception("Please specify model");
 
-		// Manage show options
-		foreach ($this->options as $opt=>$value) {
-			$opt = strtolower($opt);
-			if(strpos($opt, "show_")!==false){
-				$opt = str_replace('show_', '', $opt);				
-				if($value === false || $value ==='0' || $value === 'false' || $value ===null || $value ==='null' || $value==='undefined'){
-					$this->owner->template->tryDel($opt.'_wrapper');
-				} 
-			}
-		}
-
+		// Manage model condition
 		foreach ($this->options as $opt => $value) {
 			if($this->model->hasMethod('addToolCondition_'.$opt)){
 				$this->model->{'addToolCondition_'.$opt}($value, $this->owner);
@@ -42,5 +34,31 @@ class Controller_Tool_Optionhelper extends \AbstractController {
 				}
 			}
 		}
+
+		$cl_remove_list = [];
+
+		// Manage show options
+		foreach ($this->options as $opt=>$value) {
+			$opt = strtolower($opt);
+			if(strpos($opt, "show_")!==false){
+				$opt = str_replace('show_', '', $opt);				
+				if($value === false || $value ==='0' || $value === 'false' || $value ===null || $value ==='null' || $value==='undefined'){
+					if($this->owner instanceof \Lister){
+						$cl_remove_list[] = $opt.'_wrapper';
+					}else{
+						$this->owner->template->tryDel($opt.'_wrapper');
+					}
+				} 
+			}
+		}
+
+		if($this->owner instanceof \Lister){
+			$this->owner->addHook('formatRow',function($l)use($cl_remove_list){
+				foreach ($cl_remove_list as $rm) {
+					$l->current_row_html[$rm]="";
+				}
+			});
+		}
+
 	}
 }
