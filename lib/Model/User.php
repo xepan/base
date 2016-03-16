@@ -32,12 +32,12 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addField('password')->type('password');
 		$this->addField('type');
 		$this->addField('scope')->enum(['WebsiteUser','AdminUser','SuperUser'])->defaultValue('WebsiteUser');
-
+		$this->addField('hash');
 		$this->addField('status')->enum(['Active','Inactive'])->defaultValue('Active');
 		$this->addCondition('type','User');
-
+		$this->hasMany('xepan\hr\Employee','user_id',null,'Employees');
 		$this->is([
-				'username|unique|to_trim|required'
+				'username|unique|to_trim|required|email'
 			]);
 
 	}
