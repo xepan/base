@@ -14,10 +14,10 @@
                     {form_layout}
                     .input-group
                       i.fa.fa-user
-                      {$username}
+                      .atk-form-row.atk-form-field{$username}
                     .input-group
                       i.fa.fa-key
-                      {$password}
+                      .atk-form-row.atk-form-field{$password}
                     #remember-me-wrapper
                       .row
                         .col-xs-6
@@ -25,7 +25,7 @@
                             input#remember-me(type='checkbox', checked='checked')
                             label(for='remember-me')
                               | Remember me
-                        a#login-forget-link.col-xs-6(href='forgot-password-full.html')
+                        a#login-forget-link.col-xs-6(href='?page=xepan_base_forgotpassword')
                           | Forgot password?
                     .row
                       .col-xs-12

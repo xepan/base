@@ -13,8 +13,12 @@
                 <div id="login-box-inner">
                   {Content}
                   {form_layout}
-                  <div class="input-group"><i class="fa fa-user"></i>{$username}</div>
-                  <div class="input-group"><i class="fa fa-key"></i>{$password}</div>
+                  <div class="input-group"><i class="fa fa-user"></i>
+                    <div class="atk-form-row atk-form-field">{$username}</div>
+                  </div>
+                  <div class="input-group"><i class="fa fa-key"></i>
+                    <div class="atk-form-row atk-form-field">{$password}</div>
+                  </div>
                   <div id="remember-me-wrapper">
                     <div class="row">
                       <div class="col-xs-6">
@@ -22,7 +26,7 @@
                           <input id="remember-me" type="checkbox" checked="checked"/>
                           <label for="remember-me">Remember me</label>
                         </div>
-                      </div><a id="login-forget-link" href="forgot-password-full.html" class="col-xs-6">Forgot password?</a>
+                      </div><a id="login-forget-link" href="?page=xepan_base_forgotpassword" class="col-xs-6">Forgot password?</a>
                     </div>
                   </div>
                   <div class="row">
