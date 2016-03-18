@@ -24,6 +24,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan');
+		$this->hasOne('xepan\base\User',null,'username');
+
 		$this->addField('type');
 		
 		$this->addField('first_name');
@@ -87,4 +89,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 	function deleteContactEvents(){
 		$this->ref('Events')->deleteAll();
 	}
+
+	//load Logged In check for the user of contact loaded or not, 
+	//mainly used  for online contact account
+	function loadLoggedIn(){
+		if($this->loaded()) $this->unload();
+		if(!$this->api->auth->isLoggedIn()) return false;
+		
+		$this->addCondition('users_id',$this->api->auth->model->id);
+		$this->tryLoadAny();
+		if(!$this->loaded()) return false;
+		return true;
+	}
+
 }
