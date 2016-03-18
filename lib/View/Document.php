@@ -35,10 +35,10 @@ class View_Document extends \View{
 		parent::init();
 
 
-		if($this->action == 'view')
+		if($this->action == 'view'){
 			$this->form = new \Dummy();
-		$this->effective_template=$this->template;
-		else{
+			$this->effective_template=$this->template;
+		}else{
 			$ot = clone $this->template;
 			$this->template->loadTemplateFromString('{$Content}');
 			$this->form = $this->add('Form');
