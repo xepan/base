@@ -29,17 +29,21 @@ class View_Document extends \View{
 	public $id_field_on_reload=null;
 	public $submit_button="Save";
 
+	public $effective_template=null;
+
 	function init(){
 		parent::init();
 
 
-		if($this->action == 'view')
+		if($this->action == 'view'){
 			$this->form = new \Dummy();
-		else{
+			$this->effective_template=$this->template;
+		}else{
 			$ot = clone $this->template;
 			$this->template->loadTemplateFromString('{$Content}');
 			$this->form = $this->add('Form');
 			$this->form->setLayout($ot);
+			$this->effective_template = $this->form->layout->template;
 			if($this->submit_button)
 				$this->form->addSubmit($this->submit_button);
 		}

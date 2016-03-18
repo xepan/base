@@ -12,9 +12,16 @@
 namespace xepan\base;
 
 class Grid extends \Grid{
-	public $row_edit=true;
+	
+    public $row_edit=true;
 	public $row_delete=true;
     public $defaultTemplate = null;
+
+    public $sort_icons = array(
+        ' fa fa-sort',
+        ' fa fa-sort-asc',
+        ' fa  fa-sort-desc'
+    );
 
     function defaultTemplate(){
         if($this->defaultTemplate) return $this->defaultTemplate;
@@ -22,7 +29,23 @@ class Grid extends \Grid{
     }
 	
 	function precacheTemplate(){
-		if($this->template->template_file != 'grid') return;
+		if($this->template->template_file != 'grid'){
+            foreach ($this->columns as $name => $column) {
+                if (isset($column['sortable'])) {
+                    $s = $column['sortable'];
+                    $temp_template= $this->add('GiTemplate')
+                        ->loadTemplateFromString('<span class="{$sorticon}">');
+                    $temp_template->trySet('order', $s[0])
+                        ->trySet('sorticon', $this->sort_icons[$s[0]]);
+                    $this->template
+                        ->trySet($name.'_sortid', $sel = $this->name.'_sort_'.$name)
+                        ->trySetHTML($name.'_sort', $temp_template->render());
+
+                    $this->js('click', $this->js()->reload(array($this->name.'_sort'=>$s[1])))
+                        ->_selector('#'.$sel);
+                }
+            }  
+        } return;
 		return parent::precacheTemplate();
 	}
 

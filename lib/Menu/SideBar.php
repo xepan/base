@@ -32,7 +32,6 @@ class Menu_SideBar extends \Menu_Advanced{
                     ->set($title['badge']);
                 unset($title['badge']);
             }
-
         }
 
         if ($action) {
