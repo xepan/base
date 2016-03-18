@@ -12,7 +12,7 @@
 namespace xepan\base;
 
 
-class Model_Document_Attachment extends Model_Table{
+class Model_Document_Attachment extends \xepan\base\Model_Table{
 	
 	public $table='attachment';
 	public $acl = false;
