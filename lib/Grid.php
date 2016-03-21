@@ -45,7 +45,8 @@ class Grid extends \Grid{
                         ->_selector('#'.$sel);
                 }
             }  
-        } return;
+            return;
+        }
 		return parent::precacheTemplate();
 	}
 
