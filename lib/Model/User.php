@@ -35,7 +35,7 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addField('hash');
 		$this->addField('status')->enum(['Active','Inactive'])->defaultValue('Active');
 		$this->addCondition('type','User');
-		$this->hasMany('xepan\hr\Employee','user_id',null,'Employees');
+		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
 		$this->is([
 				'username|unique|to_trim|required|email'
 			]);
@@ -45,4 +45,17 @@ class Model_User extends \xepan\base\Model_Table{
 	function isSuperUser(){
 		return $this['scope']=='SuperUser';
 	}
+
+	// function createNewCustomer($first_name,$last_name,$email){
+	// 	$customer=$this->add('xepan\commerce\Model_Customer');
+	// 	$customer['epan_id']=$this->app->auth->model->ref('epan_id')->id;
+	// 	$customer['user_id']=$this->id;
+	// 	$customer['first_name']=$first_name;
+	// 	$customer['last_name']=$last_name;
+	// 	$customer->save();
+	// 	$email_model=$customer->ref('Emails');
+	// 	$email_model['head']='Official';
+	// 	$email_model['value']=$email;
+	// 	$email_model->save();
+	// }
 }

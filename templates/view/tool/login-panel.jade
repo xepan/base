@@ -1,0 +1,52 @@
+#login-full-wrapper
+  .container
+    .row
+      .col-xs-12
+        #login-box
+          #login-box-holder
+            .row
+              .col-xs-12
+                header#login-header
+                  #login-logo
+                    img(src='img/logo.png', alt='')
+                #login-box-inner
+                    {Content}
+                    {form_layout}
+                    .input-group
+                      i.fa.fa-user
+                      .atk-form-row.atk-form-field{$username}
+                    .input-group
+                      i.fa.fa-key
+                      .atk-form-row.atk-form-field{$password}
+                    #remember-me-wrapper
+                      .row
+                        .col-xs-6
+                          .checkbox-nice
+                            input#remember-me(type='checkbox', checked='checked')
+                            label(for='remember-me')
+                              | Remember me
+                        a#login-forget-link.col-xs-6(href='?page=forgotpassword.html')
+                          | Forgot password?
+                    .row
+                      .col-xs-12
+                        button.btn.btn-success.col-xs-12(type='submit') Login
+                    .row
+                      .col-xs-12
+                        p.social-text Or login with
+                    .row
+                      .col-xs-12.col-sm-6
+                        button.btn.btn-primary.col-xs-12.btn-facebook(type='submit')
+                          i.fa.fa-facebook
+                          |  facebook
+                      .col-xs-12.col-sm-6
+                        button.btn.btn-primary.col-xs-12.btn-twitter(type='submit')
+                          i.fa.fa-twitter
+                          |  Twitter
+                    {/}
+                    {/}
+          #login-box-footer
+            .row
+              .col-xs-12
+                | Do not have an account?
+                a(href='xepan_base_tool_frontendregistration')
+                  | Register now

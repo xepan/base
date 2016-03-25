@@ -1,36 +1,37 @@
 <?php
 namespace xepan\base;
 
-class Model_Mail_ResetPassword extends \xepan\base\Model_Mail_Content{
+class Model_Mail_Registration extends \xepan\base\Model_Mail_Content{
 	function init(){
 		parent::init();
 
-		$this->addCondition('type','ResetPassword');
+		$this->addCondition('type','Registration');
 	}
 
-	function sendResetPasswordMail($email=null){
-		// $employee=$this->add('xepan\hr\Model_Employee')->load($this->app->employee->id);
-		// $employee_email=$employee->ref('Emails')->setLimit(1)->fieldQuery('value');
+	function sendWelcomeMail($email=null){
 		$user=$this->add('xepan\base\Model_User');
 		$user->addCondition('username',$email);
 		$user->tryLoadAny();
-		if(!$user->loaded()) throw new \Exception("User Must Loaded", 1);
 		
 		$username=$user['username'];
 		if($email != $username){
 			throw new \Exception("This Email Id  not Ragister", 1);
 		}
+		if(!$user->loaded()) throw new \Exception("User Must Loaded", 1);
+
+		$contact=$user->ref('Contacts');
+
 
 		$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadAny();
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
-		$reset_pass=$this->add('xepan\base\Model_Mail_ResetPassword');
-		$reset_pass->tryLoadAny();
-		$email_body=$reset_pass['body'];
+		$reg_model=$this->add('xepan\base\Model_Mail_Registration');
+		$reg_model->tryLoadAny();
+		$email_body=$reg_model['body'];
 
 		// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
 		$temp=$this->add('GiTemplate')->loadTemplateFromString($email_body);
-		$url=$this->api->url('xepan_base_resetpassword',
+		$url=$this->api->url('xepan_base_registration',
 										[
 										'secret_code'=>$user['hash'],
 										'activate_email'=>$email
@@ -39,13 +40,16 @@ class Model_Mail_ResetPassword extends \xepan\base\Model_Mail_Content{
 
 		$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
 	
-		$temp->setHTML('name',$user['name']);
+		$temp->setHTML('name',$contact['name']);
+		$temp->setHTML('username',$user['username']);
+		$temp->setHTML('password',$user['password']);
+		// $temp->setHTML('email_id',$user['username']);
 		$temp->setHTML('click_here_to_activate',$tag_url);
 		// echo $temp->render();
 		// exit;		
 		$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 		$mail->addTo($email);
-		$mail->setSubject($reset_pass['subject']);
+		$mail->setSubject($reg_model['subject']);
 		$mail->setBody($temp->render());
 		$mail->send($email_settings);
 	}

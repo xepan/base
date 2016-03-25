@@ -7,12 +7,14 @@
             a(data-toggle='tab', href='#tab-general_setting') Emails Setting
           li
             a(data-toggle='tab', href='#reset-password') Reset Password Mail Content
-          //- li
-          //-   a(data-toggle='tab', href='#tab-chat') Personal
+          li
+            a(data-toggle='tab', href='#registration') Registration Mail Content
         .tab-content
           #tab-general_setting.tab-pane.fade.in.active
             {general_setting}Please Save Basic Information First{/}
            #reset-password.tab-pane.fade
             {$reset_email}
+           #registration.tab-pane.fade
+            {$registration_view}
           //- #tab-chat.tab-pane.fade
           //-   {$personal_info}                       
