@@ -30,6 +30,8 @@ class Tool_ResetPassword extends \xepan\cms\View_Tool{
 			}
 			$user['password']=$f['password'];
 			$user->save();
+			$update_pass_model=$this->add('xepan\base\Model_Mail_UpdatePassword');
+			$update_pass_model->updatePassword($f['email']);
 			
 			return $f->js()->univ()->successMessage('Password  SuccessFully Change');
 		});

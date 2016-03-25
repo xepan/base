@@ -1,10 +1,10 @@
 <?php
 namespace xepan\base;
-class page_resetpassword extends \Page{
-	public $title="Reset Password";
+class page_registration extends \Page{
+	public $title="Verify Email";
 	function init(){
 		parent::init();
-		$this->add('xepan\base\Tool_ResetPassword');
+		$this->add('xepan\base\Tool_Registration');
 		// $secret_code=$this->app->stickyGET('secret_code');
 		// $activate_email=$this->app->stickyGET('activate_email');
 		// $user=$this->add('xepan\base\Model_User');	
@@ -32,7 +32,7 @@ class page_resetpassword extends \Page{
 		// 	$user['password']=$f['password'];
 		// 	$user->save();
 			
-		// 	return $f->js()->univ()->successMessage('Password  SuccessFully Change');
+		// 	return $f->js()->univ()->successMessage('Verification  SuccessFully Change');
 		// });
 
 	}

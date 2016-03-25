@@ -35,6 +35,31 @@ class page_generalsetting extends \Page{
 			$form->update();
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
+		/*Verification Email Content*/
+		$verification=$this->add('xepan\base\Model_Mail_Verification');
+		$verification->addCondition('epan_id',$this->app->auth->model['epan_id']);
+		$verification->tryLoadAny();
+		$form=$this->add('Form',null,'verification_view');
+		$form->setModel($verification);
+		$form->addSubmit();
+
+		if($form->isSubmitted()){
+			$form->update();
+			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
+		}
+
+		/*Update Password Email Content*/
+		$update_pass=$this->add('xepan\base\Model_Mail_UpdatePassword');
+		$update_pass->addCondition('epan_id',$this->app->auth->model['epan_id']);
+		$update_pass->tryLoadAny();
+		$form=$this->add('Form',null,'updatepassword_view');
+		$form->setModel($update_pass);
+		$form->addSubmit();
+
+		if($form->isSubmitted()){
+			$form->update();
+			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
+		}
 	}
 	
 	function defaultTemplate(){
