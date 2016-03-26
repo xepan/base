@@ -3,6 +3,8 @@
 namespace xepan\base;
 use Carbon\Carbon;
 
+use Carbon\Carbon;
+
 class xDate extends \AbstractController{
 	public $default_date_start = '1970-01-01 00:00:00';
 	public $default_date_end = '1970-01-01 00:00:00';
@@ -34,6 +36,7 @@ class xDate extends \AbstractController{
 	function getHour($ondate){
 		return (Carbon::createFromFormat("Y-m-d H:i:s",$ondate)->format('H'));
 	}
+	
 	function getMinute($ondate){
 		return (Carbon::createFromFormat("Y-m-d H:i:s",$ondate)->format('i'));
 	}
