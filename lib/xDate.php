@@ -1,6 +1,7 @@
 <?php
 
 namespace xepan\base;
+use Carbon\Carbon;
 
 class xDate extends \AbstractController{
 	public $default_date_start = '1970-01-01 00:00:00';
