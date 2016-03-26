@@ -1,11 +1,11 @@
 <?php
 namespace xepan\base;
 
-class Model_Mail_Registration extends \xepan\base\Model_Mail_Content{
+class Model_Mail_Registration extends \xepan\base\Model_Epan_Configuration{
 	function init(){
 		parent::init();
 
-		$this->addCondition('type','Registration');
+		$this->addCondition('application','base');
 	}
 
 	function sendWelcomeMail($email=null){
@@ -26,8 +26,8 @@ class Model_Mail_Registration extends \xepan\base\Model_Mail_Content{
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reg_model=$this->add('xepan\base\Model_Mail_Registration');
-		$reg_model->tryLoadAny();
-		$email_body=$reg_model['body'];
+		$email_subject=$reg_model->getConfig('RegistrationSubject');
+		$email_body=$reg_model->getConfig('RegistrationBody');
 
 		// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
 		$temp=$this->add('GiTemplate')->loadTemplateFromString($email_body);
@@ -49,7 +49,7 @@ class Model_Mail_Registration extends \xepan\base\Model_Mail_Content{
 		// exit;		
 		$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 		$mail->addTo($email);
-		$mail->setSubject($reg_model['subject']);
+		$mail->setSubject($email_subject);
 		$mail->setBody($temp->render());
 		$mail->send($email_settings);
 	}

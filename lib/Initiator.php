@@ -37,6 +37,7 @@ class Initiator extends \Controller_Addon {
                         $auth->check();
 
                         $this->app->epan = $auth->model->ref('epan_id');
+                        $this->app->epan->config = $this->app->epan->ref('Configurations');
                         
                         $this->app->jui->addStaticInclude('xepan_jui');
                         $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);

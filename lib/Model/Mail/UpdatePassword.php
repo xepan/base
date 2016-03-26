@@ -1,10 +1,10 @@
 <?php
 namespace xepan\base;
-class Model_Mail_UpdatePassword extends \xepan\base\Model_Mail_Content{
+class Model_Mail_UpdatePassword extends \xepan\base\Model_Epan_Configuration{
 	function init(){
 		parent::init();
 
-		$this->addCondition('type','UpdatePassword');
+		$this->addCondition('application','base');
 	}
 
 	function updatePassword($email){
@@ -21,13 +21,13 @@ class Model_Mail_UpdatePassword extends \xepan\base\Model_Mail_Content{
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reg_model=$this->add('xepan\base\Model_Mail_UpdatePassword');
-		$reg_model->tryLoadAny();
-		$email_body=$reg_model['body'];
+		$email_subject=$reg_model->getConfig('UpdatePasswordSubject');
+		$email_body=$reg_model->getConfig('UpdatePasswordBody');
 		// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
 		$temp=$this->add('GiTemplate')->loadTemplateFromString($email_body);
 		$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 		$mail->addTo($email);
-		$mail->setSubject($reg_model['subject']);
+		$mail->setSubject($email_subject);
 		$mail->setBody($temp->render());
 		$mail->send($email_settings);
 	}
