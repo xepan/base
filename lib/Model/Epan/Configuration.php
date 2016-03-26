@@ -12,7 +12,7 @@
 namespace xepan\base;
 
 class Model_Epan_Configuration extends \xepan\base\Model_Table{
-	public $table='mail_content';
+	public $table='epan_config';
 	public $acl=false;
 
 	function init(){
@@ -23,7 +23,7 @@ class Model_Epan_Configuration extends \xepan\base\Model_Table{
 		$this->addField('head');		
 		$this->addField('value')->type('text')->display(['form'=>'xepan\base\RichText']);
 
-		$this->addField('app');
+		$this->addField('application');
 
 	}
 
@@ -31,7 +31,7 @@ class Model_Epan_Configuration extends \xepan\base\Model_Table{
 		$config=$this->add('xepan\base\Model_Epan_Configuration');
 		$config->addCondition('head',$head);
 		if($app)
-			$config->addCondition('app',$app);
+			$config->addCondition('application',$app);
 
 		$config->tryLoadAny();
 		return $config['value'];
@@ -40,7 +40,7 @@ class Model_Epan_Configuration extends \xepan\base\Model_Table{
 	function setConfig($head,$value,$app){
 		$config=$this->add('xepan\base\Model_Epan_Configuration');
 		$config->addCondition('head',$head);
-		$config->addCondition('app',$app);
+		$config->addCondition('application',$app);
 		$config->tryLoadAny();
 
 		$config['value'] = $value;

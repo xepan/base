@@ -4,7 +4,7 @@ class Model_Mail_UpdatePassword extends \xepan\base\Model_Epan_Configuration{
 	function init(){
 		parent::init();
 
-		$this->addCondition('app','base');
+		$this->addCondition('application','base');
 	}
 
 	function updatePassword($email){

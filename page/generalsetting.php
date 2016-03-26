@@ -12,24 +12,24 @@ class page_generalsetting extends \Page{
 		// $this->add('xepan\base\View_Emails',null,'email');
 		/*Reset Password Email Content*/
 		$resetpass_config = $this->app->epan->config;
-		$reset_subject = $resetpass_config->getConfig('ResetPasswordSubject');
-		$reset_body = $resetpass_config->getConfig('ResetPasswordBody');
+		$reset_subject = $resetpass_config->getConfig('RESET_PASSWORD_SUBJECT');
+		$reset_body = $resetpass_config->getConfig('RESET_PASSWORD_BODY');
 		$form=$this->add('Form',null,'reset_email');
 		$form->addField('line','subject')->set($reset_subject);
 		$form->addField('xepan\base\RichText','subject')->set($reset_body);
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
-			$resetpass_config->setConfig('ResetPasswordSubject',$form['subject'],'base');
+			$resetpass_config->setConfig('RESET_PASSWORD_SUBJECT',$form['subject'],'base');
 
-			$registration_config->setConfig('ResetPasswordBody',$form['Body'],'base');
+			$registration_config->setConfig('RESET_PASSWORD_BODY',$form['Body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
 
 		/*Registration Email Content*/
 		$registration_config = $this->app->epan->config;
-		$reg_subject = $registration_config->getConfig('RegistrationSubject','base');
-		$reg_body = $registration_config->getConfig('RegistrationBody','base');
+		$reg_subject = $registration_config->getConfig('REGISTRATION_SUBJECT','base');
+		$reg_body = $registration_config->getConfig('REGISTRATION_BODY','base');
 		
 		$form=$this->add('Form',null,'registration_view');
 		$form->addField('line','subject')->set($reg_subject);
@@ -37,41 +37,41 @@ class page_generalsetting extends \Page{
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
-			$registration_config->setConfig('RegistrationSubject',$form['subject'],'base');
+			$registration_config->setConfig('REGISTRATION_SUBJECT',$form['subject'],'base');
 
-			$registration_config->setConfig('RegistrationBody',$form['Body'],'base');
+			$registration_config->setConfig('REGISTRATION_BODY',$form['Body'],'base');
 
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
 		/*Verification Email Content*/
 		$verify_config = $this->app->epan->config;
-		$verify_subject = $verify_config->getConfig('VerificationEmailSubject');
-		$verify_body = $verify_config->getConfig('VerificationEmailBody');
+		$verify_subject = $verify_config->getConfig('VERIFICATIONE_MAIL_SUBJECT');
+		$verify_body = $verify_config->getConfig('VERIFICATIONE_MAIL_BODY');
 		$form=$this->add('Form',null,'verification_view');
 		$form->addField('line','subject')->set($verify_subject);
 		$form->addField('xepan\base\RichText','subject')->set($verify_body);
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
-			$verify_config->setConfig('VerificationEmailSubject',$form['subject'],'base');
+			$verify_config->setConfig('VERIFICATIONE_MAIL_SUBJECT',$form['subject'],'base');
 
-			$verify_config->setConfig('VerificationEmailBody',$form['Body'],'base');
+			$verify_config->setConfig('VERIFICATIONE_MAIL_BODY',$form['Body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
 
 		/*Update Password Email Content*/
 		$update_config = $this->app->epan->config;
-		$update_subject = $update_config->getConfig('UpdatePasswordSubject');
-		$update_body = $update_config->getConfig('UpdatePasswordBody');
+		$update_subject = $update_config->getConfig('UPDATE_PASSWORD_SUBJECT');
+		$update_body = $update_config->getConfig('UPDATE_PASSWORD_BODY');
 		$form=$this->add('Form',null,'updatepassword_view');
 		$form->addField('line','subject')->set($update_subject);
 		$form->addField('xepan\base\RichText','subject')->set($update_body);
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
-			$update_config->setConfig('UpdatePasswordSubject',$form['subject'],'base');
+			$update_config->setConfig('UPDATE_PASSWORD_SUBJECT',$form['subject'],'base');
 
-			$update_config->setConfig('UpdatePasswordBody',$form['Body'],'base');
+			$update_config->setConfig('UPDATE_PASSWORD_BODY',$form['Body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
 	}
