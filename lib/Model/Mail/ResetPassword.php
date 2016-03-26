@@ -1,11 +1,11 @@
 <?php
 namespace xepan\base;
 
-class Model_Mail_ResetPassword extends \xepan\base\Model_Mail_Content{
+class Model_Mail_ResetPassword extends \xepan\base\Model_Epan_Configuration{
 	function init(){
 		parent::init();
 
-		$this->addCondition('type','ResetPassword');
+		$this->addCondition('app','base');
 	}
 
 	function sendResetPasswordMail($email=null){

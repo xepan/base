@@ -25,6 +25,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		
 		$this->hasMany('xepan\base\Contact');
 		$this->hasMany('xepan\base\User',null,null,'Users');
+		$this->hasMany('xepan\base\Epan_Configuration',null,null,'Configurations');
 
 		$this->addHook('beforeDelete',[$this,'deleteAllEmailSettings']);
 		$this->addHook('beforeDelete',[$this,'deleteInstallApplications']);

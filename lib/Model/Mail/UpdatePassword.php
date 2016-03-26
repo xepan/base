@@ -1,10 +1,10 @@
 <?php
 namespace xepan\base;
-class Model_Mail_UpdatePassword extends \xepan\base\Model_Mail_Content{
+class Model_Mail_UpdatePassword extends \xepan\base\Model_Epan_Configuration{
 	function init(){
 		parent::init();
 
-		$this->addCondition('type','UpdatePassword');
+		$this->addCondition('app','base');
 	}
 
 	function updatePassword($email){
