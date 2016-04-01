@@ -42,7 +42,7 @@ class Initiator extends \Controller_Addon {
                         $this->app->jui->addStaticInclude('xepan_jui');
                         $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
                 }else{
-                        $this->routePages('xepan_');
+                        $this->routePages('xepan_base');
                         $this->addLocation(array('template'=>'templates','js'=>'js'))
                         ->setBaseURL('./vendor/xepan/base/')
                         ;
