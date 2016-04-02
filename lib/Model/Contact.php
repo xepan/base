@@ -41,6 +41,9 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('organization');
 		$this->addField('post')->caption('Post');
 		$this->addField('website');
+		
+		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
+		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
 		$this->add('filestore/Field_Image','image_id')->allowHTML(true);
 
@@ -61,6 +64,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 			$x = $m->add('xepan\base\Model_Contact_Phone',['table_alias'=>'contacts_str']);
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true);
+
+		$this->addHook('beforeSave',function($m){$m['updated_at']=$this->app->now;});
 
 		$this->addHook('beforeDelete',[$this,'deleteContactEmails']);
 		$this->addHook('beforeDelete',[$this,'deleteContactPhones']);
@@ -100,6 +105,13 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->tryLoadAny();
 		if(!$this->loaded()) return false;
 		return true;
+	}
+
+
+	function getEmails(){
+		$emails = $this->ref('Emails')
+								->_dsql()->del('fields')->field('value')->getAll();
+		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
 	}
 
 }
