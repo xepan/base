@@ -45,8 +45,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
-		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
-		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
+		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
+		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
 		$this->add('filestore/Field_Image','image_id')->allowHTML(true);
 

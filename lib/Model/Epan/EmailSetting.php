@@ -69,6 +69,8 @@ class Model_Epan_EmailSetting extends Model_Table{
 
 		$this->addField('footer')->type('text');
 
+		$this->addField('mass_mail')->caption('Use For Mass Mailing')->type('boolean');
+		
 		$this->hasMany('xepan\hr\Post_Email_Association','emailsetting_id',null,'EmailAssociation');
 
 		// $this->is([
