@@ -45,6 +45,9 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
+		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
+		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
+
 		$this->add('filestore/Field_Image','image_id')->allowHTML(true);
 
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]));
@@ -72,6 +75,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContactRelations']);
 		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
+
+		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
 
 		$this->is([
 				'first_name|to_trim|to_upper_words',
