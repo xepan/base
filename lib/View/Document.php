@@ -41,7 +41,7 @@ class View_Document extends \View{
 		}else{
 			$ot = clone $this->template;
 			$this->template->loadTemplateFromString('{$Content}');
-			$this->form = $this->add('Form');
+			$this->form = $this->add('Form',null,null,null,true);
 			$this->form->setLayout($ot);
 			$this->effective_template = $this->form->layout->template;
 			if($this->submit_button)
@@ -49,8 +49,8 @@ class View_Document extends \View{
 		}
 	}
 
-	function add($class,$options=null,$spot=null,$template=null){
-		if($class instanceof \AbstractView && $this->form instanceof \Form){
+	function add($class,$options=null,$spot=null,$template=null,$isMyform=false){
+		if(!$isMyform && $this->form instanceof \Form){
 			return $this->form->layout->add($class,$options,$spot,$template);
 		}
 
