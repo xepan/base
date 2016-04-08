@@ -49,7 +49,7 @@ class page_generalsetting extends \Page{
 		$verify_body = $verify_config->getConfig('VERIFICATIONE_MAIL_BODY');
 		$form=$this->add('Form',null,'verification_view');
 		$form->addField('line','subject')->set($verify_subject);
-		$form->addField('xepan\base\RichText','subject')->set($verify_body);
+		$form->addField('xepan\base\RichText','body')->set($verify_body);
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
@@ -65,7 +65,7 @@ class page_generalsetting extends \Page{
 		$update_body = $update_config->getConfig('UPDATE_PASSWORD_BODY');
 		$form=$this->add('Form',null,'updatepassword_view');
 		$form->addField('line','subject')->set($update_subject);
-		$form->addField('xepan\base\RichText','subject')->set($update_body);
+		$form->addField('xepan\base\RichText','body')->set($update_body);
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
@@ -74,6 +74,7 @@ class page_generalsetting extends \Page{
 			$update_config->setConfig('UPDATE_PASSWORD_BODY',$form['Body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
+
 	}
 	
 	function defaultTemplate(){
