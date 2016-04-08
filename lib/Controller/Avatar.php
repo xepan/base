@@ -14,7 +14,8 @@ namespace xepan\base;
 class Controller_Avatar extends \AbstractController{
 
 	public $name_field = 'name';
-	public $options = [
+	public $default_value = '';
+	public $_options = [
 			"border"=> [
 				'color'=> '#ddd',
 				'width'=> 3
@@ -26,46 +27,78 @@ class Controller_Avatar extends \AbstractController{
 			'middlename'=> false,
 			'uppercase'=> true
 		];
-
+	public $options=[];
 	function init(){
 		parent::init();
+		
 
-		if($this->owner instanceof \Lister){
-			$grid = $this->owner;
-		}elseif($this->owner instanceof \CRUD){
-			$grid= $this->owner->grid;
-		}else{
-			throw new \Exception($this->owner, 1);
-			
-		}
+		$this->_options = $this->options + $this->_options;
 
-		$style = "
-				color: ".$this->options['text'].";
-				border: ".$this->options['border']['width'] ."px solid ". $this->options['border']['color'].";
+		$this->style = $style = "
+				color: ".$this->_options['text'].";
+				border: ".$this->_options['border']['width'] ."px solid ". $this->_options['border']['color'].";
 				display: inline-block;
 				font-family: Arial,Helvetica Neue, Helvetica, sans-serif;
-				font-size: ". $this->options['size'] * 0.35 ."px;
-				border-radius: ".$this->options['size']."px;
-				width: ".$this->options['size']."px;
-				max-width: ".$this->options['size']."px;
-				height: ".$this->options['size']."px;
-				line-height: ".$this->options['size']."px;
-				margin: ".$this->options['margin']."px;
+				font-size: ". $this->_options['size'] * 0.35 ."px;
+				border-radius: ".$this->_options['size']."px;
+				width: ".$this->_options['size']."px;
+				max-width: ".$this->_options['size']."px;
+				height: ".$this->_options['size']."px;
+				line-height: ".$this->_options['size']."px;
+				margin: ".$this->_options['margin']."px;
 				text-align: center;
-				text-transform : ".($this->options['uppercase'] ? "uppercase" : "").";";
+				text-transform : ".($this->_options['uppercase'] ? "uppercase" : "").";";
+		
+		$this->style = $style= preg_replace("/[\n\t]/", "", $style);
 
-		$style= preg_replace("/[\n\t]/", "", $style);
+		if($this->owner instanceof \Lister){
+			$obj = $this->owner;
+			$this->manageLister($obj);
+		}elseif($this->owner instanceof \CRUD){
+			$obj= $this->owner->grid;
+			$this->manageLister($obj);
+		}else{
+			$obj = $this->owner;			
+			$this->manageView($obj);
+		}
+	}
 
-		$grid->addHook('formatRow',function($g)use($style){			
+	function manageLister($obj){
+		$style= $this->style;
+		$obj->addHook('formatRow',function($g)use($style){			
 			if(!$g->model['image']){
 				$initials= trim($g->model[$this->name_field]);
 				preg_match_all("/[A-Z]/", ucwords(strtolower($initials)), $initials);
-				if(!$this->options['middlename'] && count($initials[0])>2)
+				if(!$this->_options['middlename'] && count($initials[0])>2)
 					$initials=[[$initials[0][0],$initials[0][count($initials[0])-1]]];
 				$initials = implode("", $initials[0]);
-				$style .= "background-color: ".$this->options['colors'][rand(0,count($this->options['colors'])-1)].";";
+				if(strlen($initials)>0)
+					$style .= "background-color: ".$this->_options['colors'][rand(0,count($this->_options['colors'])-1)].";";
+				else{
+					$style .= "background-color: lightgray;";
+					$initials = $this->default_value;
+				}
 				$g->current_row_html['avatar']= "<div class='namebadge' style=\"position:relative; float:left; ".$style."\">".$initials."</div>";
 			} 
 		});
+
+	}
+
+	function manageView($obj){		
+		$style= $this->style;
+		if(!$obj->model['image']){
+			$initials= trim($obj->model[$this->name_field]);
+			preg_match_all("/[A-Z]/", ucwords(strtolower($initials)), $initials);
+			if(!$this->_options['middlename'] && count($initials[0])>2)
+				$initials=[[$initials[0][0],$initials[0][count($initials[0])-1]]];
+			$initials = implode("", $initials[0]);
+			if(strlen($initials)>0)
+				$style .= "background-color: ".$this->_options['colors'][rand(0,count($this->_options['colors'])-1)].";";
+			else{
+				$style .= "background-color: lightgray;";
+				$initials = $this->default_value;
+			}
+			$obj->template->trySetHTML('avatar',"<div class='namebadge' style=\"position:relative; float:left; ".$style."\">".$initials."</div>");
+		} 
 	}
 }
