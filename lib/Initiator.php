@@ -47,7 +47,9 @@ class Initiator extends \Controller_Addon {
                         ->setBaseURL('./vendor/xepan/base/')
                         ;
 
-
+                        $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadAny();
+                        $this->app->epan->config = $this->app->epan->ref('Configurations')->tryLoadAny();
+                        
                         $this->app->today = date('Y-m-d');
                         $this->app->now   = date('Y-m-d H:i:s');
 
