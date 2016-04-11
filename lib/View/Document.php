@@ -31,6 +31,8 @@ class View_Document extends \View{
 
 	public $effective_template=null;
 
+	public $add_on_view=false;
+
 	function init(){
 		parent::init();
 
@@ -50,7 +52,7 @@ class View_Document extends \View{
 	}
 
 	function add($class,$options=null,$spot=null,$template=null,$isMyform=false){
-		if(!$isMyform && $this->form instanceof \Form){
+		if(!$isMyform && $class!='xepan\hr\Controller_ACL' && $this->form instanceof \Form){
 			return $this->form->layout->add($class,$options,$spot,$template);
 		}
 
