@@ -37,9 +37,9 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addField('status')->enum(['Active','Inactive'])->defaultValue('Active');
 		$this->addCondition('type','User');
 		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
-		// $this->is([
-		// 		'username|unique|to_trim|required|email'
-		// 	]);
+		$this->is([
+				'username|unique|to_trim|required|email'
+			]);
 
 	}
 
