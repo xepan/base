@@ -34,8 +34,12 @@ class Initiator extends \Controller_Addon {
                         $user = $this->add('xepan\base\Model_User_Active');
                         $user->addCondition('scope',['AdminUser','SuperUser']);
                         $auth->setModel($user,'username','password');
+                        // $auth->usePasswordEncryption('md5');
+                        $auth->addHook('loggedIn',function($auth,$user,$pass){
+                            $auth->model['last_login_date'] = $this->app->now;
+                            $auth->model->save();
+                        });
                         $auth->check();
-
                         $this->app->epan = $auth->model->ref('epan_id');
                         $this->app->epan->config = $this->app->epan->ref('Configurations');
                         
