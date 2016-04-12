@@ -11,8 +11,9 @@
 
 namespace xepan\base;
 
-class page_contactdetail extends \Page {
+class page_contactdetail extends \xepan\base\Page {
 	public $title='Contact Detail';
+	public $breadcrumb=['Home'=>'index','Contact'=>'xepan_base_contact','Details'=>'#'];
 
 	function init(){
 		parent::init();
