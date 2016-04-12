@@ -33,7 +33,7 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addField('type');
 		$this->addField('scope')->enum(['WebsiteUser','AdminUser','SuperUser'])->defaultValue('WebsiteUser');
 		$this->addField('hash');
-		$this->addField('last_login_date')->type('date');
+		$this->addField('last_login_date')->type('datetime');
 		$this->addField('status')->enum(['Active','Inactive'])->defaultValue('Active');
 		$this->addCondition('type','User');
 		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
