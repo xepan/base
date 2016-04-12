@@ -27,6 +27,7 @@ class Controller_Avatar extends \AbstractController{
 			'middlename'=> false,
 			'uppercase'=> true
 		];
+	public $extra_classes='';
 	public $options=[];
 	function init(){
 		parent::init();
@@ -78,7 +79,7 @@ class Controller_Avatar extends \AbstractController{
 					$style .= "background-color: lightgray;";
 					$initials = $this->default_value;
 				}
-				$g->current_row_html['avatar']= "<div class='namebadge' style=\"position:relative; float:left; ".$style."\">".$initials."</div>";
+				$g->current_row_html['avatar']= "<div class='namebadge  $this->extra_classes' style=\"position:relative; float:left; ".$style."\">".$initials."</div>";
 			} 
 		});
 
@@ -98,7 +99,7 @@ class Controller_Avatar extends \AbstractController{
 				$style .= "background-color: lightgray;";
 				$initials = $this->default_value;
 			}
-			$obj->template->trySetHTML('avatar',"<div class='namebadge' style=\"position:relative; float:left; ".$style."\">".$initials."</div>");
+			$obj->template->trySetHTML('avatar',"<div class='namebadge $this->extra_classes' style=\"position:relative; float:left; ".$style."\">".$initials."</div>");
 		} 
 	}
 }
