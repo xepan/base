@@ -138,7 +138,7 @@ class View_Document extends \View{
 		if($this->action != 'view') {
 			$this->form->onSubmit(function($f){	
 				$f->save();
-				return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->univ()->location($this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action)]));
+				return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->reload(null,null,$this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action),'cut_object'=>$this->name]));
 				return $js;
 			});	
 		}
