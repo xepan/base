@@ -25,8 +25,8 @@ class Model_Mail_ResetPassword extends \xepan\base\Model_Epan_Configuration{
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reset_pass=$this->add('xepan\base\Model_Mail_ResetPassword');
-		$email_subject=$reg_model->getConfig('ResetPasswordSubject');
-		$email_body=$reg_model->getConfig('ResetPasswordBody');
+		$email_subject=$reset_pass->getConfig('RESET_PASSWORD_SUBJECT');
+		$email_body=$reset_pass->getConfig('RESET_PASSWORD_BODY');
 
 		// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
 		$temp=$this->add('GiTemplate')->loadTemplateFromString($email_body);
