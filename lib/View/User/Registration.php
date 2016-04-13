@@ -1,6 +1,6 @@
 <?php
 namespace xepan\base;
-class Tool_Registration extends \xepan\cms\View_Tool{
+class View_User_Registration extends \View{
 	function init(){
 		parent::init();
 		$verifyAccount=$this->app->stickyGET('verifyAccount');
@@ -8,6 +8,7 @@ class Tool_Registration extends \xepan\cms\View_Tool{
 		$activate_email=$this->app->stickyGET('activate_email');
 		if(!$verifyAccount){
 			$f=$this->add('Form',null,null,['form/empty']);
+			$f->setLayout(['view/registration']);
 			$f->addField('line','first_name');
 			$f->addField('line','last_name');
 			$f->addField('line','email_id');

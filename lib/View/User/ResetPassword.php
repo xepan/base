@@ -1,6 +1,6 @@
 <?php
 namespace xepan\base;
-class Tool_ResetPassword extends \xepan\cms\View_Tool{
+class View_User_ResetPassword extends \View{
 	function init(){
 		parent::init();
 
@@ -11,7 +11,7 @@ class Tool_ResetPassword extends \xepan\cms\View_Tool{
 		$user->tryLoadAny();
 		
 		$form=$this->add('Form');
-		$form->setLayout('layout/xepanrestpassword');
+		$form->setLayout('view/xepanrestpassword');
 		$form->addField('line','email')->set($_GET['activate_email'])->validateNotNull();
 		$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
 

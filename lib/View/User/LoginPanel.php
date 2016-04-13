@@ -1,17 +1,15 @@
 <?php
 namespace xepan\base;
 
-class Tool_LoginPanel extends \xepan\cms\View_Tool{
+class View_User_LoginPanel extends \View{
 	function init(){
 		parent::init();
         $f = $this->add('Form',null,null,['form/minimal']);
-        $f->setLayout(['view/tool/login-panel']);
+        $f->setLayout(['view/login-panel']);
         $f->addField('Line','username','Email address');
         $f->addField('Password','password','Password');
     	$auth=$this->app->auth;
-     //    $f->setModel($auth->model,'username','password');
-    	// throw new \Exception($auth, 1);
-
+ 
         if($f->isSubmitted()){
         	if(!($credential = $auth->verifyCredentials($f['username'],$f['password'])))
 					$f->displayError('username','Wrong Credentials');
@@ -22,13 +20,5 @@ class Tool_LoginPanel extends \xepan\cms\View_Tool{
 					$this->app->redirect($this->api->url(null))->execute();
 					$this->js()->reload()->execute();
         }
-
-
 	}
-	// function setModel($model){
-	// 	parent::setModel($model);
-	// }
-	// function defaultTemplate(){
-	// 	return ['view/tool/login-panel'];
-	// }
 }

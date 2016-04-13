@@ -1,0 +1,51 @@
+.container(style='margin-top:40px')
+  .row
+    .col-sm-6.col-md-4.col-md-offset-4
+      .panel.panel-default
+        .panel-heading
+          strong  Registration to continue
+        .panel-body
+          form(role='form', action='#', method='POST')
+            fieldset
+              //- .row
+              //-   .text-center
+              //-     img.profile-img(src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120', alt='')
+              .row
+                .col-sm-12.col-md-10.col-md-offset-1
+                  .form-group
+                    .input-group
+                      span.input-group-addon
+                        i.glyphicon.glyphicon-user
+                      {$first_name}    
+                      //- input(placeholder='Username', name='loginname', type='text', autofocus='')
+                  .form-group
+                    .input-group
+                      span.input-group-addon
+                        i.glyphicon.glyphicon-user
+                      {$last_name}    
+                  .form-group
+                    .input-group
+                      span.input-group-addon
+                        i.glyphicon.glyphicon-envelope
+                      {$email_id}
+                  .form-group
+                    .input-group
+                      span.input-group-addon
+                        i.glyphicon.glyphicon-lock
+                      {$password}
+                  .form-group
+                    .input-group
+                      span.input-group-addon
+                        i.glyphicon.glyphicon-lock
+                      {$retype_password}        
+                      //- input.form-control(placeholder='Password', name='password', type='password', value='')
+                  //- .form-group
+                  //-   input.btn.btn-lg.btn-primary.btn-block(type='submit', value='Sign in')
+              .row
+                .col-xs-12
+                  button.btn.btn-success.col-xs-12(type='submit') Register
+              
+        .panel-footer
+          | Don't have an account! 
+          a.back-login  Back To Login 
+           #login-box-footer
