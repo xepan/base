@@ -73,8 +73,9 @@ class Controller_Avatar extends \AbstractController{
 				if(!$this->_options['middlename'] && count($initials[0])>2)
 					$initials=[[$initials[0][0],$initials[0][count($initials[0])-1]]];
 				$initials = implode("", $initials[0]);
+				$stringhash = intval(substr(md5($initials), 0, 9), 16)%5;
 				if(strlen($initials)>0)
-					$style .= "background-color: ".$this->_options['colors'][rand(0,count($this->_options['colors'])-1)].";";
+					$style .= "background-color: ".$this->_options['colors'][$stringhash].";";
 				else{
 					$style .= "background-color: lightgray;";
 					$initials = $this->default_value;
@@ -93,6 +94,7 @@ class Controller_Avatar extends \AbstractController{
 			if(!$this->_options['middlename'] && count($initials[0])>2)
 				$initials=[[$initials[0][0],$initials[0][count($initials[0])-1]]];
 			$initials = implode("", $initials[0]);
+			$stringhash = intval(substr(md5($initials), 0, 9), 16)%5;
 			if(strlen($initials)>0)
 				$style .= "background-color: ".$this->_options['colors'][rand(0,count($this->_options['colors'])-1)].";";
 			else{
