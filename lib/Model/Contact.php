@@ -80,7 +80,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->is([
 				'first_name|to_trim|to_upper_words',
-				'last_name|to_trim|to_upper_words'
+				'last_name|to_trim|to_upper_words',
+				'user_id|unique_in_epan'
 			]);
 	}
 
