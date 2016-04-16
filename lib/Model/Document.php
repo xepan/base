@@ -24,7 +24,7 @@ class Model_Document extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\Contact','created_by_id')->system(true)->defaultValue($this->app->employee->id);
+		$this->hasOne('xepan\base\Contact','created_by_id')->system(true);
 		$this->hasOne('xepan\base\Contact','updated_by_id')->system(true);
 
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
