@@ -25,7 +25,7 @@ class page_general_email extends \Page{
 												'bounce_imap_email_port','return_path',
 												'bounce_imap_email_password',
 												'bounce_imap_flags','auto_reply','email_subject',
-												'email_body'
+												'email_body','signature'
 											],
 											[
 												'email_transport','name','is_support_email','encryption',
@@ -41,7 +41,7 @@ class page_general_email extends \Page{
 												'bounce_imap_email_port','return_path',
 												'bounce_imap_email_password',
 												'bounce_imap_flags','auto_reply','email_subject',
-												'email_body'
+												'email_body','signature'
 											]
 							);
 		$this->form = $email_view->form;
