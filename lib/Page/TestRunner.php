@@ -17,12 +17,13 @@ class Page_TestRunner extends \Page {
 	
 	public $title='xEpan Base Tests';
 	public $dir='tests';
+    public $namespace = __NAMESPACE__;
 
 	function init(){
 		parent::init();
 		
         $dir = $this->dir;
-        $m=$this->add('xepan\base\Model_xEpantester',array('dir'=>$this->dir));
+        $m=$this->add('xepan\base\Model_xEpantester',array('dir'=>$this->dir,'namespace'=>$this->namespace));
 
         $l = $this->add('Grid');
         $l->setModel($m);
@@ -31,7 +32,7 @@ class Page_TestRunner extends \Page {
         $l->addHook('formatRow', function($l)use($dir){
             $n = $l->current_row['name'];
             $n = str_replace('.php', '', $n);
-            $n = '<a href="'.$l->api->url(str_replace("\\","_",__NAMESPACE__).'/'.str_replace("/", "_", $dir).'/'.$n).'">'.$n.'</a>';
+            $n = '<a href="'.$l->api->url(str_replace("\\","_",$this->namespace).'/'.str_replace("/", "_", $dir).'/'.$n).'">'.$n.'</a>';
             $l->current_row_html['name'] = $n;
         });
 

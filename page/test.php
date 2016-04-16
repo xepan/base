@@ -17,12 +17,16 @@ class page_test extends \Page {
 	function init(){
 		parent::init();
 
-		$f = $this->add('Form');
-		$f->addField('TimePicker','tt')
-			->setOption('minuteStep',1)
-			->setOption('showSeconds',true)
-			->setOption('showMeridian',false);
+		$g=$this->add('Grid');
+		$g->setModel('xepan\base\Epan');
+		$g->addQuickSearch(['name']);
 
+		$f= $this->add('Form');
+		$f->addField('line','q');
+		if($f->isSubmitted()){
+			throw new \Exception($f['q'], 1);
+			
+		}
 
 
 	}

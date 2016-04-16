@@ -31,7 +31,7 @@ class Model_xEpanTester extends \Model {
          * This model automatically sets its source by traversing 
          * and searching for suitable files
          */
-        $p= scandir($this->api->pathfinder->base_location->base_path.'/../vendor/'.str_replace("\\","/",__NAMESPACE__)."/page/".$this->dir);
+        $p= scandir($this->api->pathfinder->base_location->base_path.'/../vendor/'.str_replace("\\","/",$this->namespace)."/page/".$this->dir);
         // $p=$this->api->pathfinder->searchDir($this->type,$this->dir);
 
         unset($p[0]);
@@ -55,9 +55,9 @@ class Model_xEpanTester extends \Model {
             return $this->skipped();
         }
 
-        $page=__NAMESPACE__.'/page_'.str_replace('/','_',str_replace('.php','',$this->test_dir.'_'.$this['name']));
+        $page=$this->namespace.'/page_'.str_replace('/','_',str_replace('.php','',$this->test_dir.'_'.$this['name']));
         try {
-            $p=$this->api->add($page,array('auto_test'=>true));
+            $p=$this->api->add($page,['auto_test'=>false]);
 
             if(!$p instanceof \xepan\base\Page_Tester){
                 $this['result']='Not Supported';
@@ -84,9 +84,9 @@ class Model_xEpanTester extends \Model {
             $this['result']=$this['success']==$this['total']?'OK':('FAIL: '.join(', ',$res['failures']));
 
             $p->destroy();
-        }catch(Exception $e){
+        }catch(\Exception $e){
             $this['fail']='!!';
-            $this['result']='Exception: '.($e instanceof BaseException?$e->getText():$e->getMessage());
+            $this['result']='Exception: '.($e instanceof \BaseException?$e->getText():$e->getMessage());
             return;
         }
     }
