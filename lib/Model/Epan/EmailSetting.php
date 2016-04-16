@@ -63,6 +63,7 @@ class Model_Epan_EmailSetting extends Model_Table{
 		$this->addField('auto_reply')->type('boolean');
 		$this->addField('email_subject')->group('ar~12');
 		$this->addField('email_body')->type('text')->display(['form'=>'xepan\base\RichText']);
+		$this->addField('signature')->type('text')->display(['form'=>'xepan\base\RichText']);
 
 		$this->addField('denied_email_subject');
 		$this->addField('denied_email_body')->type('text');
@@ -72,11 +73,5 @@ class Model_Epan_EmailSetting extends Model_Table{
 		$this->addField('mass_mail')->caption('Use For Mass Mailing')->type('boolean');
 		
 		$this->hasMany('xepan\hr\Post_Email_Association','emailsetting_id',null,'EmailAssociation');
-
-		// $this->is([
-		// 	'email_host|required'
-		// 	]);
-
-		
 	}
 }
