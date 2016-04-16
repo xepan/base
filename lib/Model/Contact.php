@@ -79,9 +79,11 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
 
 		$this->is([
+				'epan_id|required',
 				'first_name|to_trim|to_upper_words',
 				'last_name|to_trim|to_upper_words',
-				'user_id|unique_in_epan'
+				'user_id|unique_in_epan',
+				'type|to_trim|requied'
 			]);
 	}
 

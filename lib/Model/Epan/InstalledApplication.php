@@ -19,8 +19,8 @@ class Model_Epan_InstalledApplication extends \Model_Table{
 	function init(){
 		parent::init();
 		
-		$this->hasOne('Epan');
-		$this->hasOne('Application');
+		$this->hasOne('xepan\base\Epan');
+		$this->hasOne('xepan\base\Application');
 
 		$this->addField('installed_on')->type('datetime')->defaultValue($this->api->now);
 		$this->addField('valid_till')->type('datetime')->defaultValue($this->api->now);
