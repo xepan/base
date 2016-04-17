@@ -41,6 +41,9 @@ class Page_Tester extends \Page {
     function init(){
         parent::init();
 
+        if(!$this->app->getConfig('developer_mode')){
+            throw $this->exception('Testing can conly be executed in develoepr mode');
+        }
 
         if(!$this->auto_test){
             $this->setVariance(array('Test'));

@@ -17,5 +17,6 @@ class page_runtests extends Page_TestRunner {
 	
 	public $title='xEpan Base Tests';
 	public $dir='tests';
+	public $namespace = __NAMESPACE__;
 
 }
