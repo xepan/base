@@ -63,7 +63,7 @@ class Initiator extends \Controller_Addon {
 
 	}
 
-    function generateInstaller(){
+    function resetDB(){
 
         $this->app->old_epan = clone $this->app->epan;
 
