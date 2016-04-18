@@ -27,6 +27,7 @@ class Model_User extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Epan');
+		$this->hasOne('xepan\hr\Employee','created_by_id');
 
 		$this->addField('username');
 		$this->addField('password')->type('password');
@@ -38,7 +39,6 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addCondition('type','User');
 		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
 
-		$this->app->auth->addEncryptionHook($this);
 		$this->is([
 				'username|unique|to_trim|required|email'
 			]);
@@ -49,16 +49,4 @@ class Model_User extends \xepan\base\Model_Table{
 		return $this['scope']=='SuperUser';
 	}
 
-	// function createNewCustomer($first_name,$last_name,$email){
-	// 	$customer=$this->add('xepan\commerce\Model_Customer');
-	// 	$customer['epan_id']=$this->app->auth->model->ref('epan_id')->id;
-	// 	$customer['user_id']=$this->id;
-	// 	$customer['first_name']=$first_name;
-	// 	$customer['last_name']=$last_name;
-	// 	$customer->save();
-	// 	$email_model=$customer->ref('Emails');
-	// 	$email_model['head']='Official';
-	// 	$email_model['value']=$email;
-	// 	$email_model->save();
-	// }
 }
