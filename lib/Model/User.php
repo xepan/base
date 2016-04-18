@@ -47,6 +47,10 @@ class Model_User extends \xepan\base\Model_Table{
 		return $this['scope']=='SuperUser';
 	}
 
+	function isAdminUser(){
+		return $this['scope'] == 'AdminUser';
+	}
+
 	// function createNewCustomer($first_name,$last_name,$email){
 	// 	$customer=$this->add('xepan\commerce\Model_Customer');
 	// 	$customer['epan_id']=$this->app->auth->model->ref('epan_id')->id;
