@@ -68,8 +68,8 @@ class Initiator extends \Controller_Addon {
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
-        $truncate_tables = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
-        foreach ($truncate_tables as $t) {
+        $truncate_model = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
+        foreach ($truncate_model as $t) {
             $this->add('xepan\base\Model_'.$t)->deleteAll();
         }
 
@@ -88,12 +88,13 @@ class Initiator extends \Controller_Addon {
         $this->app->new_epan = clone $this->app->epan;
 
         // Create Default User
-        $user = $this->add('xepan\base\Model_User_SuperUser')
-                    ->set('username','admin@epan.in')
-                    ->set('scope','SuperUser')
-                    ->set('password','admin')
-                    ->set('epan_id',$epan->id)
-                    ->saveAs('xepan\base\Model_User_Active');
+        $user = $this->add('xepan\base\Model_User_SuperUser');
+        $this->app->auth->addEncryptionHook($user);
+        $user=$user->set('username','admin@epan.in')
+             ->set('scope','SuperUser')
+             ->set('password','admin')
+             ->set('epan_id',$epan->id)
+             ->saveAs('xepan\base\Model_User_Active');
 
         $this->app->auth->login($user);
 
