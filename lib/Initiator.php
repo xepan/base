@@ -68,8 +68,8 @@ class Initiator extends \Controller_Addon {
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
-        $truncate_model = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
-        foreach ($truncate_model as $t) {
+        $truncate_models = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
+        foreach ($truncate_models as $t) {
             $this->add('xepan\base\Model_'.$t)->deleteAll();
         }
 
