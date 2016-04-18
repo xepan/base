@@ -43,6 +43,8 @@ class Model_User extends \xepan\base\Model_Table{
 				'username|unique|to_trim|required|email'
 			]);
 
+		$this->app->auth->addEncryptionHook($this);
+
 	}
 
 	function isSuperUser(){
