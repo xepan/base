@@ -24,7 +24,7 @@ class page_installer_generatesql extends \Page {
 		$form->addField('password','password');
 		$form->onSubmit(function($f){
 			if(!$this->app->auth->verifyCredentials($f['username'],$f['password'])){
-				$f->displayError($f->getElement('username'),'Sorry, you cant reset database');
+				$f->displayError('username','Sorry, you cant reset database');
 			}
 
 			try{
