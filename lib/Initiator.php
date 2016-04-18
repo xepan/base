@@ -63,7 +63,7 @@ class Initiator extends \Controller_Addon {
 
 	}
 
-    function resetDB(){
+    function resetDB($write_sql=false){
 
         $this->app->old_epan = clone $this->app->epan;
 
@@ -97,6 +97,12 @@ class Initiator extends \Controller_Addon {
              ->saveAs('xepan\base\Model_User_Active');
 
         $this->app->auth->login($user);
+
+        if($write_sql){
+            $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
+            $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/export.sql');
+        }
+
 
         // Do other tasks needed
         // Like empting any folder etc
