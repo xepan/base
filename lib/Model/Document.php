@@ -34,11 +34,12 @@ class Model_Document extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Document_Attachment','document_id',null,'Attachments');
 		$this->addExpression('attachments_count')->set($this->refSQL('Attachments')->count());
 
-		$this->addField('created_at')->type('date')->defaultValue($this->app->now)->sortable(true);//->system(true);
-		$this->addField('updated_at')->type('date')->defaultValue($this->app->now)->sortable(true);//->system(true);
+		$this->addField('created_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
+		$this->addField('updated_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 
 		$this->is([
-				'created_at|required'
+				'created_at|required',
+				'type|to_trim|required'
 			]);
 
 	}

@@ -15,7 +15,7 @@ class Model_User_SuperUser extends Model_User{
 	function init(){
 		parent::init();
 		
-		$this->addCondition('type','SuperUser');
+		$this->addCondition('scope','SuperUser');
 
 	}
 }

@@ -63,4 +63,43 @@ class Initiator extends \Controller_Addon {
 
 	}
 
+    function generateInstaller(){
+
+        $this->app->old_epan = clone $this->app->epan;
+
+        // Clear DB
+        $truncate_models = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
+        foreach ($truncate_models as $t) {
+            $this->add('xepan\base\Model_'.$t)->deleteAll();
+        }
+
+        // Create default Epan_Category and Epan
+
+        $epan_category = $this->add('xepan\base\Model_Epan_Category')
+            ->set('name','default')
+            ->save();
+
+        $epan = $this->add('xepan\base\Model_Epan')
+                    ->set('epan_category_id',$epan_category->id)
+                    ->set('name','default')
+                    ->save();
+
+        $this->app->epan = $epan;
+        $this->app->new_epan = clone $this->app->epan;
+
+        // Create Default User
+        $user = $this->add('xepan\base\Model_User_SuperUser');
+        $this->app->auth->addEncryptionHook($user);
+        $user=$user->set('username','admin@epan.in')
+             ->set('scope','SuperUser')
+             ->set('password','admin')
+             ->set('epan_id',$epan->id)
+             ->saveAs('xepan\base\Model_User_Active');
+
+        $this->app->auth->login($user);
+
+        // Do other tasks needed
+        // Like empting any folder etc
+    }
+
 }

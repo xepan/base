@@ -27,6 +27,7 @@ class Model_User extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Epan');
+		$this->hasOne('xepan\base\Contact','created_by_id');
 
 		$this->addField('username');
 		$this->addField('password')->type('password');

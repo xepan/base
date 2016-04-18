@@ -18,7 +18,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan_Category');		
-		$this->addField('name')->mandatory(true)->hint('Identification for your epan');
+		$this->addField('name')->hint('Identification for your epan');
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
 		$this->hasMany('xepan\base\Epan_EmailSetting',null,null,'EmailSettings');
@@ -32,9 +32,10 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContacts']);
 		$this->addHook('beforeDelete',[$this,'deleteUsers']);
 
-		// $this->is([
-		// 		'name|unique|to_trim|required'
-		// 	]);
+		$this->is([
+				'epan_category_id|required',
+				'name|required|to_trim|unique'
+			]);
 	}
 
 	function addActivity($contact_id, $activity, $related_contact_id=null, $related_document_id=null, $details=null){
@@ -49,7 +50,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		return $activity;
 	}
 
-	function deleteEmailSettings(){
+	function deleteAllEmailSettings(){
 		$this->ref('EmailSettings')->deleteAll();
 	}
 
