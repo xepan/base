@@ -100,7 +100,7 @@ class Initiator extends \Controller_Addon {
 
         if($write_sql){
             $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
-            $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/export.sql');
+            $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/install.sql');
         }
 
 
