@@ -63,13 +63,13 @@ class Initiator extends \Controller_Addon {
 
 	}
 
-    function generateInstaller(){
+    function resetDB($write_sql=false){
 
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
-        $truncate_tables = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
-        foreach ($truncate_tables as $t) {
+        $truncate_models = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
+        foreach ($truncate_models as $t) {
             $this->add('xepan\base\Model_'.$t)->deleteAll();
         }
 
@@ -88,14 +88,21 @@ class Initiator extends \Controller_Addon {
         $this->app->new_epan = clone $this->app->epan;
 
         // Create Default User
-        $user = $this->add('xepan\base\Model_User_SuperUser')
-                    ->set('username','admin@epan.in')
-                    ->set('scope','SuperUser')
-                    ->set('password','admin')
-                    ->set('epan_id',$epan->id)
-                    ->saveAs('xepan\base\Model_User_Active');
+        $user = $this->add('xepan\base\Model_User_SuperUser');
+        $this->app->auth->addEncryptionHook($user);
+        $user=$user->set('username','admin@epan.in')
+             ->set('scope','SuperUser')
+             ->set('password','admin')
+             ->set('epan_id',$epan->id)
+             ->saveAs('xepan\base\Model_User_Active');
 
         $this->app->auth->login($user);
+
+        if($write_sql){
+            $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
+            $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/install.sql');
+        }
+
 
         // Do other tasks needed
         // Like empting any folder etc

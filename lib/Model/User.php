@@ -27,7 +27,7 @@ class Model_User extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\hr\Employee','created_by_id');
+		$this->hasOne('xepan\base\Contact','created_by_id');
 
 		$this->addField('username');
 		$this->addField('password')->type('password');
@@ -42,6 +42,8 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->is([
 				'username|unique|to_trim|required|email'
 			]);
+
+		$this->app->auth->addEncryptionHook($this);
 
 	}
 

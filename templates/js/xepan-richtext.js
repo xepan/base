@@ -82,6 +82,16 @@ $.each({
                 ed.on("change", function(ed) {
                     tinyMCE.triggerSave();
                 });
+                ed.on('init',function(ed){
+                    $(obj)
+                        .prev('.mce-container')
+                        .find('.mce-edit-area')
+                        .droppable({
+                            drop: function(event, ui) {
+                                tinyMCE.activeEditor.execCommand('mceInsertContent', false,ui.helper.html());
+                            }
+                        });
+                });
             }
         },options);
             
