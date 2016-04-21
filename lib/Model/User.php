@@ -52,6 +52,13 @@ class Model_User extends \xepan\base\Model_Table{
 		return $this['scope'] == 'AdminUser';
 	}
 
+	function updatePassword($new_password){
+		if(!$this->loaded()) return false;
+			$this['password']=$new_password;
+			$this->save();
+			return $this;
+	}
+
 	// function createNewCustomer($first_name,$last_name,$email){
 	// 	$customer=$this->add('xepan\commerce\Model_Customer');
 	// 	$customer['epan_id']=$this->app->auth->model->ref('epan_id')->id;
