@@ -11,13 +11,13 @@ class Form_Field_RichText extends \Form_Field_Text{
 		$this->addClass('tinymce');
 	}
 
-	function recursiveRender(){
+	function render(){
 
 		$this->js(true)
 				->_load('tinymce/tinymce.min')
 				->_load('tinymce/jquery.tinymce.min')
 				->_load('xepan-richtext');
 		$this->js(true)->univ()->richtext($this,$this->options);
-		parent::recursiveRender();
+		parent::render();
 	}
 }

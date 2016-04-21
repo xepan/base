@@ -44,6 +44,9 @@ class page_installer_generatesql extends \Page {
 				throw $e;
 			}
 
+			$dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
+            $dump->save(getcwd().'/../tests/_data/data.sql');
+
 			return "SQL Generated";
 
 		});
