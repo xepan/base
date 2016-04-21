@@ -32,7 +32,7 @@ class page_installer_generatesql extends \Page {
 				$this->api->db->beginTransaction();
 				$this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
 				foreach ($this->app->xepan_addons as $addon) {
-					$this->app->xepan_app_initiators[$addon]->generateInstaller();	
+					$this->app->xepan_app_initiators[$addon]->resetDB();	
 				}
 				$this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();        
 				$this->api->db->commit();
@@ -43,6 +43,9 @@ class page_installer_generatesql extends \Page {
 				$this->app->auth->login($user);
 				throw $e;
 			}
+
+			$dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
+            $dump->save(getcwd().'/../tests/_data/data.sql');
 
 			return "SQL Generated";
 

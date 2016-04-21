@@ -46,13 +46,13 @@ class Page_Tester extends \Page {
         }
 
         if(!$this->auto_test){
-            $this->setVariance(array('Test'));
+            $this->setVariance(array('test'));
             return;    // used for multi-page testing
         }
         $this->grid=$this->add('Grid');
         $this->grid->addColumn('template','name')->setTemplate('<a href="'.$this->api->url(null,array('testonly'=>'')).'<?$name?>"><?$name?></a>');
 
-        $this->setVariance(array('Test'));
+        $this->setVariance(array('test'));
 
         //$this->setVariance(array('GiTemplate','SMlite'));
 
