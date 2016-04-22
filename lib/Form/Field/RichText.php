@@ -14,9 +14,9 @@ class Form_Field_RichText extends \Form_Field_Text{
 	function render(){
 
 		$this->js(true)
-				->_load('tinymce/tinymce.min')
-				->_load('tinymce/jquery.tinymce.min')
-				->_load('xepan-richtext');
+				->_load('tinymce.min')
+				->_load('jquery.tinymce.min')
+				->_load('xepan-richtext-admin');
 		$this->js(true)->univ()->richtext($this,$this->options);
 		parent::render();
 	}

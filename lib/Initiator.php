@@ -14,6 +14,21 @@ class Initiator extends \Controller_Addon {
                         ->setBaseURL('../vendor/xepan/base/')
                         ;
 
+                        $tinymce_addon_base_path=$this->app->locatePath('addons','tinymce\tinymce');
+                        $this->addLocation(array('js'=>'.','css'=>'skins'))
+                        ->setBasePath($tinymce_addon_base_path)
+                        ->setBaseURL('../vendor/tinymce/tinymce/');
+
+
+                        $elfinder_addon_base_path=$this->app->locatePath('addons','studio-42\elfinder');
+                        $this->addLocation(array('js'=>'js','css'=>'css','image'=>'img'))
+                        ->setBasePath($elfinder_addon_base_path)
+                        ->setBaseURL('../vendor/studio-42/elfinder/');
+
+                        $this->app->jui->addStylesheet('elfinder.full');
+                        $this->app->jui->addStylesheet('theme');
+                        $this->app->jui->addStaticInclude('elfinder.full');
+
                         $this->app->today = date('Y-m-d');
                         $this->app->now   = date('Y-m-d H:i:s');
 

@@ -34,7 +34,7 @@ $.each({
 		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
 	},
 	richtext: function(obj,options){
-		tinymce.baseURL = "templates/js/tinymce";
+		tinymce.baseURL = "../vendor/tinymce/tinymce";
 
         tinymce.editors=[];
         tinymce.activeEditors=[];
@@ -52,7 +52,7 @@ $.each({
             },
             file_browser_callback: function elFinderBrowser(field_name, url, type, win) {
                 $('<div/>').dialogelfinder({
-                    url: 'elfinder/php/connector.php',
+                    url: 'index.php?page=xepan_base_elconnector',
                     lang: 'en',
                     width: 840,
                     destroyOnClose: true,
