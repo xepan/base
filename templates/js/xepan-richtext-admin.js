@@ -52,7 +52,7 @@ $.each({
             },
             file_browser_callback: function elFinderBrowser(field_name, url, type, win) {
                 $('<div/>').dialogelfinder({
-                    url: 'index.php?page=xepan_base_elconnector',
+                    url: 'index.php?page=xepan_base_elconnector&cut_page=true',
                     lang: 'en',
                     width: 840,
                     destroyOnClose: true,
@@ -70,14 +70,15 @@ $.each({
             plugins: [
                 "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
                 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "save table contextmenu directionality emoticons template paste textcolor colorpicker"
+                "save table contextmenu directionality emoticons template paste textcolor colorpicker imagetools"
             ],
-            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
-            // toolbar2: "print preview media | forecolor backcolor emoticons",
+            toolbar1: "insertfile undo redo | styleselect | bold italic fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+            fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
             image_advtab: true,
             save_enablewhendirty: false,
             // content_css: 'templates/css/epan.css',
             browser_spellcheck : true,
+            fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
             setup: function(ed) {
                 ed.on("change", function(ed) {
                     tinyMCE.triggerSave();

@@ -26,7 +26,7 @@ class Initiator extends \Controller_Addon {
                         ->setBaseURL('../vendor/studio-42/elfinder/');
 
                         $this->app->jui->addStylesheet('elfinder.full');
-                        $this->app->jui->addStylesheet('theme');
+                        $this->app->jui->addStylesheet('elfindertheme');
                         $this->app->jui->addStaticInclude('elfinder.full');
 
                         $this->app->today = date('Y-m-d');
