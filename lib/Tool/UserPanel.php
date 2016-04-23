@@ -5,9 +5,11 @@ namespace xepan\base;
 class Tool_UserPanel extends \xepan\cms\View_Tool{
 	public $options = [
 				'layout'=>'login_view',
+				'redirect_url'=>'index'
 			];	
 	function init(){
 		parent::init();
+
 		$layout = $this->app->stickyGET('layout');
 		if($layout){
 			$this->options['layout']=$layout;
@@ -50,6 +52,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			}
 			
 		}else{
+			$this->js()->univ()->loaction($this->api->url($this->options['redirect_url']));
 			$this->add('View')->setHTML('Allready Logged In');
 		}
 	}
