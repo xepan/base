@@ -61,6 +61,14 @@ class Initiator extends \Controller_Addon {
                         $this->app->epan->config = $this->app->epan->ref('Configurations');
                         
                         $this->app->jui->addStaticInclude('xepan_jui');
+                        $this->app->js(true)
+                            ->_load('pnotify.custom.min')
+                            ->_css('animate')
+                            ->_css('pnotify.custom.min');
+                        
+                        $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
+                        $this->app->js(true)->_library('PNotify.desktop')->permission();
+
                         $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
                 }else{
                         $this->routePages('xepan_base');
