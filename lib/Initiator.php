@@ -68,7 +68,16 @@ class Initiator extends \Controller_Addon {
                         ->setBaseURL('./vendor/xepan/base/')
                         ;
 
-                        $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadAny();
+                        $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
+                        $auth->usePasswordEncryption('md5');
+
+                        $user = $this->add('xepan\base\Model_User_Active');
+                        $user->addCondition('scope',['WebsiteUser']);
+                        $auth->setModel($user,'username','password');
+
+                        $url = "{$_SERVER['HTTP_HOST']}";
+                        $sub_domain = $this->extract_subdomains($url)?:'web';
+                        $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain);
                         $this->app->epan->config = $this->app->epan->ref('Configurations')->tryLoadAny();
                         
                         $this->app->today = date('Y-m-d');
@@ -122,5 +131,27 @@ class Initiator extends \Controller_Addon {
         // Do other tasks needed
         // Like empting any folder etc
     }
+
+
+    function extract_domain($domain)
+    {
+        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
+        {
+            return $matches['domain'];
+        } else {
+            return $domain;
+        }
+    }
+
+    function extract_subdomains($domain)
+    {
+        $subdomains = $domain;
+        $domain = $this->extract_domain($subdomains);
+        $subdomains = rtrim(strstr($subdomains, $domain, true), '.');
+
+        return $subdomains;
+    }
+
+
 
 }

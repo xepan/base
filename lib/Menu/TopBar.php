@@ -36,7 +36,7 @@ class Menu_TopBar extends \Menu_Advanced{
         }
 
         if ($action) {
-            if (is_string($action) || is_array($action) || $action instanceof URL) {
+            if (is_string($action) || is_array($action) || $action instanceof \URL) {
                 $i->template->set('url',$url = $this->app->url($action));
                 if($url->isCurrent()){
                     $i->addClass('active');
