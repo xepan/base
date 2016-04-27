@@ -51,6 +51,7 @@ class Initiator extends \Controller_Addon {
                         // $auth->usePasswordEncryption();
                         $auth->setModel($user,'username','password');
                         $auth->addHook('loggedIn',function($auth,$user,$pass){
+                            $this->app->memorize('user_loggedin', $auth->model);
                             $auth->model['last_login_date'] = $this->app->now;
                             $auth->model->save();
                         });
