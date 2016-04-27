@@ -74,6 +74,20 @@ class page_generalsetting extends \Page{
 			$update_config->setConfig('UPDATE_PASSWORD_BODY',$form['Body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
+		
+
+		$misc_config = $this->app->epan->config;
+		$misc_time_zone = $update_config->getConfig('TIME_ZONE');
+		$form = $this->add('Form_Stacked',null,'misc_view');
+		$time_zone_field=$form->addField('DropDown','time_zone')->set($misc_time_zone);
+		$time_zone_field->setValueList(array_combine(timezone_identifiers_list(),timezone_identifiers_list()));
+		$form->addSubmit('Update');
+
+		if($form->isSubmitted()){
+			$misc_config->setConfig('TIME_ZONE',$form['time_zone'],'base');
+			
+			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
+		}
 
 	}
 	
