@@ -13,6 +13,8 @@
             a(data-toggle='tab', href='#verification') After Verification Mail
           li
             a(data-toggle='tab', href='#update-password') Update Password Mail
+          li
+            a(data-toggle='tab', href='#misc') Misc Setting
         .tab-content
           #tab-general_setting.tab-pane.fade.in.active
             {general_setting}Please Save Basic Information First{/}
@@ -24,5 +26,7 @@
             {$verification_view}
            #update-password.tab-pane.fade
             {$updatepassword_view}
+           #misc.tab-pane.fade
+            {$misc_view}
           //- #tab-chat.tab-pane.fade
           //-   {$personal_info}                       
