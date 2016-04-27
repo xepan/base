@@ -29,8 +29,6 @@ class Initiator extends \Controller_Addon {
                         $this->app->jui->addStylesheet('elfindertheme');
                         $this->app->jui->addStaticInclude('elfinder.full');
 
-                        $this->app->today = date('Y-m-d');
-                        $this->app->now   = date('Y-m-d H:i:s');
 
                         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
                         $auth->addHook('createForm',function($a,$p){
@@ -59,6 +57,10 @@ class Initiator extends \Controller_Addon {
                         $auth->check();
                         $this->app->epan = $auth->model->ref('epan_id');
                         $this->app->epan->config = $this->app->epan->ref('Configurations');
+                        
+                        date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
+                        $this->app->today = date('Y-m-d');
+                        $this->app->now   = date('Y-m-d H:i:s');
                         
                         $this->app->jui->addStaticInclude('xepan_jui');
                         $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
