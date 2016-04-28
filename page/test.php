@@ -27,7 +27,5 @@ class page_test extends \Page {
 			throw new \Exception($f['q'], 1);
 			
 		}
-
-
 	}
 }

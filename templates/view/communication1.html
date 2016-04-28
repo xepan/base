@@ -1,0 +1,26 @@
+
+<div id="{$_name}">{rows}{row}
+  <div id="accordion" class="panel-group accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 style="height: 20px;overflow: hidden;" class="panel-title"><a href="#details{$id}" data-parent="#accordion" data-toggle="collapse" class="accordion-toggle collapsed">{title}title of communication should come here{/} {$attachment}</a></h4>
+      </div>
+      <div style="height: 2px;" id="details{$id}" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="row">{to_lister}<span class="small">To:</span>{rows}{row} <span class="small">{$email} &nbsp; &nbsp;</span>{/}{/}
+            {/}
+          </div>
+          <div class="row">{cc_lister}<span class="small">CC: </span>{rows}{row} <span class="small">{email}none{/} &nbsp;&nbsp;</span>{/}{/}
+            {/}
+          </div>
+          <div class="row">
+               
+            {description}  
+            Description should come here simpley for now
+            {/}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>{/}{/}
+</div>

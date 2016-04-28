@@ -1,0 +1,33 @@
+div(id="{$_name}")
+  //- .row.xepan-push-small
+  //-   span.pull-right
+  //-     .btn.btn-primary.btn-sm Send Via Email
+  //-     .btn.btn-primary.btn-sm Send Via Sms
+  {rows}{row}
+  #accordion.panel-group.accordion
+      .panel.panel-default
+        .panel-heading
+          h4.panel-title(style="height: 20px;overflow: hidden;")
+            a.accordion-toggle.collapsed(href='#details{$id}', data-parent='#accordion', data-toggle='collapse')
+              | {title}title of communication should come here{/} {$attachment}
+        .panel-collapse.collapse(style='height: 2px;', id="details{$id}")
+          .panel-body
+            .row
+              {to_lister}
+              span.small To:
+              {rows}{row} 
+              span.small {$email} &nbsp; &nbsp;
+              {/}{/}
+              {/}
+            .row
+              {cc_lister}
+              span.small CC: 
+              {rows}{row} 
+              span.small {email}none{/} &nbsp;&nbsp;
+              {/}{/}
+              {/}
+            .row    
+              {description}  
+              | Description should come here simpley for now
+              {/}
+  {/}{/}
