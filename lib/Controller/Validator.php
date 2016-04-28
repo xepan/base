@@ -57,6 +57,15 @@ class Controller_Validator extends \Controller_Validator{
         if($a <= $result) $this->fail('Value "{{arg1}}" is not maximum',$a);
     }
 
+    function rule_date_after($a){
+        $b=$this->pullRule();
+        $b_val=$this->get($b);
+
+        if(strtotime($a) < strtotime($b_val)) $this->fail('Value "{{arg1}}" must be greater then {{arg2}}',$a,$b_val);
+
+        return $a;
+    }
+
     function mb_str_to_lower($a)
     {
         return ($this->is_mb) ? mb_strtolower($a, $this->encoding) : strtolower($a);
