@@ -21,10 +21,11 @@ class Model_Mail_Verification extends \xepan\base\Model_Epan_Configuration{
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reg_model=$this->add('xepan\base\Model_Mail_Verification');
-		$email_subject=$reg_model->getConfig('VerificationEmailSubject');
-		$email_body=$reg_model->getConfig('VerificationEmailBody');
+		$email_subject=$reg_model->getConfig('VERIFICATIONE_MAIL_SUBJECT');
+		$email_body=$reg_model->getConfig('VERIFICATIONE_MAIL_BODY');
 		// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
-		$temp=$this->add('GiTemplate')->loadTemplateFromString($email_body);
+		$temp=$this->add('GiTemplate');
+		$temp->loadTemplateFromString($email_body);
 		$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 		$mail->addTo($email);
 		$mail->setSubject($email_subject);
