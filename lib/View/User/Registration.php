@@ -38,6 +38,7 @@ class View_User_Registration extends \View{
 			});
 		}else{
 			$form=$this->add('Form',null,null,['form/empty']);
+			$form->setLayout(['view/xepanverify']);
 			$form->addField('line','email')->set($activate_email);
 			$form->addField('line','activation_code')->set($secret_code);
 
