@@ -5,8 +5,10 @@ class page_forgotpassword extends \Page{
 	function init(){
 		parent::init();
 		
+			
+
 		$form=$this->add('Form');
-		$form->setLayout('layout/xepanforgotpassword');
+		$form->setLayout('view/xepanforgotpassword');
 		$form->addField('line','email');/*->validateNotNull()->validateField('filter_var($this->get(), FILTER_VALIDATE_EMAIL)');*/
 
 		if($form->isSubmitted()){

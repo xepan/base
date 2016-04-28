@@ -4,7 +4,7 @@ class page_resetpassword extends \Page{
 	public $title="Reset Password";
 	function init(){
 		parent::init();
-		$this->add('xepan\base\Tool_ResetPassword');
+		$this->add('xepan\base\View_User_ResetPassword');
 		// $secret_code=$this->app->stickyGET('secret_code');
 		// $activate_email=$this->app->stickyGET('activate_email');
 		// $user=$this->add('xepan\base\Model_User');	
