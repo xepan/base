@@ -8,6 +8,16 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();        
 
+                $url = "{$_SERVER['HTTP_HOST']}";
+                $sub_domain = $this->extract_subdomains($url)?:'web';
+                $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain);
+                $this->app->epan->config = $this->app->epan->ref('Configurations')->tryLoadAny();
+                
+                date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
+                $this->app->today = date('Y-m-d');
+                $this->app->now   = date('Y-m-d H:i:s');
+
+
                 if($this->app->is_admin){
                         $this->routePages('xepan_base');
                         $this->addLocation(array('template'=>'templates','js'=>'templates/js','css'=>'templates/css'))
@@ -31,6 +41,8 @@ class Initiator extends \Controller_Addon {
 
 
                         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
+                        $auth->allowPage(['xepan_base_forgotpassword']);
+                        
                         $auth->addHook('createForm',function($a,$p){
 
                             $p->add('HR');
@@ -47,8 +59,6 @@ class Initiator extends \Controller_Addon {
                         $user = $this->add('xepan\base\Model_User_Active');
                         $user->addCondition('scope',['AdminUser','SuperUser']);
                         $auth->usePasswordEncryption('md5');
-                        // $auth->debug();
-                        // $auth->usePasswordEncryption();
                         $auth->setModel($user,'username','password');
                         $auth->addHook('loggedIn',function($auth,$user,$pass){
                             $this->app->memorize('user_loggedin', $auth->model);
@@ -56,12 +66,6 @@ class Initiator extends \Controller_Addon {
                             $auth->model->save();
                         });
                         $auth->check();
-                        $this->app->epan = $auth->model->ref('epan_id');
-                        $this->app->epan->config = $this->app->epan->ref('Configurations');
-                        
-                        date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
-                        $this->app->today = date('Y-m-d');
-                        $this->app->now   = date('Y-m-d H:i:s');
                         
                         $this->app->jui->addStaticInclude('xepan_jui');
                         $this->app->js(true)
@@ -85,14 +89,6 @@ class Initiator extends \Controller_Addon {
                         $user = $this->add('xepan\base\Model_User_Active');
                         $user->addCondition('scope',['WebsiteUser']);
                         $auth->setModel($user,'username','password');
-
-                        $url = "{$_SERVER['HTTP_HOST']}";
-                        $sub_domain = $this->extract_subdomains($url)?:'web';
-                        $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain);
-                        $this->app->epan->config = $this->app->epan->ref('Configurations')->tryLoadAny();
-                        
-                        $this->app->today = date('Y-m-d');
-                        $this->app->now   = date('Y-m-d H:i:s');
 
                 }
 
