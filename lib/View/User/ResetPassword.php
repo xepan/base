@@ -6,7 +6,7 @@ class View_User_ResetPassword extends \View{
 
 		$secret_code=$this->app->stickyGET('secret_code');
 		$activate_email=$this->app->stickyGET('activate_email');
-		$user=$this->add('xepan\base\Model_User');	
+		$user=$this->app->auth->model;	
 		$user->addCondition('username',$activate_email);
 		$user->tryLoadAny();
 		
@@ -28,10 +28,15 @@ class View_User_ResetPassword extends \View{
 			if($f['password']!= $f['retype_password']){
 				$f->displayError($f->getElement('retype_password'),'Password Not Match');
 			}
-			$user['password']=$f['password'];
-			$user->save();
 			$update_pass_model=$this->add('xepan\base\Model_Mail_UpdatePassword');
 			$update_pass_model->updatePassword($f['email']);
+			
+			$user['password']=$f['password'];
+			$user->save();
+			
+			// $this->app->auth->model['password']=$f['new_password'];
+			// $this->app->auth->model->save();
+
 			
 			return $f->js()->univ()->successMessage('Password  SuccessFully Change');
 		});
