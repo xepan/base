@@ -44,7 +44,7 @@ class Initiator extends \Controller_Addon {
                         $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
                         if(in_array($this->app->page, $auth->getAllowedPages())){
                             $this->app->layout->destroy();
-                            $this->app->add('Layout_Centered');
+                            $this->app->add('xepan\base\Layout_Centered');
                             $this->app->top_menu = new \Dummy;
                             $this->app->side_menu = new \Dummy;
                         }else{
