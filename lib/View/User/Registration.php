@@ -21,7 +21,7 @@ class View_User_Registration extends \View{
 				}				
 				// // throw new \Exception($this->app->auth->model->ref('epan_id')->id, 1);
 				
-				// // $user=$this->app->auth->model;
+				// $user=$this->app->auth->model;
 				$user=$this->add('xepan\base\Model_User');
 				$user['epan_id']=$this->app->auth->model->ref('epan_id')->id;
 				$user['username']=$f['email_id'];
@@ -31,6 +31,8 @@ class View_User_Registration extends \View{
 
 				$reg_m=$this->add('xepan\base\Model_Mail_Registration');
 				$reg_m->sendWelcomeMail($f['email_id']);
+
+				$this->api->auth->addEncryptionHook($user);
 
 				$user->save();
 				// $user->createNewCustomer($f['first_name'],$f['last_name'],$f['email_id']);
