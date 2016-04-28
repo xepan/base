@@ -41,8 +41,16 @@ class Initiator extends \Controller_Addon {
 
 
                         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
-                        $auth->allowPage(['xepan_base_forgotpassword']);
-                        
+                        $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword']);
+                        if(in_array($this->app->page, $auth->getAllowedPages())){
+                            $this->app->layout->destroy();
+                            $this->app->add('Layout_Centered');
+                            $this->app->top_menu = new \Dummy;
+                            $this->app->side_menu = new \Dummy;
+                        }else{
+                            $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
+                            $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
+                        }
                         $auth->addHook('createForm',function($a,$p){
 
                             $p->add('HR');
