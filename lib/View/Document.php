@@ -74,6 +74,9 @@ class View_Document extends \View{
 		}
 		else{
 			$fields = $form_fields;
+			foreach ($this->form_fields as $fld) {
+				if($model->getElement($fld)->system()) $model->getElement($fld)->system(false)->editable(true);
+			}
 			$m = $this->form->setModel($model,$this->form_fields);
 
 			$view_fields = $view_fields?:$m->getActualFields();
