@@ -1,22 +1,33 @@
 div(id="{$_name}")
-  //- .row.xepan-push-small
-  //-   span.pull-right
-  //-     .btn.btn-primary.btn-sm Send Via Email
-  //-     .btn.btn-primary.btn-sm Send Via Sms
+  .row.xepan-push-small
+    span.pull-right
+      .btn.btn-primary.btn-sm Inform Customer
   {rows}{row}
   #accordion.panel-group.accordion
       .panel.panel-default
         .panel-heading
           h4.panel-title(style="height: 20px;overflow: hidden;")
             a.accordion-toggle.collapsed(href='#details{$id}', data-parent='#accordion', data-toggle='collapse')
-              | {title}title of communication should come here{/} {$attachment}
+              .col-md-6 
+                {title}title of communication should come here{/}
+                {$attachment}
+              .col-md-2
+              .col-md-2
+                span.pull-right
+                  {$created_at}
+              .col-md-1
+                span.pull-right
+                  {$status}
+              .col-md-1
+                span.pull-right
+                  {$communication_type}
         .panel-collapse.collapse(style='height: 2px;', id="details{$id}")
           .panel-body
             .row
-              {to_lister}
-              span.small To:
+              {from_lister}
+              span.small From: 
               {rows}{row} 
-              span.small {$email} &nbsp; &nbsp;
+              span.small {$name} &nbsp;&nbsp;
               {/}{/}
               {/}
             .row
@@ -26,8 +37,29 @@ div(id="{$_name}")
               span.small {email}none{/} &nbsp;&nbsp;
               {/}{/}
               {/}
-            .row    
+            .row
+              {to_lister}
+              span.small To:
+              {rows}{row} 
+              span.small {$email} &nbsp; &nbsp;
+              {/}{/}
+              {/}
+            .row.xepan-push-large
+              hr    
+            .row.xepan-push-large    
               {description}  
               | Description should come here simpley for now
               {/}
+            .row    
+              {Attachments}
+              {rows}{row}
+              span     
+                .img
+                  a(href="{$file}")
+                    img(alt='', src='{$file}')
+                span.name
+                a(href='{$file}' download) Download Attachment
+              {/}{/}
+              {/}
+
   {/}{/}
