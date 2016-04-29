@@ -16,7 +16,7 @@ class page_generalsetting extends \Page{
 		$reset_body = $resetpass_config->getConfig('RESET_PASSWORD_BODY');
 		$form=$this->add('Form',null,'reset_email');
 		$form->addField('line','subject')->set($reset_subject);
-		$form->addField('xepan\base\RichText','subject')->set($reset_body);
+		$form->addField('xepan\base\RichText','subject')->set($reset_body)->setFieldHint('{$name},{$email_id},{$password},{$click_here_to_activate}');
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
@@ -33,7 +33,7 @@ class page_generalsetting extends \Page{
 		
 		$form=$this->add('Form',null,'registration_view');
 		$form->addField('line','subject')->set($reg_subject);
-		$form->addField('xepan\base\RichText','Body')->set($reg_body);
+		$form->addField('xepan\base\RichText','Body')->set($reg_body)->setFieldHint('{$name},{$email_id},{$password},{$click_here_to_activate}');
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
@@ -49,13 +49,13 @@ class page_generalsetting extends \Page{
 		$verify_body = $verify_config->getConfig('VERIFICATIONE_MAIL_BODY');
 		$form=$this->add('Form',null,'verification_view');
 		$form->addField('line','subject')->set($verify_subject);
-		$form->addField('xepan\base\RichText','body')->set($verify_body);
+		$form->addField('xepan\base\RichText','body')->set($verify_body)->setFieldHint('');
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
 			$verify_config->setConfig('VERIFICATIONE_MAIL_SUBJECT',$form['subject'],'base');
 
-			$verify_config->setConfig('VERIFICATIONE_MAIL_BODY',$form['Body'],'base');
+			$verify_config->setConfig('VERIFICATIONE_MAIL_BODY',$form['body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
 
@@ -65,13 +65,13 @@ class page_generalsetting extends \Page{
 		$update_body = $update_config->getConfig('UPDATE_PASSWORD_BODY');
 		$form=$this->add('Form',null,'updatepassword_view');
 		$form->addField('line','subject')->set($update_subject);
-		$form->addField('xepan\base\RichText','body')->set($update_body);
+		$form->addField('xepan\base\RichText','body')->set($update_body)->setFieldHint('{$name},{$email_id},{$password}');
 		$form->addSubmit('Update');
 
 		if($form->isSubmitted()){
 			$update_config->setConfig('UPDATE_PASSWORD_SUBJECT',$form['subject'],'base');
 
-			$update_config->setConfig('UPDATE_PASSWORD_BODY',$form['Body'],'base');
+			$update_config->setConfig('UPDATE_PASSWORD_BODY',$form['body'],'base');
 			$form->js(null,$form->js()->reload())->univ()->successMessage('Update Information')->execute();
 		}
 		

@@ -3,7 +3,7 @@
     .col-sm-6.col-md-3.col-md-offset-4
       .panel.panel-default
         .panel-heading
-          strong  Send  Email to continue
+          strong  Activate your Account
         .panel-body
           form(role='form', action='#', method='POST')
             fieldset
@@ -16,11 +16,16 @@
                     .input-group
                       span.input-group-addon
                         i.glyphicon.glyphicon-user
-                      .atk-form-row.atk-form-field.xepan-form-field{$email}    
+                      .atk-form-row.atk-form-field.xepan-form-field{$email}
+                  .form-group
+                    .input-group
+                      span.input-group-addon
+                        i.glyphicon.glyphicon-user
+                      .atk-form-row.atk-form-field.xepan-form-field{$activation_code}    
                       //- input(placeholder='Username', name='loginname', type='text', autofocus='')
               .row.xepan-push-large
                 .col-xs-12
-                  button.btn.btn-success.col-xs-12(type='submit') Send E-Mail
+                  button.btn.btn-success.col-xs-12(type='submit') Verify Email 
         .panel-footer
           | Don't have an account! 
           a.forgot-link.back-login(href="index.php") Back to login
