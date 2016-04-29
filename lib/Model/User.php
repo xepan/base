@@ -39,7 +39,7 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addCondition('type','User');
 		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
 		$this->is([
-				'username|unique_in_epan|to_trim|required|email'
+				'username|unique|to_trim|required|email'
 			]);
 
 		// $this->app->auth->addEncryptionHook($this);
@@ -59,6 +59,16 @@ class Model_User extends \xepan\base\Model_Table{
 			$this['password']=$new_password;
 			$this->save();
 			return $this;
+	}
+
+	function deactivate(){
+		$this['status']='InActive';
+		$this->save();
+	}
+
+	function activate(){
+		$this['status']='Active';
+		$this->save();
 	}
 
 	// function createNewCustomer($first_name,$last_name,$email){
