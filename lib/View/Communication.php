@@ -16,7 +16,7 @@ class View_Communication extends \CompleteLister{
 
 			$contact_id = $this->api->stickyGET('contact_id');	
 			$model_contact = $this->add('xepan\base\Model_Contact');
-			$model_contact->loadBy('id',$contact_id);
+			$model_contact->load($contact_id);
 			$emails = $model_contact->getEmails();
 			$email_string = implode(', ', $emails);
 			
@@ -47,8 +47,11 @@ class View_Communication extends \CompleteLister{
 					$communication->addCondition('to_id',$contact_id);
 					
 					$communication->setSubject($form['title']);
-					$communication->setBody($form['body']);					
-					$communication->addTo($model_contact['name'],$form['mails']);
+					$communication->setBody($form['body']);
+
+					foreach (explode(',',$form['mails']) as $mail) {
+						$communication->addTo(trim($mail));
+					}			
 					
 					if($form['bccmails'])
 						$communication->addBcc($model_contact['name'],$form['bccmails']);
