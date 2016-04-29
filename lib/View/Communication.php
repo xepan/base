@@ -36,7 +36,9 @@ class View_Communication extends \CompleteLister{
 
 			if($form->isSubmitted()){
 				if($form['notifymail']){
-					$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadAny();
+					$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting');
+					$email_settings->loadBy('email_username',$form['fromemail']);					
+
 					$communication = $p->add('xepan\communication\Model_Communication_Abstract_Email');					
 					$communication->setfrom($email_settings['from_email'],$email_settings['from_name']);
 					$communication->getElement('status')->defaultValue('Draft');
@@ -45,16 +47,20 @@ class View_Communication extends \CompleteLister{
 					$communication->addCondition('to_id',$contact_id);
 					
 					$communication->setSubject($form['title']);
-					$communication->setBody($form['body']);
-					$communication->addTo($form['mails']);
-					$communication->addBcc($form['bccmails']);
-					$communication->addCc($form['ccmails']);
+					$communication->setBody($form['body']);					
+					$communication->addTo($model_contact['name'],$form['mails']);
+					
+					if($form['bccmails'])
+						$communication->addBcc($model_contact['name'],$form['bccmails']);
+					if($form['ccmails'])
+						$communication->addCc($model_contact['name'],$form['ccmails']);
+					
 					$communication->send($email_settings);
 					// $communication->save();
 				}
 
 				if($form['notifysms']){
-					throw new \Exception("Notify Via Sms Is Yet To Made !");
+					throw new \Exception("Notify Via Sms Is Yet To Implement !");
 				}
 				
 				$model_communication = $p->add('xepan\communication\Model_Communication');
