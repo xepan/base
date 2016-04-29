@@ -104,6 +104,21 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->ref('Events')->deleteAll();
 	}
 
+	function page_communication($page){		
+		$communication = $this->add('xepan\communication\Model_Communication');
+		$communication->addCondition(
+						$communication->dsql()->orExpr()
+						->where('from_id',$this->id)
+						->where('to_id',$this->id)
+					);
+
+		$communication->setOrder('created_at','desc');
+		$contact_id = $this->id;
+
+		$lister=$page->add('xepan\base\View_Communication',['contact_id'=>$contact_id],null,null);
+		$lister->setModel($communication);
+	}
+
 	//load Logged In check for the user of contact loaded or not, 
 	//mainly used  for online contact account
 	function loadLoggedIn(){
