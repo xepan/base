@@ -12,14 +12,15 @@ class View_Communication extends \CompleteLister{
 		$to_lister = $this->app->add('CompleteLister',null,null,['view/communication1','to_lister']);
 		$to_lister->setSource($to_mail);
 			
-		// $cc_raw = json_decode($this->model['cc'],true);
-		// $cc_lister = $this->app->add('CompleteLister',null,null,['view/communication','cc_lister']);
-		// $cc_lister->setSource($cc_raw);
+		$cc_raw = json_decode($this->model['cc'],true);
+		$cc_lister = $this->app->add('CompleteLister',null,null,['view/communication1','cc_lister']);
+		$cc_lister->setSource($cc_raw);
 
 		// echo"<pre>";
 		// print_r($to_mail);
 		// exit;
-
+		// throw new \Exception($this->model['attachment_count']);
+		
 		$this->current_row_html['description']=$this->current_row['description'];
 		$this->current_row_html['attachment'] = $this->model['attachment_count']?'<span><i style="color:green" class="fa fa-paperclip"></i></span>':'';
 		$this->current_row_html['to_lister'] = $to_lister->getHtml();
