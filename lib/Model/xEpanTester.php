@@ -36,7 +36,11 @@ class Model_xEpanTester extends \Model {
 
         unset($p[0]);
         unset($p[1]);
-
+        $i=2;
+        foreach ($p as $file) {
+            if(strpos($file, ".php")===false) unset($p[$i]);
+            $i++;
+        }
 
         sort($p);
         $this->setSource('Array',$p);
