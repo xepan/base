@@ -9,7 +9,7 @@ class Initiator extends \Controller_Addon {
 		parent::init();        
 
                 $url = "{$_SERVER['HTTP_HOST']}";
-                $sub_domain = $this->extract_subdomains($url)?:'web';
+                $sub_domain = $this->extract_subdomains($url)?:'default';
                 $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain);
                 $this->app->epan->config = $this->app->epan->ref('Configurations')->tryLoadAny();
                 
