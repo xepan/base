@@ -16,91 +16,91 @@ class Initiator extends \Controller_Addon {
                 date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
                 $this->app->today = date('Y-m-d');
                 $this->app->now   = date('Y-m-d H:i:s');
+    }
+
+    function setup_admin(){
+        
+        $this->routePages('xepan_base');
+        $this->addLocation(array('template'=>'templates','js'=>'templates/js','css'=>'templates/css'))
+        ->setBaseURL('../vendor/xepan/base/')
+        ;
+
+        $tinymce_addon_base_path=$this->app->locatePath('addons','tinymce\tinymce');
+        $this->addLocation(array('js'=>'.','css'=>'skins'))
+        ->setBasePath($tinymce_addon_base_path)
+        ->setBaseURL('../vendor/tinymce/tinymce/');
 
 
-                if($this->app->is_admin){
-                        $this->routePages('xepan_base');
-                        $this->addLocation(array('template'=>'templates','js'=>'templates/js','css'=>'templates/css'))
-                        ->setBaseURL('../vendor/xepan/base/')
-                        ;
+        $elfinder_addon_base_path=$this->app->locatePath('addons','studio-42\elfinder');
+        $this->addLocation(array('js'=>'js','css'=>'css','image'=>'img'))
+        ->setBasePath($elfinder_addon_base_path)
+        ->setBaseURL('../vendor/studio-42/elfinder/');
 
-                        $tinymce_addon_base_path=$this->app->locatePath('addons','tinymce\tinymce');
-                        $this->addLocation(array('js'=>'.','css'=>'skins'))
-                        ->setBasePath($tinymce_addon_base_path)
-                        ->setBaseURL('../vendor/tinymce/tinymce/');
+        $this->app->jui->addStylesheet('elfinder.full');
+        $this->app->jui->addStylesheet('elfindertheme');
+        $this->app->jui->addStaticInclude('elfinder.full');
 
 
-                        $elfinder_addon_base_path=$this->app->locatePath('addons','studio-42\elfinder');
-                        $this->addLocation(array('js'=>'js','css'=>'css','image'=>'img'))
-                        ->setBasePath($elfinder_addon_base_path)
-                        ->setBaseURL('../vendor/studio-42/elfinder/');
+        $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
+        $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
+        if(in_array($this->app->page, $auth->getAllowedPages())){
+            $this->app->layout->destroy();
+            $this->app->add('xepan\base\Layout_Centered');
+            $this->app->top_menu = new \Dummy;
+            $this->app->side_menu = new \Dummy;
+        }else{
+            $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
+            $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
+        }
+        $auth->addHook('createForm',function($a,$p){
 
-                        $this->app->jui->addStylesheet('elfinder.full');
-                        $this->app->jui->addStylesheet('elfindertheme');
-                        $this->app->jui->addStaticInclude('elfinder.full');
+            $p->add('HR');
+            $f = $p->add('Form',null,null,['form/minimal']);
+            $f->setLayout(['layout/xepanlogin','form_layout']);
+            $f->addField('Line','username','Email address');
+            $f->addField('Password','password','Password');
+            // $cc = $f->add('Columns');
+            // $cc->addColumn()->add('Button')->set('Log in')->addClass('atk-size-milli atk-swatch-green');
+            // $cc->addColumn()->addClass('atk-align-right')->addField('Checkbox','remember_me','Remember me');
+            $this->breakHook($f);
 
+        });
+        $user = $this->add('xepan\base\Model_User_Active');
+        $user->addCondition('scope',['AdminUser','SuperUser']);
+        $auth->usePasswordEncryption('md5');
+        $auth->setModel($user,'username','password');
+        $auth->addHook('loggedIn',function($auth,$user,$pass){
+            $this->app->memorize('user_loggedin', $auth->model);
+            $auth->model['last_login_date'] = $this->app->now;
+            $auth->model->save();
+        });
+        $auth->check();
+        
+        $this->app->jui->addStaticInclude('xepan_jui');
+        $this->app->js(true)
+            ->_load('pnotify.custom.min')
+            ->_css('animate')
+            ->_css('pnotify.custom.min');
+        
+        $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
+        $this->app->js(true)->_library('PNotify.desktop')->permission();
 
-                        $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
-                        $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
-                        if(in_array($this->app->page, $auth->getAllowedPages())){
-                            $this->app->layout->destroy();
-                            $this->app->add('xepan\base\Layout_Centered');
-                            $this->app->top_menu = new \Dummy;
-                            $this->app->side_menu = new \Dummy;
-                        }else{
-                            $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
-                            $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
-                        }
-                        $auth->addHook('createForm',function($a,$p){
-
-                            $p->add('HR');
-                            $f = $p->add('Form',null,null,['form/minimal']);
-                            $f->setLayout(['layout/xepanlogin','form_layout']);
-                            $f->addField('Line','username','Email address');
-                            $f->addField('Password','password','Password');
-                            // $cc = $f->add('Columns');
-                            // $cc->addColumn()->add('Button')->set('Log in')->addClass('atk-size-milli atk-swatch-green');
-                            // $cc->addColumn()->addClass('atk-align-right')->addField('Checkbox','remember_me','Remember me');
-                            $this->breakHook($f);
-
-                        });
-                        $user = $this->add('xepan\base\Model_User_Active');
-                        $user->addCondition('scope',['AdminUser','SuperUser']);
-                        $auth->usePasswordEncryption('md5');
-                        $auth->setModel($user,'username','password');
-                        $auth->addHook('loggedIn',function($auth,$user,$pass){
-                            $this->app->memorize('user_loggedin', $auth->model);
-                            $auth->model['last_login_date'] = $this->app->now;
-                            $auth->model->save();
-                        });
-                        $auth->check();
-                        
-                        $this->app->jui->addStaticInclude('xepan_jui');
-                        $this->app->js(true)
-                            ->_load('pnotify.custom.min')
-                            ->_css('animate')
-                            ->_css('pnotify.custom.min');
-                        
-                        $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
-                        $this->app->js(true)->_library('PNotify.desktop')->permission();
-
-                        $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
-                }else{
-                        $this->routePages('xepan_base');
-                        $this->addLocation(array('template'=>'templates','js'=>'js'))
-                        ->setBaseURL('./vendor/xepan/base/')
-                        ;
-
-                        $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
-                        $auth->usePasswordEncryption('md5');
-
-                        $user = $this->add('xepan\base\Model_User_Active');
-                        $user->addCondition('scope',['WebsiteUser']);
-                        $auth->setModel($user,'username','password');
-
-                }
-
+        $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
 	}
+
+    function setup_frontend(){
+        $this->routePages('xepan_base');
+        $this->addLocation(array('template'=>'templates','js'=>'js'))
+        ->setBaseURL('./vendor/xepan/base/')
+        ;
+
+        $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
+        $auth->usePasswordEncryption('md5');
+
+        $user = $this->add('xepan\base\Model_User_Active');
+        $user->addCondition('scope',['WebsiteUser']);
+        $auth->setModel($user,'username','password');
+    }
 
     function resetDB($write_sql=false){
 
