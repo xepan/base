@@ -110,9 +110,9 @@ class Page_Tester extends \Page {
                             $input=$test_obj->prepare($vari,$method);
                         }else $input=null;
                     }
-                }catch (Exception $e){
+                }catch (\Exception $e){
 
-                    if($e instanceof Exception_SkipTests) {
+                    if($e instanceof \Exception_SkipTests) {
                         return array(
                             'skipped'=>$e->getMessage()
                         );
@@ -149,9 +149,9 @@ class Page_Tester extends \Page {
                         $failures[]=$method;
                         $fail++;
                     }
-                }catch (Exception $e){
+                }catch (\Exception $e){
 
-                    if($e instanceof Exception_SkipTests) {
+                    if($e instanceof \Exception_SkipTests) {
                         return array(
                             'skipped'=>$e->getMessage()
                         );
@@ -213,8 +213,8 @@ class Page_Tester extends \Page {
                             $input=$test_obj->prepare($vari,$method);
                         }else $input=null;
                     }
-                }catch (Exception $e){
-                    if($e instanceof Exception_SkipTests) {
+                }catch (\Exception $e){
+                    if($e instanceof \Exception_SkipTests) {
                         $this->grid->destroy();
                         $this->add('View_Error')->set('Skipping all tests: '.$e->getMessage());
                         return;
@@ -235,9 +235,9 @@ class Page_Tester extends \Page {
                 try{
                     //$result=$test_obj->$test_func($input[0],$input[1],$input[2]);
                     $result=$this->executeTest($test_obj,$test_func,$input);
-                }catch (Exception $e){
+                }catch (\Exception $e){
 
-                    if($e instanceof Exception_SkipTests) {
+                    if($e instanceof \Exception_SkipTests) {
                         $this->grid->destroy();
                         $this->add('View_Error')->set('Skipping all tests: '.$e->getMessage());
                     }
