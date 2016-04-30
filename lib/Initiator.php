@@ -116,6 +116,16 @@ class Initiator extends \Controller_Addon {
             $this->add('xepan\base\Model_'.$t)->deleteAll();
         }
 
+        // orphan contact_info and contacts
+        
+        $this->app->db->dsql()->table('contact_info')->where('epan_id',null)->delete();
+        $this->app->db->dsql()->table('contact')->where('epan_id',null)->delete();
+        
+        $d = $this->app->db->dsql();
+        $d->sql_templates['delete'] = "delete [table] from  [table] [join] [where]";
+        $d->table('contact_info')->where('contact.id is null')->join('contact',null,'left')->delete();
+
+
         // Create default Epan_Category and Epan
 
         $epan_category = $this->add('xepan\base\Model_Epan_Category')
