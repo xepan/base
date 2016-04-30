@@ -86,6 +86,8 @@ class Initiator extends \Controller_Addon {
         $this->app->js(true)->_library('PNotify.desktop')->permission();
 
         $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
+
+        return $this;
 	}
 
     function setup_frontend(){
@@ -100,6 +102,8 @@ class Initiator extends \Controller_Addon {
         $user = $this->add('xepan\base\Model_User_Active');
         $user->addCondition('scope',['WebsiteUser']);
         $auth->setModel($user,'username','password');
+
+        return $this;
     }
 
     function resetDB($write_sql=false){
