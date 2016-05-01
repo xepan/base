@@ -219,6 +219,9 @@ class Page_Tester extends \Page {
                         $this->add('View_Error')->set('Skipping all tests: '.$e->getMessage());
                         return;
                     }
+
+                    throw $e;
+                    
                 }
 
                 $this->input=$input;
