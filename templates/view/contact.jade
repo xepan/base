@@ -7,13 +7,11 @@
       .profile-status
         i.fa.fa-circle
         |  Online
-      img.profile-img.img-responsive.center-block(alt='', src='{url}img/samples/scarlet-159.png{/}')
-      {$image_id}
-      //- {$image}
+      img.profile-img.img-responsive.center-block(alt='', src='{image}img/samples/scarlet-159.png{/}')
       .profile-label
-        span.label.label-danger Admin
+        span.label.label-danger {type}Admin{/}
       .profile-since
-        | Contact since: Jan 2012
+        | Contact since: {created_at}Jan 2012{/}
       <hr/>
       h2 Emails
       .profile-details

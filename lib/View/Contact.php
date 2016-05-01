@@ -14,11 +14,23 @@ namespace xepan\base;
 class View_Contact extends \View{
 	public $acl=null;
 	public $document_view=null;
+	public $vp ;
+
 
 	function init(){
 		parent::init();
 
-		// TODO : Check ACL here
+		$page_url = $this->api->url();
+		$this->vp = $this->add('VirtualPage');
+		$this->vp->set(function($p)use($page_url){
+			$f=$p->add('Form');
+			$f->setModel('xepan\base\Contact',['image_id'])->load($this->api->stickyGET('contact_id'));
+			$f->addSubmit('Save');
+			if($f->submitted()){
+				$f->save();
+				$f->js()->univ()->location($page_url)->execute();
+			}
+		});
 
 		$action = $this->api->stickyGET('action')?:'view';
 		$this->document_view = $this->add('xepan\base\View_Document',['action'=> $action,'id_field_on_reload'=>'contact_id'],null,['view/contact']);
@@ -26,6 +38,7 @@ class View_Contact extends \View{
 	}
 
 	function setModel(Model_Contact $contact){
+		if(!$contact['image']) $contact['image']='img/samples/scarlet-159.png';
 		parent::setModel($contact);
 		$this->document_view->setModel($this->model,null,['first_name','last_name','address','city','state','country','pin_code','organization','post','website']);
 		if($this->model->loaded()){
@@ -64,7 +77,21 @@ class View_Contact extends \View{
 			$relation->template->tryDel('Pannel');
 
 		}
+
+
 		return $this->model;
+	}
+
+	function recursiveRender(){
+		$action = $this->api->stickyGET('action')?:'view';
+		if($action == 'edit')
+			$this->js('click')->_selector('.profile-img')->univ()->frameURL('Change Image',$this->vp->getURL());
+		return parent::recursiveRender();
+	}
+
+	function format_datetime($fiels,$value,$m){
+		$date = "<div>".date('d M Y',strtotime($value))."</div>";
+		return $date;
 	}
 
 	

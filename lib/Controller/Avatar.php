@@ -15,6 +15,8 @@ class Controller_Avatar extends \AbstractController{
 
 	public $name_field = 'name';
 	public $default_value = '';
+	public $image_field = 'image';
+
 	public $_options = [
 			"border"=> [
 				'color'=> '#ddd',
@@ -67,7 +69,7 @@ class Controller_Avatar extends \AbstractController{
 	function manageLister($obj){
 		$style= $this->style;
 		$obj->addHook('formatRow',function($g)use($style){			
-			if(!$g->model['image']){
+			if(!$g->model[$this->image_field]){
 				$initials= trim($g->model[$this->name_field]);
 				preg_match_all("/[A-Z]/", ucwords(strtolower($initials)), $initials);
 				if(!$this->_options['middlename'] && count($initials[0])>2)
@@ -81,7 +83,9 @@ class Controller_Avatar extends \AbstractController{
 					$initials = $this->default_value;
 				}
 				$g->current_row_html['avatar']= "<div class='namebadge  $this->extra_classes' style=\"position:relative; float:left; ".$style."\">".$initials."</div>";
-			} 
+			}else{
+				$g->current_row_html['avatar']= "<img src='".$g->model[$this->image_field]."' alt='' />";
+			}
 		});
 
 	}
