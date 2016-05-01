@@ -16,6 +16,7 @@ namespace xepan\base;
 class Model_Document extends \xepan\base\Model_Table{
 	
 	public $table='document';
+	public $strict_fields=true;
 
 	public $status=[];
 	public $actions=[];
@@ -33,6 +34,7 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		$this->hasMany('xepan\base\Document_Attachment','document_id',null,'Attachments');
 		$this->addExpression('attachments_count')->set($this->refSQL('Attachments')->count());
+		$this->addField('search_string')->type('text')->system(true);
 
 		$this->addField('created_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 		$this->addField('updated_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
