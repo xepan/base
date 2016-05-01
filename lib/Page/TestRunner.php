@@ -23,7 +23,7 @@ class Page_TestRunner extends \Page {
 		parent::init();
 		
         $dir = $this->dir;
-        $m=$this->add('xepan\base\Model_xEpantester',array('dir'=>$this->dir,'namespace'=>$this->namespace));
+        $m=$this->add('xepan\base\Model_xEpanTester',array('dir'=>$this->dir,'namespace'=>$this->namespace));
 
         $l = $this->add('Grid');
         $l->setModel($m);

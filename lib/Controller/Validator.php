@@ -45,6 +45,21 @@ class Controller_Validator extends \Controller_Validator{
         if($result !== null) return $this->fail('Value "{{arg1}}" already exists', $a);
     }
 
+    function rule_unique_in_epan_for_type($a,$field){
+        
+        $q = clone $this->owner->dsql();
+
+        $result = $q
+                ->where($field, $a)
+                ->where($q->getField('id'),'<>', $this->owner->id)
+                ->where($q->getField('type'),'<>', $this->owner['type'])
+                ->where($q->expr('[0] = [1]',[$this->owner->getElement('epan_id'),$this->app->epan->id]))
+                ->field($field)
+                ->getOne();
+
+        if($result !== null) return $this->fail('Value "{{arg1}}" already exists', $a);
+    }
+
     function rule_max_in_epan($a,$field){
          $q = clone $this->owner->dsql();
 
