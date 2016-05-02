@@ -76,11 +76,14 @@ class Initiator extends \Controller_Addon {
         });
         $auth->check();
         
-        $this->app->jui->addStaticInclude('xepan_jui');
         $this->app->js(true)
             ->_load('pnotify.custom.min')
             ->_css('animate')
-            ->_css('pnotify.custom.min');
+            ->_css('pnotify.custom.min')
+            ->_load('xepan.pnotify')
+            ;
+
+        $this->app->jui->addStaticInclude('xepan_jui');
         
         $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
         $this->app->js(true)->_library('PNotify.desktop')->permission();

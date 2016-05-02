@@ -84,7 +84,7 @@ class Controller_Avatar extends \AbstractController{
 				}
 				$g->current_row_html['avatar']= "<div class='namebadge  $this->extra_classes' style=\"position:relative; float:left; ".$style."\">".$initials."</div>";
 			}else{
-				$g->current_row_html['avatar']= "<img src='".$g->model[$this->image_field]."' alt='' />";
+				$g->current_row_html['avatar']= "<img src='".$g->model[$this->image_field]."' alt=''  style='max-width:".$this->_options['size']."px'/>";
 			}
 		});
 
