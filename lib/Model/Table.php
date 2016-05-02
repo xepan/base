@@ -27,9 +27,9 @@ class Model_Table extends \Model_Table{
 
 		$this->addHook('afterAdd',function($e){			
 			if($e->hasElement('epan_id') && isset($e->app->epan->id)) {
-				if(!isset($e->epan_condition_set)) // comment to mute
+				// if(!isset($e->epan_condition_set)) // comment to mute
 	                $e->addCondition('epan_id',$e->app->epan->id);
-	            $e->epan_condition_set = true;  // Comment to mute
+	            // $e->epan_condition_set = true;  // Comment to mute
             }
 		});
 	}
