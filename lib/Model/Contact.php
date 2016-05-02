@@ -51,7 +51,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->add('filestore/Field_Image','image_id')->allowHTML(true);
 
-		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]));
+		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]))->sortable(true);
 
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
 		$this->hasMany('xepan\base\Contact_Phone',null,null,'Phones');
@@ -62,7 +62,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addExpression('emails_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Email',['table_alias'=>'emails_str']);
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
-		})->allowHTML(true);
+		})->allowHTML(true)->sortable(true);
 
 		$this->addExpression('contacts_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Phone',['table_alias'=>'contacts_str']);
