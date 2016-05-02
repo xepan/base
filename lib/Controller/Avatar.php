@@ -106,6 +106,8 @@ class Controller_Avatar extends \AbstractController{
 				$initials = $this->default_value;
 			}
 			$obj->template->trySetHTML('avatar',"<div class='namebadge $this->extra_classes' style=\"position:relative; float:left; ".$style."\">".$initials."</div>");
-		} 
+		}else{
+				$obj->template->trySetHtml('avatar',"<img src='".$obj->model[$this->image_field]."' alt=''  style='max-width:".$this->_options['size']."px'/>");
+		}
 	}
 }
