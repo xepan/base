@@ -29,5 +29,9 @@ class Model_Contact_Info extends Model_Table{
 
 		$this->addField('is_active')->type('boolean')->defaultValue(true);
 		$this->addField('is_valid')->type('boolean')->defaultValue(true); // Mark false if found hard bounced
+
+		$this->is([
+				'head|required'
+		]);
 	}
 }
