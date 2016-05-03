@@ -32,16 +32,21 @@ class View_Contact extends \View{
 			}
 		});
 
-		$action = $this->api->stickyGET('action')?:'view';
+		$this->action = $action = $this->api->stickyGET('action')?:'view';
 		$this->document_view = $this->add('xepan\base\View_Document',['action'=> $action,'id_field_on_reload'=>'contact_id'],null,['view/contact']);
 		
 	}
 
 	function setModel(Model_Contact $contact){
-		if(!$contact['image']) $contact['image']='img/samples/scarlet-159.png';
 		parent::setModel($contact);
 		$this->document_view->setModel($this->model,null,['first_name','last_name','address','city','state','country','pin_code','organization','post','website']);
+		if($this->action=='edit')
+			$this->document_view->form->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
+		else
+			$this->document_view->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
+
 		if($this->model->loaded()){
+
 			$email_m=$contact->ref('Emails');
 			if($this->acl)
 				$email_m->acl=$this->acl;

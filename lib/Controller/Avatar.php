@@ -16,6 +16,8 @@ class Controller_Avatar extends \AbstractController{
 	public $name_field = 'name';
 	public $default_value = '';
 	public $image_field = 'image';
+	public $float = 'left';
+	public $model=null;
 
 	public $_options = [
 			"border"=> [
@@ -25,9 +27,10 @@ class Controller_Avatar extends \AbstractController{
 			'colors'=> ['#a3a948', '#edb92e', '#f85931', '#ce1836', '#009989'],
 			'text'=> '#fff',
 			'size'=> 60,
-			'margin'=> 5,
+			'margin'=> '5px',
 			'middlename'=> false,
-			'uppercase'=> true
+			'uppercase'=> true,
+			'display'=>'inline-block'
 		];
 	public $extra_classes='';
 	public $options=[];
@@ -40,7 +43,7 @@ class Controller_Avatar extends \AbstractController{
 		$this->style = $style = "
 				color: ".$this->_options['text'].";
 				border: ".$this->_options['border']['width'] ."px solid ". $this->_options['border']['color'].";
-				display: inline-block;
+				display: ".$this->_options['display'].";
 				font-family: Arial,Helvetica Neue, Helvetica, sans-serif;
 				font-size: ". $this->_options['size'] * 0.35 ."px;
 				border-radius: ".$this->_options['size']."px;
@@ -48,7 +51,7 @@ class Controller_Avatar extends \AbstractController{
 				max-width: ".$this->_options['size']."px;
 				height: ".$this->_options['size']."px;
 				line-height: ".$this->_options['size']."px;
-				margin: ".$this->_options['margin']."px;
+				margin: ".$this->_options['margin'].";
 				text-align: center;
 				text-transform : ".($this->_options['uppercase'] ? "uppercase" : "").";";
 		
@@ -105,9 +108,9 @@ class Controller_Avatar extends \AbstractController{
 				$style .= "background-color: lightgray;";
 				$initials = $this->default_value;
 			}
-			$obj->template->trySetHTML('avatar',"<div class='namebadge $this->extra_classes' style=\"position:relative; float:left; ".$style."\">".$initials."</div>");
-		}else{
-				$obj->template->trySetHtml('avatar',"<img src='".$obj->model[$this->image_field]."' alt=''  style='max-width:".$this->_options['size']."px'/>");
+			$obj->template->trySetHTML('avatar',"<div class='namebadge $this->extra_classes' style=\"position:relative; ".($this->float?'float:'.$this->float:'')." ;".$style."\">".$initials."</div>");
+		}else{			
+			$obj->template->trySetHtml('avatar',"<img src='".$obj->model[$this->image_field]."' alt=''  style='max-width:".$this->_options['size']."px'/>");
 		}
 	}
 }
