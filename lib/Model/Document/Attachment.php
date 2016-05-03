@@ -22,5 +22,9 @@ class Model_Document_Attachment extends \xepan\base\Model_Table{
 		
 		$this->hasOne('xepan\base\Document','document_id');
 		$this->add('filestore\Field_File','file_id');
+
+		$this->is([
+				'file_id|required'
+			]);
 	}
 }
