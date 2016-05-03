@@ -1,0 +1,30 @@
+{paginatoratk}
+<div id="{$_name}" class="atk-box-small atk-actions atk-align-center">{prev}<a class="disabled">« Prev</a>{/}
+      {first}{/}
+      {points_left}{/}
+      {rows}
+      {row}<a data-skip="{$pn}" href="{$href}" class="itemlits {cur}ui-state-active ui-corner-all{/}">{$label}</a>{/}<a href="#">2</a><a href="#">3</a><a href="#" class="disabled">…</a><a href="#">19</a><a href="#">20</a><a href="#">21</a>    {/rows}
+      {points_right}{/}
+      {last}{/}
+      {next}<a class="disabled">Next »</a>{/}
+</div>{/paginatoratk}
+{paginatorcube}
+<ul class="pagination">{prev}
+  <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/prev}
+  {first}
+  <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/first}
+  {points_left}
+  <li><a data-skip="{$pn}" href="#points_left" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/}
+  {rows}{row}
+  <li><a data-skip="{$pn}" href="{$href}" class="{cur}active{/}">{$label}</a></li>{/row}
+  <li><a href="#">2</a></li>
+  <li class="active"><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>{/rows}
+  {points_right}
+  <li><a data-skip="{$pn}" href="#points_right" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/}
+  {last}
+  <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/last}
+  {next}
+  <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/next}
+</ul>{/}

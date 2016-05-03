@@ -16,6 +16,7 @@ class Grid extends \Grid{
     public $row_edit=true;
 	public $row_delete=true;
     public $defaultTemplate = null;
+    public $paginator_class='xepan\base\Paginator';
 
     public $sort_icons = array(
         ' fa fa-sort',
