@@ -20,7 +20,7 @@
 namespace xepan\base;
 
 class Paginator extends \CompleteLister {
-    public $ipp=30;         // By default, show 30 records per page
+    public $ipp=25;         // By default, show 30 records per page
     public $skip=0;         // By default, do not skip anything
     public $range=4;        // Display 4 adjacent pages from current one
 
@@ -80,6 +80,9 @@ class Paginator extends \CompleteLister {
         }
     }
     function recursiveRender(){
+
+        if($ipp = $this->api->stickyGET($this->name.'_ipp'))
+            $this->ipp = $ipp;
 
         // get data source
         if (! $this->source) {
@@ -214,8 +217,13 @@ class Paginator extends \CompleteLister {
         }
 
         if($this->ajax_reload){
-            $this->js('click',$this->owner->js()->reload(array($this->skip_var=>$this->js()->_selectorThis()->attr('data-skip'))))
+            $this->js('click',$this->owner->js()->reload(array($this->skip_var=>$this->js()->_selectorThis()->attr('data-skip'),$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector')->val())))
                 ->_selector('#'.$this->name.' a');
+
+            $this->js('change',$this->owner->js()->reload(array($this->skip_var=>0,$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector')->val())))
+                ->_selector('#ipp-selector');
+            $this->js(true)->_selector('#ipp-selector')->select2();
+            $this->js(true)->_selector('#ipp-selector')->val($this->ipp);
         }
 
         parent::setSource($data);

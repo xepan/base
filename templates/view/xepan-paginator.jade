@@ -23,7 +23,17 @@
   | {/}
 {/paginatoratk}
 {paginatorcube}
-ul.pagination
+.paginator.pull-left(style='margin-right:100px')
+  select#ipp-selector
+    option 5
+    option 10
+    option 25
+    option 50
+    option 100
+    option 500
+    option All
+ul.pagination.pull-left(id='{$_name}')
+  li
   {prev}
   li
     a(data-skip='{$pn}', href='{$href}', class='{cur}ui-state-active ui-corner-all{/}') {$label}
@@ -34,10 +44,10 @@ ul.pagination
   {/first}
   {points_left}
   li
-    a(data-skip='{$pn}', href='#points_left', class='{cur}ui-state-active ui-corner-all{/}') {$label}
+    span(data-skip='{$pn}', href='#points_left', class='{cur}ui-state-active ui-corner-all{/}') {$label}
   {/}
   {rows}{row}
-  li
+  li(class="{cur}active{/}")
     a(data-skip='{$pn}', href='{$href}', class='{cur}active{/}') {$label}
   {/row}
   li
@@ -51,7 +61,7 @@ ul.pagination
   {/rows}
   {points_right}
   li
-    a(data-skip='{$pn}', href='#points_right', class='{cur}ui-state-active ui-corner-all{/}') {$label}
+    span(data-skip='{$pn}', href='#points_right', class='{cur}ui-state-active ui-corner-all{/}') {$label}
   {/}
   {last}
   li

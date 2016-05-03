@@ -9,20 +9,32 @@
       {next}<a class="disabled">Next »</a>{/}
 </div>{/paginatoratk}
 {paginatorcube}
-<ul class="pagination">{prev}
+<div style="margin-right:100px" class="paginator pull-left">
+  <select id="ipp-selector">
+    <option>5</option>
+    <option>10</option>
+    <option>25</option>
+    <option>50</option>
+    <option>100</option>
+    <option>500</option>
+    <option>All</option>
+  </select>
+</div>
+<ul id="{$_name}" class="pagination pull-left">
+  <li></li>{prev}
   <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/prev}
   {first}
   <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/first}
   {points_left}
-  <li><a data-skip="{$pn}" href="#points_left" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/}
+  <li><span data-skip="{$pn}" href="#points_left" class="{cur}ui-state-active ui-corner-all{/}">{$label}</span></li>{/}
   {rows}{row}
-  <li><a data-skip="{$pn}" href="{$href}" class="{cur}active{/}">{$label}</a></li>{/row}
+  <li class="{cur}active{/}"><a data-skip="{$pn}" href="{$href}" class="{cur}active{/}">{$label}</a></li>{/row}
   <li><a href="#">2</a></li>
   <li class="active"><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>{/rows}
   {points_right}
-  <li><a data-skip="{$pn}" href="#points_right" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/}
+  <li><span data-skip="{$pn}" href="#points_right" class="{cur}ui-state-active ui-corner-all{/}">{$label}</span></li>{/}
   {last}
   <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/last}
   {next}
