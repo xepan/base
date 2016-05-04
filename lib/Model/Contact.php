@@ -115,7 +115,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$communication->setOrder('created_at','desc');
 		$contact_id = $this->id;
 
-		$lister=$page->add('xepan\base\View_Communication',['contact_id'=>$contact_id],null,null);
+		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
 		$lister->setModel($communication);
 	}
 
