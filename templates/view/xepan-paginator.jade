@@ -23,7 +23,12 @@
   | {/}
 {/paginatoratk}
 {paginatorcube}
-.paginator.pull-left(style='margin-right:100px')
+style.
+  .pagination > li{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+.paginator(style='margin:5px 5px 0 0; float: left;')
   select#ipp-selector
     option 5
     option 10

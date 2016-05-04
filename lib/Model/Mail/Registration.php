@@ -22,7 +22,7 @@ class Model_Mail_Registration extends \xepan\base\Model_Epan_Configuration{
 		$contact=$user->ref('Contacts');
 
 
-		$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadAny();
+		$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reg_model=$this->add('xepan\base\Model_Mail_Registration');

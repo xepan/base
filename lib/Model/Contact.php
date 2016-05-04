@@ -138,4 +138,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
 	}
 
+	function getPhones(){
+		$emails = $this->ref('Phones')
+								->_dsql()->del('fields')->field('value')->getAll();
+		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);	
+	}
+
 }

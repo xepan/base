@@ -21,7 +21,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('name')->hint('Identification for your epan');
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
-		$this->hasMany('xepan\base\Epan_EmailSetting',null,null,'EmailSettings');
+		$this->hasMany('xepan\communication\Epan_EmailSetting',null,null,'EmailSettings');
 		
 		$this->hasMany('xepan\base\Contact');
 		$this->hasMany('xepan\base\User',null,null,'Users');

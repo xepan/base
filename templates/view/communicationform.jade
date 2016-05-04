@@ -7,24 +7,29 @@
 .row.xepan-push
 	.col-md-12
 		{$body}
-.row.xepan-push
+.row.xepan-push.div.atk-form-row
 	.col-md-4
-		span Notify Via Email:
-		span.checkbox-nice {$notifymail}
+		{$email_to}
 	.col-md-4
-		{$mails}
-	.col-md-2
-		{$ccmails}
-	.col-md-2
-		{$bccmails}	
-.row.xepan-push		
+		{$cc_mails}
 	.col-md-4
-		span Notify Via Sms:	
-		span.checkbox-nice {$notifysms}
-	.col-md-8
-		{$phno}
+		{$bcc_mails}	
+.row.xepan-push.div.atk-form-row
+	.col-md-6
+		|From Email-Id: {$from_email}
+.row.xepan-push.div.atk-form-row
+	.col-md-4
+		|From Number: {$from_phone}
+	.col-md-4
+		|To: {$called_to}
+	.col-md-4	 
+		|Employee: {$from_person}
+.row.xepan-push.div.atk-form-row
+	.col-md-4
+		|From Number: {$from_number}
+	.col-md-4
+		|To: {$sms_to}
+	.col-md-4										
 .row.xepan-push
 	.col-md-6
-		|From Email-Id: {$fromemail}
-	.col-md-6
-		{$FormButtons}					
+		{$FormButtons}									

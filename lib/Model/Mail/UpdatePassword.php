@@ -17,7 +17,7 @@ class Model_Mail_UpdatePassword extends \xepan\base\Model_Epan_Configuration{
 		}
 		if(!$user->loaded()) throw new \Exception("User Must Loaded", 1);
 		$contact=$user->ref('Contacts');
-		$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadAny();
+		$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reg_model=$this->add('xepan\base\Model_Mail_UpdatePassword');

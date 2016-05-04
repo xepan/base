@@ -21,7 +21,7 @@ class Model_Mail_ResetPassword extends \xepan\base\Model_Epan_Configuration{
 			throw new \Exception("This Email Id  not Ragister", 1);
 		}
 
-		$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadAny();
+		$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 		$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 		$reset_pass=$this->add('xepan\base\Model_Mail_ResetPassword');

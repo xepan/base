@@ -9,7 +9,13 @@
       {next}<a class="disabled">Next »</a>{/}
 </div>{/paginatoratk}
 {paginatorcube}
-<div style="margin-right:100px" class="paginator pull-left">
+<style>
+  .pagination > li{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+</style>
+<div style="margin:5px 5px 0 0; float: left;" class="paginator">
   <select id="ipp-selector">
     <option>5</option>
     <option>10</option>
