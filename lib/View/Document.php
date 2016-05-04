@@ -30,6 +30,7 @@ class View_Document extends \View{
 	public $submit_button="Save";
 
 	public $effective_template=null;
+	public $effective_object=null;
 
 	public $add_on_view=false;
 
@@ -40,12 +41,14 @@ class View_Document extends \View{
 		if($this->action == 'view'){
 			$this->form = new \Dummy();
 			$this->effective_template=$this->template;
+			$this->effective_object= $this;
 		}else{
 			$ot = clone $this->template;
 			$this->template->loadTemplateFromString('{$Content}');
 			$this->form = $this->add('Form',null,null,null,true);
 			$this->form->setLayout($ot);
 			$this->effective_template = $this->form->layout->template;
+			$this->effective_object = $this->form;
 			if($this->submit_button)
 				$this->form->addSubmit($this->submit_button);
 		}
@@ -73,20 +76,19 @@ class View_Document extends \View{
 			$fields = $view_fields;
 		}
 		else{
-			$fields = $form_fields;
 			foreach ($this->form_fields as $fld) {
 				if($model->getElement($fld)->system()) $model->getElement($fld)->system(false)->editable(true);
 			}
 			$m = $this->form->setModel($model,$this->form_fields);
 
-			$view_fields = $view_fields?:$m->getActualFields();
+			$fields = $view_fields?:$m->getActualFields();
 			/* Still NonEditable fields should show as on view mode */
-			$readonly_fields = array_diff($view_fields, $this->form_fields?:[]);
+			$readonly_fields = array_diff($fields, $this->form_fields?:[]);
 
 			// remove derefrenced_fields
 			$remove_tag=[];
 			foreach ($readonly_fields as $key=>$rf) {
-				if( in_array($rf.'_id', $fields) && !in_array($rf.'_id', $this->deref_fields_in_form)){
+				if( in_array($rf.'_id', $this->form_fields) && !in_array($rf.'_id', $this->deref_fields_in_form)){
 					unset($readonly_fields[$key]);
 				}
 			}
@@ -94,11 +96,10 @@ class View_Document extends \View{
 			foreach ($readonly_fields as $fld) {
 				@$this->form->layout->template->trySetHTML($fld,$model[$fld]);
 			}
-			parent::setModel($model,$view_fields);			
-			return $m;
 		}
 
-		return parent::setModel($model,$fields);
+		$m = parent::setModel($model,$fields);
+		return $m;
 	}
 
 	function modelRender()
