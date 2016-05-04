@@ -7,17 +7,27 @@
 <div class="row xepan-push">
   <div class="col-md-12">{$body}</div>
 </div>
-<div class="row xepan-push">
-  <div class="col-md-4"><span>Notify Via Email:</span><span class="checkbox-nice">{$notifymail}</span></div>
-  <div class="col-md-4">{$mails}</div>
-  <div class="col-md-2">{$ccmails}</div>
-  <div class="col-md-2">{$bccmails}	</div>
+<div class="row xepan-push div atk-form-row">
+  <div class="col-md-4">{$email_to}</div>
+  <div class="col-md-4">{$cc_mails}</div>
+  <div class="col-md-4">{$bcc_mails}	</div>
 </div>
-<div class="row xepan-push">		
-  <div class="col-md-4"><span>Notify Via Sms:	</span><span class="checkbox-nice">{$notifysms}</span></div>
-  <div class="col-md-8">{$phno}</div>
+<div class="row xepan-push div atk-form-row">
+  <div class="col-md-6">From Email-Id: {$from_email}</div>
+</div>
+<div class="row xepan-push div atk-form-row">
+  <div class="col-md-4">From Number: {$from_phone}</div>
+  <div class="col-md-4">To: {$called_to}</div>
+  <div class="col-md-4">
+    	 
+    Employee: {$from_person}
+  </div>
+</div>
+<div class="row xepan-push div atk-form-row">
+  <div class="col-md-4">From Number: {$from_number}</div>
+  <div class="col-md-4">To: {$sms_to}</div>
+  <div class="col-md-4">										</div>
 </div>
 <div class="row xepan-push">
-  <div class="col-md-6">From Email-Id: {$fromemail}</div>
-  <div class="col-md-6">{$FormButtons}					</div>
+  <div class="col-md-6">{$FormButtons}									</div>
 </div>
