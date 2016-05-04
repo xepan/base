@@ -36,7 +36,7 @@ class View_Communication extends \CompleteLister{
 
 			if($form->isSubmitted()){
 				if($form['notifymail']){
-					$email_settings = $this->add('xepan\base\Model_Epan_EmailSetting');
+					$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting');
 					$email_settings->loadBy('email_username',$form['fromemail']);					
 
 					$communication = $p->add('xepan\communication\Model_Communication_Abstract_Email');					

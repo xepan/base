@@ -6,7 +6,7 @@ class page_general_email extends \Page{
 		parent::init();
 		$action = $this->api->stickyGET('action')?:'view';
 
-		$email_setting= $this->add('xepan\base\Model_Epan_EmailSetting')->tryLoadBy('id',$this->api->stickyGET('emailsetting_id'));
+		$email_setting= $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadBy('id',$this->api->stickyGET('emailsetting_id'));
 		
 		$email_view=$this->add('xepan\hr\View_Document',['action'=>$action,'submit_button'=>''],null,['view/setting/email-setting']);
 
