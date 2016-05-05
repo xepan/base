@@ -88,7 +88,7 @@ class Initiator extends \Controller_Addon {
         $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
         $this->app->js(true)->_library('PNotify.desktop')->permission();
 
-        $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
+        // $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
 
         return $this;
 	}
@@ -114,7 +114,7 @@ class Initiator extends \Controller_Addon {
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
-        $truncate_models = ['Epan_Category','Epan','User','Epan_Configuration','Epan_EmailSetting','Epan_InstalledApplication','Application'];
+        $truncate_models = ['Epan_Category','Epan','User','Epan_Configuration','Epan_InstalledApplication','Application'];
         foreach ($truncate_models as $t) {
             $this->add('xepan\base\Model_'.$t)->deleteAll();
         }
