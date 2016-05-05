@@ -5,10 +5,19 @@ namespace xepan\base;
 class Tool_UserPanel extends \xepan\cms\View_Tool{
 	public $options = [
 				'layout'=>'login_view',
-				'redirect_url'=>'index'
+				'redirect_url'=>'index',
+				'login_form_layout'=>'view/login-panel', //html file 
+				'forgot_form_layout'=>'view/xepanforgotpassword', //html file 
+				'registration_form_layout'=>'view/registration', //html file 
+				'reset_form_layout'=>'view/xepanrestpassword' //html file 
 			];	
 	function init(){
 		parent::init();
+
+		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration'])){
+			$this->add('View_Error')->set('View ('.$this->options['layout'].') Not Found');
+			return;
+		}
 
 		$layout = $this->app->stickyGET('layout');
 		if($layout){
