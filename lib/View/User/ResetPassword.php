@@ -1,6 +1,7 @@
 <?php
 namespace xepan\base;
 class View_User_ResetPassword extends \View{
+	public $options = [];
 	function init(){
 		parent::init();
 
@@ -11,7 +12,7 @@ class View_User_ResetPassword extends \View{
 		$user->tryLoadAny();
 		
 		$form=$this->add('Form');
-		$form->setLayout('view/xepanrestpassword');
+		$form->setLayout($this->options['login_form_layout']);
 		$form->addField('line','email')->set($_GET['activate_email'])->validateNotNull();
 		$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
 

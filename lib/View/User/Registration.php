@@ -1,6 +1,8 @@
 <?php
 namespace xepan\base;
 class View_User_Registration extends \View{
+	public $options = [];
+
 	function init(){
 		parent::init();
 		$verifyAccount=$this->app->stickyGET('verifyAccount');
@@ -8,7 +10,7 @@ class View_User_Registration extends \View{
 		$activate_email=$this->app->stickyGET('activate_email');
 		if(!$verifyAccount){
 			$f=$this->add('Form',null,null,['form/empty']);
-			$f->setLayout(['view/registration']);
+			$f->setLayout($this->option['registration_form_layout']);
 			$f->addField('line','first_name');
 			$f->addField('line','last_name');
 			$f->addField('line','email_id')->validate('required');
