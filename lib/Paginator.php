@@ -222,9 +222,11 @@ class Paginator extends \CompleteLister {
 
             $this->js('change',$this->owner->js()->reload(array($this->skip_var=>0,$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector')->val())))
                 ->_selector('#ipp-selector');
+            $this->js(true)->_load('select2.min')->_css('libs/select2');
             $this->js(true)->_selector('#ipp-selector')->select2();
             $this->js(true)->_selector('#ipp-selector')->select2('val',$this->ipp);
         }
+
 
         parent::setSource($data);
         return parent::recursiveRender();
