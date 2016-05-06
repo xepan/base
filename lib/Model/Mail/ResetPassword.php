@@ -31,17 +31,18 @@ class Model_Mail_ResetPassword extends \xepan\base\Model_Epan_Configuration{
 		// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
 		$temp=$this->add('GiTemplate');
 		$temp->loadTemplateFromString($email_body);
-		$url=$this->api->url('xepan_base_resetpassword',
+		$url=$this->api->url(null,
 										[
 										'secret_code'=>$user['hash'],
-										'activate_email'=>$email
+										'activate_email'=>$email,
+										'layout'=>'reset_form'
 										]
 										)->useAbsoluteURL();
 
 		$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
 	
-		$temp->setHTML('name',$user['name']);
-		$temp->setHTML('click_here_to_activate',$tag_url);
+		$temp->trySetHTML('name',$user['name']);		
+		$temp->trySetHTML('click_here_to_activate',$tag_url);
 		// echo $temp->render();
 		// exit;		
 		$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);

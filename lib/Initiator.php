@@ -8,14 +8,20 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();        
 
-                $url = "{$_SERVER['HTTP_HOST']}";
-                $sub_domain = $this->extract_subdomains($url)?:'default';
-                $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain);
-                $this->app->epan->config = $this->app->epan->ref('Configurations')->tryLoadAny();
-                
-                date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
-                $this->app->today = date('Y-m-d');
-                $this->app->now   = date('Y-m-d H:i:s');
+        $url = "{$_SERVER['HTTP_HOST']}";
+        $sub_domain = $this->extract_subdomains($url)?:'default';
+        $this->app->epan = $this->recall(
+                            $sub_domain.'_epan',
+                            $this->memorize(
+                                $sub_domain.'_epan',
+                                $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain)
+                            )
+                        );
+        $this->app->epan->config = $this->app->epan->ref('Configurations');
+        
+        date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
+        $this->app->today = date('Y-m-d');
+        $this->app->now   = date('Y-m-d H:i:s');
     }
 
     function setup_admin(){
@@ -36,9 +42,6 @@ class Initiator extends \Controller_Addon {
         ->setBasePath($elfinder_addon_base_path)
         ->setBaseURL('../vendor/studio-42/elfinder/');
 
-        $this->app->jui->addStylesheet('elfinder.full');
-        $this->app->jui->addStylesheet('elfindertheme');
-        $this->app->jui->addStaticInclude('elfinder.full');
 
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
@@ -75,20 +78,21 @@ class Initiator extends \Controller_Addon {
             $auth->model->save();
         });
         $auth->check();
+                
+        $this->app->jui->addStaticInclude('elfinder.full');
+        $this->app->jui->addStylesheet('elfinder.full');
+        $this->app->jui->addStylesheet('elfindertheme');
         
-        $this->app->js(true)
-            ->_load('pnotify.custom.min')
-            ->_css('animate')
-            ->_css('pnotify.custom.min')
-            ->_load('xepan.pnotify')
-            ;
-
+        $this->app->jui->addStaticInclude('pnotify.custom.min');
+        $this->app->jui->addStaticInclude('xepan.pnotify');
+        $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
+        $this->app->jui->addStaticStyleSheet('animate');
         $this->app->jui->addStaticInclude('xepan_jui');
+
         
         $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
         $this->app->js(true)->_library('PNotify.desktop')->permission();
 
-        // $this->api->js(true)->_selector('.sparkline')->sparkline('html', ['enableTagOptions' => true]);
 
         return $this;
 	}
