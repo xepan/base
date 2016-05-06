@@ -24,6 +24,8 @@ class View_User_LoginPanel extends \View{
 				$f->displayError('username','Please Activate Your Account First');
 			
 			$auth->login($f['username']);
+			$this->app->hook('login_panel_user_loggedin',[$auth->model]);
+
 			if($next_url = $this->app->recall('next_url','.'))
 				$this->app->redirect($this->api->url($next_url))->execute();			
         }

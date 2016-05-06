@@ -5,7 +5,7 @@ namespace xepan\base;
 class Tool_UserPanel extends \xepan\cms\View_Tool{
 	public $options = [
 				'layout'=>'login_view',
-				'redirect_url'=>'index',
+				'login_success_url'=>'index',
 				'login_form_layout'=>'view/login-panel', //html file 
 				'forgot_form_layout'=>'view/xepanforgotpassword', //html file 
 				'registration_form_layout'=>'view/registration', //html file 
