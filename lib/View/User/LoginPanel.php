@@ -14,19 +14,20 @@ class View_User_LoginPanel extends \View{
     	$auth=$this->app->auth;
  		
         if($f->isSubmitted()){
-        	if(!($credential = $auth->verifyCredentials($f['username'],$f['password'])))
+			if(!$credential = $this->app->auth->verifyCredentials($f['username'],$f['password'])){
+				$f->displayError($f->getElement('password'),'Wrong Credentials');
+			}
 					
-					$user = $this->add('xepan\base\Model_User')->load($credential);
-					if($user['status']=='Inactive')
-						$f->displayError('username','Please Activate Your Account First');
-					
-					$f->displayError('username','Wrong Credentials');
-
-					$auth->login($f['username']);
-					if($next_url = $this->app->recall('next_url'))
-						$this->app->redirect($this->api->url($next_url))->execute();
-					
-					$this->js()->reload()->execute();
+			$user = $this->add('xepan\base\Model_User')->load($credential);
+			
+			if($user['status']=='Inactive')
+				$f->displayError('username','Please Activate Your Account First');
+			
+			$auth->login($f['username']);
+			if($next_url = $this->app->recall('next_url'))
+				$this->app->redirect($this->api->url($next_url))->execute();
+			
+			$this->js()->reload()->execute();
         }
 	}
 }
