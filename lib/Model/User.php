@@ -71,16 +71,11 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->save();
 	}
 
-	// function createNewCustomer($first_name,$last_name,$email){
-	// 	$customer=$this->add('xepan\commerce\Model_Customer');
-	// 	$customer['epan_id']=$this->app->auth->model->ref('epan_id')->id;
-	// 	$customer['user_id']=$this->id;
-	// 	$customer['first_name']=$first_name;
-	// 	$customer['last_name']=$last_name;
-	// 	$customer->save();
-	// 	$email_model=$customer->ref('Emails');
-	// 	$email_model['head']='Official';
-	// 	$email_model['value']=$email;
-	// 	$email_model->save();
-	// }
+	function createNewCustomer($first_name,$last_name,$user_id){
+		$customer=$this->add('xepan\commerce\Model_Customer');
+		$customer['first_name']=$first_name;
+		$customer['last_name']=$last_name;
+		$customer['user_id']=$user_id;
+		$customer->save();
+	}
 }

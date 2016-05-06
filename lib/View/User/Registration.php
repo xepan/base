@@ -24,15 +24,15 @@ class View_User_Registration extends \View{
 				$user['epan_id']=$this->app->auth->model->ref('epan_id')->id;
 				$user['username']=$f['email_id'];
 				$user['password']=$f['password'];
-				// $user['status']='Active';
 				$user['hash']=rand(9999,100000);
-
 				$user->save();
+
 				$this->api->auth->addEncryptionHook($user);
 				$reg_m=$this->add('xepan\base\Model_Mail_Registration');
 				$reg_m->sendWelcomeMail($f['email_id']);
 
-				// $user->createNewCustomer($f['first_name'],$f['last_name'],$f['email_id']);
+				$user->createNewCustomer($f['first_name'],$f['last_name'],$user->id);
+			
 			return $f->js(null,$f->js()->reload())->univ()->successMessage('Registration SuccessFully');
 			});
 	}

@@ -12,22 +12,23 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'reset_form_layout'=>'view/xepanrestpassword', //html file 
 				'verify_account_layout'=>'view/xepanverify', //html file 
 				'verify_again_layout'=>'view/xepanverifyagain', //html file 
-				'already_loggedin_layout'=>'view/alreadyloggedin' //html file 
+				'already_loggedin_layout'=>'view/alreadyloggedin', //html file 
+				'micro_login_layout'=>'view/micrologin' //html file 
 			];	
 	function init(){
 		parent::init();
 
-		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration'])){
+		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login'])){
 			$this->add('View_Error')->set('View ('.$this->options['layout'].') Not Found');
 			return;
 		}
 
-		
 		$layout = $this->app->stickyGET('layout');
 		if($layout){			
 			$this->options['layout']=$layout;
 		}
 
+		
 		$view_url = $this->api->url(null,['cut_object'=>$this->name]);
 
 		$this->on('click','a.xepan-login-panl-loadview',function($js,$data)use($view_url){
@@ -67,13 +68,21 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 					$this->app->stickyForget('options');	
 				break;
 
+				case 'micro_login':
+					$ml_view=$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
+					$this->app->stickyForget('options');	
+				break;
+
 				default:
 					$this->add('View_Error')->set('View Not Found .....specify data-showview attr');	
 			}
 			
 		}else{
 			$this->js()->univ()->loaction($this->api->url($this->options['redirect_url']));
-			$this->add('xepan\base\View_User_AlreadyLoggedin',array('options'=>$this->options));
+			if($this->options['layout'] == "micro_login")
+				$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
+			else
+				$this->add('xepan\base\View_User_AlreadyLoggedin',array('options'=>$this->options));
 		}
 	}
 
