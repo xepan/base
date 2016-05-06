@@ -6,11 +6,13 @@ class View_User_MicroLogin extends \View{
 
 		if($this->app->auth->isLoggedIn()){
 			$this->template->tryDel('login_wrapper');
-			$this->template->trySet('logout_url','/?page=logout');
+			$this->template->trySet('logout_url',$this->app->url($this->options['logout_page']));
 			$this->setModel($this->app->auth->model);
 		}
-		else
+		else{
 			$this->template->tryDel('logout_wrapper');
+			$this->template->trySet('login_url',$this->app->url($this->options['login_page']));
+		}
 
 
 	}

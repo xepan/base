@@ -13,7 +13,9 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'verify_account_layout'=>'view/xepanverify', //html file 
 				'verify_again_layout'=>'view/xepanverifyagain', //html file 
 				'already_loggedin_layout'=>'view/alreadyloggedin', //html file 
-				'micro_login_layout'=>'view/micrologin' //html file 
+				'micro_login_layout'=>'view/micrologin', //html file 
+				'logout_page'=>'logout',
+				'login_page'=>'login'
 			];	
 	function init(){
 		parent::init();
