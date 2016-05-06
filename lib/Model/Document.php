@@ -17,7 +17,7 @@ class Model_Document extends \xepan\base\Model_Table{
 	
 	public $table='document';
 	public $strict_fields=false;
-
+	
 	public $status=[];
 	public $actions=[];
 

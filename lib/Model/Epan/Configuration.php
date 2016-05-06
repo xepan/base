@@ -28,6 +28,9 @@ class Model_Epan_Configuration extends \xepan\base\Model_Table{
 	}
 
 	function getConfig($head,$app=null){
+
+		if($cached_value = $this->recall($this->app->epan->id.'_'.$app.'_'.$head,false)) return $cached_value;
+		
 		$config=$this->add('xepan\base\Model_Epan_Configuration');
 		$config->addCondition('head',$head);
 		if($app)
@@ -44,6 +47,12 @@ class Model_Epan_Configuration extends \xepan\base\Model_Table{
 		$config->tryLoadAny();
 
 		$config['value'] = $value;
-		return $config->save();
+		$config->save();
+
+		if($this->recall($this->app->epan->id.'_'.$app.'_'.$head,false)){
+			$this->memorize($this->app->epan->id.'_'.$app.'_'.$head, $value);
+		}
+
+		return $config;
 	}
 }
