@@ -26,8 +26,11 @@ class View_User_LoginPanel extends \View{
 			$auth->login($f['username']);
 			$this->app->hook('login_panel_user_loggedin',[$auth->model]);
 
-			if($next_url = $this->app->recall('next_url','.'))
-				$this->app->redirect($this->api->url($next_url))->execute();			
+			if($next_url = $this->app->recall('next_url'))
+				$this->app->redirect($this->api->url($next_url))->execute();
+
+			if($success_url = $this->options['login_success_url'])
+				$this->app->redirect($this->app->url($success_url));
         }
 	}
 }
