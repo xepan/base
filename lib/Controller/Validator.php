@@ -37,6 +37,7 @@ class Controller_Validator extends \Controller_Validator{
 
         $result = $q
                 ->where($field, $a)
+                ->where($field,'<>', '')
                 ->where($q->getField('id'),'<>', $this->owner->id)
                 ->where($q->expr('[0] = [1]',[$this->owner->getElement('epan_id'),$this->app->epan->id]))
                 ->field($field)
