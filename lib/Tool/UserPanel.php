@@ -11,7 +11,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'registration_form_layout'=>'view/registration', //html file 
 				'reset_form_layout'=>'view/xepanrestpassword', //html file 
 				'verify_account_layout'=>'view/xepanverify', //html file 
-				'verify_again_layout'=>'view/xepanverifyagain' //html file 
+				'verify_again_layout'=>'view/xepanverifyagain', //html file 
+				'already_loggedin_layout'=>'view/alreadyloggedin' //html file 
 			];	
 	function init(){
 		parent::init();
@@ -63,7 +64,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 
 				case 'reset_form':
 					$va_view=$this->add('xepan\base\View_User_ResetPassword',array('options'=>$this->options));
-					$this->app->stickyForget('options');
+					$this->app->stickyForget('options');	
 				break;
 
 				default:
@@ -72,7 +73,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			
 		}else{
 			$this->js()->univ()->loaction($this->api->url($this->options['redirect_url']));
-			$this->add('View')->setHTML('Allready Logged In');
+			$this->add('xepan\base\View_User_AlreadyLoggedin',array('options'=>$this->options));
 		}
 	}
 

@@ -24,10 +24,8 @@ class View_User_LoginPanel extends \View{
 				$f->displayError('username','Please Activate Your Account First');
 			
 			$auth->login($f['username']);
-			if($next_url = $this->app->recall('next_url'))
-				$this->app->redirect($this->api->url($next_url))->execute();
-			
-			$this->js()->reload()->execute();
+			if($next_url = $this->app->recall('next_url','.'))
+				$this->app->redirect($this->api->url($next_url))->execute();			
         }
 	}
 }
