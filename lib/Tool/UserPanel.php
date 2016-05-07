@@ -5,7 +5,7 @@ namespace xepan\base;
 class Tool_UserPanel extends \xepan\cms\View_Tool{
 	public $options = [
 				'layout'=>'login_view',
-				'redirect_url'=>'index',
+				'login_success_url'=>'index',
 				'login_form_layout'=>'view/login-panel', //html file 
 				'forgot_form_layout'=>'view/xepanforgotpassword', //html file 
 				'registration_form_layout'=>'view/registration', //html file 
@@ -15,7 +15,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'already_loggedin_layout'=>'view/alreadyloggedin', //html file 
 				'micro_login_layout'=>'view/micrologin', //html file 
 				'logout_page'=>'logout',
-				'login_page'=>'login'
+				'login_page'=>'login',
+				'show_micro_login'=>false
 			];	
 	function init(){
 		parent::init();
@@ -36,6 +37,12 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		$this->on('click','a.xepan-login-panl-loadview',function($js,$data)use($view_url){
 			return $this->js()->reload(['layout'=>$data['showview']],null,$view_url);
 		});
+
+		if($this->options['show_micro_login']){
+			$ml_view=$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
+			$this->app->stickyForget('options');	
+			return;
+		}
 
 		if(!$this->app->auth->isLoggedIn()){
 
@@ -70,9 +77,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 					$this->app->stickyForget('options');	
 				break;
 
-				case 'micro_login':
-					$ml_view=$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
-					$this->app->stickyForget('options');	
+				case 'micro_login':					
 				break;
 
 				default:
