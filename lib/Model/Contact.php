@@ -116,7 +116,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$contact_id = $this->id;
 
 		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
-		$lister->setModel($communication);
+		$lister->setModel($communication)->setOrder(['created_at desc','id desc']);
 	}
 
 	//load Logged In check for the user of contact loaded or not, 
