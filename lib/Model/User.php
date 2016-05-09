@@ -77,7 +77,7 @@ class Model_User extends \xepan\base\Model_Table{
 	function deactivate(){
 		$this['status']='InActive';
 		$this->app->employee
-            ->addActivity("User '".$this['username']."' is now active", null/* Related Document ID*/, $this->id /*Related Contact ID*/)
+            ->addActivity("User '". $this['username'] ."' has been deactivated", null/* Related Document ID*/, $this->id /*Related Contact ID*/)
             ->notifyWhoCan('activate','InActive',$this);
 		$this->save();
 	}
@@ -85,7 +85,7 @@ class Model_User extends \xepan\base\Model_Table{
 	function activate(){
 		$this['status']='Active';
 		$this->app->employee
-            ->addActivity("User '". $this['name'] ."' has been deactivated", null /*Related Document ID*/, $this->id /*Related Contact ID*/)
+            ->addActivity("User '".$this['username']."' now active", null /*Related Document ID*/, $this->id /*Related Contact ID*/)
             ->notifyWhoCan('deactivate','Active',$this);
 		$this->save();
 	}
