@@ -12,7 +12,7 @@ class View_User_ResetPassword extends \View{
 		$user->tryLoadAny();
 		
 		$form=$this->add('Form');
-		$form->setLayout($this->options['reset_form_layout']);
+		$form->setLayout('view/xepanrestpassword');
 		$form->addField('line','email')->set($_GET['activate_email'])->validateNotNull();
 		$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
 

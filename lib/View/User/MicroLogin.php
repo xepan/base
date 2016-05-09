@@ -24,6 +24,6 @@ class View_User_MicroLogin extends \View{
 	}
 
 	function defaultTemplate(){		
-		return [$this->options['micro_login_layout']];
+		return ['view/micrologin'];
 	}
 }			

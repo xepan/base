@@ -6,7 +6,7 @@ class View_User_Registration extends \View{
 	function init(){
 		parent::init();
 			$f=$this->add('Form',null,null,['form/empty']);
-			$f->setLayout($this->options['registration_form_layout']);
+			$f->setLayout('view/registration');
 			$f->addField('line','first_name');
 			$f->addField('line','last_name');
 			$f->addField('line','email_id')->validate('required');
