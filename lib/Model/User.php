@@ -17,7 +17,10 @@ class Model_User extends \xepan\base\Model_Table{
 
 	public $table="user";
 	public $acl=true;
-
+	public $status=[
+	'Active',
+	'InActive'
+	];
 	public $actions=[
 		'Active'=>['view','edit','delete','deactivate'],
 		'InActive'=>['view','edit','delete','activate']
@@ -29,7 +32,7 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\Epan');
 		$this->hasOne('xepan\base\Contact','created_by_id');
 
-		$this->addField('username');
+		$this->addField('username')->sortable(true);
 		$this->addField('password')->type('password');
 		$this->addField('type');
 		$this->addField('scope')->enum(['WebsiteUser','AdminUser','SuperUser'])->defaultValue('WebsiteUser');
@@ -43,6 +46,16 @@ class Model_User extends \xepan\base\Model_Table{
 			]);
 
 		// $this->app->auth->addEncryptionHook($this);
+
+
+		
+		$this->addExpression('related_contact')->set(function($m,$q){
+			return $m->refSQL('Contacts')->setLimit(1)->fieldQuery('name');
+		})->sortable(true);
+
+		$this->addExpression('related_contact_type')->set(function($m,$q){
+			return $m->refSQL('Contacts')->setLimit(1)->fieldQuery('type');
+		})->sortable(true);
 
 	}
 

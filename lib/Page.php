@@ -10,7 +10,15 @@ class Page extends \Page {
 					];
 
 	function init(){
-		parent::init();		
+		parent::init();
+
+		if(!$this->app->auth->isLoggedIn() || !in_array($this->app->auth->model['scope'] , ['AdminUser','SuperUser'])){
+			throw $this->exception('You are not authorised to access this page')
+						->addMoreInfo('User Type',$this->app->auth->model['scope'])
+						->addMoreInfo('page',$this->app->page)
+						;
+
+		}
 
 		$breadcrumbs = [];
 		foreach ($this->breadcrumb as $title => $url) {
