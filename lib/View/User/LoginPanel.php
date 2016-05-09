@@ -8,7 +8,7 @@ class View_User_LoginPanel extends \View{
 		parent::init();
 
         $f = $this->add('Form',null,null,['form/minimal']);
-        $f->setLayout($this->options['login_form_layout']);
+        $f->setLayout('view/login-panel');
         $f->addField('Line','username','Email address');
         $f->addField('Password','password','Password');
     	$auth=$this->app->auth;

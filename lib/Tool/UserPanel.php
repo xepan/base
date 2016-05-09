@@ -6,14 +6,6 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 	public $options = [
 				'layout'=>'login_view',
 				'login_success_url'=>'index',
-				'login_form_layout'=>'view/login-panel', //html file 
-				'forgot_form_layout'=>'view/xepanforgotpassword', //html file 
-				'registration_form_layout'=>'view/registration', //html file 
-				'reset_form_layout'=>'view/xepanrestpassword', //html file 
-				'verify_account_layout'=>'view/xepanverify', //html file 
-				'verify_again_layout'=>'view/xepanverifyagain', //html file 
-				'already_loggedin_layout'=>'view/alreadyloggedin', //html file 
-				'micro_login_layout'=>'view/micrologin', //html file 
 				'logout_page'=>'logout',
 				'login_page'=>'login',
 				'show_micro_login'=>false

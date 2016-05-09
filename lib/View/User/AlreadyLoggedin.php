@@ -10,6 +10,6 @@ class View_User_AlreadyLoggedin extends \View{
 	}
 	
 	function defaultTemplate(){
-		return [$this->options['already_loggedin_layout']];
+		return ['view/alreadyloggedin'];
 	}
 }	
