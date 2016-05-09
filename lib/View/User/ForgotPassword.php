@@ -6,7 +6,7 @@ class View_User_ForgotPassword extends \View{
 		parent::init();
 		$form=$this->add('Form');
 		$form->setLayout('view/xepanforgotpassword');
-		$form->addField('line','email');
+		$form->addField('line','email')->validate('required');
 
 		if($form->isSubmitted()){
 			$user=$this->add('xepan\base\Model_User');
@@ -14,8 +14,7 @@ class View_User_ForgotPassword extends \View{
 			$user->tryLoadAny();
 			
 			if(!$user->loaded()){
-				throw new \Exception($user->id, 1);
-				// $form->displayError('email','Email Id Not Register');
+				$form->displayError('email','Email Id Not Register');
 			}else{
 				$user['hash']=rand(9999,100000);
 				$user->update();
