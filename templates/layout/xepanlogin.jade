@@ -22,9 +22,7 @@
                       .row
                         .col-xs-6
                           .checkbox-nice
-                            input#remember-me(type='checkbox', checked='checked')
-                            label(for='remember-me')
-                              | Remember me
+                            {$memorize}
                         a#login-forget-link.col-xs-6(href='?page=xepan_base_forgotpassword')
                           | Forgot password?
                     .row
@@ -47,6 +45,6 @@
           #login-box-footer
             .row
               .col-xs-12
-                | Do not have an account?
-                a(href='?page=xepan_base_registration' style="color:gray")
-                  | Register now
+                | Powered by
+                a(href='http://www.xavoc.com' style="color:gray")
+                  | Xavoc Technocrats Pvt. Ltd
