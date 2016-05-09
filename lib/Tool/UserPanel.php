@@ -45,7 +45,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		}
 
 		if(!$this->app->auth->isLoggedIn()){
-
+			
 			switch ($this->options['layout']) {
 				case 'login_view':
 					$user_login=$this->add('xepan\base\View_User_LoginPanel',array('options'=>$this->options));

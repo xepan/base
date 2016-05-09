@@ -2,7 +2,7 @@
 
 namespace xepan\base;
 
-class page_logout extends \Page{
+class page_logout extends \xepan\base\Page{
 	public $title = "Logout Page";
 	function init(){
 		parent::init();

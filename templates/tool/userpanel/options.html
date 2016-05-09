@@ -1,0 +1,24 @@
+
+<div id="{$_name}" style="display:none" for-xepan-component="/xepan/base/Tool_UserPanel" class="xepan-tool-options">
+  <h3>User Panel Options</h3>
+  <div class="xepan-tool-option">
+    <div class="xepan-tool-option-title">Layout</div>
+    <div class="xepan-tool-option-value"> 
+      <select id="user-panel-logo">
+        <option>Micro</option>
+        <option>Mini</option>
+        <option>Standard</option>
+        <option>Full</option>
+      </select>
+    </div>
+  </div>
+  <script>
+    $('#user-panel-logo').on('change',function(){
+    	$(current_selected_component).css('border','2px solid red');
+    });
+    
+    $('#{$_name}').on('show',function(event){
+    	$(current_selected_component).css('border','2px solid green');
+    })
+  </script>
+</div>

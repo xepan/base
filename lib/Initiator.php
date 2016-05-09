@@ -22,6 +22,7 @@ class Initiator extends \Controller_Addon {
         date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
         $this->app->today = date('Y-m-d');
         $this->app->now   = date('Y-m-d H:i:s');
+
     }
 
     function setup_admin(){
@@ -56,7 +57,7 @@ class Initiator extends \Controller_Addon {
             $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
         }
         $auth->addHook('createForm',function($a,$p){
-
+            $this->app->loggingin=true;            
             $p->add('HR');
             $f = $p->add('Form',null,null,['form/minimal']);
             $f->setLayout(['layout/xepanlogin','form_layout']);
@@ -68,6 +69,14 @@ class Initiator extends \Controller_Addon {
             $this->breakHook($f);
 
         });
+
+        $this->api->addHook('post-init',function($app){
+            if(!isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
+                throw $this->exception('Admin Page Must extend \'xepan\base\Page\'')
+                            ->addMoreInfo('page',$app->page);
+            }
+        });
+
         $user = $this->add('xepan\base\Model_User_Active');
         $user->addCondition('scope',['AdminUser','SuperUser']);
         $auth->usePasswordEncryption('md5');
@@ -99,16 +108,29 @@ class Initiator extends \Controller_Addon {
 
     function setup_frontend(){
         $this->routePages('xepan_base');
-        $this->addLocation(array('template'=>'templates','js'=>'js'))
+        $this->addLocation(array('template'=>'templates','js'=>'templates/js'))
         ->setBaseURL('./vendor/xepan/base/')
         ;
+        $this->app->jui->addStaticInclude('xepan_jui');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->usePasswordEncryption('md5');
 
         $user = $this->add('xepan\base\Model_User_Active');
-        $user->addCondition('scope',['WebsiteUser']);
+        $user->addCondition('scope',['WebsiteUser','SuperUser','AdminUser']);
         $auth->setModel($user,'username','password');
+
+        $this->app->addMethod('exportFrontEndTool',function($app,$tool, $group='Basic'){
+            if(!isset($app->fronend_tool)) $app->fronend_tool=[];
+            $app->fronend_tool[$group][] = $tool;
+        });
+
+        $this->app->addMethod('getFrontEndTools',function($app){
+            if(!isset($app->fronend_tool)) $app->fronend_tool=[];
+            return $app->fronend_tool;
+        });
+
+        $this->app->exportFrontEndTool('xepan\base\Tool_UserPanel');
 
         return $this;
     }
