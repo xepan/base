@@ -3,16 +3,41 @@
 	.xepan-tool-option
 		.xepan-tool-option-title Layout
 		.xepan-tool-option-value 
-			select#user-panel-logo
-				option Micro
-				option Mini
-				option Standard
-				option Full
+			select#user-panel-layout(data-attr='layout')
+				option login_view
+				option forget_password
+				option new_registration
+				option verify_account
+				option verify_again
+	div.atk-form-row			
+		.xepan-tool-option
+			.xepan-tool-option-title Success URL
+			.xepan-tool-option-value 
+				input#user-panle-sucess-url(data-attr='login_success_url' data-shortname="success_url")
+	div.atk-form-row
+		.xepan-tool-option
+			.xepan-tool-option-title Logout Page
+			.xepan-tool-option-value 
+				input#user-panle-logoutpage-layout(data-attr='logout_page_form_layout' data-shortname="logout_page")
+	div.atk-form-row
+		.xepan-tool-option
+			.xepan-tool-option-title Login Page
+			.xepan-tool-option-value 
+				input#user-panle-loginpage-layout(data-attr='login_page_form_layout' data-shortname="login_page")
+	div.atk-form-row
+		.xepan-tool-option
+			.xepan-tool-option-title Micro Login
+			.xepan-tool-option-value 
+				select#user-panel-micrologin(data-attr='show_micro_login' data-shortname="micro_login")
+					option True
+					option False																							
 	script.
-		$('#user-panel-logo').on('change',function(){
-			$(current_selected_component).css('border','2px solid red');
+		$('\#{$_name} [data-attr]').on('change',function(){
+			$(current_selected_component).attr($(this).data('attr'),$(this).val());
 		});
 
 		$('\#{$_name}').on('show',function(event){
-			console.log('Loading From '+ $(current_selected_component).attr('xepan-component'));
+			$('\#{$_name} [data-attr]').each(function(index,value){
+				$(this).val($(current_selected_component).attr($(this).data('attr')));				
+			});
 		})

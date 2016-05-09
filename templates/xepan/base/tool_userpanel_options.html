@@ -4,21 +4,59 @@
   <div class="xepan-tool-option">
     <div class="xepan-tool-option-title">Layout</div>
     <div class="xepan-tool-option-value"> 
-      <select id="user-panel-logo">
-        <option>Micro</option>
-        <option>Mini</option>
-        <option>Standard</option>
-        <option>Full</option>
+      <select id="user-panel-layout" data-attr="layout">
+        <option>login_view</option>
+        <option>forget_password</option>
+        <option>new_registration</option>
+        <option>verify_account</option>
+        <option>verify_again</option>
       </select>
     </div>
   </div>
+  <div class="atk-form-row">			
+    <div class="xepan-tool-option">
+      <div class="xepan-tool-option-title">Success URL</div>
+      <div class="xepan-tool-option-value"> 
+        <input id="user-panle-sucess-url" data-attr="login_success_url" data-shortname="success_url"/>
+      </div>
+    </div>
+  </div>
+  <div class="atk-form-row">
+    <div class="xepan-tool-option">
+      <div class="xepan-tool-option-title">Logout Page</div>
+      <div class="xepan-tool-option-value"> 
+        <input id="user-panle-logoutpage-layout" data-attr="logout_page_form_layout" data-shortname="logout_page"/>
+      </div>
+    </div>
+  </div>
+  <div class="atk-form-row">
+    <div class="xepan-tool-option">
+      <div class="xepan-tool-option-title">Login Page</div>
+      <div class="xepan-tool-option-value"> 
+        <input id="user-panle-loginpage-layout" data-attr="login_page_form_layout" data-shortname="login_page"/>
+      </div>
+    </div>
+  </div>
+  <div class="atk-form-row">
+    <div class="xepan-tool-option">
+      <div class="xepan-tool-option-title">Micro Login</div>
+      <div class="xepan-tool-option-value"> 
+        <select id="user-panel-micrologin" data-attr="show_micro_login" data-shortname="micro_login">
+          <option>True</option>
+          <option>False																							</option>
+        </select>
+      </div>
+    </div>
+  </div>
   <script>
-    $('#user-panel-logo').on('change',function(){
-    	$(current_selected_component).css('border','2px solid red');
+    $('#{$_name} [data-attr]').on('change',function(){
+    	$(current_selected_component).attr($(this).data('attr'),$(this).val());
     });
     
     $('#{$_name}').on('show',function(event){
-    	console.log('Loading From '+ $(current_selected_component).attr('xepan-component'));
+    	$('#{$_name} [data-attr]').each(function(index,value){
+    		$(this).val($(current_selected_component).attr($(this).data('attr')));				
+    	});
     })
   </script>
 </div>
