@@ -10,11 +10,15 @@
     .main-box-body.clearfix.table
         table.table.user-list.table-hover(style="width:100%")
             {header}
-            thead
+            thead.xepan-hover-hand
                 tr
                     {cols}
-                    th
-                      span User
+                    th(id="{$username_sortid}")
+                      span User 
+                      span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$username_sort}
+                    th(id="{$related_contact_sortid}")
+                      span Related Contact 
+                      span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$related_contact_sort}
                     th 
                     th
                     {/}    
@@ -31,6 +35,10 @@
                       {/}
                       a.user-link(href='#user') {username}Scarlett Johansson{/}
                       span.user-subhead {scope}Admin{/}
+                    td 
+                       |{$related_contact}
+                       br
+                       small {$related_contact_type} 
                     td
                         {action}Inactive{/}
                     td(style="width: 15%;")

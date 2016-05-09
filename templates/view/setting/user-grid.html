@@ -8,9 +8,10 @@
   </header>{/Pannel}
   <div class="main-box-body clearfix table">
     <table style="width:100%" class="table user-list table-hover">{header}
-      <thead>
+      <thead class="xepan-hover-hand">
         <tr>{cols}
-          <th><span>User</span></th>
+          <th id="{$username_sortid}"><span>User </span><span style="cursor:pointer; cursor: hand; max-width:600px;">{$username_sort}</span></th>
+          <th id="{$related_contact_sortid}"><span>Related Contact </span><span style="cursor:pointer; cursor: hand; max-width:600px;">{$related_contact_sort}</span></th>
           <th> </th>
           <th></th>{/}    
         </tr>
@@ -19,6 +20,10 @@
       <tbody>{rows}{row}
         <tr data-id="{$id}" class="{$odd_even}">{cols}
           <td>{avatar}<img alt="" src="{image}img/samples/scarlet-159.png{/}"/>{/}<a href="#user" class="user-link">{username}Scarlett Johansson{/}</a><span class="user-subhead">{scope}Admin{/}</span></td>
+          <td>
+             
+            {$related_contact}<br/><small>{$related_contact_type} </small>
+          </td>
           <td>{action}Inactive{/}</td>
           <td style="width: 15%;">
             {$edit}
