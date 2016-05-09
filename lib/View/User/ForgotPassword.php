@@ -5,7 +5,7 @@ class View_User_ForgotPassword extends \View{
 	function init(){
 		parent::init();
 		$form=$this->add('Form');
-		$form->setLayout($this->options['forgot_form_layout']);
+		$form->setLayout('view/xepanforgotpassword');
 		$form->addField('line','email');
 
 		if($form->isSubmitted()){
