@@ -14,7 +14,6 @@ class View_User_VerifyAccount extends \View{
 		$form->addField('line','activation_code')->set($secret_code);
 
 		$form->onSubmit(function($f){
-
 			$user=$this->add('xepan\base\Model_User');	
 			$user->addCondition('username',$f['email']);
 			$user->tryLoadAny();
@@ -24,8 +23,20 @@ class View_User_VerifyAccount extends \View{
 			if($f['activation_code']!=$user['hash'])
 				$f->displayError('activation_code','Activation Code Not Match');
 
-			$verfiy_email=$this->add('xepan\base\Model_Mail_Verification');
-			$verfiy_email->verificationMail($f['email']);
+			$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
+			$mail = $this->add('xepan\communication\Model_Communication_Email');
+
+			$reg_model=$this->app->epan->config;
+			$email_subject=$reg_model->getConfig('VERIFICATIONE_MAIL_SUBJECT');
+			$email_body=$reg_model->getConfig('VERIFICATIONE_MAIL_BODY');
+			// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
+			$temp=$this->add('GiTemplate');
+			$temp->loadTemplateFromString($email_body);
+			$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
+			$mail->addTo($f['email']);
+			$mail->setSubject($email_subject);
+			$mail->setBody($temp->render());
+			$mail->send($email_settings);
 			
 			$user['status']='Active';
 			$user->save();
