@@ -14,7 +14,6 @@ class View_User_ForgotPassword extends \View{
 			$user->tryLoadAny();
 			
 			if(!$user->loaded()){
-				// throw new \Exception($user->id, 1);
 				$form->displayError('email','Email Id Not Register');
 			}else{
 				$user['hash']=rand(9999,100000);

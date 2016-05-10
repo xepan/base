@@ -144,4 +144,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);	
 	}
 
+	function user(){
+		return $this->ref('user_id');
+	}
 }
