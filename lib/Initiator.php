@@ -69,6 +69,7 @@ class Initiator extends \Controller_Addon {
             $this->breakHook($f);
 
         });
+        $auth->add('auth/Controller_Cookie');
 
         $this->api->addHook('post-init',function($app){
             if(!isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
@@ -119,6 +120,12 @@ class Initiator extends \Controller_Addon {
         $user = $this->add('xepan\base\Model_User_Active');
         $user->addCondition('scope',['WebsiteUser','SuperUser','AdminUser']);
         $auth->setModel($user,'username','password');
+        if(strpos($this->app->page,'_admin_')!==false){
+            $user->addCondition('scope',['SuperUser','AdminUser']);
+            $auth->setModel($user,'username','password');
+            $auth->check();
+        }
+
 
         $this->app->addMethod('exportFrontEndTool',function($app,$tool, $group='Basic'){
             if(!isset($app->fronend_tool)) $app->fronend_tool=[];

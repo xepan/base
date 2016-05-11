@@ -28,8 +28,41 @@ class View_User_Registration extends \View{
 				$user->save();
 
 				$this->api->auth->addEncryptionHook($user);
-				$reg_m=$this->add('xepan\base\Model_Mail_Registration');
-				$reg_m->sendWelcomeMail($f['email_id']);
+
+
+				$contact=$user->ref('Contacts');
+				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
+				$mail = $this->add('xepan\communication\Model_Communication_Email');
+
+				$reg_model=$this->app->epan->config;
+				$email_subject=$reg_model->getConfig('REGISTRATION_SUBJECT');
+				$email_body=$reg_model->getConfig('REGISTRATION_BODY');
+
+				// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
+				$temp=$this->add('GiTemplate');
+				$temp->loadTemplateFromString($email_body);
+				$url=$this->api->url(null,
+											[
+											'secret_code'=>$user['hash'],
+											'activate_email'=>$f['email'],
+											'layout'=>'verify_account',
+											]
+									)->useAbsoluteURL();
+
+				$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
+						
+				$temp->trySetHTML('name',$contact['name']);
+				$temp->trySetHTML('otp',$user['hash']);
+				$temp->trySetHTML('password',$user['password']);
+				$temp->trySetHTML('email_id',$user['username']);
+				$temp->trySetHTML('click_here_to_activate',$tag_url);
+				// echo $temp->render();
+				// exit;		
+				$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
+				$mail->addTo($f['email']);
+				$mail->setSubject($email_subject);
+				$mail->setBody($temp->render());
+				$mail->send($email_settings);
 
 				$user->createNewCustomer($f['first_name'],$f['last_name'],$user->id);
 			

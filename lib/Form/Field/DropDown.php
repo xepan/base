@@ -10,6 +10,8 @@ class Form_Field_DropDown extends \Form_Field_ValueList {
     function getInput($attr=array()){
         // $this->select_menu_options['change']=$this->js()->trigger('change')->_enclose();
         $this->js(true)->_load('select2.min')->_css('libs/select2')->select2($this->select_menu_options);
+        if($this->get())
+            $this->js(true)->select2('val',$this->get());
         $multi = isset($this->attr['multiple']);
         $output=$this->getTag('select',array_merge(array(
                         'name'=>$this->name . ($multi?'[]':''),

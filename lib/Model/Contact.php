@@ -46,6 +46,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		$this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
+		$this->addField('search_string')->type('text')->system(true)->defaultValue(null);
 		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
@@ -144,4 +145,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);	
 	}
 
+	function user(){
+		return $this->ref('user_id');
+	}
 }
