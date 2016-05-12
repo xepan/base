@@ -1,9 +1,9 @@
 $.each({
 	successMessage: function(msg){
-		$.univ().notify('thumbs-up',msg);
+		$.univ().notify('Success',msg,'success',null,null,null);
 	},
 	errorMessage: function(msg){
-		$.univ().notify('times-circle',msg,null,null,null,'error');
+		$.univ().notify('Error',msg,'error',null,null,null);
 	}
 },$.univ._import);
 
