@@ -1,6 +1,20 @@
 $.each({
 	notify: function(xTitle, xText, xType, isDesktop, callback, sticky){
-		if(sticky !== null) {
+		if(isDesktop != undefined || isDesktop != null || isDesktop != false || isDesktop==true) {
+			var nn = new PNotify(
+			{ 
+				title: xTitle?xTitle:"Notification",
+				text: xText,
+				type: xType==null?"notice":xType,
+				hide: false,
+				desktop: {
+						desktop: true
+					}
+			});
+		}
+
+		if(sticky != undefined || sticky != null || sticky==true) {
+			// But also show sticky notification on web page, in case user missed desktop notification
 			var nn = new PNotify(
 			{ 
 				title: xTitle?xTitle:"Notification",
@@ -9,9 +23,11 @@ $.each({
 				hide: false,
 				desktop: {
 						desktop: false
-					}
-				}
-			);
+					},
+				history: {
+        			menu: true
+    			}
+			});
 		}else{
 			var nn = new PNotify(
 			{ 
@@ -19,34 +35,10 @@ $.each({
 				text: xText,
 				type: xType==null?"success":xType,
 				history: {
-        			menu: true
+        			menu: false
     			}
     		}
 			);
 		}
-	},
-	
-	getNotification: function (xUrl){
-		$.ajax({
-			url: xUrl,
-		})
-		.done(function(ret) {
-			try{
-				msg = JSON.parse(ret);
-				if(msg['message']){
-					$.univ().notify(msg['title'], msg['message'],msg['type'],true,undefined,msg['sticky']);
-				}
-				$.univ().getNotification(xUrl);
-			}catch(e){
-
-			}
-		})
-		.fail(function() {
-			// console.log("error");
-		})
-		.always(function() {
-			// console.log("complete");
-		});		
 	}
-	
 }, $.univ._import);
