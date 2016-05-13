@@ -33,5 +33,11 @@ class Model_Contact_Info extends Model_Table{
 		$this->is([
 				'head|required'
 		]);
+
+		$this->addHook('beforeSave',$this);
+	}
+
+	function beforeSave($m){
+    	$this->app->hook('contact_info',[$this]);    	
 	}
 }
