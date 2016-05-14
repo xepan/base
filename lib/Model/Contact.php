@@ -70,6 +70,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true);
 
+		$this->addExpression('online_status')->set(function($m,$q){
+			return '"online"'; // or ideal or offline
+		});
+
 		$this->addHook('beforeSave',function($m){$m['updated_at']=$this->app->now;});
 
 		$this->addHook('beforeDelete',[$this,'deleteContactEmails']);

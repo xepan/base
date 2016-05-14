@@ -33,8 +33,11 @@ $.each({
 		$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
 		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
 	},
-	richtext: function(obj,options){
-		tinymce.baseURL = "../vendor/tinymce/tinymce";
+	richtext: function(obj,options,frontend){
+        if(typeof frontend =='undefined')
+            tinymce.baseURL = "../vendor/tinymce/tinymce";
+        else
+    		tinymce.baseURL = "./vendor/tinymce/tinymce";
 
         tinymce.editors=[];
         tinymce.activeEditors=[];

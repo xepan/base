@@ -18,12 +18,18 @@ class page_elconnector extends \Page {
 	function init(){
 		parent::init();
 
+		if($this->app->is_admin){
+			$path = $this->app->pathfinder->base_location->base_path.'/../websites/'.$this->app->current_website_name;
+		}else{
+			$path = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name;
+		}
+
 		$opts = array(
 		    'locale' => '',
 		    'roots'  => array(
 		        array(
 		            'driver' => 'LocalFileSystem',
-		            'path'   => $this->app->pathfinder->base_location->base_path.'/../websites/'.$this->app->current_website_name,
+		            'path'   => $path,
 		            'URL'    => 'http://localhost/xepan2/websites/'.$this->app->current_website_name
 		        )
 		    )

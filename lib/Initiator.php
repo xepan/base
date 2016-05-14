@@ -114,9 +114,10 @@ class Initiator extends \Controller_Addon {
 
     function setup_frontend(){
         $this->routePages('xepan_base');
-        $this->addLocation(array('template'=>'templates','js'=>'templates/js'))
+        $this->addLocation(array('template'=>'templates','js'=>'templates/js','css'=>'templates/css'))
         ->setBaseURL('./vendor/xepan/base/')
         ;
+        
         $this->app->jui->addStaticInclude('xepan_jui');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
