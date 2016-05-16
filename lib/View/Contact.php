@@ -41,7 +41,7 @@ class View_Contact extends \View{
 		parent::setModel($contact);
 		$this->document_view->setModel($this->model,null,['first_name','last_name','address','city','state','country','pin_code','organization','post','website']);
 		if($this->action=='edit')
-			$this->document_view->form->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
+			$this->document_view->form->layout->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
 		else
 			$this->document_view->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
 
