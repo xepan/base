@@ -59,12 +59,15 @@ class Controller_Avatar extends \AbstractController{
 
 		if($this->owner instanceof \Lister){
 			$obj = $this->owner;
+			if(!$this->model) $this->model = $obj->model;
 			$this->manageLister($obj);
 		}elseif($this->owner instanceof \CRUD){
 			$obj= $this->owner->grid;
+			if(!$this->model) $this->model = $obj->model;
 			$this->manageLister($obj);
 		}else{
 			$obj = $this->owner;			
+			if(!$this->model) $this->model = $obj->model;
 			$this->manageView($obj);
 		}
 	}
@@ -95,8 +98,8 @@ class Controller_Avatar extends \AbstractController{
 
 	function manageView($obj){		
 		$style= $this->style;
-		if(!$obj->model['image']){
-			$initials= trim($obj->model[$this->name_field]);
+		if(!$this->model['image']){
+			$initials= trim($this->model[$this->name_field]);
 			preg_match_all("/[A-Z]/", ucwords(strtolower($initials)), $initials);
 			if(!$this->_options['middlename'] && count($initials[0])>2)
 				$initials=[[$initials[0][0],$initials[0][count($initials[0])-1]]];
@@ -110,7 +113,7 @@ class Controller_Avatar extends \AbstractController{
 			}
 			$obj->template->trySetHTML('avatar',"<div class='namebadge $this->extra_classes' style=\"position:relative; ".($this->float?'float:'.$this->float:'')." ;".$style."\">".$initials."</div>");
 		}else{			
-			$obj->template->trySetHtml('avatar',"<img src='".$obj->model[$this->image_field]."' alt=''  style='max-width:".$this->_options['size']."px'/>");
+			$obj->template->trySetHtml('avatar',"<img src='".$this->model[$this->image_field]."' class='namebadge $this->extra_classes' alt=''  style='max-width:".$this->_options['size']."px'/>");
 		}
 	}
 }
