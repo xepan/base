@@ -74,7 +74,9 @@ class Initiator extends \Controller_Addon {
         $this->api->addHook('post-init',function($app){
             if(!isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
                 throw $this->exception('Admin Page Must extend \'xepan\base\Page\'')
-                            ->addMoreInfo('page',$app->page);
+                            ->addMoreInfo('page',$app->page)
+                            ->addMoreInfo('page_object_class',get_class($app->page_object))
+                            ;
             }
         });
 
