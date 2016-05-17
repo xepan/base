@@ -1,16 +1,13 @@
-.jumbotron.well.text-center 
-  .row Some preferred text here 
+.jumbotron.well.text-center(style = "background: #eea849;")
+  .row Activate your account by filling up the below information and clicking on verify email button
 .panel.panel-default
   .panel-heading
     strong  Activate your Account
-  .panel-body
+  .panel-body(style="margin-top:30px;margin-bottom:30px;")
     form(role='form', action='#', method='POST')
       fieldset
-        .row
-          .text-center
-            img.profile-img(src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120', alt='')
-        .row.xepan-push
-          .col-sm-12.col-md-10.col-md-offset-1
+        .row(style="padding-bottom:20px;")
+           .col-sm-12.col-md-12
             .form-group
               .input-group
                 span.input-group-addon
@@ -22,10 +19,9 @@
                   i.glyphicon.glyphicon-user
                 .atk-form-row.atk-form-field.xepan-form-field{$activation_code}    
                 //- input(placeholder='Username', name='loginname', type='text', autofocus='')
-        .row.xepan-push-large
+        .row
           .col-xs-12
             button.btn.btn-success.col-xs-12(type='submit') Verify Email 
   .panel-footer
-    | Don't have an account! 
-    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="login_view") Back to login
-     #login-box-footer                        
+    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="login_view" style="margin-left:85px;") Back to login
+    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="verify_again" style="margin-left:150px;") Resend verification
