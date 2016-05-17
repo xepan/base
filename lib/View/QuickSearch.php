@@ -15,11 +15,11 @@ class View_QuickSearch extends \View {
 		$result = $this->add('View');
 		
 		if($_GET[$f->name.'_term']){
-			$this->app->hook('quick_searched',['term'=>$_GET[$f->name.'_term'],'view'=>$result]);
+			$this->app->hook('quick_searched',[$_GET[$f->name.'_term'],$result]);
 		}
 
 		if($f->isSubmitted()){
-			$result->js()->reload([$f->name.'_term'=>$f['search_field']])->execute();
+			$result->js()->reload([$f->name.'_term'=>$f['search_xepan']])->execute();
 		}
 
 	}
