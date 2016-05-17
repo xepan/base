@@ -72,7 +72,7 @@ class Initiator extends \Controller_Addon {
         $auth->add('auth/Controller_Cookie');
 
         $this->api->addHook('post-init',function($app){
-            if(!isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
+            if(!$this->app->getConfig('developer_mode',false) && !isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
                 throw $this->exception('Admin Page Must extend \'xepan\base\Page\'')
                             ->addMoreInfo('page',$app->page)
                             ->addMoreInfo('page_object_class',get_class($app->page_object))
@@ -151,7 +151,6 @@ class Initiator extends \Controller_Addon {
     }
 
     function resetDB($write_sql=false){
-
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB

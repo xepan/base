@@ -13,7 +13,7 @@
 namespace xepan\base;
 
 
-class Page_TestRunner extends \Page {
+class Page_TestRunner extends \xepan\base\Page {
 	
 	public $title='xEpan Base Tests';
 	public $dir='tests';

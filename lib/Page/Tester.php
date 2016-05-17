@@ -19,7 +19,7 @@
 
 namespace xepan\base;
 
-class Page_Tester extends \Page {
+class Page_Tester extends \xepan\base\Page {
     public $variances=array();
     public $input;
     public $responses=array();
