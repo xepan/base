@@ -9,7 +9,7 @@ class View_User_VerifyAccount extends \View{
 		$activate_email=$this->app->stickyGET('activate_email');
 		
 		$form=$this->add('Form',null,null,['form/empty']);
-		$form->setLayout('view/xepanverify');
+		$form->setLayout('view/tool/userpanel/form/xepanverify');
 		$form->addField('line','email')->set($activate_email);	
 		$form->addField('line','activation_code')->set($secret_code);
 

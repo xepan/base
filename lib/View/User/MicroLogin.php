@@ -24,6 +24,6 @@ class View_User_MicroLogin extends \View{
 	}
 
 	function defaultTemplate(){		
-		return ['view/micrologin'];
+		return ['view/tool/userpanel/form/micrologin'];
 	}
 }			

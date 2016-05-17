@@ -1,0 +1,43 @@
+.jumbotron.well.text-center(style = "background: #eea849;")
+  .row Fill all the information and click on register
+.panel.panel-default
+  .panel-heading
+    strong  Registration
+  .panel-body(style="margin-top:30px;margin-bottom:30px;")
+    form(role='form', action='#', method='POST')
+      fieldset
+        .row
+          .col-sm-12.col-md-12
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.glyphicon.glyphicon-user
+                .atk-form-row.atk-form-field.xepan-form-field{$first_name}    
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.glyphicon.glyphicon-user
+                .atk-form-row.atk-form-field.xepan-form-field{$last_name}    
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.glyphicon.glyphicon-envelope
+                .atk-form-row.atk-form-field.xepan-form-field{$email_id}
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.glyphicon.glyphicon-lock
+                .atk-form-row.atk-form-field.xepan-form-field{$password}
+            .form-group
+              .input-group
+                span.input-group-addon
+                  i.glyphicon.glyphicon-lock
+                .atk-form-row.atk-form-field.xepan-form-field{$retype_password}   
+        .ro(style="padding-bottom:20px;")             
+        .row
+          .col-xs-12
+            button.btn.btn-success.col-xs-12(type='submit') Register
+        
+  .panel-footer.text-center
+    a.back-login.xepan-login-panl-loadview(href="index.php" data-showview="login_view")  Back To Login 
+     #login-box-footer

@@ -6,7 +6,7 @@ class View_User_VerifyAgain extends \View{
 		parent::init();
 
 		$form=$this->add('Form',null,null,['form/empty']);
-		$form->setLayout('view/xepanverifyagain');
+		$form->setLayout('view/tool/userpanel/form/xepanverifyagain');
 		$form->addField('line','email');
 
 		$form->onSubmit(function($f){

@@ -10,6 +10,6 @@ class View_User_AlreadyLoggedin extends \View{
 	}
 	
 	function defaultTemplate(){
-		return ['view/alreadyloggedin'];
+		return ['view/tool/userpanel/form/alreadyloggedin'];
 	}
 }	

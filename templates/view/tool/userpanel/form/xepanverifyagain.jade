@@ -1,5 +1,5 @@
-.jumbotron.well.text-center 
-  .row Some preferred text here 
+.jumbotron.well.text-center(style = "background: #eea849;")
+  .row Enter your mail and click on send E-Mail to receive welcome mail again 
 .panel.panel-default
   .panel-heading
     strong  Activate your Account
@@ -9,8 +9,8 @@
         .row
           .text-center
             img.profile-img(src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120', alt='')
-        .row.xepan-push
-          .col-sm-12.col-md-10.col-md-offset-1
+        .row(style="padding-bottom:20px;")
+          .col-sm-12.col-md-12
             .form-group
               .input-group
                 span.input-group-addon
@@ -19,7 +19,6 @@
         .row.xepan-push-large
           .col-xs-12
             button.btn.btn-success.col-xs-12(type='submit') Send Email 
-  .panel-footer
-    | Don't have an account! 
-    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="login_view") Back to login
-     #login-box-footer                        
+  .panel-footer.text-center 
+    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="login_view") Back to login                        
+
