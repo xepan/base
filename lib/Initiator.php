@@ -116,7 +116,7 @@ class Initiator extends \Controller_Addon {
         });
 
         // Adding all other installed applications
-        $this->setup_xepan_apps();
+        $this->setup_xepan_apps('admin');
 
         return $this;
 	}
@@ -154,18 +154,22 @@ class Initiator extends \Controller_Addon {
 
         $this->app->exportFrontEndTool('xepan\base\Tool_UserPanel');
 
+        // Adding all other installed applications
+        $this->setup_xepan_apps('frontend');
+
         return $this;
     }
 
 
-    function setup_xepan_apps(){
+    function setup_xepan_apps($side){
          foreach ($this->app->epan->ref('InstalledApplications') as $apps) {
             $this->app->xepan_addons[] = $apps['application_namespace'];   
         }
 
         foreach ($this->app->xepan_addons as $addon) {
             if($addon == 'xepan\base') continue;
-            $this->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator")->setup_admin();    
+            $func = 'setup_'.$side;
+            $this->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator")->$func();
         }
     }
 

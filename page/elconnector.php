@@ -18,7 +18,7 @@ class page_elconnector extends \Page {
 	function init(){
 		parent::init();
 
-		$path = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name;
+		$path = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/assets';
 
 		$opts = array(
 		    'locale' => '',
@@ -26,7 +26,7 @@ class page_elconnector extends \Page {
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path,
-		            'URL'    => 'http://localhost/xepan2/websites/'.$this->app->current_website_name
+		            'URL'    => 'http://localhost/xepan2/websites/'.$this->app->current_website_name.'/assets'
 		        )
 		    )
 		);
