@@ -19,6 +19,7 @@ class Model_Application extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->addField('name')->mandatory(true)->hint('Identification of xEpan Application');
+		$this->addField('namespace')->mandatory(true)->hint('Identification of xEpan Application');
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'Installations');
 

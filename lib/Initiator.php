@@ -17,12 +17,14 @@ class Initiator extends \Controller_Addon {
                                 $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain)
                             )
                         );
+        if(!$this->app->epan->loaded()){
+            die('No site found, forwarding to 404 service');
+        }
         $this->app->epan->config = $this->app->epan->ref('Configurations');
         
         date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
         $this->app->today = date('Y-m-d');
         $this->app->now   = date('Y-m-d H:i:s');
-
     }
 
     function setup_admin(){
@@ -110,6 +112,8 @@ class Initiator extends \Controller_Addon {
                 $app->layout->add('xepan\base\View_QuickSearch',null,'quick_search_form');
         });
 
+        // Adding all other installed applications
+        $this->setup_xepan_apps();
 
         return $this;
 	}
@@ -148,6 +152,18 @@ class Initiator extends \Controller_Addon {
         $this->app->exportFrontEndTool('xepan\base\Tool_UserPanel');
 
         return $this;
+    }
+
+
+    function setup_xepan_apps(){
+         foreach ($this->app->epan->ref('InstalledApplications') as $apps) {
+            $this->app->xepan_addons[] = $apps['application_namespace'];   
+        }
+
+        foreach ($this->app->xepan_addons as $addon) {
+            if($addon == 'xepan\base') continue;
+            $this->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator")->setup_admin();    
+        }
     }
 
     function resetDB($write_sql=false){
@@ -193,6 +209,19 @@ class Initiator extends \Controller_Addon {
              ->saveAs('xepan\base\Model_User_Active');
 
         $this->app->auth->login($user);
+
+        // Create Default Applications and INstall with all with root application
+        
+        $addons = ['xepan\\hr','xepan\\communication','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\epanservices'];
+
+        foreach ($addons as $ad) {
+            $app = $this->add('xepan\base\Model_Application')
+                ->set('name',array_pop(explode("\\", $ad)))
+                ->set('namespace',$ad)
+                ->save();
+
+            $epan->installApp($app);
+        }
 
         if($write_sql){
             $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));

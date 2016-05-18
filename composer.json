@@ -19,7 +19,8 @@
     },
     "require": {
         "atk4/atk4": "4.3",
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "nette/utils": "~2.4"
     },
     "autoload": {
         "psr-0": { "autocomplete": "lib" }
