@@ -169,7 +169,7 @@ class Initiator extends \Controller_Addon {
         foreach ($this->app->xepan_addons as $addon) {
             if($addon == 'xepan\base') continue;
             $func = 'setup_'.$side;
-            $this->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator")->$func();
+            $this->app->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator")->$func();
         }
     }
 
@@ -191,6 +191,10 @@ class Initiator extends \Controller_Addon {
         $d->sql_templates['delete'] = "delete [table] from  [table] [join] [where]";
         $d->table('contact_info')->where('contact.id is null')->join('contact',null,'left')->delete();
 
+        // orphan document_attachements
+        $d = $this->app->db->dsql();
+        $d->sql_templates['delete'] = "delete [table] from  [table] [join] [where]";
+        $d->table('attachment')->where('document.id is null')->join('document',null,'left')->delete();
 
         // Create default Epan_Category and Epan
 
@@ -222,8 +226,9 @@ class Initiator extends \Controller_Addon {
         $addons = ['xepan\\hr','xepan\\communication','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\epanservices'];
 
         foreach ($addons as $ad) {
+            $ad_array = explode("\\", $ad);
             $app = $this->add('xepan\base\Model_Application')
-                ->set('name',array_pop(explode("\\", $ad)))
+                ->set('name',array_pop($ad_array))
                 ->set('namespace',$ad)
                 ->save();
 
