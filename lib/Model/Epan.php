@@ -21,7 +21,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\Contact','created_by_id');		
 		
 		$this->addField('name')->hint('Identification for your epan');
-		$this->addField('type')->defaultValue('epan')->system(true);
+		$this->addField('type')->defaultValue('Epan')->system(true);
 		$this->addField('status')->defaultValue('Trial');
 		$this->addField('created_at')->type('datetime')->defaultValue(isset($this->app->now)?$this->app->now:null)->system(true);
 
