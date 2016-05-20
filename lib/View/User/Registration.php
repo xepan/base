@@ -21,14 +21,17 @@ class View_User_Registration extends \View{
 				
 				// $user=$this->app->auth->model;
 				$user=$this->add('xepan\base\Model_User');
-				$user['epan_id']=$this->app->auth->model->ref('epan_id')->id;
+				
+				$this->add('BasicAuth')
+				->usePasswordEncryption('md5')
+				->addEncryptionHook($user);
+
+				$user['epan_id']=$this->app->epan->id;
 				$user['username']=$f['email_id'];
 				$user['password']=$f['password'];
+				$user['status'] = 'InActive';
 				$user['hash']=rand(9999,100000);
 				$user->save();
-
-				$this->api->auth->addEncryptionHook($user);
-
 
 				$contact=$user->ref('Contacts');
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
