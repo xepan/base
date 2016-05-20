@@ -33,7 +33,7 @@ class View_User_Registration extends \View{
 				$user['hash']=rand(9999,100000);
 				$user->save();
 
-				$contact=$user->ref('Contacts');
+				$contact=$user->ref('Contacts')->tryLoadAny();
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
 
@@ -66,8 +66,7 @@ class View_User_Registration extends \View{
 				$mail->setSubject($email_subject);
 				$mail->setBody($temp->render());
 				$mail->send($email_settings);
-
-				$user->createNewCustomer($f['first_name'],$f['last_name'],$user->id);
+				$this->app->addHook('userCreated'[$f['first_name'],$f['last_name'],$user]);
 			
 			return $f->js(null,$f->js()->reload())->univ()->successMessage('Registration SuccessFully');
 			});
