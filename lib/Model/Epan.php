@@ -17,7 +17,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 	function init(){
 		parent::init();
 
-		$this->hasOne('xepan\base\Epan_Category');		
+		$this->hasOne('xepan\base\Epan_Category');
 		$this->hasOne('xepan\base\Contact','created_by_id');		
 		
 		$this->addField('name')->hint('Identification for your epan');
@@ -55,7 +55,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 						->addMoreInfo('App',$application['name']);
 
 
-		$installed->save();
+		$installed->saveAndUnload();
 
 	}
 

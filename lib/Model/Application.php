@@ -20,11 +20,16 @@ class Model_Application extends \xepan\base\Model_Table{
 
 		$this->addField('name')->mandatory(true)->hint('Identification of xEpan Application');
 		$this->addField('namespace')->mandatory(true)->hint('Identification of xEpan Application');
+		$this->addField('user_installable')->type('boolean')->defaultValue(true);
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'Installations');
 
 		$this->is([
 				'name|unique|to_trim|required'
 			]);
+	}
+
+	function validateRequirements($apps_selected){
+		return false;
 	}
 }
