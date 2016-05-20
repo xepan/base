@@ -89,12 +89,4 @@ class Model_User extends \xepan\base\Model_Table{
             ->notifyWhoCan('deactivate','Active',$this);
 		$this->save();
 	}
-
-	function createNewCustomer($first_name,$last_name,$user_id){
-		$customer=$this->add('xepan\commerce\Model_Customer');
-		$customer['first_name']=$first_name;
-		$customer['last_name']=$last_name;
-		$customer['user_id']=$user_id;
-		$customer->save();
-	}
 }
