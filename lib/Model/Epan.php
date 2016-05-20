@@ -26,7 +26,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('datetime')->defaultValue(isset($this->app->now)?$this->app->now:null)->system(true);
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
-		$this->hasMany('xepan\communication\Epan_EmailSetting',null,null,'EmailSettings');
+		$this->hasMany('xepan\communication\Communication_EmailSetting',null,null,'EmailSettings');
 		
 		$this->hasMany('xepan\base\Contact');
 		$this->hasMany('xepan\base\User',null,null,'Users');
@@ -43,27 +43,6 @@ class Model_Epan extends \xepan\base\Model_Table{
 				'name|required|to_trim|unique'
 			]);
 	}
-
-	// function createFolder($m){
-	// 	if(file_exists(realpath($this->app->pathfinder->base_location->base_path.'/websites/'.$this['name']))){
-	// 		throw $this->exception('Epan cannot be created, folder already exists','ValidityCheck')
-	// 					->setField('name')
-	// 					->addMoreInfo('epan',$this['name']);
-	// 	}
-	// 	$fs = \Nette\Utils\FileSystem::createDir('./websites/'.$this['name']);		
-	// }
-
-	// function createSuperUser($m,$new_id){
-	// 	$user = $this->add('xepan\base\Model_User_SuperUser');
- //        $this->app->auth->addEncryptionHook($user);
- //        $user=$user->set('username','admin@epan.in')
- //             ->set('scope','SuperUser')
- //             ->set('password','admin')
- //             ->set('epan_id',$new_id)
- //             ->saveAndUnload('xepan\base\Model_User_Active');
- //        $this->app->hook('epan-created',[$new_id]);
-	// }
-
 
 	function installApp($application){
 		$installed  = $this->add('xepan\base\Model_Epan_InstalledApplication')
