@@ -77,6 +77,8 @@ class Controller_Validator extends \Controller_Validator{
         $b=$this->pullRule();
         $b_val=$this->get($b);
 
+        if($a=="") return $a;
+
         if(strtotime($a) < strtotime($b_val)) $this->fail('Value "{{arg1}}" must be greater then {{arg2}}',$a,$b_val);
 
         return $a;
