@@ -18,6 +18,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan_Category');
+		$this->hasOne('xepan\base\Epan_Template');
 		$this->hasOne('xepan\base\Contact','created_by_id');		
 		
 		$this->addField('name')->hint('Identification for your epan');
