@@ -32,11 +32,15 @@ class View_User_Registration extends \View{
 				if($reg_type =='default_activated'){
 					$user['status'] = 'Active';
 					$user->save();
-				}elseif($reg_type =='self_activated'){
+				}elseif($reg_type =='admin_activated'){
+					$user['status'] = 'InActive';
+					$user->save();
+				
+				}else{
+
 					$user['status'] = 'InActive';
 					$user['hash']=rand(9999,100000);
 					$user->save();
-
 					$contact=$user->ref('Contacts')->tryLoadAny();
 					$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 					$mail = $this->add('xepan\communication\Model_Communication_Email');
@@ -66,10 +70,7 @@ class View_User_Registration extends \View{
 					$mail->addTo($f['email_id']);
 					$mail->setSubject($email_subject);
 					$mail->setBody($temp->render());
-					$mail->send($email_settings);
-				}else{
-					$user['status'] = 'InActive';
-					$user->save();						
+					$mail->send($email_settings);						
 				}
 				
 				$this->app->hook('userCreated',[$f['first_name'],$f['last_name'],$user]);
