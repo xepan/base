@@ -6,16 +6,16 @@
       fieldset
         .row(style="padding-bottom:20px;")
           .col-sm-12.col-md-12
-            .form-group
+            .form-group.atk-form-row.atk-form-field
               .input-group
                 span.input-group-addon
-                  i.glyphicon.glyphicon-user
-                .atk-form-row.atk-form-field.xepan-form-field{$email}
-            .form-group
+                  i.fa.fa-envelope
+                .xepan-form-field{$email}
+            .form-group.atk-form-row.atk-form-field
               .input-group
                 span.input-group-addon
-                  i.glyphicon.glyphicon-user
-                .atk-form-row.atk-form-field.xepan-form-field{$activation_code}    
+                  i.fa.fa-lock
+                .xepan-form-field{$activation_code}    
         .row
           .col-xs-12
             button.btn.btn-success.col-xs-12(type='submit') Verify Email 
