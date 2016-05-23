@@ -61,7 +61,7 @@
  * Example3: Specifying inside Model
  
 $model=$this->add('Model_Book');
-$model->add('filestore/Field_Image','picture_id');
+$model->add('xepan/filestore/Field_Image','picture_id');
 
 $this->add('Form')->setModel($model);
 
