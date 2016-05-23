@@ -127,6 +127,10 @@ class Initiator extends \Controller_Addon {
         ->setBaseURL('./vendor/xepan/base/')
         ;
         
+        $this->app->jui->addStaticInclude('pnotify.custom.min');
+        $this->app->jui->addStaticInclude('xepan.pnotify');
+        $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
+        $this->app->jui->addStaticStyleSheet('animate');
         $this->app->jui->addStaticInclude('xepan_jui');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
