@@ -18,8 +18,9 @@ class page_elconnector extends \Page {
 	function init(){
 		parent::init();
 
-		if($this->app->is_admin)
+		if($this->app->is_admin){			
 			$folder ='assets';
+		}
 		else
 			$folder ='www';
 
@@ -31,7 +32,7 @@ class page_elconnector extends \Page {
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path,
-		            'URL'    => 'http://localhost/xepan2/websites/'.$this->app->current_website_name.'/assets'
+		            'URL'    => $this->app->pathfinder->base_location->base_url.'websites/'.$this->app->current_website_name.'/'. $folder
 		        )
 		    )
 		);
