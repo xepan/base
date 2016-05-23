@@ -1,34 +1,34 @@
 
-<div class="panel panel-default">
+<div id="{$_name}" class="panel panel-default">
   <div class="panel-heading text-center"><strong> Registration</strong></div>
   <div style="margin-top:30px;margin-bottom:30px;" class="panel-body">
     <form role="form" action="#" method="POST">
       <fieldset>
         <div class="row">
           <div class="col-sm-12 col-md-12">
-            <div class="form-group">
+            <div class="form-group atk-form-row atk-form-field">
               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                <div class="atk-form-row atk-form-field xepan-form-field">{$first_name}    </div>
+                <div class="xepan-form-field">{$first_name}    </div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group atk-form-row atk-form-field">
               <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                <div class="atk-form-row atk-form-field xepan-form-field">{$last_name}    </div>
+                <div class="xepan-form-field">{$last_name}    </div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <div class="atk-form-row atk-form-field xepan-form-field">{$email_id}</div>
+            <div class="form-group atk-form-row atk-form-field">
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <div class="xepan-form-field">{$email_id}</div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                <div class="atk-form-row atk-form-field xepan-form-field">{$password}</div>
+            <div class="form-group atk-form-row atk-form-field">
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-key"></i></span>
+                <div class="xepan-form-field">{$password}</div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                <div class="atk-form-row atk-form-field xepan-form-field">{$retype_password}   </div>
+            <div class="form-group atk-form-row atk-form-field">
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-key"></i></span>
+                <div class="xepan-form-field">{$retype_password}   </div>
               </div>
             </div>
           </div>
@@ -42,6 +42,11 @@
       </fieldset>
     </form>
   </div>
-  <div class="panel-footer text-center"><a href="index.php" data-showview="login_view" class="back-login xepan-login-panl-loadview"> Back To Login 
+  <div class="panel-footer text-center"><a style="cursor:pointer; cursor: hand;" href="index.php" data-showview="login_view" class="back-login xepan-login-panl-loadview"> Back To Login 
       <div id="login-box-footer"></div></a></div>
 </div>
+<style>
+   input{
+    width:100%;
+  }      
+</style>

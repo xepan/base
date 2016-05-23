@@ -1,26 +1,31 @@
-.panel.panel-default
+.panel.panel-default(id="{$_name}")
   .panel-heading.text-center
     strong Sign in to continue
   .panel-body(style='margin-top:30px;margin-bottom:30px;')
     form(role='form', action='#', method='POST')
       fieldset
         .row(style='padding-bottom:20px;')
+          .col-sm-12.col-md-12
             .form-group.atk-form-row
               .input-group
                 span.input-group-addon
-                  i.glyphicon.glyphicon-user
+                  i.fa.fa-envelope
                 | {$username}{$fieldError}
-            .form-group.atk-form-row
+            .form-group.atk-form-row.atk-form-field
               .input-group
                 span.input-group-addon
-                  i.glyphicon.glyphicon-lock
+                  i.fa.fa-lock
                 | {$password}
         .row
           .col-xs-12
             button.btn.btn-success.col-xs-12(type='submit') Login  
-  .panel-footer
-    a#login-forget-link.col-xs-6.forgotpassword.xepan-login-panl-loadview.pull-left(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='forget_password') Forgot password
-    a.reg_view.xepan-login-panl-loadview(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='new_registration')  Register now 
+  .panel-footer.row(style="margin:auto")
+    a#login-forget-link.forgotpassword.xepan-login-panl-loadview.pull-left(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='forget_password') Forgot password
+    a.col-xs-6.text-center.reg_view.xepan-login-panl-loadview(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='new_registration')  Register now 
     a.reg_view.xepan-login-panl-loadview.pull-right(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='verify_account')
       | Activate 
       #login-box-footer  
+style.
+    #{$_name} input{
+      width:100%;
+    }

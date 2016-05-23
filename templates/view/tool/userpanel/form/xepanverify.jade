@@ -1,24 +1,28 @@
-.panel.panel-default
+.panel.panel-default(id="{$_name}")
   .panel-heading.text-center
     strong  Activate your Account
   .panel-body(style="margin-top:30px;margin-bottom:30px;")
     form(role='form', action='#', method='POST')
       fieldset
         .row(style="padding-bottom:20px;")
-           .col-sm-12.col-md-12
-            .form-group
+          .col-sm-12.col-md-12
+            .form-group.atk-form-row.atk-form-field
               .input-group
                 span.input-group-addon
-                  i.glyphicon.glyphicon-user
-                .atk-form-row.atk-form-field.xepan-form-field{$email}
-            .form-group
+                  i.fa.fa-envelope
+                .xepan-form-field{$email}
+            .form-group.atk-form-row.atk-form-field
               .input-group
                 span.input-group-addon
-                  i.glyphicon.glyphicon-user
-                .atk-form-row.atk-form-field.xepan-form-field{$activation_code}    
+                  i.fa.fa-lock
+                .xepan-form-field{$activation_code}    
         .row
           .col-xs-12
             button.btn.btn-success.col-xs-12(type='submit') Verify Email 
   .panel-footer
-    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="login_view") Back to login    
-    a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="verify_again") Resend verification
+    a.forgot-link.back-login.xepan-login-panl-loadview(style="cursor:pointer; cursor: hand;" data-showview="login_view") Back to login    
+    a.forgot-link.back-login.xepan-login-panl-loadview.pull-right(style="cursor:pointer; cursor: hand;" data-showview="verify_again") Resend verification
+style.
+    #{$_name} input{
+      width:100%;
+    }
