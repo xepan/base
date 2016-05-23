@@ -18,7 +18,12 @@ class page_elconnector extends \Page {
 	function init(){
 		parent::init();
 
-		$path = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/assets';
+		if($this->app->is_admin)
+			$folder ='assets';
+		else
+			$folder ='www';
+
+		$path = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/'. $folder;
 
 		$opts = array(
 		    'locale' => '',
