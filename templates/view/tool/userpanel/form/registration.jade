@@ -1,4 +1,4 @@
-.panel.panel-default
+.panel.panel-default(id="{$_name}")
   .panel-heading.text-center
     strong  Registration
   .panel-body(style="margin-top:30px;margin-bottom:30px;")
@@ -39,3 +39,7 @@
   .panel-footer.text-center
     a.back-login.xepan-login-panl-loadview(href="index.php" data-showview="login_view")  Back To Login 
      #login-box-footer
+style.
+    #{$_name} input{
+      width:100%;
+    }      

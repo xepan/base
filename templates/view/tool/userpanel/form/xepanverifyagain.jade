@@ -1,4 +1,4 @@
-.jumbotron.well.text-center(style = "background: #eea849;")
+.jumbotron.well.text-center(id="{$_name}" style = "background: #eea849;")
   .row Enter your mail and click on send E-Mail to receive welcome mail again 
 .panel.panel-default
   .panel-heading
@@ -22,3 +22,7 @@
   .panel-footer.text-center 
     a.forgot-link.back-login.xepan-login-panl-loadview( data-showview="login_view") Back to login                        
 
+style.
+    #{$_name} input{
+      width:100%;
+    }
