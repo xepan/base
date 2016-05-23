@@ -168,8 +168,34 @@ class Initiator extends \Controller_Addon {
 
         foreach ($this->app->xepan_addons as $addon) {
             if($addon == 'xepan\base') continue;
+            $this->app->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator");
+        }
+
+        // Pre setup call
+
+        foreach ($this->app->xepan_app_initiators as $addon_name=>$addon_obj) {
+            if($addon == 'xepan\base') continue;
+            $func = 'setup_pre_'.$side;
+            if($addon_obj->hasMethod($func)){
+                $addon_obj->$func();
+            }
+        }
+
+        // Setup call
+        foreach ($this->app->xepan_app_initiators as $addon_name=>$addon_obj) {
+            if($addon == 'xepan\base') continue;
             $func = 'setup_'.$side;
-            $this->app->xepan_app_initiators[$addon] = $app_initiators[$addon] = $this->add("$addon\Initiator")->$func();
+            $addon_obj->$func();
+        }
+
+        // Post Setup Call
+
+        foreach ($this->app->xepan_app_initiators as $addon_name=>$addon_obj) {
+            if($addon == 'xepan\base') continue;
+            $func = 'setup_post_'.$side;
+            if($addon_obj->hasMethod($func)){
+                $addon_obj->$func();
+            }
         }
     }
 
