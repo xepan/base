@@ -101,5 +101,9 @@ class Grid extends \Grid{
             $row_template->trySet("tdparam_$field", trim($tdparam_str));
         }
     }
+    function render(){
+        $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
+        parent::render();
+    }
 
 }
