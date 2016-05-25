@@ -7,8 +7,8 @@
                 span(class="form-control pull-left")|{$quick_search}
                     i(class="fa fa-search search-icon")
     {/Pannel}
-    .main-box-body.clearfix.table
-        table.table.user-list.table-hover(style="width:100%")
+    .main-box-body.clearfix.table-responsive
+        table.table.user-list.table-hover.footable.toggle-circle-filled(style="width:100%")
             {header}
             thead.xepan-hover-hand
                 tr
@@ -16,7 +16,7 @@
                     th(id="{$username_sortid}")
                       span User 
                       span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$username_sort}
-                    th(id="{$related_contact_sortid}")
+                    th(id="{$related_contact_sortid}" data-hide="phone")
                       span Related Contact 
                       span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$related_contact_sort}
                     th 
