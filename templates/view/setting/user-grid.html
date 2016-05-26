@@ -6,12 +6,12 @@
       <div class="form-group pull-right xepan-filter-form"><span class="form-control pull-left">{$quick_search}<i class="fa fa-search search-icon"></i></span></div>
     </div>
   </header>{/Pannel}
-  <div class="main-box-body clearfix table">
-    <table style="width:100%" class="table user-list table-hover">{header}
+  <div class="main-box-body clearfix table-responsive">
+    <table style="width:100%" class="table user-list table-hover footable toggle-circle-filled">{header}
       <thead class="xepan-hover-hand">
         <tr>{cols}
           <th id="{$username_sortid}"><span>User </span><span style="cursor:pointer; cursor: hand; max-width:600px;">{$username_sort}</span></th>
-          <th id="{$related_contact_sortid}"><span>Related Contact </span><span style="cursor:pointer; cursor: hand; max-width:600px;">{$related_contact_sort}</span></th>
+          <th id="{$related_contact_sortid}" data-hide="phone"><span>Related Contact </span><span style="cursor:pointer; cursor: hand; max-width:600px;">{$related_contact_sort}</span></th>
           <th> </th>
           <th></th>{/}    
         </tr>

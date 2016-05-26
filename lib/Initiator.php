@@ -9,7 +9,7 @@ class Initiator extends \Controller_Addon {
 		parent::init();        
 
         $url = "{$_SERVER['HTTP_HOST']}";
-        $sub_domain = $this->extract_subdomains($url)?:'default';
+        $sub_domain = $this->extract_subdomains($url)?:'www';
         $this->app->epan = $this->recall(
                             $sub_domain.'_epan',
                             $this->memorize(
