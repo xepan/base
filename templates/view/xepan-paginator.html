@@ -15,7 +15,7 @@
     padding-right: 0px !important;
   }
 </style>
-<div style="margin:5px 5px 0 0; float: left;" class="paginator">
+<div style="margin:5px 5px 0 0; float: left;" class="paginator hidden-xs">
   <select id="ipp-selector">
     <option>5</option>
     <option>10</option>
@@ -34,15 +34,15 @@
   {points_left}
   <li><span data-skip="{$pn}" href="#points_left" class="{cur}ui-state-active ui-corner-all{/}">{$label}</span></li>{/}
   {rows}{row}
-  <li class="{cur}active{/}"><a data-skip="{$pn}" href="{$href}" class="{cur}active{/}">{$label}</a></li>{/row}
+  <li class="{cur}active{/} hidden-xs"><a data-skip="{$pn}" href="{$href}" class="{cur}active{/}">{$label}</a></li>{/row}
   <li><a href="#">2</a></li>
   <li class="active"><a href="#">3</a></li>
   <li><a href="#">4</a></li>
   <li><a href="#">5</a></li>{/rows}
   {points_right}
-  <li><span data-skip="{$pn}" href="#points_right" class="{cur}ui-state-active ui-corner-all{/}">{$label}</span></li>{/}
+  <li class="hidden-xs"><span data-skip="{$pn}" href="#points_right" class="{cur}ui-state-active ui-corner-all{/}">{$label}</span></li>{/}
   {last}
-  <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/last}
+  <li class="hidden-xs"><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/last}
   {next}
   <li><a data-skip="{$pn}" href="{$href}" class="{cur}ui-state-active ui-corner-all{/}">{$label}</a></li>{/next}
 </ul>{/}
