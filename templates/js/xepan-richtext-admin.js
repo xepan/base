@@ -93,6 +93,28 @@ $.each({
                             }
                         });
                 });
+                // ed.addMenuItem('save', {
+                //     title: 'Save Content',
+                //     icon: 'save',
+                //     text: 'Save',
+                //     context: 'file',
+                //     onclick: function() {
+                //         ed.windowManager.open({
+                //             title:'Content Manager',
+                //             url : '?page=xepan_cms_admin_contents&cut_page=1',
+                //             width : $(window).width()*.8,
+                //             height : $(window).height()*.8
+                //         });
+                //     }
+                // });
+                // ed.addMenuItem('load', {
+                //     title: 'Load Content',
+                //     text: 'Open',
+                //     context: 'file',
+                //     onclick: function() {
+                //         $.univ().frameURL('Content Manager','xepan_cms_admin_contents',{'data':ed.getContent()});
+                //     }
+                // });
             }
         },options);
             
