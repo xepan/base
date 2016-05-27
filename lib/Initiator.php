@@ -109,7 +109,8 @@ class Initiator extends \Controller_Addon {
         
         $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
         $this->app->js(true)->_library('PNotify.desktop')->permission();
-
+        $this->app->js(true)->_load('jquery.bootstrap-responsive-tabs.min')->_selector('.responsive-tabs')->responsiveTabs("accordionOn: ['xs', 'sm']");
+       
         $this->app->addHook('post-init',function($app){
             if($app->layout->template->hasTag('quick_search_form'))
                 $app->layout->add('xepan\base\View_QuickSearch',null,'quick_search_form');
