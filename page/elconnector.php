@@ -32,7 +32,7 @@ class page_elconnector extends \Page {
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path,
-		            'URL'    => $this->app->pathfinder->base_location->base_url.'websites/'.$this->app->current_website_name.'/'. $folder
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/'. $folder
 		        )
 		    )
 		);
