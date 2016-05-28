@@ -18,7 +18,7 @@
         "reference": "origin/master"
     },
     "require": {
-        "atk4/atk4": "4.3",
+        "xepan/atk4": "4.3",
         "xepan/filestore" : "dev-master",
         "php": ">=5.3",
         "nette/utils": "~2.4"
