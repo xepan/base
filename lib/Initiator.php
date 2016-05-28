@@ -232,12 +232,12 @@ class Initiator extends \Controller_Addon {
         // Create default Epan_Category and Epan
 
         $epan_category = $this->add('xepan\base\Model_Epan_Category')
-            ->set('name','www')
+            ->set('name','default')
             ->save();
 
         $epan = $this->add('xepan\base\Model_Epan')
                     ->set('epan_category_id',$epan_category->id)
-                    ->set('name','default')
+                    ->set('name','www')
                     ->save();
 
         $this->app->epan = $epan;
