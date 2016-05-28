@@ -16,3 +16,7 @@ $.each({
         };
       });
     })(jQuery);
+
+$.ui.dialog.prototype._allowInteraction = function(e) {
+    return !!$(e.target).closest('.ui-dialog, .ui-datepicker, .select2-drop').length;
+};
