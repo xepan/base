@@ -237,7 +237,7 @@ class Initiator extends \Controller_Addon {
 
         $epan = $this->add('xepan\base\Model_Epan')
                     ->set('epan_category_id',$epan_category->id)
-                    ->set('name','default')
+                    ->set('name','www')
                     ->save();
 
         $this->app->epan = $epan;
