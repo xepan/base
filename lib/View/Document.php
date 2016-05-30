@@ -50,7 +50,7 @@ class View_Document extends \View{
 			$this->effective_template = $this->form->layout->template;
 			$this->effective_object = $this->form;
 			if($this->submit_button)
-				$this->form->addSubmit($this->submit_button);
+				$this->form->addSubmit($this->submit_button)->addClass('btn btn-primary');
 		}
 	}
 
