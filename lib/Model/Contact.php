@@ -50,7 +50,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
-		$this->add('xepan/filestore/Field_Image','image_id')->allowHTML(true);
+		$this->add('xepan/filestore/Field_Image',['name'=>'image_id','deref_field'=>'thumb_url'])->allowHTML(true);
 
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]))->sortable(true);
 
