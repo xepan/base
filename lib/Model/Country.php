@@ -18,7 +18,7 @@ class Model_Country extends \xepan\base\Model_Table{
 	function init(){
 		parent::init();
 		
-		$this->hasOne('xepan\hr\Employee','created_by_id')->defaultValue($this->app->employee->id);
+		$this->hasOne('xepan\hr\Employee','created_by_id')->defaultValue(@$this->app->employee->id);
 
 		$this->addField('status')->enum(['Active','InActive'])->defaultValue('Active');
 
