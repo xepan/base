@@ -26,6 +26,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\Epan');
 		$this->hasOne('xepan\base\Contact','created_by_id');
 		$this->hasOne('xepan\base\User',null,'username');
+		$this->hasOne('xepan\base\Country','country_id');
+		$this->hasOne('xepan\base\State','state_id');
 
 		$this->addField('type');
 		
@@ -34,8 +36,6 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->addField('address')->type('text');
 		$this->addField('city');
-		$this->addField('state');
-		$this->addField('country');
 		$this->addField('pin_code');
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 
