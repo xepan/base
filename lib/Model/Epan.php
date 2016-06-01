@@ -25,6 +25,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('type')->defaultValue('Epan')->system(true);
 		$this->addField('status')->defaultValue('Trial');
 		$this->addField('created_at')->type('datetime')->defaultValue(isset($this->app->now)?$this->app->now:null)->system(true);
+		$this->addField('published')->defaultValue(null);
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
 		$this->hasMany('xepan\communication\Communication_EmailSetting',null,null,'EmailSettings');
