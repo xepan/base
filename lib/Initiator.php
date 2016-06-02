@@ -206,7 +206,7 @@ class Initiator extends \Controller_Addon {
         }
     }
 
-    function resetDB($write_sql=false){
+    function resetDB($write_sql=false,$install_apps=true){
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
@@ -264,8 +264,8 @@ class Initiator extends \Controller_Addon {
                 ->set('name',array_pop($ad_array))
                 ->set('namespace',$ad)
                 ->save();
-
-            $epan->installApp($app);
+            if($install_apps)
+                $epan->installApp($app);
         }
 
         if($write_sql){
