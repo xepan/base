@@ -40,10 +40,14 @@
             <label>Website</label>{website}-{/}</span></div>
         <div class="form-group"><span title="address"><i class="fa fa-map-marker fa-lg">&nbsp;</i>
             <label>Address</label>{address}not found{/}<br/>
-            <label>City: </label>{city}not found{/}<br/>
-            <label>State: </label>{state}not found{/}<br/>
-            <label>Country: </label>{country}not found{/}<br/>
-            <label>Pin Code: </label>{pin_code}not found{/}</span></div>
+            <label>Country: </label>
+            <div>{$country}{country_id}not found{/}<br/></div>
+            <label>State: </label>
+            <div>{$state}{state_id}not found{/}<br/></div>
+            <label>City: </label>
+            <div>{city}not found{/}<br/></div>
+            <label>Pin Code: </label>
+            <div>{pin_code}not found{/}</div></span></div>
       </div>
       <h2>IM Numbers</h2>
       <div class="profile-details">
