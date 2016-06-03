@@ -78,6 +78,7 @@ $.each({
             save_enablewhendirty: false,
             // content_css: 'templates/css/epan.css',
             browser_spellcheck : true,
+            valid_children : "+body[style]",
             fontsize_formats: "8px 10px 12px 14px 18px 24px 36px",
             setup: function(ed) {
                 ed.on("change", function(ed) {

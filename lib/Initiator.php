@@ -169,7 +169,7 @@ class Initiator extends \Controller_Addon {
 
 
     function setup_xepan_apps($side){
-         foreach ($this->app->epan->ref('InstalledApplications') as $apps) {
+         foreach ($this->app->epan->ref('InstalledApplications')->setOrder('application_id') as $apps) {
             $this->app->xepan_addons[] = $apps['application_namespace'];   
         }
 
