@@ -38,7 +38,7 @@ class View_Document extends \View{
 		parent::init();
 
 
-		if($this->action == 'view'){
+		if($this->action === 'view'){
 			$this->form = new \Dummy();
 			$this->effective_template=$this->template;
 			$this->effective_object= $this;
