@@ -1,11 +1,14 @@
-table.table.user-list.table-hover.footable.toggle-circle-filled(style="width:100%")
+table.table-hover.footable.panel.panel-default.panel-body(style="width:100%;")
     {header}
     thead.xepan-hover-hand
-        th
+        th.text-center.text-primary
             span {$title} 
     tbody
         tr
             td
-              span {$message}
-              a.fa.fa-question.pull-right(href="{$url}")
-              {$action_spot}
+              .col-md-9
+                span.text-muted {$message}
+              .col-md-2(style="margin-bottom:10px;")
+                  {$action_spot}
+              .col-md-1  
+                  a.fa.fa-question(href="{$url}")

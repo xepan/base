@@ -19,7 +19,7 @@ class View_Wizard_Step extends \View {
 	}
 
 	function setAction($title,$action){
-		$button = $this->add('Button',null,'action_spot')->set($title);
+		$button = $this->add('Button',null,'action_spot')->set($title)->addClass('btn btn-primary btn-sm');
 		$button->js('click',$action);
 		return $this;
 	}

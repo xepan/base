@@ -1,11 +1,15 @@
 
-<table style="width:100%" class="table user-list table-hover footable toggle-circle-filled">{header}
+<table style="width:100%;" class="table-hover footable panel panel-default panel-body">{header}
   <thead class="xepan-hover-hand">
-    <th><span>{$title} </span></th>
+    <th class="text-center text-primary"><span>{$title} </span></th>
   </thead>
   <tbody>
     <tr>
-      <td><span>{$message}</span><a href="{$url}" class="fa fa-question pull-right"></a>{$action_spot}</td>
+      <td>
+        <div class="col-md-9"><span class="text-muted">{$message}</span></div>
+        <div style="margin-bottom:10px;" class="col-md-2">{$action_spot}</div>
+        <div class="col-md-1"> <a href="{$url}" class="fa fa-question"></a></div>
+      </td>
     </tr>
   </tbody>
 </table>
