@@ -1,6 +1,6 @@
 $.each({
 	notify: function(xTitle, xText, xType, isDesktop, callback, sticky){
-		if(isDesktop != undefined || isDesktop != null || isDesktop != false || isDesktop==true) {
+		if(isDesktop != undefined && isDesktop != null && isDesktop != false && isDesktop==true) {
 			var nn = new PNotify(
 			{ 
 				title: xTitle?xTitle:"Notification",
