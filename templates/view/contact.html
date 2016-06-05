@@ -1,7 +1,7 @@
 
-<div id="user-profile" class="xepan-contact-profile">
+<div id="{$_name}" class="xepan-contact-profile">
   <div class="main-box clearfix">
-    <header class="main-box-header clearfix">
+    <header class="main-box-header clearfix">{action}{/}
       <h2>{first_name}First Name{/} </h2>
       <h2>{last_name}Last Name{/} </h2>
     </header>
@@ -41,11 +41,13 @@
         <div class="form-group"><span title="address"><i class="fa fa-map-marker fa-lg">&nbsp;</i>
             <label>Address</label>{address}not found{/}<br/>
             <label>Country: </label>
-            <div>{country_id}not found{/}<br/></div>
+            <div>{$country}{country_id}not found{/}<br/></div>
             <label>State: </label>
-            <div>{state_id}not found{/}<br/></div>
-            <label>City: </label>{city}not found{/}<br/>
-            <label>Pin Code: </label>{pin_code}not found{/}</span></div>
+            <div>{$state}{state_id}not found{/}<br/></div>
+            <label>City: </label>
+            <div>{city}not found{/}<br/></div>
+            <label>Pin Code: </label>
+            <div>{pin_code}not found{/}</div></span></div>
       </div>
       <h2>IM Numbers</h2>
       <div class="profile-details">

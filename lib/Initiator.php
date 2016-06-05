@@ -71,6 +71,13 @@ class Initiator extends \Controller_Addon {
             $this->breakHook($f);
 
         });
+        
+        $auth->addHook('loggedIn',function($auth,$user,$pass){
+            $this->app->memorize('user_loggedin', $auth->model);
+            $auth->model['last_login_date'] = $this->app->now;
+            $auth->model->save();
+        });
+
         $auth->add('auth/Controller_Cookie');
 
         $this->api->addHook('post-init',function($app){
@@ -89,11 +96,6 @@ class Initiator extends \Controller_Addon {
         $auth->usePasswordEncryption('md5');
         $auth->setModel($user,'username','password');
         
-        $auth->addHook('loggedIn',function($auth,$user,$pass){
-            $this->app->memorize('user_loggedin', $auth->model);
-            $auth->model['last_login_date'] = $this->app->now;
-            $auth->model->save();
-        });
         $auth->check();
                 
         $this->app->jui->addStaticInclude('elfinder.full');
@@ -169,7 +171,7 @@ class Initiator extends \Controller_Addon {
 
 
     function setup_xepan_apps($side){
-         foreach ($this->app->epan->ref('InstalledApplications') as $apps) {
+         foreach ($this->app->epan->ref('InstalledApplications')->setOrder('application_id') as $apps) {
             $this->app->xepan_addons[] = $apps['application_namespace'];   
         }
 
@@ -206,7 +208,7 @@ class Initiator extends \Controller_Addon {
         }
     }
 
-    function resetDB($write_sql=false){
+    function resetDB($write_sql=false,$install_apps=true){
         $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
@@ -264,8 +266,8 @@ class Initiator extends \Controller_Addon {
                 ->set('name',array_pop($ad_array))
                 ->set('namespace',$ad)
                 ->save();
-
-            $epan->installApp($app);
+            if($install_apps)
+                $epan->installApp($app);
         }
 
         if($write_sql){
