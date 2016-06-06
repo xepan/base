@@ -71,6 +71,13 @@ class Initiator extends \Controller_Addon {
             $this->breakHook($f);
 
         });
+        
+        $auth->addHook('loggedIn',function($auth,$user,$pass){
+            $this->app->memorize('user_loggedin', $auth->model);
+            $auth->model['last_login_date'] = $this->app->now;
+            $auth->model->save();
+        });
+
         $auth->add('auth/Controller_Cookie');
 
         $this->api->addHook('post-init',function($app){
@@ -89,11 +96,6 @@ class Initiator extends \Controller_Addon {
         $auth->usePasswordEncryption('md5');
         $auth->setModel($user,'username','password');
         
-        $auth->addHook('loggedIn',function($auth,$user,$pass){
-            $this->app->memorize('user_loggedin', $auth->model);
-            $auth->model['last_login_date'] = $this->app->now;
-            $auth->model->save();
-        });
         $auth->check();
                 
         $this->app->jui->addStaticInclude('elfinder.full');
@@ -256,7 +258,7 @@ class Initiator extends \Controller_Addon {
 
         // Create Default Applications and INstall with all with root application
         
-        $addons = ['xepan\\hr','xepan\\communication','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\epanservices'];
+        $addons = ['xepan\\hr','xepan\\communication','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog','xepan\\epanservices'];
 
         foreach ($addons as $ad) {
             $ad_array = explode("\\", $ad);
