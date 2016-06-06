@@ -6,20 +6,27 @@ class View_EasySetupWizard extends \View{
 	
 	function init(){
 		parent::init();
-		if($this->add('xepan\hr\Model_Department')->count()->getOne() <= 1000){
-			$v = $this->add('xepan\base\View_Wizard_Step');
-			$v->setTitle('base');
-			$v->setMessage('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut porta massa, sit amet maximus odio.');
-			$v->setHelpURL('#');
-			$v->setAction('I M ATION',$v->js()->reload());
-
-			$v1 = $this->add('xepan\base\View_Wizard_Step');
-			$v1->setTitle('Lorem ipsum dolor sit amet');
-			$v1->setMessage('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut porta massa, sit amet maximus odio.');
-			$v1->setHelpURL('#');
-			$v1->setAction('I M ATION',$v->js()->reload());
-		}
 		
+		if($_GET[$this->name.'_set_countries']){
+			$this->api->db->dsql()->expr(file_get_contents(realpath(getcwd().'/vendor/xepan/base/countriesstates.sql')))->execute();
+			$this->js(true)->reload();
+		}
+
+		$isDone = false;
+		
+		$action = $this->js()->reload([$this->name.'_set_countries'=>1]);
+
+		if($this->add('xepan\base\Model_Country')->count()->getOne() > 0){
+			$isDone = true;
+			$action = $this->js()->univ()->dialogOK("Already have Data",' You already have countries populated, visit page ? <a href="'. $this->app->url('xepan_communication_general_countrystate')->getURL().'"> click here to go </a>');
+		}
+
+		$country_view = $this->add('xepan\base\View_Wizard_Step');
+
+		$country_view->setAddOn('Application - Base')
+			->setTitle('Country & State Information')
+			->setMessage('First Set The Country & their states information ')
+			->setHelpURL('#')
+			->setAction('Click Here',$action,$isDone);
 	}
-	
 }
