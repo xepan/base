@@ -15,12 +15,8 @@ class View_User_VerifyAgain extends \View{
 				$user->addCondition('username',$f['email']);
 				$user->tryLoadAny();
 				
-				if(!$user->loaded()) throw new \Exception("User Must Loaded", 1);
-				
-				$username=$user['username'];
-				if($email != $username){
-					throw new \Exception("This Email Id  not Ragister", 1);
-				}
+				if(!$user->loaded()) throw $this->exception('Email id is not registered','ValidityCheck')->setField('email');
+
 				$contact=$user->ref('Contacts');
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
