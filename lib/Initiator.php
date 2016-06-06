@@ -258,7 +258,7 @@ class Initiator extends \Controller_Addon {
 
         // Create Default Applications and INstall with all with root application
         
-        $addons = ['xepan\\hr','xepan\\communication','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog','xepan\\epanservices'];
+        $addons = ['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog','xepan\\epanservices'];
 
         foreach ($addons as $ad) {
             $ad_array = explode("\\", $ad);
