@@ -3,6 +3,12 @@
 namespace xepan\base;
 
 class View_Wizard_Step extends \View {
+	public $action_btn = null;
+
+	function setAddOn($addon){
+		$this->template->set('addon',$addon);
+		return $this;
+	}
 	function setTitle($title){
 		$this->template->set('title',$title);
 		return $this;
@@ -18,10 +24,25 @@ class View_Wizard_Step extends \View {
 		return $this;
 	}
 
-	function setAction($title,$action){
-		$button = $this->add('Button',null,'action_spot')->set($title)->addClass('btn btn-primary btn-sm');
+	function setAction($title,$action, $isDone=false){
+		$this->action_btn = $button = $this->add('Button',null,'action_spot')
+			->addClass('btn btn-sm');
+		if($isDone){
+			$button->addClass('btn-success');
+			$title = [$title, 'icon'=>' fa fa-check'];
+		}
+		else{
+			$button->addClass('btn-danger');
+		}
+
+		$button->set($title);
+
 		$button->js('click',$action);
 		return $this;
+	}
+
+	function getActionButton(){
+		return $this->action_btn;
 	}
 
 	function defaultTemplate(){
