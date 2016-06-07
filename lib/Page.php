@@ -15,6 +15,9 @@ class Page extends \Page {
 		if(!$this->app->auth->isLoggedIn() || !in_array($this->app->auth->model['scope'] , ['AdminUser','SuperUser'])){
 			throw $this->exception('You are not authorised to access this page')
 						->addMoreInfo('User Type',$this->app->auth->model['scope'])
+						->addMoreInfo('User_id',$this->app->auth->model->id)
+						->addMoreInfo('User',$this->app->auth->model['name'])
+						->addMoreInfo('isLoggedIn',$this->app->auth->isLoggedIn())
 						->addMoreInfo('page',$this->app->page)
 						;
 
