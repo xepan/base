@@ -29,7 +29,7 @@ class View_Wizard_Step extends \View {
 			->addClass('btn btn-sm');
 		if($isDone){
 			$button->addClass('btn-success');
-			$title = [$title, 'icon'=>' fa fa-check'];
+			$title = ['Done', 'icon'=>' fa fa-check'];
 		}
 		else{
 			$button->addClass('btn-danger');
