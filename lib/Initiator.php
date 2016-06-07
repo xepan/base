@@ -8,13 +8,11 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();        
 
-        $url = "{$_SERVER['HTTP_HOST']}";
-        $sub_domain = $this->extract_subdomains($url)?:'www';
         $this->app->epan = $this->recall(
-                            $sub_domain.'_epan',
+                            $this->app->current_website_name.'_epan',
                             $this->memorize(
-                                $sub_domain.'_epan',
-                                $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$sub_domain)
+                                $this->app->current_website_name.'_epan',
+                                $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name)
                             )
                         );
         if(!$this->app->epan->loaded()){
