@@ -99,7 +99,7 @@ class Initiator extends \Controller_Addon {
         $this->app->jui->addStaticInclude('elfinder.full');
         $this->app->jui->addStylesheet('elfinder.full');
         $this->app->jui->addStylesheet('elfindertheme');
-        $this->app->jui->addStylesheet('theme');
+        $this->app->jui->addStylesheet('elfindertheme');
         $this->app->jui->addStaticInclude('pnotify.custom.min');
         $this->app->jui->addStaticInclude('xepan.pnotify');
         $this->app->jui->addStaticStyleSheet('pnotify.custom.min');

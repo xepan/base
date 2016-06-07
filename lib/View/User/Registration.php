@@ -15,7 +15,7 @@ class View_User_Registration extends \View{
 
 			$f->onSubmit(function($f){
 				if($f['password']!= $f['retype_password']){
-					$f->displayError($f->getElement('retype_password'),'Password Not Match');			
+					$f->displayError($f->getElement('retype_password'),'Password did not match');			
 				}
 				
 				$user=$this->add('xepan\base\Model_User');
@@ -75,7 +75,7 @@ class View_User_Registration extends \View{
 				
 				$this->app->hook('userCreated',[$f['first_name'],$f['last_name'],$user]);
 			
-			return $f->js(null,$f->js()->reload())->univ()->successMessage('Registration SuccessFully');
+			return $f->js(null,$f->js()->reload())->univ()->successMessage('Account Verification Mail Sent');
 			});
 	}
 }

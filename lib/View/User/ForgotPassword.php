@@ -14,7 +14,7 @@ class View_User_ForgotPassword extends \View{
 			$user->tryLoadAny();
 			
 			if(!$user->loaded()){
-				$form->displayError('email','Email Id Not Register');
+				$form->displayError('email','This E-Mail Id is not registered');
 			}else{
 				$user['hash']=rand(9999,100000);
 				$user->update();
@@ -47,7 +47,7 @@ class View_User_ForgotPassword extends \View{
 				$mail->setBody($temp->render());
 				$mail->send($email_settings);
 
-				return $form->js(null,$form->js()->univ()->successMessage(' E-Mail SuccessFully Send'))->reload->execute();
+				return $form->js(null,$form->js()->univ()->successMessage('Mail sent'))->reload->execute();
 			}
 		}
 	}

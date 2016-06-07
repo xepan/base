@@ -27,7 +27,7 @@ class View_User_ResetPassword extends \View{
 				$f->displayError($f->getElement('password'),'Password Required Field');
 			
 			if($f['password']!= $f['retype_password'])
-				$f->displayError($f->getElement('retype_password'),'Password Not Match');
+				$f->displayError($f->getElement('retype_password'),'Password did not match');
 
 			$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 			$mail = $this->add('xepan\communication\Model_Communication_Email');
@@ -51,7 +51,7 @@ class View_User_ResetPassword extends \View{
 			// $this->app->auth->model->save();
 
 			
-			return $f->js()->univ()->successMessage('Password  SuccessFully Change');
+			return $f->js()->univ()->successMessage('Password  SuccessFully Changed');
 		});
 	}
 }
