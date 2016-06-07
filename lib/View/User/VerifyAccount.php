@@ -18,10 +18,10 @@ class View_User_VerifyAccount extends \View{
 			$user->addCondition('username',$f['email']);
 			$user->tryLoadAny();
 			if(!$user->loaded())
-				$f->displayError('email','Email Id Not Register');
+				$f->displayError('email','This E-mail Id is not registered');
 			
 			if($f['activation_code']!=$user['hash'])
-				$f->displayError('activation_code','Activation Code Not Match');
+				$f->displayError('activation_code','Activation code did not match');
 
 			$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 			$mail = $this->add('xepan\communication\Model_Communication_Email');
@@ -40,7 +40,7 @@ class View_User_VerifyAccount extends \View{
 			
 			$user['status']='Active';
 			$user->save();
-			return $f->js(null,$f->js()->reload())->univ()->successMessage('Account Verification SuccessFully');
+			return $f->js(null,$f->js()->reload())->univ()->successMessage('Account verified successfully');
 		});
 	}			
 }			

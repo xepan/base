@@ -15,7 +15,7 @@ class View_User_VerifyAgain extends \View{
 				$user->addCondition('username',$f['email']);
 				$user->tryLoadAny();
 				
-				if(!$user->loaded()) throw $this->exception('Email id is not registered','ValidityCheck')->setField('email');
+				if(!$user->loaded()) throw $this->exception('Email Id is not registered','ValidityCheck')->setField('email');
 
 				$contact=$user->ref('Contacts');
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
@@ -51,7 +51,7 @@ class View_User_VerifyAgain extends \View{
 				$mail->setBody($temp->render());
 				$mail->send($email_settings);
 
-				return $f->js(null,$f->js()->reload())->univ()->successMessage('Secret Code Send');
+				return $f->js(null,$f->js()->reload())->univ()->successMessage('Secret Code Sent');
 			} catch (Exception $e) {
 				return $this->js()->univ()->errorMessage('Error');	
 			}

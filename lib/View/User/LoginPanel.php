@@ -15,7 +15,7 @@ class View_User_LoginPanel extends \View{
  		
         if($f->isSubmitted()){
 			if(!$credential = $this->app->auth->verifyCredentials($f['username'],$f['password'])){
-				$f->displayError($f->getElement('password'),'Wrong Credentials');
+				$f->displayError($f->getElement('password'),'wrong credentials');
 			}
 					
 			$user = $this->add('xepan\base\Model_User')->load($credential);

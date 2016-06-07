@@ -24,8 +24,8 @@ class View_EasySetupWizard extends \View{
 		$country_view = $this->add('xepan\base\View_Wizard_Step');
 
 		$country_view->setAddOn('Application - Base')
-			->setTitle('Country & State Information')
-			->setMessage('First Set The Country & their states information ')
+			->setTitle('Country & State database not populated yet')
+			->setMessage('Populate country and states. Need help ! click on the help icon')
 			->setHelpURL('#')
 			->setAction('Click Here',$action,$isDone);
 	}
