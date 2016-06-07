@@ -27,6 +27,8 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('datetime')->defaultValue(isset($this->app->now)?$this->app->now:null)->system(true);
 		$this->addField('is_published')->defaultValue(null);
 		$this->addField('extra_info')->type('text');
+		$this->addField('aliases')->type('text');
+		
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
 		$this->hasMany('xepan\communication\Communication_EmailSetting',null,null,'EmailSettings');
@@ -43,7 +45,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 
 		$this->is([
 				'epan_category_id|required',
-				'name|required|to_trim|unique'
+				'name|required|to_trim|unique',
 			]);
 	}
 
