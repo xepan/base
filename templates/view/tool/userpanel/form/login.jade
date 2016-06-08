@@ -19,12 +19,14 @@
         .row
           .col-xs-12
             button.btn.btn-success.col-xs-12(type='submit') Login  
+  {footer_wrapper}
   .panel-footer.row(style="margin:auto")
     a#login-forget-link.forgotpassword.xepan-login-panl-loadview.pull-left(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='forget_password') Forgot password
     a.col-xs-6.text-center.reg_view.xepan-login-panl-loadview(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='new_registration')  Register now 
     a.reg_view.xepan-login-panl-loadview.pull-right(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='verify_account')
       | Activate 
-      #login-box-footer  
+      #login-box-footer
+  {/}      
 style.
     #{$_name} input{
       width:100%;

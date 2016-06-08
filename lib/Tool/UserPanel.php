@@ -8,7 +8,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'login_success_url'=>'index',
 				'logout_page'=>'logout',
 				'login_page'=>'login',
-				'show_micro_login'=>false
+				'show_micro_login'=>false,
+				'show_footer'=>true
 			];	
 	function init(){
 		parent::init();
