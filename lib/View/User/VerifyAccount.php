@@ -40,7 +40,7 @@ class View_User_VerifyAccount extends \View{
 			
 			$user['status']='Active';
 			$user->save();
-			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view'])))->univ()->successMessage('Account verified successfully');
+			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>$this->options['verify_message']])))->univ()->successMessage('Account verified successfully');
 		});
 	}			
 }			

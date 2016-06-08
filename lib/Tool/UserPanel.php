@@ -12,12 +12,12 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'show_footer'=>true,
 				'show_login_link'=>true,
 				// THESE OPTIONS ARE NOT YET IMPLEMENTED, TIME TO JUMP ON TO FRONTEND
-				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
 				'show_forgotpassword_link'=>true,
 				'show_registration_link'=>true,
 				'show_verification_link'=>true,
 				'show_resendverification_link'=>true,
-				'message'=>''
+				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
+				'verify_message'=>'verification successful, you can login now',
 			];	
 	function init(){
 		parent::init();

@@ -9,6 +9,9 @@ class View_User_LoginPanel extends \View{
 
         $f = $this->add('Form',null,null,['form/minimal']);
         $f->setLayout('view/tool/userpanel/form/login');
+        if($message = $this->app->stickyGET('message'))
+   	 		$f->layout->template->trySet('message',$message);
+
         if(!$this->options['show_footer']){
 			$f->layout->template->del('footer_wrapper');        	
         }
