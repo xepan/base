@@ -62,7 +62,6 @@ class View_User_Registration extends \View{
 					$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
 							
 					$temp->trySetHTML('name',$contact['name']);
-					throw new \Exception($contact['name']);
 					
 					$temp->trySetHTML('otp',$user['hash']);
 					$temp->trySetHTML('password',$user['password']);
@@ -77,7 +76,7 @@ class View_User_Registration extends \View{
 				
 				$this->app->hook('userCreated',[$f['first_name'],$f['last_name'],$user]);
 			
-			return $f->js(null,$f->js()->reload())->univ()->successMessage('Account Verification Mail Sent');
+			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view'])))->univ()->successMessage('Account Verification Mail Sent');
 			});
 	}
 }

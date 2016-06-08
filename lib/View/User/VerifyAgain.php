@@ -51,9 +51,10 @@ class View_User_VerifyAgain extends \View{
 				$mail->setBody($temp->render());
 				$mail->send($email_settings);
 
-				return $f->js(null,$f->js()->reload())->univ()->successMessage('Secret Code Sent');
+				return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view'])))->univ()->successMessage('Secret Code Sent');
 			} catch (Exception $e) {
 				return $this->js()->univ()->errorMessage('Error');	
+
 			}
 		});
 	}			

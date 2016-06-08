@@ -16,7 +16,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'show_forgotpassword_link'=>true,
 				'show_registration_link'=>true,
 				'show_verification_link'=>true,
-				'show_resendverification_link'=>true
+				'show_resendverification_link'=>true,
+				'message'=>''
 			];	
 	function init(){
 		parent::init();
