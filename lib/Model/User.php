@@ -17,6 +17,7 @@ class Model_User extends \xepan\base\Model_Table{
 
 	public $table="user";
 	public $acl=true;
+	public $title_field = "username";
 	public $status=[
 	'Active',
 	'InActive'

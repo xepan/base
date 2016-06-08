@@ -9,6 +9,10 @@ class View_User_LoginPanel extends \View{
 
         $f = $this->add('Form',null,null,['form/minimal']);
         $f->setLayout('view/tool/userpanel/form/login');
+        if(!$this->options['show_footer']){
+			$f->layout->template->del('footer_wrapper');        	
+        }
+        
         $f->addField('Line','username','Email address');
         $f->addField('Password','password','Password');
     	$auth=$this->app->auth;
