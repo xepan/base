@@ -62,6 +62,8 @@ class View_User_Registration extends \View{
 					$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
 							
 					$temp->trySetHTML('name',$contact['name']);
+					throw new \Exception($contact['name']);
+					
 					$temp->trySetHTML('otp',$user['hash']);
 					$temp->trySetHTML('password',$user['password']);
 					$temp->trySetHTML('email_id',$user['username']);
