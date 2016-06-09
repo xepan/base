@@ -47,7 +47,7 @@ class View_User_ForgotPassword extends \View{
 				$mail->setBody($temp->render());
 				$mail->send($email_settings);
 
-				return $form->js(null,$form->js()->univ()->successMessage('Mail sent'))->redirect($this->app->url('login',['layout'=>'login_view']))->execute();
+				return $form->js(null,$form->js()->univ()->successMessage('Mail sent'))->redirect($this->app->url('login',['layout'=>'login_view', 'message'=>$this->options['forgot_message']]))->execute();
 			}
 		}
 	}

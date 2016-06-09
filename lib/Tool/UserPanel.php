@@ -18,6 +18,9 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'show_resendverification_link'=>true,
 				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
 				'verify_message'=>'verification successful, you can login now',
+				'registration_message'=>'registration mail sent, visit your mailbox to continue',
+				'forgot_message'=>'mail sent, visit your mailbox to continue',
+				'reactive_message'=>'re-registration mail sent you your mailbox'
 			];	
 	function init(){
 		parent::init();

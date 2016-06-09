@@ -76,7 +76,7 @@ class View_User_Registration extends \View{
 				
 				$this->app->hook('userCreated',[$f['first_name'],$f['last_name'],$user]);
 			
-			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view'])))->univ()->successMessage('Account Verification Mail Sent');
+			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>$this->options['registration_message']])))->univ()->successMessage('Account Verification Mail Sent');
 			});
 	}
 }
