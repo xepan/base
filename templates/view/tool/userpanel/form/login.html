@@ -1,4 +1,4 @@
-{$message}
+
 <div id="{$_name}" class="panel panel-default">
   <div class="panel-heading text-center"><strong>Sign in to continue</strong></div>
   <div style="margin-top:30px;margin-bottom:30px;" class="panel-body">
@@ -26,8 +26,9 @@
     {register_wrapper}<a style="cursor:pointer; cursor: hand; max-width:600px;" data-showview="new_registration" class="col-xs-6 text-center reg_view xepan-login-panl-loadview"> Register now </a>{/}
     {activate_wrapper}<a style="cursor:pointer; cursor: hand; max-width:600px;" data-showview="verify_account" class="reg_view xepan-login-panl-loadview pull-right">Activate
       <div id="login-box-footer"></div></a>{/} 
-  </div>{/}      
+  </div>{/}
 </div>
+<div class="text-center text-primary">{$message}        </div>
 <style>
    input{
     width:100%;
