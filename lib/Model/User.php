@@ -44,6 +44,8 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
 		$this->is([
 				'username|unique|to_trim|required|email'
+				'password|to_trim|required',
+				'status|required'
 			]);
 
 		// $this->app->auth->addEncryptionHook($this);
