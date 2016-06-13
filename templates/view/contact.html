@@ -9,6 +9,7 @@
       <div class="profile-status"><i class="fa fa-circle"></i> Online</div>{avatar}<img alt="" src="" class="profile-img img-responsive center-block"/>{/}
       <div class="profile-label"><span class="label label-danger">{type}{/}</span></div>
       <div class="profile-since">Contact since: {created_at}{/}</div><hr/>
+      {email_and_phone}
       <h2>Emails</h2>
       <div class="profile-details">
         {Emails}
@@ -22,7 +23,7 @@
       <div class="profile-details">
         {Phones}
         {/}
-      </div>
+      </div>{/}  
       <div class="profile-message-btn center-block text-center">
         <div role="group" class="btn-group btn-group-sm">
           <button type="button" title="send email" class="btn btn-primary"><i class="fa fa-envelope"></i>&nbsp;Email</button>
@@ -48,7 +49,7 @@
             <div>{city}not found{/}<br/></div>
             <label>Pin Code: </label>
             <div>{pin_code}not found{/}</div></span></div>
-      </div>
+      </div>{im_and_events_andrelation}
       <h2>IM Numbers</h2>
       <div class="profile-details">
          
@@ -67,7 +68,7 @@
          
         {Relations}
         <div><span title="Father"><i class="fa fa-skype">&nbsp;</i></span> </div>{/}
-      </div>
+      </div>{/}  
     </div>
   </div>
 </div>
