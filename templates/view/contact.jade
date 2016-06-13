@@ -16,6 +16,7 @@
       .profile-since
         | Contact since: {created_at}{/}
       <hr/>
+      {email_and_phone}
       h2 Emails
       .profile-details
         {Emails}
@@ -28,6 +29,7 @@
       .profile-details
         {Phones}
         {/}
+      {/}  
       .profile-message-btn.center-block.text-center
         .btn-group.btn-group-sm(role="group")
           button.btn.btn-primary(type="button" title="send email")
@@ -67,6 +69,7 @@
             div {city}not found{/}<br/>
             label Pin Code: 
             div {pin_code}not found{/}
+      {im_and_events_andrelation}
       h2 IM Numbers
       .profile-details 
         {IMs}
@@ -96,3 +99,4 @@
             i.fa.fa-skype &nbsp;
           | 
         {/}
+      {/}  
