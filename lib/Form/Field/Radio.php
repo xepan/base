@@ -5,12 +5,12 @@ namespace xepan\base;
 class Form_Field_Radio extends \Form_Field_ValueList {
     Public $image_field = null;
     
-    function validate(){
-        if(!isset($this->value_list[$this->value]) && (!$this->value && $this->empty_value)){
-            $this->displayFieldError("Value ".$this->value." is not one of offered values");
-        }
-        return parent::validate();
-    }
+    // function validate(){
+    //     if(!isset($this->value_list[$this->value]) && (!$this->value && $this->empty_value)){
+    //         $this->displayFieldError("Value ".$this->value." is not one of offered values");
+    //     }
+    //     return parent::validate();
+    // }
     function getInput($attr=array()){
         
         $output = '<div id="'.$this->name.'" class="atk-form-options">';

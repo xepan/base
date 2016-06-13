@@ -32,15 +32,18 @@ class Controller_Validator extends \Controller_Validator{
     }
 
     function rule_unique_in_epan($a,$field){
-        
+
         $q = clone $this->owner->dsql();
 
         $result = $q
                 ->where($field, $a)
                 ->where($field,'<>', '')
-                ->where($q->getField('id'),'<>', $this->owner->id)
-                ->where($q->expr('[0] = [1]',[$this->owner->getElement('epan_id'),$this->app->epan->id]))
-                ->field($field)
+                ->where($q->getField('id'),'<>', $this->owner->id);
+
+        if($this->owner->hasElement('epan_id'))
+            $q->where($q->expr('[0] = [1]',[$this->owner->getElement('epan_id'),$this->app->epan->id]));
+        
+        $result = $q->field($field)
                 ->getOne();
 
         if($result !== null) return $this->fail('Value "{{arg1}}" already exists', $a);
