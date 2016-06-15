@@ -29,5 +29,28 @@ class Model_Country extends \xepan\base\Model_Table{
 		$this->addCondition('type','Country');
 		
 		$this->hasMany('xepan\base\State','country_id');
+		
+		$this->addHook('afterInsert',$this);
+		$this->addHook('beforeDelete',$this);
+
+		$this->is([
+			'name|to_trim|required|unique_in_epan'
+		]);
+	}
+
+	function afterInsert($model,$id){
+		$state = $this->add('xepan\base\Model_State');
+		$state['country_id'] = $id;
+		$state['created_by_id'] = $this->app->employee->id;
+		$state['name'] = 'All';		
+		$this['type'] = 'State';
+		$this['abbreviation'] = 'All';
+		$state->save();
+	}
+
+	function beforeDelete($m){
+		if($m['name'] === 'All'){
+			throw new \Exception("Cannot delete countries together, please delete countries individually");
+		}		
 	}
 }

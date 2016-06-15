@@ -18,7 +18,6 @@ class Model_Epan extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan_Category');
-		$this->hasOne('xepan\base\Epan_Template');
 		$this->hasOne('xepan\base\Contact','created_by_id');		
 		
 		$this->addField('name')->hint('Identification for your epan');
@@ -28,7 +27,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('is_published')->defaultValue(null);
 		$this->addField('extra_info')->type('text');
 		$this->addField('aliases')->type('text');
-		
+		$this->addField('xepan_template_id');	
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
 		$this->hasMany('xepan\communication\Communication_EmailSetting',null,null,'EmailSettings');
