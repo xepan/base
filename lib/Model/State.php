@@ -27,6 +27,16 @@ class Model_State extends \xepan\base\Model_Table{
 		$this->addField('type');
 		$this->addField('abbreviation');
 		$this->addCondition('type','State');
-		
+		$this->addHook('beforeDelete',$this);
+
+		$this->is([
+				'name|to_trim|required|unique_in_epan'
+			]);
+	}
+
+	function beforeDelete($m){
+		if($m['name'] === 'All'){
+			throw new \Exception("Cannot delete states together, please delete states individually");
+		}		
 	}
 }
