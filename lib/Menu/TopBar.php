@@ -20,7 +20,7 @@ class Menu_TopBar extends \Menu_Advanced{
         return $m;
     }
 
-    public function addItem($title, $action=null){
+    public function addItem($title, $action=null,$match_qs_vars=[]){
     	$i = $this->add('xepan\base\Menu_TopBar',null,'SubMenu',['menu/item']);
 
         if (is_array($title)) {
@@ -39,8 +39,23 @@ class Menu_TopBar extends \Menu_Advanced{
             if (is_string($action) || is_array($action) || $action instanceof \URL) {
                 $i->template->set('url',$url = $this->app->url($action));
                 if($url->isCurrent()){
-                    $i->addClass('active');
-                    $i->owner->addClass('active');
+                    if(count($match_qs_vars)===0){
+                        $i->addClass('active');
+                        $i->owner->addClass('active');
+                    }else{
+                        $active=true;
+                        $args= $action->arguments;
+                        foreach ($match_qs_vars as $var) {
+                            if($_GET[$var]!=$args[$var]){
+                                $active = false;
+                                break;
+                            }
+                        }
+                        if($active){
+                            $i->addClass('active');
+                            $i->owner->addClass('active');
+                        }
+                    }
                 }
             } else {
                 $i->on('click',$action);
