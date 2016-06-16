@@ -36,6 +36,7 @@ class View_Contact extends \View{
 
 		$this->action = $action = $this->api->stickyGET('action')?:'view';
 		$this->document_view = $this->add($this->view_document_class,['action'=> $action,'id_field_on_reload'=>'contact_id'],null,['view/contact']);
+
 		
 	}
 
@@ -84,6 +85,18 @@ class View_Contact extends \View{
 			$relation->template->tryDel('Pannel');
 
 		}
+
+		$contact_emails=implode(',',$this->model->getEmails());
+		$this->document_view->js('click')->_selector('.do-contact-email')
+			->univ()->location(
+				$this->app->url(
+								'xepan_communication_composeemail',
+								[
+									'send_email_contact'=>true,
+									'contact_id'=>$this->model->id
+								]
+							)
+				);
 
 
 		return $this->model;
