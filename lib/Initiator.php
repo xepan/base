@@ -268,6 +268,19 @@ class Initiator extends \Controller_Addon {
                 $epan->installApp($app);
         }
 
+        // create default filestore volume
+        
+        $fv = $this->add('epan\filestore\Model_Volume');
+        $fv->addCondition('name','upload');
+        $fv->tryLoadAny();
+        $fv['dirname']='upload';
+        $fv['total_space'] = '1000000000';
+        $fv['used_space'] = '0';
+        $fv['stored_files_count'] = '0';
+        $fv['enabled'] = '1';
+        $fv->save();
+
+
         if($write_sql){
             $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
             $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/install.sql');
