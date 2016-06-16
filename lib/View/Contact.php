@@ -48,6 +48,14 @@ class View_Contact extends \View{
 		else
 			$this->document_view->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
 
+		$country_field=$this->document_view->form->getElement('country_id');
+		$state_field=$this->document_view->form->getElement('state_id');
+
+		if($this->app->stickyGET('country_id'))
+			$state_field->getModel()->addCondition('country_id',$_GET['country_id'])->setOrder('name','asc');
+
+		$country_field->js('change',$state_field->js()->reload(null,null,[$this->app->url(null,['cut_object'=>$state_field->name]),'country_id'=>$country_field->js()->val()]));
+
 		if($this->model->loaded()){
 
 			$email_m=$contact->ref('Emails');

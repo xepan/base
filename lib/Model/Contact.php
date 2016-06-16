@@ -89,7 +89,9 @@ class Model_Contact extends \xepan\base\Model_Table{
 				'first_name|to_trim|to_upper_words|required',
 				'last_name|to_trim|to_upper_words',
 				'user_id|unique_in_epan',
-				'type|to_trim|required'
+				'type|to_trim|required',
+				'country_id|required',
+				'state_id|required'
 			]);
 	}
 
