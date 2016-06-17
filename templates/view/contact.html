@@ -5,10 +5,14 @@
       <h2>{first_name}First Name{/} </h2>
       <h2>{last_name}Last Name{/} </h2>
     </header>
-    <div class="main-box-body clearfix">
-      <div class="profile-status"><i class="fa fa-circle"></i> Online</div>{avatar}<img alt="" src="" class="profile-img img-responsive center-block"/>{/}
-      <div class="profile-label"><span class="label label-danger">{type}{/}</span></div>
-      <div class="profile-since">Contact since: {created_at}{/}</div><hr/>
+    <div class="main-box-body clearfix">{online_status_wrapper}
+      <div class="profile-status"><i class="fa fa-circle"></i> {online_status}Online{/}</div>{/}
+      {avatar_wrapper}
+      {avatar}<img alt="" src="" class="profile-img img-responsive center-block"/>{/}{/}
+      {contact_type_wrapper}
+      <div class="profile-label"><span class="label label-danger">{type}{/}</span></div>{/}
+      {contact_since_wrapper}
+      <div class="profile-since">Contact since: {created_at}{/}</div>{/}
       {email_and_phone}
       <h2>Emails</h2>
       <div class="profile-details">
@@ -23,19 +27,20 @@
       <div class="profile-details">
         {Phones}
         {/}
-      </div>{/}  
+      </div>{/}
+      {send_email_sms_wrapper}
       <div class="profile-message-btn center-block text-center">
         <div role="group" class="btn-group btn-group-sm">
           <button type="button" title="send email" class="btn btn-primary do-contact-email"><i class="fa fa-envelope"></i>&nbsp;Email</button>
         </div>
-      </div>
+      </div>{/}
       <div class="row xepan-push"></div>
-      <div class="row">     </div>
+      <div class="row"></div>
       <div class="profile-details">
         <div class="form-group"><span title="organization"><i class="fa fa-building fa-lg">&nbsp;</i>
-            <label>Organization</label>{organization}-{/}</span></div>
+            <label>Organization</label>{organization}-{/}</span></div>{post_wrapper}
         <div class="form-group"><span title="post"><i class="fa fa-user fa-lg">&nbsp;</i>
-            <label>Post</label>{post}-{/}</span></div>
+            <label>Post</label>{post}-{/}</span></div>{/}
         <div class="form-group"><span title="website"><i class="fa fa-globe fa-lg">&nbsp;</i>
             <label>Website</label>{website}-{/}</span></div>
         <div class="form-group"><span title="address"><i class="fa fa-map-marker fa-lg">&nbsp;</i>
