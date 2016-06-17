@@ -95,21 +95,22 @@ class Initiator extends \Controller_Addon {
         $auth->setModel($user,'username','password');
         
         $auth->check();
-                
-        $this->app->jui->addStaticInclude('elfinder.full');
-        $this->app->jui->addStylesheet('elfinder.full');
-        $this->app->jui->addStylesheet('elfindertheme');
-        $this->app->jui->addStylesheet('elfindertheme');
-        $this->app->jui->addStaticInclude('pnotify.custom.min');
-        $this->app->jui->addStaticInclude('xepan.pnotify');
-        $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
-        $this->app->jui->addStaticStyleSheet('animate');
-        $this->app->jui->addStaticInclude('xepan_jui');
-
-        
-        $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
-        $this->app->js(true)->_library('PNotify.desktop')->permission();
-        $this->app->js(true)->_load('jquery.bootstrap-responsive-tabs.min')->_selector('.responsive-tabs')->responsiveTabs("accordionOn: ['xs', 'sm']");
+               
+        if(!$this->app->isAjaxOutput()) {
+            $this->app->jui->addStaticInclude('elfinder.full');
+            $this->app->jui->addStylesheet('elfinder.full');
+            $this->app->jui->addStylesheet('elfindertheme');
+            $this->app->jui->addStylesheet('elfindertheme');
+            $this->app->jui->addStaticInclude('pnotify.custom.min');
+            $this->app->jui->addStaticInclude('xepan.pnotify');
+            $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
+            $this->app->jui->addStaticStyleSheet('animate');
+            $this->app->jui->addStaticInclude('xepan_jui');
+            
+            $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
+            $this->app->js(true)->_library('PNotify.desktop')->permission();
+            $this->app->js(true)->_load('jquery.bootstrap-responsive-tabs.min')->_selector('.responsive-tabs')->responsiveTabs("accordionOn: ['xs', 'sm']");
+        }
        
         $this->app->addHook('post-init',function($app){
             if($app->layout->template->hasTag('quick_search_form'))
@@ -281,11 +282,14 @@ class Initiator extends \Controller_Addon {
         $fv->save();
 
 
-        if($write_sql){
-            $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
-            $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/install.sql');
-        }
+        // if($write_sql){
+        //     $dump = new \MySQLDump(new \mysqli('localhost', 'root', 'winserver', 'xepan2'));
+        //     $dump->save(getcwd().'/../vendor/'.str_replace("\\",'/',__NAMESPACE__).'/install.sql');
+        // }
 
+        // Insert default country and states
+        $this->api->db->dsql()->expr(file_get_contents(realpath(getcwd().'/vendor/xepan/base/countriesstates.sql')))->execute();
+        
 
         // Do other tasks needed
         // Like empting any folder etc
