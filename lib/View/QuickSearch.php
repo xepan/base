@@ -18,11 +18,18 @@ class View_QuickSearch extends \View {
 		if($_GET[$f->name.'_term']){			
 			$this->app->hook('quick_searched',[$_GET[$f->name.'_term'],&$result_array]);
 		}
+		
+		usort($result_array, [$this,'sortByRelevence']);
+
 		$result_view->setSource($result_array);
 
 		if($f->isSubmitted()){
 			$result_view->js()->reload([$f->name.'_term'=>$f['search_xepan']])->execute();
 		}
 
+	}
+
+	function sortByRelevence($a,$b){
+		return $a['relevency'] < $b['relevency'];
 	}
 }
