@@ -9,6 +9,9 @@ class page_forgotpassword extends \Page{
 		$form->setLayout('view/admin/user/form/forgotpassword');
 		$form->addField('line','email')->validate('required');/*->validateNotNull()->validateField('filter_var($this->get(), FILTER_VALIDATE_EMAIL)');*/
 
+		if($_GET['email_send'])
+			$form->layout->add('View',null,'success_message')->addClass('label label-primary col-sm-12 col-md-12')->setStyle('padding-bottom:10px;padding-top:10px;border-radius:0px;')->set('Please check your email');
+
 		if($form->isSubmitted()){
 			$user=$this->add('xepan\base\Model_User');
 			$user->addCondition('username',$form['email']);
@@ -54,7 +57,7 @@ class page_forgotpassword extends \Page{
 				$mail->setBody($body_v->getHtml());
 				$mail->send($email_settings);
 
-				return $form->js(null,$form->js()->univ()->successMessage(' E-Mail SuccessFully Send'))->reload->execute();
+				return $form->js(null)->reload(array('email_send'=>1))->execute();				
 			}
 		}
 
