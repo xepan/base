@@ -271,7 +271,7 @@ class Initiator extends \Controller_Addon {
 
         // create default filestore volume
         
-        $fv = $this->add('epan\filestore\Model_Volume');
+        $fv = $this->add('xepan\filestore\Model_Volume');
         $fv->addCondition('name','upload');
         $fv->tryLoadAny();
         $fv['dirname']='upload';

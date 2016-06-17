@@ -5,17 +5,24 @@
       h2 {first_name}First Name{/} 
       h2 {last_name}Last Name{/} 
     .main-box-body.clearfix
+      {online_status_wrapper}
       .profile-status
         i.fa.fa-circle
-        |  Online
+        |  {online_status}Online{/}
+      {/}
+
+      {avatar_wrapper}
       {avatar}
       img.profile-img.img-responsive.center-block(alt='', src='')
-      {/}
+      {/}{/}
+      {contact_type_wrapper}
       .profile-label
         span.label.label-danger {type}{/}
+      {/}
+      {contact_since_wrapper}
       .profile-since
         | Contact since: {created_at}{/}
-      <hr/>
+      {/}
       {email_and_phone}
       h2 Emails
       .profile-details
@@ -29,28 +36,32 @@
       .profile-details
         {Phones}
         {/}
-      {/}  
+      {/}
+      {send_email_sms_wrapper}
       .profile-message-btn.center-block.text-center
         .btn-group.btn-group-sm(role="group")
-          button.btn.btn-primary(type="button" title="send email")
+          button.btn.btn-primary.do-contact-email(type="button" title="send email")
             i.fa.fa-envelope
             |&nbsp;Email
-          button.btn.btn-primary(type="button" title="send message")
-            i.fa.fa-phone
-            |&nbsp;SMS
+          //- button.btn.btn-primary(type="button" title="send message")
+          //-   i.fa.fa-phone
+          //-   |&nbsp;SMS
+      {/}
       .row.xepan-push
-      .row      
+      .row
       .profile-details
         .form-group
           span(title="organization")
             i.fa.fa-building.fa-lg &nbsp;
             label Organization
             |{organization}-{/}
+        {post_wrapper}
         .form-group
           span(title="post")
             i.fa.fa-user.fa-lg &nbsp;
             label Post
             |{post}-{/}
+        {/}
         .form-group
           span(title="website")
             i.fa.fa-globe.fa-lg &nbsp;
@@ -62,9 +73,9 @@
             label Address
             |{address}not found{/}<br/>
             label Country: 
-            div {$country}{country_id}not found{/}<br/>
+            div.atk-form-row {$country}{country_id}not found{/}<br/>
             label State: 
-            div {$state}{state_id}not found{/}<br/>
+            div.atk-form-row {$state}{state_id}not found{/}<br/>
             label City: 
             div {city}not found{/}<br/>
             label Pin Code: 
