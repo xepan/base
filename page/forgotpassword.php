@@ -25,6 +25,8 @@ class page_forgotpassword extends \Page{
 				$email_subject=$reset_pass->getConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN');
 				$email_body=$reset_pass->getConfig('RESET_PASSWORD_BODY_FOR_ADMIN');
 				// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
+				$subject_temp=$this->add('GiTemplate');
+				$subject_temp->loadTemplateFromString($email_subject);
 				$temp=$this->add('GiTemplate');
 				$temp->loadTemplateFromString($email_body);
 				$url=$this->api->url('xepan_base_resetpassword',
@@ -35,14 +37,21 @@ class page_forgotpassword extends \Page{
 												]
 												)->useAbsoluteURL();
 
-				$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
+				$tag_url="<a href=\"".$url."\">Click here </a>"	;
 			
-				$temp->trySetHTML('name',$user['name']);		
-				$temp->trySetHTML('click_here_to_activate',$tag_url);
+				
+				$subject_v=$this->add('View',null,null,$subject_temp);
+				$subject_v->setModel($user);
+				
+				$body_v=$this->add('View',null,null,$temp);
+				$body_v->setModel($user);
+
+				$body_v->template->trySetHTML('click_here',$tag_url);
+
 				$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 				$mail->addTo($form['email']);
-				$mail->setSubject($email_subject);
-				$mail->setBody($temp->render());
+				$mail->setSubject($subject_v->getHtml());
+				$mail->setBody($body_v->getHtml());
 				$mail->send($email_settings);
 
 				return $form->js(null,$form->js()->univ()->successMessage(' E-Mail SuccessFully Send'))->reload->execute();
