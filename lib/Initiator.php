@@ -58,7 +58,6 @@ class Initiator extends \Controller_Addon {
         }
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
-            $p->add('HR');
             $f = $p->add('Form',null,null,['form/minimal']);
             $f->setLayout(['layout/xepanlogin','form_layout']);
             $f->addField('Line','username','Email address');
