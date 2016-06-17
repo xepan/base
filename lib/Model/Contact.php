@@ -89,9 +89,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 				'first_name|to_trim|to_upper_words|required',
 				'last_name|to_trim|to_upper_words',
 				'user_id|unique_in_epan',
-				'type|to_trim|required',
-				'country_id|required',
-				'state_id|required'
+				'type|to_trim|required'
 			]);
 	}
 
@@ -140,12 +138,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 
 	function getEmails(){
+		if(!$this->loaded())
+			return [];
 		$emails = $this->ref('Emails')
 								->_dsql()->del('fields')->field('value')->getAll();
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
 	}
 
 	function getPhones(){
+		if(!$this->loaded())
+			return [];
+
 		$emails = $this->ref('Phones')
 								->_dsql()->del('fields')->field('value')->getAll();
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);	
