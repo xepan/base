@@ -36,6 +36,7 @@ class View_Contact extends \View{
 
 		$this->action = $action = $this->api->stickyGET('action')?:'view';
 		$this->document_view = $this->add($this->view_document_class,['action'=> $action,'id_field_on_reload'=>'contact_id'],null,['view/contact']);
+
 		
 	}
 
@@ -46,6 +47,14 @@ class View_Contact extends \View{
 			$this->document_view->form->layout->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null,'model'=>$this->model]);
 		else
 			$this->document_view->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null]);
+
+		$country_field=$this->document_view->form->getElement('country_id');
+		$state_field=$this->document_view->form->getElement('state_id');
+
+		if($this->app->stickyGET('country_id'))
+			$state_field->getModel()->addCondition('country_id',$_GET['country_id'])->setOrder('name','asc');
+
+		$country_field->js('change',$state_field->js()->reload(null,null,[$this->app->url(null,['cut_object'=>$state_field->name]),'country_id'=>$country_field->js()->val()]));
 
 		if($this->model->loaded()){
 
@@ -84,6 +93,18 @@ class View_Contact extends \View{
 			$relation->template->tryDel('Pannel');
 
 		}
+
+		$contact_emails=implode(',',$this->model->getEmails());
+		$this->document_view->js('click')->_selector('.do-contact-email')
+			->univ()->location(
+				$this->app->url(
+								'xepan_communication_composeemail',
+								[
+									'send_email_contact'=>true,
+									'contact_id'=>$this->model->id
+								]
+							)
+				);
 
 
 		return $this->model;
