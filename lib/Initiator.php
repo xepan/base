@@ -215,6 +215,23 @@ class Initiator extends \Controller_Addon {
             $this->add('xepan\base\Model_'.$t)->deleteAll();
         }
 
+
+        $resetpass_config = $this->app->epan->config;
+        $file_reset_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_subject_admin.html'));
+        $file_reset_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_body_admin.html'));
+        
+        $reset_subject = $resetpass_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'base');
+        $reset_body = $resetpass_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'base');
+        
+        $update_config = $this->app->epan->config;
+        $file_update_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_subject_admin.html'));
+        $file_update_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_body_admin.html'));
+        
+        $update_subject = $update_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'base');
+        $update_body = $update_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'base');
+        
+           
+
         // orphan contact_info and contacts
         
         $this->app->db->dsql()->table('contact_info')->where('epan_id',null)->delete();
