@@ -25,20 +25,33 @@ class page_resetpassword extends \Page{
 			if($f['password']!= $f['retype_password']){
 				$f->displayError($f->getElement('retype_password'),'Password Not Match');
 			}
-			$contact=$user->ref('Contacts');
+			$contact=$user->ref('Contacts')->tryLoadAny();
 			$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
+			
 			$mail = $this->add('xepan\communication\Model_Communication_Email');
-
+			$merge_model_array=[];
+			$merge_model_array = array_merge($merge_model_array,$user->get());
+			$merge_model_array = array_merge($merge_model_array,$contact->get());
+			
 			$reg_model=$this->app->epan->config;
 			$email_subject=$reg_model->getConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN');
 			$email_body=$reg_model->getConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN');
 			// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
+			$subject_temp=$this->add('GiTemplate');
+			$subject_temp->loadTemplateFromString($email_subject);
+			
+			$subject_v=$this->add('View',null,null,$subject_temp);
+			$subject_v->template->trySet($merge_model_array);
+			
 			$temp=$this->add('GiTemplate');
 			$temp->loadTemplateFromString($email_body);
+			$body_v=$this->add('View',null,null,$temp);
+			$body_v->template->trySet($merge_model_array);
+			
 			$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 			$mail->addTo($f['email']);
-			$mail->setSubject($email_subject);
-			$mail->setBody($temp->render());
+			$mail->setSubject($subject_v->getHtml());
+			$mail->setBody($body_v->getHtml());
 			$mail->send($email_settings);
 			
 			$user['password']=$f['password'];
@@ -48,7 +61,7 @@ class page_resetpassword extends \Page{
 			// $this->app->auth->model->save();
 
 			
-			return $f->js()->univ()->successMessage('Password  SuccessFully Change');
+			return $f->js()->univ()->location('index.php');
 		});
 
 	}
