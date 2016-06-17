@@ -15,8 +15,9 @@ class View_QuickSearch extends \View {
 		$result_view = $this->add('CompleteLister',null,null,['view\quicksearch']);
 		$result_array=[];
 		
-		if($_GET[$f->name.'_term']){			
-			$this->app->hook('quick_searched',[$_GET[$f->name.'_term'],&$result_array]);
+		if($_GET[$f->name.'_term']){
+			$search_string = $_GET[$f->name.'_term'];
+			$this->app->hook('quick_searched',[$search_string,&$result_array]);
 		}
 		
 		usort($result_array, [$this,'sortByRelevence']);
