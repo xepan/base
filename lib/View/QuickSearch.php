@@ -12,14 +12,16 @@ class View_QuickSearch extends \View {
 		$f->addField('Line','search_xepan','search xEpan');
 		$f->addSubmit('Search')->addClass('btn btn-primary');
 
-		$result = $this->add('View');
+		$result_view = $this->add('CompleteLister',null,null,['view\quicksearch']);
+		$result_array=[];
 		
-		if($_GET[$f->name.'_term']){
-			$this->app->hook('quick_searched',[$_GET[$f->name.'_term'],$result]);
+		if($_GET[$f->name.'_term']){			
+			$this->app->hook('quick_searched',[$_GET[$f->name.'_term'],&$result_array]);
 		}
+		$result_view->setSource($result_array);
 
 		if($f->isSubmitted()){
-			$result->js()->reload([$f->name.'_term'=>$f['search_xepan']])->execute();
+			$result_view->js()->reload([$f->name.'_term'=>$f['search_xepan']])->execute();
 		}
 
 	}
