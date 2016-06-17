@@ -11,9 +11,9 @@ class page_resetpassword extends \Page{
 		$user->tryLoadAny();
 		
 		$form=$this->add('Form');
-		$form->setLayout('view//admin/user/form/restpassword');
+		$form->setLayout('view/admin/user/form/restpassword');
 		$form->addField('line','email')->set($_GET['activate_email'])->validate('required');
-		$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validate('required');
+		$form->addField('line','secret_code','Reset Code')->set($_GET['secret_code'])->validate('required');
 
 		$form->addField('password','password')->validate('required');
 		$form->addField('password','retype_password')->validateNotNull();
