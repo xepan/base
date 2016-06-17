@@ -15,6 +15,7 @@ class page_forgotpassword extends \Page{
 		if($form->isSubmitted()){
 			$user=$this->add('xepan\base\Model_User');
 			$user->addCondition('username',$form['email']);
+			$user->addCondition('scope',['AdminUser','SuperUser']);
 			$user->tryLoadAny();
 			if(!$user->loaded()){
 				$form->displayError('email','Email Id Not Register');
