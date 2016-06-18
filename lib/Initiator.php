@@ -96,6 +96,7 @@ class Initiator extends \Controller_Addon {
         $auth->check();
                
         if(!$this->app->isAjaxOutput()) {
+            $this->app->jui->addStaticInclude('pace.min');
             $this->app->jui->addStaticInclude('elfinder.full');
             $this->app->jui->addStylesheet('elfinder.full');
             $this->app->jui->addStylesheet('elfindertheme');
