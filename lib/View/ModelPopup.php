@@ -21,7 +21,7 @@ class View_ModelPopup extends \View{
 	function addCloseButton(){
 		$this->add('Button',null,'close_button')
 				->set($this->options['close_button_label'])
-				->setAttr(array("data-dismiss"=>'model',"type"=>"button"))
+				->setAttr(array("data-dismiss"=>'modal',"type"=>"button"))
 				->addClass('btn btn-default');
 	}
 
