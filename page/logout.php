@@ -11,7 +11,7 @@ class page_logout extends \xepan\base\Page{
 		
 		$form = $this->add('Form');
 		$form->setModel($movement,['reason','narration']);
-		$form->addSubmit('Logout');
+		$form->addSubmit('Logout')->addClass('btn btn-primary');
 
 		if($form->isSubmitted()){
 			$movement->addCondition('employee_id',$this->app->employee->id);
