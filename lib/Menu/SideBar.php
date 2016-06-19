@@ -26,7 +26,11 @@ class Menu_SideBar extends \Menu_Advanced{
         if (is_array($title)) {
 
             if ($title['badge']) {
-                $i->template->set($title['badge']);
+                $i->add('View',null,'Badge')
+                    ->setElement('span')
+                    ->addClass('atk-label')
+                    ->set($title['badge']);
+                // $i->template->set($title['badge']);
                 unset($title['badge']);
             }
         }
