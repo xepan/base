@@ -62,7 +62,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->addExpression('emails_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Email',['table_alias'=>'emails_str']);
-			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
+			return $x->addCondition('contact_id',$q->getField('id'))
+						->addCondition('is_active',true)
+						->addCondition('is_valid',true)
+						->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true)->sortable(true);
 
 		$this->addExpression('contacts_str')->set(function($m,$q){
