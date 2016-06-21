@@ -43,8 +43,6 @@ class Initiator extends \Controller_Addon {
         ->setBasePath($elfinder_addon_base_path)
         ->setBaseURL('../vendor/studio-42/elfinder/');
 
-        $this->app->jui->addStylesheet('bootstrap/bootstrap.min');
-
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
         if(in_array($this->app->page, $auth->getAllowedPages())){
@@ -134,6 +132,7 @@ class Initiator extends \Controller_Addon {
         $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
         $this->app->jui->addStaticStyleSheet('animate');
         $this->app->jui->addStaticInclude('xepan_jui');
+        $this->app->jui->addStylesheet('bootstrap/bootstrap.min');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->usePasswordEncryption('md5');
