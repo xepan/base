@@ -70,8 +70,6 @@ class View_User_Registration extends \View{
 					$subject_v=$this->add('View',null,null,$subject_temp);
 					$subject_v->template->trySet($merge_model_array);
 
-					$temp=$this->add('GiTemplate');
-					$temp->loadTemplateFromString($email_body);
 					$body_v=$this->add('View',null,null,$temp);
 					$body_v->template->trySet($merge_model_array);					
 					$t=$body_v->template->trySetHTML('click_here',$tag_url);		

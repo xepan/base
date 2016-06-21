@@ -18,15 +18,18 @@ class View_User_ForgotPassword extends \View{
 			}else{
 				$user['hash']=rand(9999,100000);
 				$user->update();
-				
+				$contact=$user->ref('Contacts')->tryLoadAny();
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
 				$reset_pass = $this->app->epan->config;
 				$email_subject=$reset_pass->getConfig('RESET_PASSWORD_SUBJECT');
 				$email_body=$reset_pass->getConfig('RESET_PASSWORD_BODY');
 				// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
-				$temp=$this->add('GiTemplate');
-				$temp->loadTemplateFromString($email_body);
+
+				$merge_model_array=[];
+				$merge_model_array = array_merge($merge_model_array,$user->get());
+				$merge_model_array = array_merge($merge_model_array,$contact->get());
+				
 				$url=$this->api->url(null,
 												[
 												'secret_code'=>$user['hash'],
@@ -37,14 +40,22 @@ class View_User_ForgotPassword extends \View{
 
 				$tag_url="<a href=\"".$url."\">Click Here to Activate </a>"	;
 			
-				$temp->trySetHTML('name',$user['name']);		
-				$temp->trySetHTML('click_here_to_activate',$tag_url);
-				// echo $temp->render();
-				// exit;		
+				$subject_temp=$this->add('GiTemplate');
+				$subject_temp->loadTemplateFromString($email_subject);
+				$subject_v=$this->add('View',null,null,$subject_temp);
+				$subject_v->template->trySet($merge_model_array);
+
+				$temp=$this->add('GiTemplate');
+				$temp->loadTemplateFromString($email_body);
+				$body_v=$this->add('View',null,null,$temp);
+				$body_v->template->trySet($merge_model_array);					
+				$t=$body_v->template->trySetHTML('click_here',$tag_url);		
+				$t=$body_v->template->trySetHTML('url',$url);	
+
 				$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 				$mail->addTo($form['email']);
-				$mail->setSubject($email_subject);
-				$mail->setBody($temp->render());
+				$mail->setSubject($subject_v->getHtml());
+				$mail->setBody($body_v->getHtml());
 				$mail->send($email_settings);
 
 				return $form->js(null,$form->js()->univ()->successMessage('Mail sent'))->redirect($this->app->url('login',['layout'=>'login_view', 'message'=>$this->options['forgot_message']]))->execute();
