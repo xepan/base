@@ -74,8 +74,8 @@ class View_User_Registration extends \View{
 					$temp->loadTemplateFromString($email_body);
 					$body_v=$this->add('View',null,null,$temp);
 					$body_v->template->trySet($merge_model_array);					
-					$body_v->template->trySetHTML('click_here',$tag_url);		
-										
+					$t=$body_v->template->trySetHTML('click_here',$tag_url);		
+					$t=$body_v->template->trySetHTML('url',$url);		
 					$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
 					$mail->addTo($f['email_id']);
 					$mail->setSubject($subject_v->getHtml());
