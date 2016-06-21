@@ -17,11 +17,11 @@ class View_QuickSearch extends \View {
 		
 		if($_GET[$f->name.'_term']){
 			$search_string = $_GET[$f->name.'_term'];
-			
-			$relevency_mode = 'IN BOOLEAN MODE';
+						
+			$relevency_mode = 'IN NATURAL LANGUAGE MODE';
 			$this->app->hook('quick_searched',[$search_string,&$result_array,$relevency_mode]);
 		}
-		
+
 		usort($result_array, [$this,'sortByRelevence']);
 
 		$result_view->setSource($result_array);
