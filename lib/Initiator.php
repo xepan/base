@@ -43,7 +43,7 @@ class Initiator extends \Controller_Addon {
         ->setBasePath($elfinder_addon_base_path)
         ->setBaseURL('../vendor/studio-42/elfinder/');
 
-
+        $this->app->jui->addStylesheet('bootstrap/bootstrap.min');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
