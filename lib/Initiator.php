@@ -133,8 +133,8 @@ class Initiator extends \Controller_Addon {
         $this->app->jui->addStaticStyleSheet('animate');
         $this->app->jui->addStaticInclude('xepan_jui');
         $this->app->jui->addStaticInclude('xepan_jui');
-        $this->app->jui->addStylesheet('bootstrap/bootstrap.min');
-        $this->app->jui->addStaticInclude('bootstrap.min');
+        // $this->app->jui->addStylesheet('bootstrap/bootstrap.min');
+        $this->app->jui->addStaticStyleSheet('bootstrap.min');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->usePasswordEncryption('md5');
