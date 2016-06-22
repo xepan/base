@@ -63,7 +63,12 @@ class View_Contact extends \View{
 				$email_m->acl=$this->acl;
 			$e = $this->document_view->addMany('Emails',null,'Emails',['view/addmany']);
 			$e->setModel($email_m);
-			$e->grid->addMethod('format_value',function($g,$f){
+
+			
+			$g=$e;
+			if($e instanceof \CRUD && !$e->isEditing()) $g = $e->grid;
+			
+			$g->addMethod('format_value',function($g,$f){
 				if($g->model['is_active']!=true){
 					$g->current_row_html[$f]="<span style='color:gray'>".$g->model['value']."</span>";
 				}
@@ -71,7 +76,7 @@ class View_Contact extends \View{
 					$g->current_row_html[$f]="<span style='color:red'>".$g->model['value']."</span>";
 				}	
 			});
-			$e->grid->addFormatter('value','value');
+			$g->addFormatter('value','value');
 
 			$e->template->tryDel('Pannel');
 
