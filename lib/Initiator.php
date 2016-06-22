@@ -43,8 +43,6 @@ class Initiator extends \Controller_Addon {
         ->setBasePath($elfinder_addon_base_path)
         ->setBaseURL('../vendor/studio-42/elfinder/');
 
-
-
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
         if(in_array($this->app->page, $auth->getAllowedPages())){
@@ -134,6 +132,9 @@ class Initiator extends \Controller_Addon {
         $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
         $this->app->jui->addStaticStyleSheet('animate');
         $this->app->jui->addStaticInclude('xepan_jui');
+        $this->app->jui->addStaticInclude('xepan_jui');
+        // $this->app->jui->addStylesheet('bootstrap/bootstrap.min');
+        $this->app->jui->addStaticStyleSheet('bootstrap.min');
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->usePasswordEncryption('md5');
@@ -208,7 +209,7 @@ class Initiator extends \Controller_Addon {
     }
 
     function resetDB($write_sql=false,$install_apps=true){
-        $this->app->old_epan = clone $this->app->epan;
+        // $this->app->old_epan = clone $this->app->epan;
 
         // Clear DB
         $truncate_models = ['Epan_Category','Epan','User','Epan_Configuration','Epan_InstalledApplication','Application','Country','State'];
@@ -242,7 +243,8 @@ class Initiator extends \Controller_Addon {
                     ->save();
 
         $this->app->epan = $epan;
-        $this->app->new_epan = clone $this->app->epan;
+        $this->app->epan->config = $this->app->epan->ref('Configurations');
+        // $this->app->new_epan = clone $this->app->epan;
 
         // Create Default User
         $user = $this->add('xepan\base\Model_User_SuperUser');
@@ -291,19 +293,18 @@ class Initiator extends \Controller_Addon {
         $this->api->db->dsql()->expr(file_get_contents(realpath(getcwd().'/vendor/xepan/base/countriesstates.sql')))->execute();
         
         //Set Epan config 
-        $resetpass_config = $this->app->epan->config;
+        $admin_config = $this->app->epan->config;
         $file_reset_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_subject_admin.html'));
         $file_reset_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_body_admin.html'));
         
-        $resetpass_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'base');
-        $resetpass_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'base');
+        $admin_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'communication');
+        $admin_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'communication');
         
-        $update_config = $this->app->epan->config;
         $file_update_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_subject_admin.html'));
         $file_update_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_body_admin.html'));
         
-        $update_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'base');
-        $update_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'base');
+        $admin_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'communication');
+        $admin_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'communication');
       
         // Do other tasks needed
         // Like empting any folder etc
