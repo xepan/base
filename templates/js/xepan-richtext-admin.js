@@ -82,7 +82,7 @@ $.each({
             fontsize_formats: "6px 8px 10px 12px 14px 18px 24px 36px",
             // cleanup_on_startup: false,
             // trim_span_elements: false,
-            // verify_html: false,
+            verify_html: true,
             // cleanup: false,
             convert_urls: false,
             // valid_elements: '*[*]',
