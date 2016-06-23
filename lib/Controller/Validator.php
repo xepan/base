@@ -87,6 +87,11 @@ class Controller_Validator extends \Controller_Validator{
         return $a;
     }
 
+    function rule_to_strip_tags($a)
+    {
+        return strip_tags($a);
+    }
+
     function mb_str_to_lower($a)
     {
         return ($this->is_mb) ? mb_strtolower($a, $this->encoding) : strtolower($a);
