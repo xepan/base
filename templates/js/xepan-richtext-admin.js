@@ -80,15 +80,15 @@ $.each({
             browser_spellcheck : true,
             valid_children : "+body[style]",
             fontsize_formats: "6px 8px 10px 12px 14px 18px 24px 36px",
-            cleanup_on_startup: false,
-            trim_span_elements: false,
-            verify_html: false,
-            cleanup: false,
+            // cleanup_on_startup: false,
+            // trim_span_elements: false,
+            // verify_html: false,
+            // cleanup: false,
             convert_urls: false,
-            valid_elements: '*[*]',
-            force_br_newlines: false,
-            force_p_newlines: false,
-            forced_root_block: '',
+            // valid_elements: '*[*]',
+            // force_br_newlines: false,
+            // force_p_newlines: false,
+            // forced_root_block: '',
             setup: function(ed) {
                 ed.on("change", function(ed) {
                     tinyMCE.triggerSave();
