@@ -67,16 +67,17 @@ class View_Contact extends \View{
 			
 			$g=$e;
 			if($e instanceof \CRUD && !$e->isEditing()) $g = $e->grid;
-			
-			$g->addMethod('format_value',function($g,$f){
-				if($g->model['is_active']!=true){
-					$g->current_row_html[$f]="<span style='color:gray'>".$g->model['value']."</span>";
-				}
-				if($g->model['is_valid']!=true){
-					$g->current_row_html[$f]="<span style='color:red'>".$g->model['value']."</span>";
-				}	
-			});
-			$g->addFormatter('value','value');
+			if($g instanceof \Grid){
+				$g->addMethod('format_value',function($g,$f){
+					if($g->model['is_active']!=true){
+						$g->current_row_html[$f]="<span style='color:gray'>".$g->model['value']."</span>";
+					}
+					if($g->model['is_valid']!=true){
+						$g->current_row_html[$f]="<span style='color:red'>".$g->model['value']."</span>";
+					}	
+				});
+				$g->addFormatter('value','value');
+			}
 
 			$e->template->tryDel('Pannel');
 
