@@ -96,9 +96,9 @@ class Initiator extends \Controller_Addon {
         if(!$this->app->isAjaxOutput()) {
             $this->app->jui->addStaticInclude('pace.min');
             $this->app->jui->addStaticInclude('elfinder.full');
-            $this->app->jui->addStylesheet('elfinder.full');
-            $this->app->jui->addStylesheet('elfindertheme');
-            $this->app->jui->addStylesheet('elfindertheme');
+            $this->app->jui->addStaticStyleSheet('elfinder.full');
+            $this->app->jui->addStaticStyleSheet('elfindertheme');
+            $this->app->jui->addStaticStyleSheet('elfindertheme');
             $this->app->jui->addStaticInclude('pnotify.custom.min');
             $this->app->jui->addStaticInclude('xepan.pnotify');
             $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
