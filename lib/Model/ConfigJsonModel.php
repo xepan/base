@@ -14,8 +14,8 @@ namespace xepan\base;
 class Model_ConfigJsonModel extends \Model{
 	public $fields = [];
 	public $config_key;
-	public $target_strategy = []; //STRATEGY_PLANNING_TARGET_AUDIENCE, STRATEGY_PLANNING_TARGET_LOCATION, STRATEGY_PLANNING_BUSINES_DESCRIPTION, STRATEGY_PLANNING_DIGITAL_PRESENCE, STRATEGY_PLANNING_COMETETORS
-	public $strategy_config;
+	public $config_data = []; //STRATEGY_PLANNING_TARGET_AUDIENCE, STRATEGY_PLANNING_TARGET_LOCATION, STRATEGY_PLANNING_BUSINES_DESCRIPTION, STRATEGY_PLANNING_DIGITAL_PRESENCE, STRATEGY_PLANNING_COMETETORS
+	public $config_model;
 	function init(){
 		parent::init();
 		
@@ -31,26 +31,26 @@ class Model_ConfigJsonModel extends \Model{
 				$field->type($type);
 		}
 
-		$this->strategy_config = $this->app->epan->config;
-		$this->target_strategy = json_decode($this->strategy_config->getConfig($this->config_key,'marketing')?:'{}',true);
+		$this->config_model = $this->app->epan->config;
+		$this->config_data = json_decode($this->config_model->getConfig($this->config_key,'marketing')?:'{}',true);
 		
-		$this->setSource("Array",$this->target_strategy);
+		$this->setSource("Array",$this->config_data);
 
 		$this->addHook('beforeSave',$this);
 		$this->addHook('beforeDelete',$this);
 	}
 
 	function beforeSave(){
-		$this->target_strategy[$this->id?:uniqid()] = $this->data;
-		$this->strategy_config->setConfig($this->config_key,json_encode($this->target_strategy),'marketing');
+		$this->config_data[$this->id?:uniqid()] = $this->data;
+		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),'marketing');
 	}
 
 	function beforeDelete(){
 		if(!$this->id)
 			throw new \Exception("ConfigJsonModel id not defined", 1);
 		
-		unset($this->target_strategy[$this->id]);
-		$this->strategy_config->setConfig($this->config_key,json_encode($this->target_strategy),'marketing');
+		unset($this->config_data[$this->id]);
+		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),'marketing');
 	}
 
 }
