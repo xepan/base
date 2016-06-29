@@ -1,19 +1,21 @@
-
-<div id="{$_name}">{person_info}
+<div id="{$_name}">
+{person_info}
   <script type="application/ld+json">
     {
     "@context": "http://schema.org",
     "@type" : "Organization",
-    "name" : "[{company_name}person's name{/}]",
-    "image" : "[image_id]",
+    "name" : "{$company_name}",
+    "image" : "{$image_id}",
     "address" : {
-    "@type" : "PostalAddress",
-    "addressLocality" : "[{$company_address}]",
-    "postalCode" : "[{$company_pin_code}]"
+        "@type" : "PostalAddress",
+        "addressLocality" : "{$company_address}",
+        "postalCode" : "{$company_pin_code}"
     },
-    "telephone" : "[{mobile_no}]",
-    "email" : "[{$company_email}]",
-    "description" : "[{$company_description}]"
+
+    "telephone" : "{$mobile_no}",
+    "email" : "{$company_email}",
+    "description" : "{$company_description}"
     }
-  </script>{/}
+  </script>
+{/}
 </div>

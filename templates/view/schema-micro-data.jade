@@ -1,19 +1,20 @@
-div(id="{$_name}")
+div(id="{$_name}" data-company-name='{$data}')
   //-====== Tell Us About Yourself with Person Mark-up ========
   {person_info}
   script(type='application/ld+json').
    {
+   var place =$("#{$_name}").attr('data-place');
    "@context": "http://schema.org",
    "@type" : "Organization",
-   "name" : "[{company_name}person's name{/}]",
-   "image" : "[image_id]",
+   "name" : {$company_name},
+   "image" : "image_id",
    "address" : {
    "@type" : "PostalAddress",
-   "addressLocality" : "[{$company_address}]",
-   "postalCode" : "[{$company_pin_code}]"
+   "addressLocality" : "{$company_address}",
+   "postalCode" : "{$company_pin_code}"
    },
-   "telephone" : "[{mobile_no}]",
-   "email" : "[{$company_email}]",
-   "description" : "[{$company_description}]"
+   "telephone" : "{mobile_no}",
+   "email" : "{$company_email}",
+   "description" : "{$company_description}"
    }
   {/}
