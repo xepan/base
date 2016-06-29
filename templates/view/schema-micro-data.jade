@@ -1,20 +1,54 @@
-div(id="{$_name}" data-company-name='{$data}')
+div(id='{$_name}')
   //-====== Tell Us About Yourself with Person Mark-up ========
-  {person_info}
+  | {person_info}
+  script(type='application/ld+json').
+    {
+    "@context": "http://schema.org",
+    "@type" : "Organization",
+    "name" : "{$company_name}",
+    "image" : "{$image_id}",
+    "address" : {
+    "@type" : "PostalAddress",
+    "addressLocality" : "{$company_address}",
+    "postalCode" : "{$company_pin_code}"
+    },
+    "telephone" : "{$mobile_no}",
+    "email" : "{$company_email}",
+    "description" : "{$company_description}"
+    }
+  | {/}
+
+  | {Product_list_block}
+  | {rows}{row}
   script(type='application/ld+json').
    {
-   var place =$("#{$_name}").attr('data-place');
-   "@context": "http://schema.org",
-   "@type" : "Organization",
-   "name" : {$company_name},
-   "image" : "image_id",
-   "address" : {
-   "@type" : "PostalAddress",
-   "addressLocality" : "{$company_address}",
-   "postalCode" : "{$company_pin_code}"
+   "@context": "http://schema.org/",
+   "@type": "Product",
+   "name": "{$name}",
+   "image": "{$first_image}",
+   "description": "{$description}",
+   "code": "{$sku}",
+   "brand": {
+   "@type": "Thing",
+   "name": "{$item_brand_value}"
    },
-   "telephone" : "{mobile_no}",
-   "email" : "{$company_email}",
-   "description" : "{$company_description}"
+   "aggregateRating": {
+   "@type": "AggregateRating",
+   "ratingValue": "",
+   "reviewCount": ""
+   },
+   "offers": {
+   "@type": "Offer",
+   "priceCurrency": "{currency}INR{/}",
+   "price": "{$sale_price}",
+   "priceValidUntil": "{$expiry_date}",
+   "itemCondition": "http://epan.in/terms-and-condition",
+   "availability": "{$available_stock}",
+   "seller": {
+   "@type": "Organization",
+   "name": "{$company_name}"
    }
-  {/}
+   }
+   }  
+  | {/}{/} 
+  | {/}
