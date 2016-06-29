@@ -20,32 +20,29 @@
   {rows}{row}
   <script type="application/ld+json">
     {
-    "@context": "http://schema.org/",
-    "@type": "Product",
-    "name": "{$name}",
-    "image": "{$first_image}",
-    "description": "{$description}",
-    "model": "{$sku}",
-    "brand": {
-    "@type": "Thing",
-    "name": "{$item_brand_value}"
-    },
-    "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "499"
-    },
-    "offers": {
-    "@type": "Offer",
-    "priceCurrency": "{currency}INR{/}",
-    "price": "{$sale_price}",
-    "priceValidUntil": "{$expiry_date}",
-    "itemCondition": "http://epan.in/terms-and-condition",
-    "availability": "{$available_stock}",
-    "seller": {
-    "@type": "Organization",
-    "name": "{$company_name}"
-    }
+     "@context": "http://schema.org/",
+     "@type": "Product",
+     "name": "{$name}",
+     "image": "{$first_image}",
+     "description": "{$description}",
+     "model": "{$sku}",
+     "brand": {
+       "@type": "Thing",
+       "name": "{$item_brand_value}"
+     },
+     "aggregateRating": {
+       "@type": "AggregateRating",
+       "ratingValue": "4.9",
+       "reviewCount": "499"
+     },
+     "offers": { 
+       "@type": "Offer",
+       "priceCurrency": "{$currency}",
+       "price": "{$sale_price}",
+       "priceValidUntil": "{$expiry_date}",
+       "itemCondition": "http://epan.in/terms-and-condition",
+       "availability": "{$available_stock}",
+       "seller": {"@type": "Organization","name": "{$company_name}"}
     }
     }  
   </script>{/}{/} 
