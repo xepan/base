@@ -1,0 +1,56 @@
+<?php
+
+/**
+* description: Contains one or many, CRUD facility on data array 
+* 
+* @author : RK Sinha
+* @email : info@xavoc.com
+* @website : http://xepan.org
+* 
+*/
+
+namespace xepan\base;
+
+class Model_ConfigJsonModel extends \Model{
+	public $fields = [];
+	public $config_key;
+	public $config_data = []; //STRATEGY_PLANNING_TARGET_AUDIENCE, STRATEGY_PLANNING_TARGET_LOCATION, STRATEGY_PLANNING_BUSINES_DESCRIPTION, STRATEGY_PLANNING_DIGITAL_PRESENCE, STRATEGY_PLANNING_COMETETORS
+	public $config_model;
+	function init(){
+		parent::init();
+		
+		if(!count($this->fields))
+			throw new \Exception("must define the fields");
+		
+		if(!$this->config_key)
+			throw new \Exception("must define epan config key");
+
+		foreach ($this->fields as $name => $type) {
+			$field = $this->addField($name);
+			if($type != "Line")
+				$field->type($type);
+		}
+
+		$this->config_model = $this->app->epan->config;
+		$this->config_data = json_decode($this->config_model->getConfig($this->config_key,'marketing')?:'{}',true);
+		
+		$this->setSource("Array",$this->config_data);
+
+		$this->addHook('beforeSave',$this);
+		$this->addHook('beforeDelete',$this);
+	}
+
+	function beforeSave(){
+		$this->config_data[$this->id?:uniqid()] = $this->data;
+		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),'marketing');
+	}
+
+	function beforeDelete(){
+		if(!$this->id)
+			throw new \Exception("ConfigJsonModel id not defined", 1);
+		
+		unset($this->config_data[$this->id]);
+		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),'marketing');
+	}
+
+}
