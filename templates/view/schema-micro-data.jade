@@ -49,432 +49,432 @@ div(id="{$_name}")
 
   
   //-===============Item & Item Details List=============== 
-  {product_information}
+  //- {product_information}
  
-  div(itemscope='', itemtype='http://schema.org/Product')
-  span(itemprop='brand') {brand}ACME{/}
-  span(itemprop='name') {item_name}Executive Anvil{/}
-  img(itemprop='image', src='{image_id}anvil_executive.jpg{/}', alt='Executive Anvil logo')
-  span(itemprop='description')
-    |{description}
-    | Sleeker than ACME's Classic Anvil, the
-    | Executive Anvil is perfect for the business traveler
-    | looking for something to drop from a height.
-  |   Product #: 
-  span(itemprop='mpn') 925872
-  span(itemprop='aggregateRating', itemscope='', itemtype='http://schema.org/AggregateRating')
-    span(itemprop='ratingValue') 4.4
-    |  stars, based on 
-    span(itemprop='reviewCount')
-      | 89
-    |  reviews
-  span(itemprop='offers', itemscope='', itemtype='http://schema.org/Offer')
-    | Regular price: $179.99
-    meta(itemprop='priceCurrency', content='USD')
-    |     $
-    span(itemprop='price') {net_amount}119.99{/}
-    |     (Sale ends 
-    time(itemprop='priceValidUntil', datetime='2020-11-05')
-      | 5 November!
-    | )
-    |     Available from: 
-    span(itemprop='seller', itemscope='', itemtype='http://schema.org/Organization')
-      span(itemprop='name') Executive Objects
-    |     Condition: 
-    link(itemprop='itemCondition', href='http://schema.org/UsedCondition')
-    | Previously owned,
-    |       in excellent condition
-    link(itemprop='availability', href='http://schema.org/InStock')
-    | In stock! Order now!
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org/",
-   "@type": "Product",
-   "name": "{item_name}Executive Anvil{/}",
-   "image": "{image_id}http://www.example.com/anvil_executive.jpg{/}",
-   "description": "{description}Sleeker than ACME's Classic Anvil, the Executive Anvil is perfect for the business traveler looking for something to drop from a height.{/}",
-   "mpn": "{sku}925872{/}",
-   "brand": {
-   "@type": "Thing",
-   "name": "{brand}ACME{/}"
-   },
-   "aggregateRating": {
-   "@type": "AggregateRating",
-   "ratingValue": "4.4",
-   "reviewCount": "89"
-   },
-   "offers": {
-   "@type": "Offer",
-   "priceCurrency": "{currency}USD{/}",
-   "price": "{net_amount}119.99{/}",
-   "priceValidUntil": "2020-11-05",
-   "itemCondition": "http://schema.org/UsedCondition",
-   "availability": "http://schema.org/InStock",
-   "seller": {
-   "@type": "Organization",
-   "name": "{Executive Objects}"
-   }
-   }
-   }
-  {/}
+  //- div(itemscope='', itemtype='http://schema.org/Product')
+  //- span(itemprop='brand') {brand}ACME{/}
+  //- span(itemprop='name') {item_name}Executive Anvil{/}
+  //- img(itemprop='image', src='{image_id}anvil_executive.jpg{/}', alt='Executive Anvil logo')
+  //- span(itemprop='description')
+  //-   |{description}
+  //-   | Sleeker than ACME's Classic Anvil, the
+  //-   | Executive Anvil is perfect for the business traveler
+  //-   | looking for something to drop from a height.
+  //- |   Product #: 
+  //- span(itemprop='mpn') 925872
+  //- span(itemprop='aggregateRating', itemscope='', itemtype='http://schema.org/AggregateRating')
+  //-   span(itemprop='ratingValue') 4.4
+  //-   |  stars, based on 
+  //-   span(itemprop='reviewCount')
+  //-     | 89
+  //-   |  reviews
+  //- span(itemprop='offers', itemscope='', itemtype='http://schema.org/Offer')
+  //-   | Regular price: $179.99
+  //-   meta(itemprop='priceCurrency', content='USD')
+  //-   |     $
+  //-   span(itemprop='price') {net_amount}119.99{/}
+  //-   |     (Sale ends 
+  //-   time(itemprop='priceValidUntil', datetime='2020-11-05')
+  //-     | 5 November!
+  //-   | )
+  //-   |     Available from: 
+  //-   span(itemprop='seller', itemscope='', itemtype='http://schema.org/Organization')
+  //-     span(itemprop='name') Executive Objects
+  //-   |     Condition: 
+  //-   link(itemprop='itemCondition', href='http://schema.org/UsedCondition')
+  //-   | Previously owned,
+  //-   |       in excellent condition
+  //-   link(itemprop='availability', href='http://schema.org/InStock')
+  //-   | In stock! Order now!
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org/",
+  //-  "@type": "Product",
+  //-  "name": "{item_name}Executive Anvil{/}",
+  //-  "image": "{image_id}http://www.example.com/anvil_executive.jpg{/}",
+  //-  "description": "{description}Sleeker than ACME's Classic Anvil, the Executive Anvil is perfect for the business traveler looking for something to drop from a height.{/}",
+  //-  "mpn": "{sku}925872{/}",
+  //-  "brand": {
+  //-  "@type": "Thing",
+  //-  "name": "{brand}ACME{/}"
+  //-  },
+  //-  "aggregateRating": {
+  //-  "@type": "AggregateRating",
+  //-  "ratingValue": "4.4",
+  //-  "reviewCount": "89"
+  //-  },
+  //-  "offers": {
+  //-  "@type": "Offer",
+  //-  "priceCurrency": "{currency}USD{/}",
+  //-  "price": "{net_amount}119.99{/}",
+  //-  "priceValidUntil": "2020-11-05",
+  //-  "itemCondition": "http://schema.org/UsedCondition",
+  //-  "availability": "http://schema.org/InStock",
+  //-  "seller": {
+  //-  "@type": "Organization",
+  //-  "name": "{Executive Objects}"
+  //-  }
+  //-  }
+  //-  }
+  //- {/}
 
   //-===============Promote Software Applications in Search Results=============== 
     
-  {promote_product}
-  div(itemscope='', itemtype='http://schema.org/SoftwareApplication')
-   img(itemprop='image', src='[software application icon image url]')
-   span(itemprop='name') [name of application]
-   |  -
-   div(itemprop='author', itemscope='', itemtype='http://schema.org/Organization')
-     a(itemprop='url', href='[author url]')
-       span(itemprop='name') [developer name]
-   div(itemprop='aggregateRating', itemscope='', itemtype='http://schema.org/AggregateRating')
-     span(itemprop='ratingValue') [rating given]
-     | /
-     span(itemprop='bestRating') [highest possible rating]
-     |  stars from
-     span(itemprop='ratingCount') [total number of ratings]
-     |  users.
-   div(itemprop='offers', itemscope='', itemtype='http://schema.org/Offer')
-     span(itemprop='price') [price]
-   span(itemprop='description') [description of application]
-   a(itemprop='downloadURL', href='[download url]') Download
-   time(itemprop='datePublished', datetime='[date in ISO format e.g. 2012-04-15]') [publication date]
-   span(itemprop='operatingSystems') [supported operating systems]
-   span(itemprop='applicationCategory') [category]
-   meta(itemprop='fileSize', content='[file size e.g. 14MB]')
-   meta(itemprop='interactionCount', content='[number of downloads] UserDownloads')
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "SoftwareApplication",
-   "image": "[software application icon image url]",
-   "name": "[name of the software application]",
-   "author": {
-   "@type": "Organization",
-   "url": "[author url]",
-   "name": "[developer name]"
-   },
-   "aggregateRating": {
-   "@type" : "AggregateRating",
-   "ratingValue" : "[rating given]",
-   "bestRating" : "[highest possible rating]",
-   "ratingCount" : "[total number of ratings]"
-   },
-   "datePublished": "[date in ISO format e.g. 2012-04-15]",
-   "fileSize" : "[file size e.g. 14mb]",
-   "interactionCount" : "[number of user downloads]",
-   "contentRating" : "[content rating e.g. Low Maturity]",
-   "description" : "[description of the software application]",
-   "downloadURL" : "[download url]"
-   "operatingSystem" : [
-   "[operating system 1]",
-   "[operating system 2]"
-   ],
-   "applicationCategory" : "[application category e.g. http://schema.org/GameApplication]",
-   "Offers": {
-   "@type" : "Offer",
-   "price" : "[app price]"
-   }
-   }{/}
+  //- {promote_product}
+  //- div(itemscope='', itemtype='http://schema.org/SoftwareApplication')
+  //-  img(itemprop='image', src='[software application icon image url]')
+  //-  span(itemprop='name') [name of application]
+  //-  |  -
+  //-  div(itemprop='author', itemscope='', itemtype='http://schema.org/Organization')
+  //-    a(itemprop='url', href='[author url]')
+  //-      span(itemprop='name') [developer name]
+  //-  div(itemprop='aggregateRating', itemscope='', itemtype='http://schema.org/AggregateRating')
+  //-    span(itemprop='ratingValue') [rating given]
+  //-    | /
+  //-    span(itemprop='bestRating') [highest possible rating]
+  //-    |  stars from
+  //-    span(itemprop='ratingCount') [total number of ratings]
+  //-    |  users.
+  //-  div(itemprop='offers', itemscope='', itemtype='http://schema.org/Offer')
+  //-    span(itemprop='price') [price]
+  //-  span(itemprop='description') [description of application]
+  //-  a(itemprop='downloadURL', href='[download url]') Download
+  //-  time(itemprop='datePublished', datetime='[date in ISO format e.g. 2012-04-15]') [publication date]
+  //-  span(itemprop='operatingSystems') [supported operating systems]
+  //-  span(itemprop='applicationCategory') [category]
+  //-  meta(itemprop='fileSize', content='[file size e.g. 14MB]')
+  //-  meta(itemprop='interactionCount', content='[number of downloads] UserDownloads')
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "SoftwareApplication",
+  //-  "image": "[software application icon image url]",
+  //-  "name": "[name of the software application]",
+  //-  "author": {
+  //-  "@type": "Organization",
+  //-  "url": "[author url]",
+  //-  "name": "[developer name]"
+  //-  },
+  //-  "aggregateRating": {
+  //-  "@type" : "AggregateRating",
+  //-  "ratingValue" : "[rating given]",
+  //-  "bestRating" : "[highest possible rating]",
+  //-  "ratingCount" : "[total number of ratings]"
+  //-  },
+  //-  "datePublished": "[date in ISO format e.g. 2012-04-15]",
+  //-  "fileSize" : "[file size e.g. 14mb]",
+  //-  "interactionCount" : "[number of user downloads]",
+  //-  "contentRating" : "[content rating e.g. Low Maturity]",
+  //-  "description" : "[description of the software application]",
+  //-  "downloadURL" : "[download url]"
+  //-  "operatingSystem" : [
+  //-  "[operating system 1]",
+  //-  "[operating system 2]"
+  //-  ],
+  //-  "applicationCategory" : "[application category e.g. http://schema.org/GameApplication]",
+  //-  "Offers": {
+  //-  "@type" : "Offer",
+  //-  "price" : "[app price]"
+  //-  }
+  //-  }{/}
 
   //-==========Generate Rich Media Listings with Video Mark-up================= 
-  {Video_block}
-  div(itemprop='video', itemscope='', itemtype='http://schema.org/VideoObject')
-   span(itemprop='name') [name of video]
-   meta(itemprop='duration', content='[duration in ISO format e.g. T1M33S]')
-   meta(itemprop='thumbnail', content='[thumbnail-url]')
-   span(itemprop='description') [description of video]
-  script(type='application/ld+json').
-   {
-   "@context" : "http://schema.org",
-   "@type" : "VideoObject",
-   "name" : "[name of video]",
-   "duration" : "[duration in ISO format e.g. T1M33S]",
-   "thumbnail" : "[thumbnail url]",
-   "description" : "[description of video]"
-   }
-  {/}
+  //- {Video_block}
+  //- div(itemprop='video', itemscope='', itemtype='http://schema.org/VideoObject')
+  //-  span(itemprop='name') [name of video]
+  //-  meta(itemprop='duration', content='[duration in ISO format e.g. T1M33S]')
+  //-  meta(itemprop='thumbnail', content='[thumbnail-url]')
+  //-  span(itemprop='description') [description of video]
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context" : "http://schema.org",
+  //-  "@type" : "VideoObject",
+  //-  "name" : "[name of video]",
+  //-  "duration" : "[duration in ISO format e.g. T1M33S]",
+  //-  "thumbnail" : "[thumbnail url]",
+  //-  "description" : "[description of video]"
+  //-  }
+  //- {/}
 
   //-==========Logo & Social Sitelinks in Knowledge Graph============
-  {social_block}
-  div(itemscope='', itemtype='http://schema.org/Organization')
-   span(itemprop='name') [organization name]
-   img(src='[logo image url]', itemprop='logo')
-   a(href='[website url]') Website
-   | Follow us on 
-   a(href='[profile url]', itemprop='sameAs') Twitter
-   | , 
-   a(href='[profile url]', itemprop='sameAs')
-    | Facebook, 
-    a(href='[profile url]', itemprop='sameAs')
-      | Google+ and 
-      a(href='[profile url]', itemprop='sameAs') LinkedIn
-      | .
-  script(type='application/ld+json').
-   { "@context" : "http://schema.org",
-   "@type" : "Organization",
-   "name" : "[organization name]",
-   "logo" : "[logo image url]",
-   "url" : "[website url]",
-   "sameAs" : [
-   "https://twitter.com/[username]",
-   "https://www.facebook.com/[username]",
-   "https://www.linkedin.com/company/[username]",
-   "https://plus.google.com/[username]/posts"
-   ]
-   }
-  {/}
+  //- {social_block}
+  //- div(itemscope='', itemtype='http://schema.org/Organization')
+  //-  span(itemprop='name') [organization name]
+  //-  img(src='[logo image url]', itemprop='logo')
+  //-  a(href='[website url]') Website
+  //-  | Follow us on 
+  //-  a(href='[profile url]', itemprop='sameAs') Twitter
+  //-  | , 
+  //-  a(href='[profile url]', itemprop='sameAs')
+  //-   | Facebook, 
+  //-   a(href='[profile url]', itemprop='sameAs')
+  //-     | Google+ and 
+  //-     a(href='[profile url]', itemprop='sameAs') LinkedIn
+  //-     | .
+  //- script(type='application/ld+json').
+  //-  { "@context" : "http://schema.org",
+  //-  "@type" : "Organization",
+  //-  "name" : "[organization name]",
+  //-  "logo" : "[logo image url]",
+  //-  "url" : "[website url]",
+  //-  "sameAs" : [
+  //-  "https://twitter.com/[username]",
+  //-  "https://www.facebook.com/[username]",
+  //-  "https://www.linkedin.com/company/[username]",
+  //-  "https://plus.google.com/[username]/posts"
+  //-  ]
+  //-  }
+  //- {/}
 
   //- ========SearchAction – Sitelinks Search Box===================
 
-  {SearchAction}
-  div(itemscope='', itemtype='http://schema.org/WebSite')
-   meta(itemprop='url', content='[website url]')
-   form(itemprop='potentialAction', itemscope='', itemtype='http://schema.org/SearchAction')
-     meta(itemprop='target', content='[website search url]={search_term}')
-     input(itemprop='query-input', type='text', name='search_term')
-     input(type='submit')
-  script(type='application/ld+json').
-   { "@context": "http://schema.org",
-   "@type": "WebSite",
-   "url": "[website url]",
-   "potentialAction": {
-   "@type": "SearchAction",
-   "target": "[website search url]={search_term}",
-   "query-input": "required name=search_term"
-   }
-   }
-  {/}	
+  //- {SearchAction}
+  //- div(itemscope='', itemtype='http://schema.org/WebSite')
+  //-  meta(itemprop='url', content='[website url]')
+  //-  form(itemprop='potentialAction', itemscope='', itemtype='http://schema.org/SearchAction')
+  //-    meta(itemprop='target', content='[website search url]={search_term}')
+  //-    input(itemprop='query-input', type='text', name='search_term')
+  //-    input(type='submit')
+  //- script(type='application/ld+json').
+  //-  { "@context": "http://schema.org",
+  //-  "@type": "WebSite",
+  //-  "url": "[website url]",
+  //-  "potentialAction": {
+  //-  "@type": "SearchAction",
+  //-  "target": "[website search url]={search_term}",
+  //-  "query-input": "required name=search_term"
+  //-  }
+  //-  }
+  //- {/}	
 
   //-==================== InDepth Article Markup============
   
-  {article_block}
-  div(itemscope='', itemtype='http://schema.org/Article')
-   h1(itemprop='headline') [article headline]
-   h2(itemprop='alternativeHeadline') [alternative headline]
-   img(src='[main article image url]', itemprop='image')
-   span(itemprop='author') [author name]
-   span(itemprop='datePublished') [publication date in ISO format e.g. 2014-03-16]
-   span(itemprop='description') [article summary]
-   div(itemprop='articleBody')
-     | [article content]
-  script(type='application/ld+json').
-   { "@context": "http://schema.org",
-   "@type": "Article",
-   "headline": "[article title]",
-   "alternativeHeadline": "[article sub heading]",
-   "image": "[main article image url]",
-   "author": "[author name]",
-   "datePublished": "[date in ISO format e.g. 2014-03-16]",
-   "description": "[article summary]"
-   }
-  {/}
+  //- {article_block}
+  //- div(itemscope='', itemtype='http://schema.org/Article')
+  //-  h1(itemprop='headline') [article headline]
+  //-  h2(itemprop='alternativeHeadline') [alternative headline]
+  //-  img(src='[main article image url]', itemprop='image')
+  //-  span(itemprop='author') [author name]
+  //-  span(itemprop='datePublished') [publication date in ISO format e.g. 2014-03-16]
+  //-  span(itemprop='description') [article summary]
+  //-  div(itemprop='articleBody')
+  //-    | [article content]
+  //- script(type='application/ld+json').
+  //-  { "@context": "http://schema.org",
+  //-  "@type": "Article",
+  //-  "headline": "[article title]",
+  //-  "alternativeHeadline": "[article sub heading]",
+  //-  "image": "[main article image url]",
+  //-  "author": "[author name]",
+  //-  "datePublished": "[date in ISO format e.g. 2014-03-16]",
+  //-  "description": "[article summary]"
+  //-  }
+  //- {/}
 
   //-==========Gmail – View Action==================
 
-  {Gmail_ViewAction_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "EmailMessage",
-   "potentialAction": {
-   "@type": "ViewAction",
-   "name": "[text displayed on button]",
-   "target": "[target viewable url]"
-   },
-   "description": "[email subject]"
-   }
-   }
-  {/}
+  //- {Gmail_ViewAction_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "EmailMessage",
+  //-  "potentialAction": {
+  //-  "@type": "ViewAction",
+  //-  "name": "[text displayed on button]",
+  //-  "target": "[target viewable url]"
+  //-  },
+  //-  "description": "[email subject]"
+  //-  }
+  //-  }
+  //- {/}
 
   //-============Gmail – Save Action================== 
   
-  {Gmail_SaveAction_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "EmailMessage",
-   "potentialAction": {
-   "@type": "SaveAction",
-   "name": "[name of required action]",
-   "handler": {
-   "@type": "HttpActionHandler",
-   "url": "[url]"
-   }
-   },
-   "description": "[description text]"
-   }
-  {/}
+  //- {Gmail_SaveAction_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "EmailMessage",
+  //-  "potentialAction": {
+  //-  "@type": "SaveAction",
+  //-  "name": "[name of required action]",
+  //-  "handler": {
+  //-  "@type": "HttpActionHandler",
+  //-  "url": "[url]"
+  //-  }
+  //-  },
+  //-  "description": "[description text]"
+  //-  }
+  //- {/}
   
   //-============Gmail – Confirm Action================== 
   
-  {Gmail_ConfirmAction_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "EmailMessage",
-   "potentialAction": {
-   "@type": "ConfirmAction",
-   "name": "[name of required action]",
-   "handler": {
-   "@type": "HttpActionHandler",
-   "url": "[action url]"
-   }
-   },
-   "description": "[text description]"
-   }
-  {/}
+  //- {Gmail_ConfirmAction_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "EmailMessage",
+  //-  "potentialAction": {
+  //-  "@type": "ConfirmAction",
+  //-  "name": "[name of required action]",
+  //-  "handler": {
+  //-  "@type": "HttpActionHandler",
+  //-  "url": "[action url]"
+  //-  }
+  //-  },
+  //-  "description": "[text description]"
+  //-  }
+  //- {/}
 
   //-================Gmail – RSVP Action===================
 
-  {Gmail_RSPVAction_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "Event",
-   "name": "Meeting with Builtvisible",
-   "startDate": "2015-07-06T11:30:00Z",
-   "endDate": "2015-07-06T12:30:00Z",
-   "location": {
-   "@type": "Place",
-   "address": {
-   "@type": "PostalAddress",
-   "name": "[name of location]",
-   "streetAddress": "[street name]",
-   "addressLocality": "[locality]",
-   "postalCode": "[postal code]",
-   "addressCountry": "[country]"
-   }
-   },
-   "potentialAction": [
-   {
-   "@type": "RsvpAction",
-   "handler": {
-   "@type": "HttpActionHandler",
-   "url": "[accept url]"
-   },
-   "attendance": "http://schema.org/RsvpAttendance/Yes"
-   },
-   {
-   "@type": "RsvpAction",
-   "handler": {
-   "@type": "HttpActionHandler",
-   "url": "[decline-url]"
-   },
-   "attendance": "http://schema.org/RsvpAttendance/No"
-   },
-   {
-   "@type": "RsvpAction",
-   "handler": {
-   "@type": "HttpActionHandler",
-   "url": "[tentative-url]"
-   },
-   "attendance": "http://schema.org/RsvpAttendance/Maybe"
-   }
-   ]
-   }
-  {/}
+  //- {Gmail_RSPVAction_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "Event",
+  //-  "name": "Meeting with Builtvisible",
+  //-  "startDate": "2015-07-06T11:30:00Z",
+  //-  "endDate": "2015-07-06T12:30:00Z",
+  //-  "location": {
+  //-  "@type": "Place",
+  //-  "address": {
+  //-  "@type": "PostalAddress",
+  //-  "name": "[name of location]",
+  //-  "streetAddress": "[street name]",
+  //-  "addressLocality": "[locality]",
+  //-  "postalCode": "[postal code]",
+  //-  "addressCountry": "[country]"
+  //-  }
+  //-  },
+  //-  "potentialAction": [
+  //-  {
+  //-  "@type": "RsvpAction",
+  //-  "handler": {
+  //-  "@type": "HttpActionHandler",
+  //-  "url": "[accept url]"
+  //-  },
+  //-  "attendance": "http://schema.org/RsvpAttendance/Yes"
+  //-  },
+  //-  {
+  //-  "@type": "RsvpAction",
+  //-  "handler": {
+  //-  "@type": "HttpActionHandler",
+  //-  "url": "[decline-url]"
+  //-  },
+  //-  "attendance": "http://schema.org/RsvpAttendance/No"
+  //-  },
+  //-  {
+  //-  "@type": "RsvpAction",
+  //-  "handler": {
+  //-  "@type": "HttpActionHandler",
+  //-  "url": "[tentative-url]"
+  //-  },
+  //-  "attendance": "http://schema.org/RsvpAttendance/Maybe"
+  //-  }
+  //-  ]
+  //-  }
+  //- {/}
 
   //-===============Gmail – Numeric Rating===================
 
-  {Gmail_NumericRating_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "EmailMessage",
-   "action": {
-   "@type": "ReviewAction",
-   "review": {
-   "@type": "Review",
-   "itemReviewed": {
-   "@type": "Product",
-   "name": "[product name]"
-   },
-   "reviewRating": {
-   "@type": "Rating",
-   "bestRating": "[best rating]",
-   "worstRating": "[worst rating]"
-   }
-   },
-   "handler": {
-   "@type": "HttpActionHandler",
-   "url": "[submit review url]",
-   "requiredProperty": {
-   "@type": "Property",
-   "name": "review.reviewRating.ratingValue"
-   },
-   "optionalProperty": {
-   "@type": "Property",
-   "name": "review.reviewBody"
-   },
-   "method": "http://schema.org/HttpRequestMethod/POST"
-   }
-   },
-   "description": "[description text]"
-   }
-  {/}
+  //- {Gmail_NumericRating_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "EmailMessage",
+  //-  "action": {
+  //-  "@type": "ReviewAction",
+  //-  "review": {
+  //-  "@type": "Review",
+  //-  "itemReviewed": {
+  //-  "@type": "Product",
+  //-  "name": "[product name]"
+  //-  },
+  //-  "reviewRating": {
+  //-  "@type": "Rating",
+  //-  "bestRating": "[best rating]",
+  //-  "worstRating": "[worst rating]"
+  //-  }
+  //-  },
+  //-  "handler": {
+  //-  "@type": "HttpActionHandler",
+  //-  "url": "[submit review url]",
+  //-  "requiredProperty": {
+  //-  "@type": "Property",
+  //-  "name": "review.reviewRating.ratingValue"
+  //-  },
+  //-  "optionalProperty": {
+  //-  "@type": "Property",
+  //-  "name": "review.reviewBody"
+  //-  },
+  //-  "method": "http://schema.org/HttpRequestMethod/POST"
+  //-  }
+  //-  },
+  //-  "description": "[description text]"
+  //-  }
+  //- {/}
 
   //-=============Gmail – Parcel Delivery==================
 
-  {Gmail_TrackPackage_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "ParcelDelivery",
-   "deliveryAddress": {
-   "@type": "PostalAddress",
-   "streetAddress": "[street address]",
-   "addressRegion": "[region]",
-   "addressCountry": "[country]",
-   "postalCode": "[post code]"
-   },
-   "expectedArrivalUntil": "2015-08-10T12:00:00-08:00",
-   "carrier": {
-   "@type": "Organization",
-   "name": "[courier name]"
-   },
-   "itemShipped": {
-   "@type": "Product",
-   "name": "[name of product]"
-   },
-   "partOfOrder": {
-   "@type": "Order",
-   "orderNumber": "[order number]",
-   "merchant": {
-   "@type": "Organization",
-   "name": "[name of seller]"
-   }
-   },
-   "trackingUrl": "[the tracking url]"
-   }
-  {/}
+  //- {Gmail_TrackPackage_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "ParcelDelivery",
+  //-  "deliveryAddress": {
+  //-  "@type": "PostalAddress",
+  //-  "streetAddress": "[street address]",
+  //-  "addressRegion": "[region]",
+  //-  "addressCountry": "[country]",
+  //-  "postalCode": "[post code]"
+  //-  },
+  //-  "expectedArrivalUntil": "2015-08-10T12:00:00-08:00",
+  //-  "carrier": {
+  //-  "@type": "Organization",
+  //-  "name": "[courier name]"
+  //-  },
+  //-  "itemShipped": {
+  //-  "@type": "Product",
+  //-  "name": "[name of product]"
+  //-  },
+  //-  "partOfOrder": {
+  //-  "@type": "Order",
+  //-  "orderNumber": "[order number]",
+  //-  "merchant": {
+  //-  "@type": "Organization",
+  //-  "name": "[name of seller]"
+  //-  }
+  //-  },
+  //-  "trackingUrl": "[the tracking url]"
+  //-  }
+  //- {/}
 
   //-====================Gmail – View Order=======================
 
-  {Gmail_ViewOrder_Block}
-  script(type='application/ld+json').
-   {
-   "@context": "http://schema.org",
-   "@type": "Order",
-   "merchant": {
-   "@type": "Organization",
-   "name": "[seller name]"
-   },
-   "orderNumber": "[order number]",
-   "priceCurrency": "[currency e.g. GBP]",
-   "price": "[total order value]",
-   "acceptedOffer": {
-   "@type": "Offer",
-   "itemOffered": {
-   "@type": "Product",
-   "name": "[product name]"
-   },
-   "eligibleQuantity": {
-   "@type": "QuantitativeValue",
-   "value": "[number of units ordered]"
-   }
-   },
-   "url": "[view order url]"
-   }
-  {/}
+  //- {Gmail_ViewOrder_Block}
+  //- script(type='application/ld+json').
+  //-  {
+  //-  "@context": "http://schema.org",
+  //-  "@type": "Order",
+  //-  "merchant": {
+  //-  "@type": "Organization",
+  //-  "name": "[seller name]"
+  //-  },
+  //-  "orderNumber": "[order number]",
+  //-  "priceCurrency": "[currency e.g. GBP]",
+  //-  "price": "[total order value]",
+  //-  "acceptedOffer": {
+  //-  "@type": "Offer",
+  //-  "itemOffered": {
+  //-  "@type": "Product",
+  //-  "name": "[product name]"
+  //-  },
+  //-  "eligibleQuantity": {
+  //-  "@type": "QuantitativeValue",
+  //-  "value": "[number of units ordered]"
+  //-  }
+  //-  },
+  //-  "url": "[view order url]"
+  //-  }
+  //- {/}
