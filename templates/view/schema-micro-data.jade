@@ -4,13 +4,13 @@ div(id="{$_name}")
   div(itemscope='', itemtype='http://schema.org/Person')
    a(itemprop='url', href='xepan')
      div(itemprop='name')
-       strong {name}xEpan{/}
+       strong {company_owner}xEpan{/}
    div(itemscope='', itemtype='http://schema.org/Organization')
-     span(itemprop='name') {organization}Xavoc Technocrats{/}
+     span(itemprop='name') {company_name}Xavoc Technocrats{/}
    div(itemprop='jobtitle') {posts}Director{/}
    div(itemprop='description') {description}test{/}
    div(itemprop='address', itemscope='', itemtype='http://schema.org/PostalAddress')
-     div(itemprop='streetAddress') {address}18/436, Gaytri marg, Kanji ka hata, Inside Surajpol{/}
+     div(itemprop='streetAddress') {company_address}18/436, Gaytri marg, Kanji ka hata, Inside Surajpol{/}
      div
        | P.O. Box: 
        span(itemprop='postOfficeBoxNumber') {po_box_no}123456{/}
@@ -18,10 +18,10 @@ div(id="{$_name}")
        span(itemprop='addressLocality') {city}Udaipur{/}
        | , 
        span(itemprop='addressRegion') {state}Rajasthan{/}
-     div(itemprop='postalCode') {pin_code}313001{/}
+     div(itemprop='postalCode') {company_pin_code}313001{/}
      div(itemprop='addressCountry') {country}India{/}
-   div(itemprop='email') {email_id}info@epan.in{/}
-   div(itemprop='telephone') {phone_no}9783807100{/}
+   div(itemprop='email') {company_email}info@epan.in{/}
+   div(itemprop='telephone') {mobile_no}9783807100{/}
    div
      meta(itemprop='birthDate', content='2016-06-30')
      | DOB: {date_of_birth}06/30/2016{/}
