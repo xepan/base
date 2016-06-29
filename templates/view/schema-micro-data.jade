@@ -26,26 +26,26 @@ div(id="{$_name}")
      meta(itemprop='birthDate', content='2016-06-30')
      | DOB: {date_of_birth}06/30/2016{/}
    
-  script(type='application/ld+json').
-     {
-     "@context": "http://schema.org",
-     "@type" : {
-     	"Person",
-     "name" : "[{name}person's name{/}]",
-     "image" : "[{image_url}image url of person{/}]",
-     "jobTitle": "[{posts}job tile{/}]",
-     "address" : {
-     "@type" : "PostalAddress",
-     "streetAddress" : "[{address}Address{/}]"
-     "postalCode" : "[{pin_code}postal code{/}]"
-     "addressLocality" : "[{city}City{/}]"
-     "addressRegion" : "[{state}State{/}]"
-     "addressCountry" : "[{country}Country{/}]"
-     },
-     "telephone" : "[{phone_no}telephone number{/}]",
-     "email" : "[{email_id}email address{/}]",
-     "description" : "[{description}email address{/}]",
-  }{/}
+  //- script(type='application/ld+json').
+  //-    {
+  //-    "@context": "http://schema.org",
+  //-    "@type" : {
+  //-    	"Person",
+  //-    "name" : "[{name}person's name{/}]",
+  //-    "image" : "[{image_url}image url of person{/}]",
+  //-    "jobTitle": "[{posts}job tile{/}]",
+  //-    "address" : {
+  //-    "@type" : "PostalAddress",
+  //-    "streetAddress" : "[{address}Address{/}]"
+  //-    "postalCode" : "[{pin_code}postal code{/}]"
+  //-    "addressLocality" : "[{city}City{/}]"
+  //-    "addressRegion" : "[{state}State{/}]"
+  //-    "addressCountry" : "[{country}Country{/}]"
+  //-    },
+  //-    "telephone" : "[{phone_no}telephone number{/}]",
+  //-    "email" : "[{email_id}email address{/}]",
+  //-    "description" : "[{description}email address{/}]",
+  //- }{/}
 
   
   //-===============Item & Item Details List=============== 
