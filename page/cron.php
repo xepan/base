@@ -19,6 +19,6 @@ class page_cron extends \Page {
 		
 		$resolver = new \Cron\Resolver\ArrayResolver();
 
-		$this->app->hook('cron_exector',[$resolver]);
+		$this->app->hook('cron_executor',[$resolver]);
 	}
 }
