@@ -30,6 +30,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\State','state_id')->display(array('form' => 'xepan\commerce\DropDown'));
 
 		$this->addField('type');
+		$this->getElement('type')->defaultValue('Contact');
 		
 		$this->addField('first_name');
 		$this->addField('last_name');
