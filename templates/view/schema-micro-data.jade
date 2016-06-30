@@ -75,7 +75,7 @@ div(id='{$_name}')
     "@type": "BlogPosting",
     "headline": "{title}14 Ways Json Can Improve Your SEO{/}",
     "alternativeHeadline": "{tag}and the women who love them{/}",
-    "image": "{blog_image}http://epan.xepan-local.org/xepan2/websites/epan/upload/0/20160626161322_0_crowdsourcing-large1.jpg{/}",
+    "image": "{$blog_image}",
     "award": "Best article ever written",
     "editor": "{created_by}John Doe{/}",
     "genre": "search engine optimization",
@@ -84,19 +84,19 @@ div(id='{$_name}')
     "publisher": {
         "@type": "Organization",
         "name": "{created_by}Xavoc technocrats Pvt. Ltd.{/}",
-        "@id": "{url}http://musicbrainz.org/label/26df054d-78cf-4d83-9bb1-a41816125528{/}",
-        "logo":"{blog_image}http://epan.xepan-local.org/xepan2/websites/epan/upload/0/20160626161322_0_crowdsourcing-large1.jpg{/}"
+        "@id": "{$url}",
+        "logo":"{$blog_image}",
     },
 
     
-    "url": "{url}http://www.example.com{/}",
+    "url": "{$url}",
     "datePublished": "{created_at}2015-09-20{/}",
     "dateCreated": "{created_at}2015-09-20{/}",
     "dateModified": "{created_at}2015-09-20{/}",
     "description": "{blog_description}We love to do stuff to help people and stuff{/}",
     "articleBody": "{meta_description}You can paste your entire post in here, and yes it can get really really long.{/}",
     
-    "mainEntityOfPage": {"@type": "WebPage","@id": "{url}http://cathscafe.example.com{/}"},
+    "mainEntityOfPage": {"@type": "WebPage","@id": "{$url}"},
     "author": {"@type": "Person","name": "{$created_by}"}
     }
   {/}{/}  
