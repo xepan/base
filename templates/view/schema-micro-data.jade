@@ -49,3 +49,20 @@ div(id='{$_name}')
    }  
   | {/}{/} 
   | {/}
+
+  //-==========Logo & Social Sitelinks in Knowledge Graph============
+  {social_block}
+  script(type='application/ld+json').
+   { "@context" : "http://schema.org",
+    "@type" : "Organization",
+    "name" : "{$company_name}",
+    "logo" : "{$logo_url}",
+    "url" : "{$website_url}",
+    "sameAs" : [
+     "{$twitter_url}",
+     "{$facebook_url}"
+     "{$google_url}",
+     "{$linkedin_url}",
+    ]
+   }
+  {/}
