@@ -73,7 +73,10 @@
     "genre": "search engine optimization",
     "keywords": "seo sales b2b",
     "wordcount": "1120",
-    "publisher": "{current_website}Book Publisher Inc{/}",
+    "publisher": {
+      "name": "{current_website}Book Publisher Inc{/}",
+      "logo": "{$logo_url}"
+    },
     "url": "{url}http://www.example.com{/}",
     "datePublished": "{created_at}2015-09-20{/}",
     "dateCreated": "{created_at}2015-09-20{/}",
@@ -82,7 +85,7 @@
     "articleBody": "{meta_description}You can paste your entire post in here, and yes it can get really really long.{/}",
     "author": {
     "@type": "Person",
-    "name": "{$created_by}"
+    "name": "{created_by}John Doe{/}"
     }
     }
   </script>{/}{/}  
