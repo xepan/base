@@ -60,5 +60,31 @@
       "{$linkedin_url}"
      ]
     }
-  </script>{/}
+  </script>{/}{blog_post_block}
+  {rows}{row}
+  <script type="application/ld+json">
+    { "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{title}14 Ways Json Can Improve Your SEO{/}",
+    "alternativeHeadline": "{tag}and the women who love them{/}",
+    "image": "{blog_image}http://example.com/image.jpg{/}",
+    "award": "Best article ever written",
+    "editor": "{created_by}John Doe{/}",
+    "genre": "search engine optimization",
+    "keywords": "seo sales b2b",
+    "wordcount": "1120",
+    "publisher": "{current_website}Book Publisher Inc{/}",
+    "url": "{url}http://www.example.com{/}",
+    "datePublished": "{created_at}2015-09-20{/}",
+    "dateCreated": "{created_at}2015-09-20{/}",
+    "dateModified": "2015-09-20",
+    "description": "{description}We love to do stuff to help people and stuff{/}",
+    "articleBody": "{meta_description}You can paste your entire post in here, and yes it can get really really long.{/}",
+    "author": {
+    "@type": "Person",
+    "name": "{$created_by}"
+    }
+    }
+  </script>{/}{/}  
+  {/}
 </div>
