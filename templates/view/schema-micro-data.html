@@ -23,7 +23,7 @@
      "@context": "http://schema.org/",
      "@type": "Product",
      "name": "{$name}",
-     "image": "{$first_image}",
+     "image": "{$item_image}",
      "description": "{$description}",
      "model": "{$sku}",
      "brand": {
@@ -37,7 +37,7 @@
      },
      "offers": { 
        "@type": "Offer",
-       "priceCurrency": "{currency}INR{/}",
+       "priceCurrency": "{$currency}",
        "price": "{$sale_price}",
        "priceValidUntil": "{$expiry_date}",
        "itemCondition": "http://epan.in/terms-and-condition",
