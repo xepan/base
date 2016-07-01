@@ -1,0 +1,36 @@
+i.xepan-location-tool.glyphicon.glyphicon-map-marker.text-primary(type='button', data-toggle='modal', data-target='#myModal', style="cursor:pointer; cursor: hand;")
+#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4#myModalLabel.modal-title Country And State :{$c} &nbsp; {$s}
+      .modal-body
+        table(style="width:100%;")
+          tr
+            td(style="width:50%;")
+              b Countries
+              {country_lister}
+              {rows}
+              {row}
+              div.list-item.xepan-country(data-id='{$id}' style="cursor:pointer; cursor: hand;") {$name}
+              {/}{/}
+              {/}
+            td(style="width:50%;") 	
+             b States
+             {state_lister}
+             {rows}
+             {row}
+             div.list-item.xepan-state(data-id='{$id}' style="cursor:pointer; cursor: hand;") {$name}
+             {/}{/}
+             {/}   
+
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+        button.btn.btn-primary(type='button') Save changes
+
+style(type='text/css', media='screen').
+  .glyphicon-map-marker {
+   font-size: 65px;
+  }

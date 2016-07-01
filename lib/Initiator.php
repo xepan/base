@@ -160,6 +160,7 @@ class Initiator extends \Controller_Addon {
         });
 
         $this->app->exportFrontEndTool('xepan\base\Tool_UserPanel');
+        $this->app->exportFrontEndTool('xepan\base\Tool_Location');
 
         $this->app->jui->addStaticStyleSheet('xepan-base');
 
