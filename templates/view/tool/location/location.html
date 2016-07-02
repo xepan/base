@@ -1,38 +1,33 @@
-<i type="button" data-toggle="modal" data-target="#myModal" style="cursor:pointer; cursor: hand;" class="xepan-location-tool glyphicon glyphicon-map-marker text-primary"></i>
-<div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" class="modal fade">
-  <div role="document" class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-        <h4 id="myModalLabel" class="modal-title">Country And State :{$c} &nbsp; {$s}</h4>
-      </div>
-      <div class="modal-body">
-        <table style="width:100%;">
-          <tr>
-            <td style="width:50%;"><b>Countries</b>{country_lister}
-              {rows}
-              {row}
-              <div data-id="{$id}" style="cursor:pointer; cursor: hand;" class="list-item xepan-country">{$name}</div>{/}{/}
-              {/}
-            </td>
-            <td style="width:50%;">	<b>States</b>{state_lister}
-              {rows}
-              {row}
-              <div data-id="{$id}" style="cursor:pointer; cursor: hand;" class="list-item xepan-state">{$name}</div>{/}{/}
-              {/}   
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+
+<div id="{$_name}" style="{$style}" class="{$class}"><i type="button" data-toggle="modal" data-target="#{$_name}_location_model" style="cursor:pointer; cursor: hand;" class="xepan-location-tool glyphicon glyphicon-map-marker text-primary"></i>
+  <div id="{$_name}_location_model" tabindex="-1" role="dialog" aria-labelledby="{$_name}_model_label" class="modal fade">
+    <div role="document" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+          <h4 id="{$_name}_model_label" class="modal-title">Select your location</h4>
+        </div>
+        <div class="modal-body">
+          <div style="width:80%" class="container xepan-select-your-location-form">{form_layout}
+            <div class="form-group">
+              <label>Country</label>
+              <div class="atk-form-row">{$country}</div>
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <div class="atk-form-row">{$state}</div>
+            </div>{/}
+          </div>{$Content}
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>{$save_button}
+        </div>
       </div>
     </div>
   </div>
+  <style>
+    .xepan-select-your-location-form select{
+    width:100%;
+    }
+  </style>  {location_fetcher_wrapper}  {/}
 </div>
-<style type="text/css" media="screen">
-  .glyphicon-map-marker {
-   font-size: 65px;
-  }
-</style>

@@ -1,36 +1,63 @@
-i.xepan-location-tool.glyphicon.glyphicon-map-marker.text-primary(type='button', data-toggle='modal', data-target='#myModal', style="cursor:pointer; cursor: hand;")
-#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-  .modal-dialog(role='document')
-    .modal-content
-      .modal-header
-        button.close(type='button', data-dismiss='modal', aria-label='Close')
-          span(aria-hidden='true') ×
-        h4#myModalLabel.modal-title Country And State :{$c} &nbsp; {$s}
-      .modal-body
-        table(style="width:100%;")
-          tr
-            td(style="width:50%;")
-              b Countries
-              {country_lister}
-              {rows}
-              {row}
-              div.list-item.xepan-country(data-id='{$id}' style="cursor:pointer; cursor: hand;") {$name}
-              {/}{/}
-              {/}
-            td(style="width:50%;") 	
-             b States
-             {state_lister}
-             {rows}
-             {row}
-             div.list-item.xepan-state(data-id='{$id}' style="cursor:pointer; cursor: hand;") {$name}
-             {/}{/}
-             {/}   
-
-      .modal-footer
-        button.btn.btn-default(type='button', data-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Save changes
-
-style(type='text/css', media='screen').
-  .glyphicon-map-marker {
-   font-size: 65px;
-  }
+div(id='{$_name}', style='{$style}', class='{$class}')
+  i.xepan-location-tool.glyphicon.glyphicon-map-marker.text-primary(type='button', data-toggle='modal', data-target='\#{$_name}_location_model', style='cursor:pointer; cursor: hand;')
+  .modal.fade(id='{$_name}_location_model', tabindex='-1', role='dialog', aria-labelledby='{$_name}_model_label')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4.modal-title(id='{$_name}_model_label') Select your location
+        .modal-body
+          .container.xepan-select-your-location-form(style='width:80%')
+            | {form_layout}
+            .form-group
+              label Country
+              .atk-form-row {$country}
+            .form-group
+              label State
+              .atk-form-row {$state}
+            | {/}
+          | {$Content}
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+          | {$save_button}
+  style.
+    .xepan-select-your-location-form select{
+    width:100%;
+    }
+  |   {location_fetcher_wrapper}
+  //- script.
+  //-   // calling location detector and save to session
+  //-   $(document).ready(function(){
+  //-   // first check browser support the navigator or not
+  //-   if (navigator.geolocation) {
+  //-   navigator.geolocation.getCurrentPosition(
+  //-   function(position){
+  //-   // success function
+  //-   console.log("Latitude: " + position.coords.latitude);
+  //-   console.log("Longitude: " + position.coords.longitude);
+  //-   // console.log(self);
+  //-   },
+  //-   function(error){
+  //-   //failed function
+  //-   switch(error.code) {
+  //-   case error.PERMISSION_DENIED:
+  //-   console.log("User denied the request for Geolocation.");
+  //-   break;
+  //-   case error.POSITION_UNAVAILABLE:
+  //-   console.log("Location information is unavailable.");
+  //-   break;
+  //-   case error.TIMEOUT:
+  //-   console.log("The request to get user location timed out.");
+  //-   break;
+  //-   case error.UNKNOWN_ERROR:
+  //-   console.log("An unknown error occurred.");
+  //-   break;
+  //-   }
+  //-   });
+  //-   }else {
+  //-   alert("Geolocation is not supported by this browser");
+  //-   console.log("Geolocation is not supported by this browser");
+  //-   }
+  //-   });
+  |   {/}

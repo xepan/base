@@ -23,6 +23,10 @@ class Initiator extends \Controller_Addon {
         date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
         $this->app->today = date('Y-m-d');
         $this->app->now   = date('Y-m-d H:i:s');
+
+        //Todo load default location of a customer from browser or 
+        $this->app->country = $this->app->recall('xepan-customer-current-country');
+        $this->app->state = $this->app->recall('xepan-customer-current-state');
     }
 
     function setup_admin(){
