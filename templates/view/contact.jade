@@ -53,32 +53,39 @@
         .form-group
           span(title="organization")
             i.fa.fa-building.fa-lg &nbsp;
-            label Organization
-            |{organization}-{/}
+            label 
+            strong Organization : 
+            | {organization}-{/}
         {post_wrapper}
         .form-group
           span(title="post")
             i.fa.fa-user.fa-lg &nbsp;
-            label Post
-            |{post}-{/}
+            strong Post : 
+            | {post}-{/}
         {/}
         .form-group
           span(title="website")
             i.fa.fa-globe.fa-lg &nbsp;
-            label Website
+            label 
+            strong Website : 
             |{website}-{/}
         .form-group
           span(title="address")
             i.fa.fa-map-marker.fa-lg &nbsp;
-            label Address
+            label 
+            strong Address : 
             |{address}not found{/}<br/>
-            label Country: 
+            label 
+            strong Country :  
             div.atk-form-row {$country}{country_id}not found{/}<br/>
-            label State: 
+            label 
+            strong State :  
             div.atk-form-row {$state}{state_id}not found{/}<br/>
-            label City: 
+            label 
+            strong City :  
             div {city}not found{/}<br/>
-            label Pin Code: 
+            label 
+            strong Pin Code :  
             div {pin_code}not found{/}
       {im_and_events_andrelation}
       h2 IM Numbers
