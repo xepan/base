@@ -6,7 +6,8 @@ class View_ModelPopup extends \View{
 					'addCloseButton'=>true,
 					'close_button_label' => "Close",
 					'addSaveButton'=>true,
-					'save_button_label' => "Save Changes"
+					'save_button_label' => "Save Changes",
+					'template'=>"modelpopup"
 				];
 
 	function init(){
@@ -48,7 +49,7 @@ class View_ModelPopup extends \View{
 	}
 
 	function defaultTemplate(){
-		return ['view/modelpopup'];
+		return ['view/'.($this->options['template']?:"modelpopup")];
 	}
 	
 	function recursiveRender(){
