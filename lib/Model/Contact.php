@@ -118,6 +118,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 	function page_communication($page){		
 		$communication = $this->add('xepan\communication\Model_Communication');
+
 		$communication->addCondition(
 						$communication->dsql()->orExpr()
 						->where('from_id',$this->id)
@@ -126,7 +127,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$communication->setOrder('created_at','desc');
 		$contact_id = $this->id;
-
+		
 		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
 		$lister->setModel($communication)->setOrder(['created_at desc','id desc']);
 	}
