@@ -27,6 +27,9 @@ class Initiator extends \Controller_Addon {
         //Todo load default location of a customer from browser or 
         $this->app->country = $this->app->recall('xepan-customer-current-country');
         $this->app->state = $this->app->recall('xepan-customer-current-state');
+
+        $event_cont = $this->add('xepan\base\Controller_PointEventManager');
+        $this->app->addHook('pointable_event',[$event_cont,'handleEvent']);
     }
 
     function setup_admin(){
@@ -119,8 +122,11 @@ class Initiator extends \Controller_Addon {
                 $app->layout->add('xepan\base\View_QuickSearch',null,'quick_search_form');
         });
 
+
+
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
+        // throw new \Exception($this->app->employee->id, 1);
 
         return $this;
 	}
