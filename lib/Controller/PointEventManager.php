@@ -6,7 +6,6 @@ namespace xepan\base;
 class Controller_PointEventManager extends \AbstractController {
 	
 	function handleEvent($app,$event_name,$param){
-		// throw new \Exception(var_dump($param), 1);
 		switch ($event_name) {
 			case 'telemarketing_response':
 				$m=$this->add('xepan\base\Model_PointSystem');
