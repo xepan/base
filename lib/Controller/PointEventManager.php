@@ -10,19 +10,19 @@ class Controller_PointEventManager extends \AbstractController {
 			case 'telemarketing_response':
 				$m=$this->add('xepan\base\Model_PointSystem');
 				$m['contact_id']=$param['lead']['id'];
-				$m['score']=$m['score']+10;
+				if($param['score'])
+					$m['score']=$m['score']+10;
+				else
+					$m['score']=$m['score']-10;
 				$m->save();
 				break;
 			case 'landing_response':
-				// throw new \Exception(var_dump($param['response']['content_id']), 1);
-				// exit;
 				$m=$this->add('xepan\base\Model_PointSystem');
 				$m['contact_id']=$param['lead']['id'];
-				$m['score']=$m['score']+30;
 				$m['landing_content_id']=$param['response']['content_id'];
 				$m['landing_campaign_id']=$param['response']['campaign_id'];
+				$m['score']=$m['score']+30;
 				$m->save();
-			
 				break;
 			default:
 				# code...
