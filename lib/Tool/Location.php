@@ -46,12 +46,12 @@ class Tool_Location extends \xepan\cms\View_Tool{
 
 		if($selected_country_id){
 			$state_model->addCondition('country_id',$selected_country_id);
-			$state_field->setEmptyText("Please Select State");
-		}else{
-			$state_model->addCondition("country_id",-1);
-			$state_field->setEmptyText("Please Select Country First");
-		}
+		}//else{
+		// 	$state_model->addCondition("country_id",-1);
+		// 	$state_field->setEmptyText("Please Select Country First");
+		// }
 
+		$state_field->setEmptyText("Please Select State");
 		$state_field->setModel($state_model);
 
 		if(isset($this->app->state) and ($this->app->state instanceof \xepan\base\Model_State)){
@@ -74,7 +74,6 @@ class Tool_Location extends \xepan\cms\View_Tool{
 
 		// Form Submission
 		if($form->isSubmitted()){
-
 			$c_model = $this->add('xepan\base\Model_Country')->load($form['country']);
 			$s_model = $this->add('xepan\base\Model_State')->load($form['state']);
 
@@ -82,15 +81,11 @@ class Tool_Location extends \xepan\cms\View_Tool{
 			$this->app->memorize('xepan-customer-current-state',$s_model);
 			$this->app->country = $c_model;
 			$this->app->state = $s_model;
-
-			$this->app->redirect($this->app->url());
-			// todo set the current country and state to app county and state
-			// $form->js()->univ()->successMessage("Location Updated")->execute();
+			$this->app->redirect($_SERVER['HTTP_REFERER']);
 		}
 
 		// if($this->app->country or $this->app->state)
 		// $this->template->tryDel('location_fetcher_wrapper');
-
 		// $this->js(true)->_library('navigator')->geolocation->getCurrentPosition($this->js(null,'$.ajax({url:})'))->_enclose());
 	}
 
