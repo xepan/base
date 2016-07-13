@@ -4,6 +4,8 @@ namespace xepan\base;
 
 class Tool_Location extends \xepan\cms\View_Tool{
 	public $options = [
+				"show_country_name"=>true,
+				"show_state_name"=>true,
 			];	
 	function init(){
 		parent::init();
@@ -37,6 +39,9 @@ class Tool_Location extends \xepan\cms\View_Tool{
 		if( isset($this->app->country) and ($this->app->country instanceof \xepan\base\Model_Country)){
 			$country_field->set($this->app->country->id);
 			$selected_country_id = $this->app->country->id;
+			
+			if($this->options['show_country_name'])
+				$this->template->trySet('country_name',$this->app->country['name']);
 		}
 
 		if($_GET['location_country_id']){
@@ -59,7 +64,8 @@ class Tool_Location extends \xepan\cms\View_Tool{
 			if(!$_GET['location_country_id']){
 				$state_field->set($selected_state_id);
 			}
-
+			if($this->options['show_state_name'])
+				$this->template->trySet('state_name',$this->app->state['name']);
 		}
 
 		// Save Button
@@ -83,7 +89,6 @@ class Tool_Location extends \xepan\cms\View_Tool{
 			$this->app->state = $s_model;
 			$this->app->redirect($_SERVER['HTTP_REFERER']);
 		}
-
 		// if($this->app->country or $this->app->state)
 		// $this->template->tryDel('location_fetcher_wrapper');
 		// $this->js(true)->_library('navigator')->geolocation->getCurrentPosition($this->js(null,'$.ajax({url:})'))->_enclose());

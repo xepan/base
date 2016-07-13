@@ -1,5 +1,5 @@
 div(id='{$_name}', style='{$style}', class='{$class}')
-  i.xepan-location-tool.glyphicon.glyphicon-map-marker.text-primary(type='button', data-toggle='modal', data-target='\#{$_name}_location_model', style='cursor:pointer; cursor: hand;')
+  i.xepan-location-tool.glyphicon.glyphicon-map-marker.text-primary(title="select your location" type='button', data-toggle='modal', data-target='\#{$_name}_location_model', style='cursor:pointer; cursor: hand;') {$country_name} {$state_name}
   .modal.fade(id='{$_name}_location_model', tabindex='-1', role='dialog', aria-labelledby='{$_name}_model_label')
     .modal-dialog(role='document')
       .modal-content
