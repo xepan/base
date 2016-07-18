@@ -67,8 +67,8 @@ class View_User_ResetPassword extends \View{
 			// $this->app->auth->model['password']=$f['new_password'];
 			// $this->app->auth->model->save();
 
-			
-			return $f->js()->univ()->successMessage('Password  SuccessFully Changed');
+			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>"Password  SuccessFully Changed"])))->univ()->successMessage('Password SuccessFully Changed');
+			// return $f->js()->univ()->successMessage('Password  SuccessFully Changed');
 		});
 	}
 }
