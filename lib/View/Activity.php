@@ -27,10 +27,11 @@ class View_Activity extends \View{
 				$contact_url='xepan_hr_employeedetail'.'&contact_id='.$g->model['related_contact_id'];
 				break;
 			default:
-				$contact_url='xepan_base_contactdetail'.'&contact_id='.$g->model['related_contact_id'];
+				$contact_url='xepan_base_contactdetail';
 		}
 		$g->current_row['contact_url']= $contact_url;
 	});
+	$grid->addPaginator(10);
 
 	}
 }
