@@ -17,11 +17,11 @@
       </thead>{/}
       {$subheader}
       <tbody>{rows}{row}
-        <tr data-id="{$id}" data-contacttype="{$contact_type}" data-documenttype="{$document_type}" class="{$odd_even}">{cols}
+        <tr data-id="{$id}" data-contacttype="{$contact_type}" class="{$odd_even}">{cols}
           <td style="font-size: 0.87em; font-weight: 400;">{$activity}&nbsp;</td>
           <td><a href="#" data-id="{$id}" data-contact-id="{$contact_id}" class="do-view-person-frame">{$contact}</a></td>
-          <td> <a href="#" data-id="{$id}" data-qsp-id="{$related_document_id}" class="do-view-frame">{$related_document_id}                        </a></td>
-          <td><a href="#" data-id="{$id}" data-contact-id="{$related_contact_id}" class="do-view-person-frame">{$related_contact} </a></td>
+          <td> <a href="{$document_url}&amp;document_id={$related_document_id}" data-id="{$id}" data-qsp-id="{$related_document_id}" class="do-view-frame">{$related_document_id}</a></td>
+          <td><a href="#" data-id="{$id}" data-contact-id="{$related_contact_id}" class="do-view-person-frame">{$related_contact}</a></td>
           <td>{$callback_date}</td>{/}
         </tr>{/}{/}
         {not_found}
