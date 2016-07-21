@@ -6,22 +6,23 @@
       <div class="form-group pull-right xepan-filter-form"><span class="form-control pull-left">{$quick_search}<i class="fa fa-search search-icon"></i></span></div>
     </div>
   </header>{/Pannel}
-  <div class="main-box-body clearfix table">
+  <div class="main-box-body clearfix table-responsive">
     <table style="width:100%" class="table user-list table-hover">{header}
-      <thead>
-        {cols}{col}
-        {/}{/}
+      <thead>{cols}{col}
+        <th>Activity Message</th>
+        <th>Created By</th>
+        <th>Related Document No.</th>
+        <th>Related Person</th>
+        <th>Created At</th>{/}{/}
       </thead>{/}
       {$subheader}
       <tbody>{rows}{row}
-        <tr data-id="{$id}" class="{$odd_even}">{cols}
-          <td class="text-center"><i class="fa fa-comment"></i></td>
-          <td>{contact}Vijay mali{/}&nbsp; {activity}| Scarlett Johansson posted a comment in{/}&nbsp;<a href="#">{$related_document} </a>{related_contact} Avengers Initiative{/}</td>
-          <td>{created_at} 2014/08/08 12:08{/}</td>
-          <td>
-            {$edit}
-            {$delete}
-          </td>{/}
+        <tr data-id="{$id}" data-contacttype="{$contact_type}" data-documenttype="{$document_type}" class="{$odd_even}">{cols}
+          <td style="font-size: 0.87em; font-weight: 400;">{$activity}&nbsp;</td>
+          <td><a href="#" data-id="{$id}" data-contact-id="{$contact_id}" class="do-view-person-frame">{$contact}</a></td>
+          <td> <a href="#" data-id="{$id}" data-qsp-id="{$related_document_id}" class="do-view-frame">{$related_document_id}                        </a></td>
+          <td><a href="#" data-id="{$id}" data-contact-id="{$related_contact_id}" class="do-view-person-frame">{$related_contact} </a></td>
+          <td>{$callback_date}</td>{/}
         </tr>{/}{/}
         {not_found}
         <div class="row">

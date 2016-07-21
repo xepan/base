@@ -7,30 +7,34 @@
                 span(class="form-control pull-left")|{$quick_search}
                     i(class="fa fa-search search-icon")
     {/Pannel}
-    .main-box-body.clearfix.table
+    .main-box-body.clearfix.table-responsive
         table.table.user-list.table-hover(style="width:100%")
             {header}
             thead
                 {cols}{col}
+                th Activity Message
+                th Created By
+                th Related Document No.
+                th Related Person
+                th Created At
                 {/}{/}
             {/}
             {$subheader}
-
+            //- {contact}Vijay mali{/} &nbsp; {related_contact} Avengers Initiative{/}
             tbody
                 {rows}{row}
-                tr(class="{$odd_even}" data-id="{$id}")
+                tr(class="{$odd_even}" data-id="{$id}" data-contacttype="{$contact_type}" data-documenttype="{$document_type}")
                     {cols}
-                    td.text-center
-                     i.fa.fa-comment
+                    td(style="font-size: 0.87em; font-weight: 400;")
+                        |{$activity}&nbsp;
                     td
-                     {contact}Vijay mali{/}&nbsp; {activity}| Scarlett Johansson posted a comment in{/}&nbsp;
-                     a(href='#'){$related_document} 
-                     {related_contact} Avengers Initiative{/}
+                        a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$contact_id}"){$contact}
+                    td 
+                        a.do-view-frame(href='#',data-id="{$id}" data-qsp-id="{$related_document_id}"){$related_document_id}                        
                     td
-                     |{created_at} 2014/08/08 12:08{/}
+                        a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$related_contact_id}"){$related_contact} 
                     td
-                     {$edit}
-                     {$delete}
+                     | {$callback_date}
                     {/}
                 {/}{/}
                 {not_found}

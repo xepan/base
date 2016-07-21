@@ -35,6 +35,7 @@ class Model_Activity extends Model_Table{
 			}
 			return date('M d y',strtotime($m['created_at']));
 		});
+
 	}
 	
 }
