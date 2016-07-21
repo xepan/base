@@ -20,7 +20,6 @@ class View_Activity extends \View{
 	$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
 	$grid->setModel($activity_model);
 
-	$grid->js('click')->_selector('.do-view-frame')->univ()->frameURL('Document Details',[$this->api->url($activity_model['document_url']),'document_id'=>$this->js()->_selectorThis()->closest('[data-qsp-id]')->data('id')]);
 	$grid->js('click')->_selector('.do-view-person-frame')->univ()->frameURL('Customer Details',[$this->api->url('xepan_commerce_customerdetail'),'contact_id'=>$this->js()->_selectorThis()->closest('[data-contact-id]')->data('contact-id')]);
 
 

@@ -30,7 +30,7 @@
                     td
                         a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$contact_id}"){$contact}
                     td 
-                        a.do-view-frame(href='#',data-id="{$id}" data-qsp-id="{$related_document_id}"){$related_document_id}
+                        a.do-view-frame(href='#',data-id="{$id}" data-document-id="{$related_document_id}" onclick="javascript:$.univ().frameURL('aaa','?page={$document_url}');"){$related_document_id}
                     td
                         a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$related_contact_id}"){$related_contact}
                     td
