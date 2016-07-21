@@ -33,7 +33,7 @@ class Model_Activity extends Model_Table{
 			if(date('Y-m-d',strtotime($m['created_at']))==date('Y-m-d',strtotime($this->app->now))){
 				return date('h:i a',strtotime($m['created_at']));	
 			}
-			return date('M d',strtotime($m['created_at']));
+			return date('M d y',strtotime($m['created_at']));
 		});
 	}
 	
