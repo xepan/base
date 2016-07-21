@@ -31,6 +31,10 @@ class View_Activity extends \View{
 		}
 		$g->current_row['contact_url']= $contact_url;
 	});
+
+	$grid->addHook('formatRow',function($g){
+			if(!$g->model['related_document_id']) $g->current_row_html['related_document_id']= "sNot Available";
+	});
 	$grid->addPaginator(10);
 
 	}
