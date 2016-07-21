@@ -18,6 +18,37 @@ class Initiator extends \Controller_Addon {
         if(!$this->app->epan->loaded()){
             die('No site found, forwarding to 404 service');
         }
+        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/../vendor/xepan/epanservices/dbversion';
+        
+        $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
+        // throw new \Exception($db_model->max_count, 1);
+        if($this->app->epan['epan_dbversion'] < $db_model->max_count){
+            foreach ($db_model as $file) {
+                if(!file_exists($path."/".$file['name'])) continue;
+                
+                try{
+                    $sql = file_get_contents($path."/".$file['name']);
+                    $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+                    $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
+
+                    $this->api->db->beginTransaction();
+                    $this->app->db->dsql()->expr($sql)->execute();
+                    $this->api->db->commit();
+                }catch(\Exception_StopInit $e){
+
+                }catch(\Exception $e){
+                    $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+                    $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
+                    $this->api->db->rollback();
+                    throw $e;
+                }
+            }
+            $this->app->epan['epan_dbversion']=$db_model->max_count;
+            $this->app->epan->save();
+        }   
+
+
+
         $this->app->epan->config = $this->app->epan->ref('Configurations');
         
         date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');

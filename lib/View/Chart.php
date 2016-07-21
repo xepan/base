@@ -113,6 +113,7 @@ class View_Chart extends \View{
 		$this->js(true)
 					->_load('raphael-min')
 					->_load('morris')
+					->_css('libs/morris')
 					;
 
 		$this->js(true)->_library($this->library)->{$this->type}($this->options);
