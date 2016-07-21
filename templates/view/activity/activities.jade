@@ -30,9 +30,9 @@
                     td
                         a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$contact_id}"){$contact}
                     td 
-                        a.do-view-frame(href='#',data-id="{$id}" data-document-id="{$related_document_id}" onclick="javascript:$.univ().frameURL('aaa','?page={$document_url}');"){$related_document_id}
+                        a.do-view-frame(href='#',data-id="{$id}" data-document-id="{$related_document_id}" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');"){$related_document_id}
                     td
-                        a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$related_contact_id}"){$related_contact}
+                        a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$related_contact_id}" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');"){$related_contact}
                     td
                      | {$callback_date}
                     {/}
