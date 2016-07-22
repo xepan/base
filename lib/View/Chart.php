@@ -37,6 +37,11 @@ class View_Chart extends \View{
 		return $this;
 	}
 
+	function setXLabelAngle($angle=0){
+		$this->options['xLabelAngle'] = $angle;
+		return $this;
+	}
+
 	function setChartType($charttype){
 		$this->type = $charttype;
 		return $this;

@@ -25,13 +25,22 @@ class View_Activity extends \View{
 				break;
 			case 'Employee':
 				$contact_url='xepan_hr_employeedetail'.'&contact_id='.$g->model['related_contact_id'];
+			case 'OutsourceParty':
+				$contact_url='xepan_production_outsourcepartiesdetails'.'&contact_id='.$g->model['related_contact_id'];
 				break;
 			default:
 				$contact_url='xepan_base_contactdetail';
 		}
 		$g->current_row['contact_url']= $contact_url;
 	});
+
+	$grid->addHook('formatRow',function($g){
+			if(!$g->model['related_document_id']) $g->current_row_html['related_document_id']= "Not Available"; 
+			if(!$g->model['related_contact_id']) $g->current_row_html['related_contact']= "Not Available";
+	});
+
 	$grid->addPaginator(10);
+	$grid->addQuickSearch(['activity']);
 
 	}
 }
