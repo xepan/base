@@ -81,6 +81,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return '"online"'; // or ideal or offline
 		});
 
+		$this->addExpression('scope')->set(function($m,$q){
+			return $m->refSQL('user_id')->fieldQuery('scope');
+		});
+
 		$this->addHook('beforeSave',function($m){$m['updated_at']=$this->app->now;});
 
 		$this->addHook('beforeDelete',[$this,'deleteContactEmails']);
