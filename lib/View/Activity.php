@@ -33,8 +33,13 @@ class View_Activity extends \View{
 	});
 
 	$grid->addHook('formatRow',function($g){
-			if(!$g->model['related_document_id']) $g->current_row_html['related_document_id']= "sNot Available";
+			if(!$g->model['related_document_id']) $g->current_row_html['related_document_id']= "Not Available";
 	});
+
+	$grid->addHook('formatRow',function($g){
+			if(!$g->model['related_contact_id']) $g->current_row_html['related_contact']= "Not Available";
+	});
+
 	$grid->addPaginator(10);
 
 	}
