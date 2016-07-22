@@ -28,11 +28,11 @@
                     td(style="font-size: 0.87em; font-weight: 400;")
                         |{$activity}&nbsp;
                     td
-                        a.do-view-person-frame(href='#',data-id="{$id}" data-contact-id="{$contact_id}"){$contact}
+                        span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$contact}
                     td 
-                        a.do-view-frame(href='#',data-id="{$id}" data-document-id="{$related_document_id}" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');"){$related_document_id}
+                        span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');"){$related_document_id}
                     td
-                        a.do-view-person-frame(href='#' onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');"){$related_contact}
+                        span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');"){$related_contact}
                     td
                      | {$callback_date}
                     {/}
