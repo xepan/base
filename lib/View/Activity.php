@@ -33,7 +33,7 @@ class View_Activity extends \View{
 	});
 
 	$grid->addHook('formatRow',function($g){
-			if(!$g->model['related_document_id']) $v = $g->current_row_html['related_document_id']= "Not Available"; 
+			if(!$g->model['related_document_id']) $g->current_row_html['related_document_id']= "Not Available"; 
 	});
 
 	$grid->addHook('formatRow',function($g){
