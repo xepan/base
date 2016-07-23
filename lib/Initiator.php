@@ -18,7 +18,7 @@ class Initiator extends \Controller_Addon {
         if(!$this->app->epan->loaded()){
             die('No site found, forwarding to 404 service');
         }
-        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/../vendor/xepan/epanservices/dbversion';
+        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
         // throw new \Exception($db_model->max_count, 1);
