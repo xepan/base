@@ -25,6 +25,7 @@ class View_Activity extends \View{
 				break;
 			case 'Employee':
 				$contact_url='xepan_hr_employeedetail'.'&contact_id='.$g->model['related_contact_id'];
+				break;
 			case 'OutsourceParty':
 				$contact_url='xepan_production_outsourcepartiesdetails'.'&contact_id='.$g->model['related_contact_id'];
 				break;
