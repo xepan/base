@@ -35,8 +35,12 @@ class View_Activity extends \View{
 	});
 
 	$grid->addHook('formatRow',function($g){
-			if(!$g->model['related_document_id']) $g->current_row_html['related_document_id']= "Not Available"; 
-			if(!$g->model['related_contact_id']) $g->current_row_html['related_contact']= "Not Available";
+		if(!$g->model['related_document_id'] && (strpos($g->model['activity'], 'Communicated') !== false) ) 
+			$g->current_row_html['related_document_id'] = 'See Communication Detail';
+		else	
+			$g->current_row_html['related_document_id'] = 'Not Available';
+
+		if(!$g->model['related_contact_id']) $g->current_row_html['related_contact']= "Not Available";
 	});
 
 	$grid->addPaginator(10);
