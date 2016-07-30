@@ -24,6 +24,12 @@ class Controller_PointEventManager extends \AbstractController {
 				$m['score']=$m['score']+30;
 				$m->save();
 				break;
+			case 'Subscription':
+				$m=$this->add('xepan\base\Model_PointSystem');
+				$m['contact_id']=$param['lead']['id'];
+				$m['score']=50;
+				$m->save();
+				break;	
 			default:
 				# code...
 				break;
