@@ -3,13 +3,13 @@ namespace xepan\base;
 
 class Form_Field_Plus extends \autocomplete\Form_Field_Basic
 {
-    public $fields=null;
+    public $show_fields=null;
 
     function setModel($model)
     {
         parent::setModel($model);
         $self = $this;
-        $fields = $this->fields;
+        $show_fields = $this->show_fields;
 
         $f = $this->other_field;
 
@@ -21,9 +21,9 @@ class Form_Field_Plus extends \autocomplete\Form_Field_Basic
             ->set('+')
             ->add('VirtualPage')
             ->bindEvent('Add New Record', 'click')
-                ->set(function($page)use($self,$fields) {
+                ->set(function($page)use($self,$show_fields) {
                     $form = $page->add('Form_Stacked');
-                    $form->setModel($self->model,$fields);
+                    $form->setModel($self->model,$show_fields);
                     $form->addSubmit('Add And Select');
                     if ($form->isSubmitted()) {
                         $form->update();
