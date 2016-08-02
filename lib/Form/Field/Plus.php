@@ -1,12 +1,15 @@
 <?php
-namespace autocomplete;
+namespace xepan\base;
 
-class Form_Field_Plus extends Form_Field_Basic
+class Form_Field_Plus extends \autocomplete\Form_Field_Basic
 {
+    public $fields=null;
+
     function setModel($model)
     {
         parent::setModel($model);
         $self = $this;
+        $fields = $this->fields;
 
         $f = $this->other_field;
 
@@ -18,9 +21,9 @@ class Form_Field_Plus extends Form_Field_Basic
             ->set('+')
             ->add('VirtualPage')
             ->bindEvent('Add New Record', 'click')
-                ->set(function($page)use($self) {
+                ->set(function($page)use($self,$fields) {
                     $form = $page->add('Form_Stacked');
-                    $form->setModel($self->model);
+                    $form->setModel($self->model,$fields);
                     $form->addSubmit('Add And Select');
                     if ($form->isSubmitted()) {
                         $form->update();
@@ -29,7 +32,6 @@ class Form_Field_Plus extends Form_Field_Basic
                         $js[] = $self->other_field->js()->val($form->model[$self->title_field]);
                         $form->js(null, $js)->univ()->closeDialog()->execute();
                     }
-                    $form->add('Controller_FormBeautifier');
                 });
     }
 }
