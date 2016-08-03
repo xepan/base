@@ -1,8 +1,16 @@
 
 <div id="{$_name}">
-  <div class="row xepan-push-small"><span class="pull-right">
-      <div class="btn btn-primary btn-sm inform">Inform Customer</div>
-      <div class="btn btn-primary btn-sm create">Create Communication</div></span></div>{rows}{row}
+  <div class="row xepan-push-small"><span>
+      <div class="panel panel-default panel-body">
+        <div class="row xepan-push"> 
+          <div class="col-md-6">
+            <div class="btn btn-primary btn-sm inform btn-block">Inform Customer</div>
+          </div>
+          <div class="col-md-6"> 
+            <div class="btn btn-primary btn-sm create btn-block">Create Communication</div>
+          </div>
+        </div>{$form}
+      </div></span></div>{rows}{row}
   <div id="accordion" class="panel-group accordion">
     <div class="panel panel-default">
       <div class="panel-heading">

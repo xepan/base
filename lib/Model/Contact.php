@@ -133,7 +133,33 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$contact_id = $this->id;
 		
 		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
+		
+		if($_GET['comm_type']){
+			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
+		}
+
+		if($_GET['search']){
+			$communication->addExpression('Relevance')->set('MATCH(title,description,communication_type) AGAINST ("'.$_GET["search"].'")');
+			$communication->addCondition('Relevance','>',0);
+ 			$communication->setOrder('Relevance','Desc');
+		}
+
 		$lister->setModel($communication)->setOrder(['created_at desc','id desc']);
+
+		$form = $lister->add('Form',null,'form');
+		$form->setLayout('view\communication\filterform');
+		$type_field = $form->addField('xepan\base\DropDown','communication_type');
+		$type_field->setAttr(['multiple'=>'multiple']);
+		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal']);
+		$form->addField('search');
+		$form->addSubmit('Filter')->addClass('btn btn-primary btn-block');
+		
+		$temp = ['Email','Support','Call','Newsletter','SMS','Personal'];
+		$type_field->set($_GET['comm_type']?explode(",", $_GET['comm_type']):$temp)->js(true)->trigger('changed');
+		
+		if($form->isSubmitted()){			
+			$lister->js()->reload(['comm_type'=>$form['communication_type'],'search'=>$form['search']])->execute();
+		}
 	}
 
 	//load Logged In check for the user of contact loaded or not, 

@@ -1,8 +1,13 @@
 div(id="{$_name}")
   .row.xepan-push-small
-    span.pull-right
-      .btn.btn-primary.btn-sm.inform Inform Customer
-      .btn.btn-primary.btn-sm.create Create Communication
+    span
+      div.panel.panel-default.panel-body
+        .row.xepan-push 
+          .col-md-6
+            .btn.btn-primary.btn-sm.inform.btn-block Inform Customer
+          .col-md-6 
+            .btn.btn-primary.btn-sm.create.btn-block Create Communication
+        {$form}
   {rows}{row}
   #accordion.panel-group.accordion
       .panel.panel-default
