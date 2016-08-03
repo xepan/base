@@ -145,6 +145,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		}
 
 		$lister->setModel($communication)->setOrder(['created_at desc','id desc']);
+		$p = $lister->add('Paginator',null,'Paginator');
+		$p->setRowsPerPage(10);
 
 		$form = $lister->add('Form',null,'form');
 		$form->setLayout('view\communication\filterform');
