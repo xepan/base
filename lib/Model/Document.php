@@ -46,12 +46,19 @@ class Model_Document extends \xepan\base\Model_Table{
 
 	}
 
-	function amountInWords($number) {
+	function amountInWords($number,$currency_id=null) {
+	    $currency_model = $this->app->epan->default_currency;
+		if($currency_id)
+			$currency_model = $this->add('xepan\accounts\Model_Currency')->load($currency_id);
+		
+		$integer_part = isset($currency_model['integer_part'])?$currency_model['integer_part']:"";
+		$fractional_part = isset($currency_model['fractional_part'])?$currency_model['fractional_part']:"";	    
 	    $hyphen      = '-';
-	    $conjunction = ' and ';
+	    $conjunction = ' ';
+	    // $conjunction = ' and ';
 	    $separator   = ', ';
 	    $negative    = 'negative ';
-	    $decimal     = ' point ';
+	    $decimal     = ' and ';
 	    $dictionary  = array(
 	        0                   => 'zero',
 	        1                   => 'one',
@@ -75,7 +82,7 @@ class Model_Document extends \xepan\base\Model_Table{
 	        19                  => 'nineteen',
 	        20                  => 'twenty',
 	        30                  => 'thirty',
-	        40                  => 'fourty',
+	        40                  => 'forty',
 	        50                  => 'fifty',
 	        60                  => 'sixty',
 	        70                  => 'seventy',
@@ -146,13 +153,22 @@ class Model_Document extends \xepan\base\Model_Table{
 	    }
 
 	    if (null !== $fraction && is_numeric($fraction)) {
-	        $string .= $decimal;
-	        $words = array();
-	        foreach (str_split((string) $fraction) as $number) {
-	            $words[] = $dictionary[$number];
+	    	// concating integer part
+	    	$string .= " ".$integer_part;
+
+	        if($fraction > 0){
+		        $string .= $decimal;
+		        $words = array();
+		        foreach (str_split((string) $fraction) as $number) {
+		            $words[] = $dictionary[$number];
+		        }
+		        $string .= implode(' ', $words);
+
+		        // concating fractional part
+		        $string .= " ".$fractional_part;
 	        }
-	        $string .= implode(' ', $words);
 	    }
+
 
 	    return $string;
 	}
