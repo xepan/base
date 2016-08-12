@@ -97,7 +97,7 @@ class Tool_Location extends \xepan\cms\View_Tool{
 
 	function render(){
 		parent::render();
-		if(!$this->app->country or !$this->app->state)
+		if(!$this->app->country->id and !$this->app->state->id)
 			$this->js(true)->_selector('.xepan-location-tool')->trigger('click');
 	}
 }
