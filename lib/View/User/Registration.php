@@ -9,7 +9,7 @@ class View_User_Registration extends \View{
 			$f->setLayout('view/tool/userpanel/form/registration');
 			$f->addField('line','first_name');
 			$f->addField('line','last_name');
-			$f->addField('line','email_id')->validate('required');
+			$f->addField('line','Username','email_id')->validate('required');
 			$f->addField('password','password')->validate('required');
 			$f->addField('password','retype_password');
 
