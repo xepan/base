@@ -9,7 +9,7 @@ class View_User_Registration extends \View{
 			$f->setLayout('view/tool/userpanel/form/registration');
 			$f->addField('line','first_name');
 			$f->addField('line','last_name');
-			$f->addField('line','Username','email_id')->validate('required');
+			$f->addField('line','username','email_id')->validate('required|email');
 			$f->addField('password','password')->validate('required');
 			$f->addField('password','retype_password');
 
@@ -17,6 +17,8 @@ class View_User_Registration extends \View{
 				if($f['password']!= $f['retype_password']){
 					$f->displayError($f->getElement('retype_password'),'Password did not match');			
 				}
+				if( ! filter_var(trim($f['email_id']), FILTER_VALIDATE_EMAIL))
+					$f->displayError($f->getElement('username'),'not a valid email address');			
 				
 				$user=$this->add('xepan\base\Model_User');
 				$this->add('BasicAuth')
@@ -24,7 +26,7 @@ class View_User_Registration extends \View{
 				->addEncryptionHook($user);
 
 				$user['epan_id']=$this->app->epan->id;
-				$user['username']=$f['Username'];
+				$user['username']=$f['username'];
 				$user['password']=$f['password'];
 
 				$frontend_config = $this->app->epan->config;
