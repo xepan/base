@@ -205,6 +205,28 @@ class Initiator extends \Controller_Addon {
 
         $this->app->jui->addStaticStyleSheet('xepan-base');
 
+        if($_SERVER['SERVER_ADDR']){
+            
+            if(!$this->app->recall('xepan-customer-current-country',false)){
+                $ip=str_replace('.',"", $_SERVER['SERVER_ADDR']);
+                $s=$this->app->db->dsql()
+                                ->table('IP2LOCATION-LITE-DB11')
+                                // ->where('ip_from','<=','16777216')
+                                // ->where('ip_to','>=','16777471')
+                                ->where('ip_from','<=',$ip)
+                                ->where('ip_to','>=',$ip)
+                                ->del('fields')->get();
+                // throw new \Exception(var_dump($s), 1);
+                // exit;
+                $ip_country= $this->add('xepan\base\Model_Country')->tryLoadBy('name',$s['country']); 
+                $ip_state = $this->add('xepan\base\Model_State')->tryLoadBy('name',$s['state']);
+                $this->app->memorize('xepan-customer-current-country',$ip_country);
+                $this->app->memorize('xepan-customer-current-state',$ip_state);
+            }
+            $this->app->country=$this->app->recall('xepan-customer-current-country');
+            $this->app->state=$this->app->recall('xepan-customer-current-state');
+        }
+        
         // Adding all other installed applications
         $this->setup_xepan_apps('frontend');
 

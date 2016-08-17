@@ -51,10 +51,7 @@ class Tool_Location extends \xepan\cms\View_Tool{
 
 		if($selected_country_id){
 			$state_model->addCondition('country_id',$selected_country_id);
-		}//else{
-		// 	$state_model->addCondition("country_id",-1);
-		// 	$state_field->setEmptyText("Please Select Country First");
-		// }
+		}
 
 		$state_field->setEmptyText("Please Select State");
 		$state_field->setModel($state_model);
@@ -96,5 +93,11 @@ class Tool_Location extends \xepan\cms\View_Tool{
 
 	function defaultTemplate(){
 		return['view\tool\location\location'];
+	}
+
+	function render(){
+		parent::render();
+		if(!$this->app->country->id and !$this->app->state->id)
+			$this->js(true)->_selector('.xepan-location-tool')->trigger('click');
 	}
 }
