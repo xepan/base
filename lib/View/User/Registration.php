@@ -24,7 +24,7 @@ class View_User_Registration extends \View{
 				->addEncryptionHook($user);
 
 				$user['epan_id']=$this->app->epan->id;
-				$user['username']=$f['email_id'];
+				$user['username']=$f['Username'];
 				$user['password']=$f['password'];
 
 				$frontend_config = $this->app->epan->config;
