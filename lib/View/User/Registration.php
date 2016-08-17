@@ -17,7 +17,7 @@ class View_User_Registration extends \View{
 				if($f['password']!= $f['retype_password']){
 					$f->displayError($f->getElement('retype_password'),'Password did not match');			
 				}
-				if( ! filter_var(trim($f['email_id']), FILTER_VALIDATE_EMAIL))
+				if( ! filter_var(trim($f['username']), FILTER_VALIDATE_EMAIL))
 					$f->displayError($f->getElement('username'),'not a valid email address');			
 				
 				$user=$this->add('xepan\base\Model_User');
