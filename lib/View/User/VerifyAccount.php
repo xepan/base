@@ -17,13 +17,13 @@ class View_User_VerifyAccount extends \View{
 			$user=$this->add('xepan\base\Model_User');	
 			$user->addCondition('username',$f['email']);
 			$user->tryLoadAny();
-			$contact=$user->ref('Contacts')->tryLoadAny();
 			if(!$user->loaded())
 				$f->displayError('email','This E-mail Id is not registered');
 			
 			if($f['activation_code']!=$user['hash'])
 				$f->displayError('activation_code','Activation code did not match');
 
+			$contact=$user->ref('Contacts')->tryLoadAny();
 			$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 			$mail = $this->add('xepan\communication\Model_Communication_Email');
 
