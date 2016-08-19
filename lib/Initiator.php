@@ -21,29 +21,32 @@ class Initiator extends \Controller_Addon {
         $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
-        // throw new \Exception($db_model->max_count, 1);
-        if($this->app->epan['epan_dbversion'] < $db_model->max_count){
+
+        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){
             foreach ($db_model as $file) {
                 if(!file_exists($path."/".$file['name'])) continue;
+                $file_name=explode('.', $file['name']);
+                if(isset($file_name[0]) && (int)$file_name[0] > $this->app->epan['epan_dbversion']){
+                    try{
+                        $sql = file_get_contents($path."/".$file['name']);
+                        $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+                        $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
+
+                        $this->api->db->beginTransaction();
+                        $this->app->db->dsql()->expr($sql)->execute();
+                        $this->api->db->commit();
+                    }catch(\Exception_StopInit $e){
+
+                    }catch(\Exception $e){
+                        $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+                        $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
+                        $this->api->db->rollback();
+                        throw $e;
+                    }
+                }   
                 
-                try{
-                    $sql = file_get_contents($path."/".$file['name']);
-                    $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
-                    $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
-
-                    $this->api->db->beginTransaction();
-                    $this->app->db->dsql()->expr($sql)->execute();
-                    $this->api->db->commit();
-                }catch(\Exception_StopInit $e){
-
-                }catch(\Exception $e){
-                    $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-                    $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
-                    $this->api->db->rollback();
-                    throw $e;
-                }
             }
-            $this->app->epan['epan_dbversion']=$db_model->max_count;
+            $this->app->epan['epan_dbversion']=(int)$db_model->max_count;
             $this->app->epan->save();
         }   
 
