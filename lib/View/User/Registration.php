@@ -60,7 +60,7 @@ class View_User_Registration extends \View{
 					$url=$this->api->url(null,
 												[
 												'secret_code'=>$user['hash'],
-												'activate_email'=>$f['email_id'],
+												'activate_email'=>$f['username'],
 												'layout'=>'verify_account',
 												]
 										)->useAbsoluteURL();
@@ -77,7 +77,7 @@ class View_User_Registration extends \View{
 					$t=$body_v->template->trySetHTML('click_here',$tag_url);		
 					$t=$body_v->template->trySetHTML('url',$url);		
 					$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
-					$mail->addTo($f['email_id']);
+					$mail->addTo($f['username']);
 					$mail->setSubject($subject_v->getHtml());
 					$mail->setBody($body_v->getHtml());
 					$mail->send($email_settings);						
