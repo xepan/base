@@ -93,7 +93,7 @@ before_script:
   - mysql -uroot demo < tests/_data/data.sql
 # copy test suite to root test folder
   - cp -r ~/tests .
-  - php vendor/codeception/codeception/codecept build
+  - codecept build
   
 script:
   - codecept run acceptance --env travis --html index.html
