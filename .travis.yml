@@ -38,7 +38,7 @@ install:
   - cp -r tests ~/tests
 # lets remove current clone from project and clone xepan2 in all
   - rm -rf *
-  - git clone --depth 1 https://github.com/xavoctechnocratspvtltd/xepan2.git -b develop
+  - git clone --depth=1 --branch=develop https://github.com/xavoctechnocratspvtltd/xepan2.git
   - mv xepan2/* .
 
   - echo "Extracting firefox and setting PATH variable..."

@@ -18,9 +18,4 @@ class LoginSuperUserCest
         $i->see('Incorrect');
     }
 
-    // tests
-    public function tryToLogin(SuperUser $i)
-    {
-        $i->login();
-    }
 }
