@@ -101,3 +101,4 @@ script:
 env:
   global:
     - GITHUB_REPO: "xavoctechnocratspvtltd/xepan2"
+    - REPORT_FOLDER : 'base'
