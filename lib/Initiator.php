@@ -213,7 +213,7 @@ class Initiator extends \Controller_Addon {
             if(!$this->app->recall('xepan-customer-current-country',false)){
                 $ip=str_replace('.',"", $_SERVER['SERVER_ADDR']);
                 $s=$this->app->db->dsql()
-                                ->table('IP2LOCATION-LITE-DB11')
+                                ->table('ip2location-lite-db11')
                                 // ->where('ip_from','<=','16777216')
                                 // ->where('ip_to','>=','16777471')
                                 ->where('ip_from','<=',$ip)
