@@ -16,6 +16,9 @@ class page_cron extends \Page {
 
 	function init(){
 		parent::init();
+
+		ini_set('memory_limit', '2048M');
+		set_time_limit(0);
 		
 		$resolver = new \Cron\Resolver\ArrayResolver();
 
