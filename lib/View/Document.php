@@ -105,7 +105,13 @@ class View_Document extends \View{
 	function modelRender()
     {
     	foreach ($this->model->get() as $field => $value) {
-			if($this->owner->owner->hasMethod('format_'.$field)){
+    		if($this->hasMethod('format_'.$field)){
+				$value = $this->{'format_'.$field}($value,$this->model);
+    		}
+    		elseif($this->hasMethod('format_'.$this->model->getElement($field)->type())){
+				$value = $this->{'format_'.$this->model->getElement($field)->type()}($field,$value,$this->model);
+    		}
+			elseif($this->owner->owner->hasMethod('format_'.$field)){
 				$value = $this->owner->owner->{'format_'.$field}($value,$this->model);
 			}elseif($this->owner->hasMethod('format_'.$this->model->getElement($field)->type())){
 				$value = $this->owner->{'format_'.$this->model->getElement($field)->type()}($field,$value,$this->model);

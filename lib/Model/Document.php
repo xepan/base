@@ -56,7 +56,7 @@ class Model_Document extends \xepan\base\Model_Table{
 	    $hyphen      = '-';
 	    $conjunction = ' ';
 	    // $conjunction = ' and ';
-	    $separator   = ', ';
+	    $separator   = ' ';
 	    $negative    = 'negative ';
 	    $decimal     = ' and ';
 	    $dictionary  = array(
