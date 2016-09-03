@@ -177,11 +177,14 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 
-	function getEmails(){
+	function getEmails($all=false){
 		if(!$this->loaded())
 			return [];
-		$emails = $this->ref('Emails')
-								->_dsql()->del('fields')->field('value')->getAll();
+		$emails = $this->ref('Emails')->_dsql();
+		
+		if(!$all) $emails->where('is_active',true)->where('is_valid',true);
+
+		$emails = $emails->del('fields')->field('value')->getAll();
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
 	}
 
