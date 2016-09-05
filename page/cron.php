@@ -19,6 +19,9 @@ class page_cron extends \Page {
 
 		ini_set('memory_limit', '2048M');
 		set_time_limit(0);
+		session_write_close();
+
+		if($_GET['now']) $this->app->now = $_GET['now'];
 		
 		$resolver = new \Cron\Resolver\ArrayResolver();
 
