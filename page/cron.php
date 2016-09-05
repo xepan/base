@@ -21,7 +21,7 @@ class page_cron extends \Page {
 		set_time_limit(0);
 		session_write_close();
 
-		if($_GET['now']) $this->app->now = $_GET['now'];
+		if($_GET['now']) $this->app->now = urldecode($_GET['now']);
 		
 		$resolver = new \Cron\Resolver\ArrayResolver();
 
