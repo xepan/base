@@ -27,6 +27,9 @@ class Form_Field_Plus extends \autocomplete\Form_Field_Basic
                     $form->addSubmit('Add And Select');
                     if ($form->isSubmitted()) {
                         $form->update();
+                        
+                        if($form->app->db->inTransaction()) $form->app->db->commit();
+
                         $js = array();
                         $js[] = $self->js()->val($form->model[$self->id_field]);
                         $js[] = $self->other_field->js()->val($form->model[$self->title_field]);
