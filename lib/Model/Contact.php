@@ -77,6 +77,11 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true);
 
+		$this->addExpression('contacts_comma_seperated')->set(function($m,$q){
+			$x = $m->add('xepan\base\Model_Contact_Phone',['table_alias'=>'contacts_str']);
+			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR ", ")',[$x->getElement('value')]));
+		})->allowHTML(true);
+
 		$this->addExpression('online_status')->set(function($m,$q){
 			return '"online"'; // or ideal or offline
 		});
