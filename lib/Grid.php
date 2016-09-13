@@ -101,6 +101,46 @@ class Grid extends \Grid{
             $row_template->trySet("tdparam_$field", trim($tdparam_str));
         }
     }
+
+    /**
+     * Initialize column with delete buttons
+     *
+     * @param string $field
+     *
+     * @return void
+     */
+    function init_delete($field)
+    {
+        // set special CSS class for delete buttons to add some styling
+        $this->columns[$field]['button_class'] = 'atk-effect-danger atk-delete-button';
+        $this->columns[$field]['icon'] = 'trash';
+
+        // if this was clicked, then delete record
+        if ($id = @$_GET[$this->name.'_'.$field]) {
+
+            // delete record
+            $this->_performDelete($id);
+
+            if($this->app->db->inTransaction()) $this->app->db->commit();
+            // show message
+            $this->js()->univ()
+                ->successMessage('Deleted Successfully')
+                ->reload()
+                ->execute();
+        }
+
+        // move button column at the end (to the right)
+        $self = $this;
+        $this->app->addHook('post-init', function() use($self, $field) {
+            if ($self->hasColumn($field)) {
+                $self->addOrder()->move($field, 'last')->now();
+            }
+        });
+
+        // ask for confirmation
+        $this->init_confirm($field);
+    }
+
     function render(){
         $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
         parent::render();
