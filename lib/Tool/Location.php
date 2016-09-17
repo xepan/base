@@ -94,8 +94,8 @@ class Tool_Location extends \xepan\cms\View_Tool{
 			$this->app->country = $c_model;
 			$this->app->state = $s_model;
 			
-			setcookie('xepan_state_cookies',$form['state'] );
-			setcookie('xepan_country_cookies',$form['country'] );
+			setcookie('xepan_state_cookies',$form['state'], time()+31556926 ,'/' );
+			setcookie('xepan_country_cookies',$form['country'], time()+31556926 ,'/');;
 			// throw new \Exception(setcookie($cookie_state, $cookie_country), 1);
 			$this->app->redirect($_SERVER['HTTP_REFERER']);
 			
