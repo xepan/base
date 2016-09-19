@@ -8,21 +8,20 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();        
 
-        $this->app->epan = $this->recall(
-                            $this->app->current_website_name.'_epan',
-                            $this->memorize(
-                                $this->app->current_website_name.'_epan',
-                                $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name)
-                            )
-                        );
+        if(!($this->app->epan = $this->recall($this->app->current_website_name.'_epan',false))){
+            $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
+            $this->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+        }
+                
         if(!$this->app->epan->loaded()){
             die('No site found, forwarding to 404 service');
         }
+
         $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
 
-        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){
+        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){            
             foreach ($db_model as $file) {
                 if(!file_exists($path."/".$file['name'])) continue;
                 $file_name=explode('.', $file['name']);
@@ -41,13 +40,15 @@ class Initiator extends \Controller_Addon {
                         $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
                         $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
                         $this->api->db->rollback();
-                        throw $e;
+                        // throw $e;
                     }
                 }   
                 
             }
             $this->app->epan['epan_dbversion']=(int)$db_model->max_count;
             $this->app->epan->save();
+            $this->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+
         }   
 
 
