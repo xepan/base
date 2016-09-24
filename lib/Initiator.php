@@ -8,9 +8,9 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();        
 
-        if(!($this->app->epan = $this->recall($this->app->current_website_name.'_epan',false))){
+        if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
             $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
-            $this->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
         }
                 
         if(!$this->app->epan->loaded()){
@@ -28,18 +28,24 @@ class Initiator extends \Controller_Addon {
                 if(isset($file_name[0]) && (int)$file_name[0] > $this->app->epan['epan_dbversion']){
                     try{
                         $sql = file_get_contents($path."/".$file['name']);
-                        $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
-                        $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
+                        if($file_name[1]=='sql'){
+                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+                            $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
 
-                        $this->api->db->beginTransaction();
-                        $this->app->db->dsql()->expr($sql)->execute();
-                        $this->api->db->commit();
+                            $this->api->db->beginTransaction();
+                            $this->app->db->dsql()->expr($sql)->execute();
+                            $this->api->db->commit();
+                        }elseif($file_name[1]=='php'){
+                            include_once $file['name'];
+                        }
                     }catch(\Exception_StopInit $e){
 
                     }catch(\Exception $e){
-                        $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-                        $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
-                        $this->api->db->rollback();
+                        if($file_name[1]=='sql'){
+                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+                            $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
+                            $this->api->db->rollback();
+                        }
                         // throw $e;
                     }
                 }   
@@ -47,7 +53,7 @@ class Initiator extends \Controller_Addon {
             }
             $this->app->epan['epan_dbversion']=(int)$db_model->max_count;
             $this->app->epan->save();
-            $this->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
 
         }   
 
