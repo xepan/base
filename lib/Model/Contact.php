@@ -43,6 +43,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('organization');
 		$this->addField('post')->caption('Post');
 		$this->addField('website');
+		$this->addField('code')->system(true);
 		
 		$this->addField('source');
 		$this->addField('remark')->type('text');
@@ -97,6 +98,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContactRelations']);
 		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
+		$this->addHook('afterSave',[$this,'updateContactCode']);
 
 		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
 
@@ -107,6 +109,43 @@ class Model_Contact extends \xepan\base\Model_Table{
 				'user_id|unique_in_epan',
 				'type|to_trim|required'
 			]);
+	}
+
+	function updateContactCode(){
+		if(!$this->loaded()) throw new \Exception($this['type'] ." Model Must be Loaded", 1);
+			$type = $this['type'];
+			$company_info = $this->app->epan['name'];
+			$owner_code = substr($company_info, 0,3);
+									
+			switch ($type) {
+					case 'Employee':
+							$code = $owner_code."EMP";
+						break;
+					case 'Customer':
+							$code = $owner_code."CUS";
+						break;
+					case 'Supplier':
+							$code = $owner_code."SUP";
+						break;
+					case 'OutsourceParty':
+							$code = $owner_code."OUT";
+						break;
+					case 'Lead':
+							$code = $owner_code."LEA";
+						break;
+					case 'Warehouse':
+							$code = $owner_code."WAR";
+						break;
+					case 'Affiliate':
+							$code = $owner_code."AFF";
+						break;
+					default:
+						//Code...							
+						break;
+			}			
+			$this['code'] = $code.$this->id;
+			$this->save();
+
 	}
 
 	function deleteContactEmails(){
