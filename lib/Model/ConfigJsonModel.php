@@ -17,6 +17,18 @@ class Model_ConfigJsonModel extends \Model{
 	public $config_data = []; //STRATEGY_PLANNING_TARGET_AUDIENCE, STRATEGY_PLANNING_TARGET_LOCATION, STRATEGY_PLANNING_BUSINES_DESCRIPTION, STRATEGY_PLANNING_DIGITAL_PRESENCE, STRATEGY_PLANNING_COMETETORS
 	public $config_model;
 	public $application='base';
+	public $namespace='xepan\base';
+
+	public $acl=true;
+
+	public $status=[
+		'All',
+	];
+
+	public $actions=[
+		'All'=>['view','edit']
+	];
+
 	function init(){
 		parent::init();
 		
@@ -26,10 +38,13 @@ class Model_ConfigJsonModel extends \Model{
 		if(!$this->config_key)
 			throw new \Exception("must define epan config key");
 
+		$this->acl_type = $this->config_key;
+		$this->namespace = 'xepan\\'.$this->application;
+
 		foreach ($this->fields as $name => $type) {
 			$field = $this->addField($name);
 			if($type != "Line")
-				$field->type($type);
+				$field->display(['form'=>$type]);
 		}
 
 		$this->config_model = $this->app->epan->config;
