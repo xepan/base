@@ -7,13 +7,14 @@ class Initiator extends \Controller_Addon {
 
 	function init(){
 		parent::init();        
-
+        
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
             $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
             $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
         }
-                
+                    
         if(!$this->app->epan->loaded()){
+            $this->app->forget($this->app->current_website_name.'_epan');
             die('No site found, forwarding to 404 service');
         }
 
@@ -60,11 +61,19 @@ class Initiator extends \Controller_Addon {
 
 
         $this->app->epan->config = $this->app->epan->ref('Configurations');
-        
-        date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
+        $misc_m = $this->add('xepan\base\Model_ConfigJsonModel',
+            [
+                'fields'=>[
+                            'time_zone'=>'DropDown'
+                            ],
+                    'config_key'=>'Miscellaneous_Technical_Settings',
+                    'application'=>'base'
+            ]);
+        $misc_m->tryLoadAny();
+
+        date_default_timezone_set($misc_m['time_zone']?:'UTC');
         $this->app->today = date('Y-m-d');
         $this->app->now   = date('Y-m-d H:i:s');
-
         //Todo load default location of a customer from browser or 
         $this->app->country = $this->app->recall('xepan-customer-current-country');
         $this->app->state = $this->app->recall('xepan-customer-current-state');
