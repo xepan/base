@@ -58,7 +58,11 @@ class Model_ConfigJsonModel extends \Model{
 
 	function beforeSave(){
 		$this->config_data[$this->id?:uniqid()] = $this->data;
-		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
+	}
+
+	function save(){
+		$this->hook('beforeSave', array($this->id));		
+		return $this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
 	}
 
 	function beforeDelete(){
