@@ -33,10 +33,27 @@ class page_resetpassword extends \Page{
 			$merge_model_array = array_merge($merge_model_array,$user->get());
 			$merge_model_array = array_merge($merge_model_array,$contact->get());
 			
-			$reg_model=$this->app->epan->config;
-			$email_subject=$reg_model->getConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN');
-			$email_body=$reg_model->getConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN');
+			// $reg_model=$this->app->epan->config;
+			// $email_subject=$reg_model->getConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN');
+			// $email_body=$reg_model->getConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN');
 			// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
+			
+			$config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+		        [
+		            'fields'=>[
+		                        'reset_subject'=>'Line',
+		                        'reset_body'=>'xepan\base\RichText',
+		                        'update_subject'=>'Line',
+		                        'update_body'=>'xepan\base\RichText',
+		                        ],
+		                'config_key'=>'ADMIN_LOGIN_RELATED_EMAIL',
+		                'application'=>'communication'
+		        ]);
+	        $config_m->tryLoadAny();
+
+			$email_subject=$config_m['update_subject'];
+			$email_body=$config_m['update_body'];
+
 			$subject_temp=$this->add('GiTemplate');
 			$subject_temp->loadTemplateFromString($email_subject);
 			

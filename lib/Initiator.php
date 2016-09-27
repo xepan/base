@@ -376,18 +376,36 @@ class Initiator extends \Controller_Addon {
         $this->api->db->dsql()->expr(file_get_contents(realpath(getcwd().'/vendor/xepan/base/countriesstates.sql')))->execute();
         
         //Set Epan config 
-        $admin_config = $this->app->epan->config;
+        $config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+        [
+            'fields'=>[
+                        'reset_subject'=>'Line',
+                        'reset_body'=>'xepan\base\RichText',
+                        'update_subject'=>'Line',
+                        'update_body'=>'xepan\base\RichText',
+                        ],
+                'config_key'=>'ADMIN_LOGIN_RELATED_EMAIL',
+                'application'=>'communication'
+        ]);
+        $config_m->tryLoadAny();
+
+        // $admin_config = $this->app->epan->config;
         $file_reset_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_subject_admin.html'));
         $file_reset_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_body_admin.html'));
         
-        $admin_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'communication');
-        $admin_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'communication');
-        
+        $config_m['reset_subject'] = $file_reset_subject_admin;
+        $config_m['reset_body'] = $file_reset_body_admin;
+        // $config_m->save();
+        // $admin_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'communication');
+        // $admin_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'communication');
+
         $file_update_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_subject_admin.html'));
         $file_update_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_body_admin.html'));
-        
-        $admin_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'communication');
-        $admin_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'communication');
+        $config_m['update_subject'] = $file_update_subject_admin;
+        $config_m['update_body'] = $file_update_body_admin;
+        $config_m->save();
+        // $admin_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'communication');
+        // $admin_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'communication');
       
         // Do other tasks needed
         // Like empting any folder etc
