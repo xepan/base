@@ -37,11 +37,35 @@ class View_User_ResetPassword extends \View{
 			$merge_model_array = array_merge($merge_model_array,$user->get());
 			$merge_model_array = array_merge($merge_model_array,$contact->get());
 			
-			$reg_model=$this->app->epan->config;
-			$email_subject=$reg_model->getConfig('UPDATE_PASSWORD_SUBJECT');
-			$email_body=$reg_model->getConfig('UPDATE_PASSWORD_BODY');
+			$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			[
+				'fields'=>[
+							'user_registration_type'=>'DropDown',
+							'reset_subject'=>'xepan\base\RichText',
+							'reset_body'=>'xepan\base\RichText',
+							'update_subject'=>'Line',
+							'update_body'=>'xepan\base\RichText',
+							'registration_subject'=>'Line',
+							'registration_body'=>'xepan\base\RichText',
+							'verification_subject'=>'Line',
+							'verification_body'=>'xepan\base\RichText',
+							'subscription_subject'=>'Line',
+							'subscription_body'=>'xepan\base\RichText',
+							],
+					'config_key'=>'FRONTEND_LOGIN_RELATED_EMAIL',
+					'application'=>'communication'
+			]);
+			$frontend_config_m->tryLoadAny();
+
+
+			// $reg_model=$this->app->epan->config;
+			// $email_subject=$reg_model->getConfig('UPDATE_PASSWORD_SUBJECT');
+			// $email_body=$reg_model->getConfig('UPDATE_PASSWORD_BODY');
 			// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
 
+			$email_subject = $frontend_config_m['update_subject'];
+			$email_body = $frontend_config_m['update_body'];
+			
 			$temp=$this->add('GiTemplate');
 			$temp->loadTemplateFromString($email_body);
 
