@@ -49,11 +49,11 @@ class Model_ConfigJsonModel extends \Model{
 
 		$this->config_model = $this->app->epan->config;
 		$this->config_data = json_decode($this->config_model->getConfig($this->config_key,$this->application)?:'{}',true);
-		
+
 		$this->setSource("Array",$this->config_data);
 
 		$this->addHook('beforeSave',$this);
-		$this->addHook('beforeDelete',$this);
+		$this->addHook('afterDelete',$this);
 	}
 
 	function beforeSave(){
@@ -65,12 +65,12 @@ class Model_ConfigJsonModel extends \Model{
 		return $this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
 	}
 
-	function beforeDelete(){
-		if(!$this->id)
-			throw new \Exception("ConfigJsonModel id not defined", 1);
+	function afterDelete(){
+		// if(!$this->id)
+		// 	throw new \Exception("ConfigJsonModel id not defined", 1);
 		
-		unset($this->config_data[$this->id]);
-		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
+		// unset($this->config_data[$this->id]);
+		// $this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
 	}
 
 }
