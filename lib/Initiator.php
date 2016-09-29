@@ -107,10 +107,15 @@ class Initiator extends \Controller_Addon {
             $this->app->add('xepan\base\Layout_Centered');
             $this->app->top_menu = new \Dummy;
             $this->app->side_menu = new \Dummy;
+            $this->app->user_menu = new \Dummy;
         }else{
             $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
             $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
+            $m = $this->app->layout->add('xepan\base\Menu_TopBar',null,'User_Menu');
+            $this->app->user_menu = $m->addMenu('My Menu');
+               
         }
+
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
             $f = $p->add('Form',null,null,['form/minimal']);
