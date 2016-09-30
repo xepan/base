@@ -7,10 +7,6 @@ class View_User_ResetPassword extends \View{
 
 		$secret_code=$this->app->stickyGET('secret_code');
 		$activate_email=$this->app->stickyGET('activate_email');
-		$user=$this->app->auth->model;	
-		$user->addCondition('username',$activate_email);
-		$user->tryLoadAny();
-		
 		$form=$this->add('Form');
 		$form->setLayout('view/tool/userpanel/form/xepanrestpassword');
 		$form->addField('line','email')->set($_GET['activate_email'])->validateNotNull();
@@ -19,7 +15,11 @@ class View_User_ResetPassword extends \View{
 		$form->addField('password','password')->validateNotNull();
 		$form->addField('password','retype_password')->validateNotNull();
 
-		$form->onSubmit(function($f)use($user){
+		$form->onSubmit(function($f){
+			$user=$this->app->auth->model;	
+			$user->addCondition('username',$f['email']);
+			$user->tryLoadAny();
+			
 			if($f['secret_code']!=$user['hash'])
 				$f->displayError('secret_code','Activation Code Not Match');
 			
