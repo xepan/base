@@ -24,7 +24,7 @@ class View_Chart extends \View{
 		parent::init();
 		$this->_debug=false;
 
-		$this->options['element'] = $this->getJSId();
+		$this->options['bindto'] = '#'.$this->getJSId();
 	}
 
 	function setLabels($labels){
@@ -116,12 +116,12 @@ class View_Chart extends \View{
 		// var_dump($this->options);
 		// exit;
 		$this->js(true)
-					->_load('raphael-min')
-					->_load('morris')
-					->_css('libs/morris')
+					->_load('d3.v3.min')
+					->_load('c3.min')
+					->_css('c3')
 					;
 
-		$this->js(true)->_library($this->library)->{$this->type}($this->options);
+		$this->js(true)->_library('c3')->generate($this->options);
 		parent::render();
 	}
 
@@ -130,11 +130,11 @@ class View_Chart extends \View{
 	}
 
 	function validateOptions(){
-		if(!trim($this->library))
-			throw new \Exception("must defined library", 1);
+		// if(!trim($this->library))
+		// 	throw new \Exception("must defined library", 1);
 
-		if(!trim($this->type))
-			throw new \Exception("must defined Graph Type", 1);
+		// if(!trim($this->type))
+		// 	throw new \Exception("must defined Graph Type", 1);
 
 	}	
 }
