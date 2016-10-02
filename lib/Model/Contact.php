@@ -24,7 +24,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\ContactCreatedBy','created_by_id');
+		$this->hasOne('xepan\base\ContactCreatedBY','created_by_id');
 		$this->hasOne('xepan\base\ContactAssignedTo','assign_to_id');
 		$this->hasOne('xepan\base\User',null,'username');
 		$this->hasOne('xepan\base\Country','country_id')->display(array('form' => 'xepan\commerce\DropDown'));
