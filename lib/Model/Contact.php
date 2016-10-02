@@ -60,6 +60,15 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]))->sortable(true);
 
+		$this->addExpression('effective_name',function($m,$q){
+			return $q->expr('IF(ISNULL([organization_name]) OR trim([organization_name])="" ,[contact_name],[organization_name])',
+						[
+							'contact_name'=>$m->getElement('name'),
+							'organization_name'=>$m->getElement('organization')
+						]
+					);
+		});
+
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
 		$this->hasMany('xepan\base\Contact_Phone',null,null,'Phones');
 		$this->hasMany('xepan\base\Contact_Relation',null,null,'Relations');
