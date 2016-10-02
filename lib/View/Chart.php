@@ -103,6 +103,12 @@ class View_Chart extends \View{
 		return $this;	
 	}
 
+	function rotateAxis(){
+		if(!isset($this->options['axis'])) $this->options['axis']=[];
+		$this->options['axis']['rotated']=true;
+		return $this;
+	}
+
 	function setType($type){
 		$this->options['data']['type']=$type;
 		$this->type = $type;
