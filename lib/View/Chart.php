@@ -69,18 +69,28 @@ class View_Chart extends \View{
 		return $this;
 	}
 
-	function setXAxis($x_Axis){
-		$this->options['xkey']=$x_Axis;
+	function setXAxis($x_Axis_field, $type='category'){
+		if(!isset($this->options['data']['keys'])) $this->options['data']['keys'] =[];
+		$this->options['data']['keys']['x']=$x_Axis_field;
+		if($type){
+			if(!isset($this->options['axis'])) $this->options['axis'] =[];
+			$this->options['axis']['x']=['type'=>$type];
+		}
+
+		$this->x_Axis_field = $x_Axis_field;
+
 		return $this;
 	}
 
-	function setYAxis($y_Axis){
-		$this->options['ykeys']=$y_Axis;
+	function setYAxises($y_Axis_fields){
+		if(!isset($this->options['data']['keys'])) $this->options['data']['keys'] =[];
+		$this->options['data']['keys']['value']=$y_Axis_fields;
+		$this->y_Axis_fields = $y_Axis_fields;
 		return $this;
 	}
 
 	function setLineColors($colors =['#ffc107', '#03a9f4']){
-		$this->options['lineColors'] = $colors;
+		$this->optionrecus['lineColors'] = $colors;
 	}
 
 	function setXAxisTitle($x_Axis_Title){
@@ -93,6 +103,12 @@ class View_Chart extends \View{
 		return $this;	
 	}
 
+	function setType($type){
+		$this->options['data']['type']=$type;
+		$this->type = $type;
+		return $this;
+	}
+
 	function setData($data){
 		// if(is_array($data))
 		// 	$data = json_encode($data);
@@ -100,8 +116,47 @@ class View_Chart extends \View{
 		return $this;
 	}
 
+	function mergeOptions($option){
+		$this->options = array_merge($this->options,$option);
+	}
+
 	function debug(){
 		$this->_debug=true;
+		return $this;
+	}
+
+	function setModel($model,$x_Axis_field,$y_Axis_fields,$x_Axis_type='category'){
+		$m = parent::setModel($model,array_merge($y_Axis_fields, [$x_Axis_field]));
+		$this->x_Axis_field = $x_Axis_field;
+		$this->y_Axis_fields = $y_Axis_fields;
+
+		$this->setXAxis($x_Axis_field,$x_Axis_type);
+		$this->setYAxises($y_Axis_fields);
+
+		return $m;
+	}
+
+	function recursiveRender(){
+		if($this->model){
+			$data = $this->model->getRows();
+			$this->options['data']['json']=$data;
+		}
+
+		if($this->model && $this->type=='pie'){
+			$formatted_data=[];
+			$formatted_values=[];
+			foreach ($data as $row) {
+				foreach ($this->y_Axis_fields as $fld) {
+					$formatted_data[] = [$row[$this->x_Axis_field] => $row[$fld]];
+					$formatted_values[] = $row[$this->x_Axis_field];
+				}
+			}
+			unset($this->options['data']['keys']['x']);
+			$this->options['data']['json']=$formatted_data;
+			$this->options['data']['keys']['value']=$formatted_values;
+		}
+
+		parent::recursiveRender();
 	}
 
 	function render(){
@@ -109,7 +164,7 @@ class View_Chart extends \View{
 		
 		if($this->_debug){
 			echo "<pre>";
-			print_r($this->data);
+			print_r($this->options);
 			echo "</pre>";
 		}
 
