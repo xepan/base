@@ -17,6 +17,7 @@ class View_Contact extends \View{
 	public $vp ;
 
 	public $view_document_class= 'xepan\base\View_Document';
+	public $page_reload=false;
 
 
 	function init(){
@@ -35,7 +36,7 @@ class View_Contact extends \View{
 		});
 
 		$this->action = $action = $this->api->stickyGET('action')?:'view';
-		$this->document_view = $this->add($this->view_document_class,['action'=> $action,'id_field_on_reload'=>'contact_id'],null,['view/contact']);
+		$this->document_view = $this->add($this->view_document_class,['action'=> $action,'id_field_on_reload'=>'contact_id','page_reload'=>$this->page_reload],null,['view/contact']);
 
 		
 	}
