@@ -43,7 +43,7 @@ class View_Chart extends \View{
 	}
 
 	function setChartType($charttype){
-		$this->type = $charttype;
+		$this->setType($charttype);
 		return $this;
 	}
 
@@ -116,6 +116,11 @@ class View_Chart extends \View{
 		return $this;
 	}
 
+	function setGroup($groups){
+		$this->options['data']['groups']=[$groups];
+		return $this;
+	}
+
 	function mergeOptions($option){
 		$this->options = array_merge($this->options,$option);
 	}
@@ -133,7 +138,7 @@ class View_Chart extends \View{
 		$this->setXAxis($x_Axis_field,$x_Axis_type);
 		$this->setYAxises($y_Axis_fields);
 
-		return $m;
+		return $this; //not returning model 
 	}
 
 	function recursiveRender(){
