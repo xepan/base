@@ -15,8 +15,8 @@ class page_logout extends \xepan\base\Page{
 
 		if($form->isSubmitted()){
 			$movement->addCondition('employee_id',$this->app->employee->id);
-			$movement->addCondition('time',$this->app->now);
-			$movement->addCondition('type','Attandance');
+			$movement->addCondition('movement_at',$this->app->now);
+			// $movement->addCondition('type','Attandance');
 			$movement->addCondition('direction','Out');
 			$movement->addCondition('reason',$form['reason']);
 			$movement->addCondition('narration',$form['narration']);
