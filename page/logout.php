@@ -15,12 +15,24 @@ class page_logout extends \xepan\base\Page{
 
 		if($form->isSubmitted()){
 			$movement->addCondition('employee_id',$this->app->employee->id);
-			$movement->addCondition('movement_at',$this->app->now);
-			// $movement->addCondition('type','Attandance');
+			$movement->addCondition('movement_at',$this->app->today);
 			$movement->addCondition('direction','Out');
 			$movement->addCondition('reason',$form['reason']);
 			$movement->addCondition('narration',$form['narration']);
 			$movement->save();
+
+			$attan_m = $this->add("xepan\hr\Model_Employee_Attandance");
+			$attan_m->addCondition('employee_id',$this->app->employee->id);
+			$attan_m->addCondition('fdate',$this->app->today);
+			$attan_m->setOrder('id','desc');
+			$attan_m->tryLoadAny();
+
+			if($movement['reason'] != 'Official Outing'){
+				$attan_m['to_date'] = $this->app->now;
+				$attan_m->save();
+			}
+									
+
 
 			$this->app->hook('user_loggedout',[$this->app->auth->model,$this->app->employee]);
 			$this->app->auth->logout();
