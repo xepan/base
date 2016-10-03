@@ -192,8 +192,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
 		}
 
-		if($_GET['search']){
-			$communication->addExpression('Relevance')->set('MATCH(title,description,communication_type) AGAINST ("'.$_GET["search"].'")');
+		if($search = $this->app->stickyGET('search')){
+			$communication->addExpression('Relevance')->set('MATCH(title,description,communication_type) AGAINST ("'.$search.'")');
 			$communication->addCondition('Relevance','>',0);
  			$communication->setOrder('Relevance','Desc');
 		}
