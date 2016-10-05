@@ -126,7 +126,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 			$type = $this['type'];
 			$company_info = $this->app->epan['name'];
 			$owner_code = substr($company_info, 0,3);
-									
+
+			$code = "CON";
 			switch ($type) {
 					case 'Employee':
 							$code = $owner_code."EMP";

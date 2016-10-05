@@ -2,13 +2,27 @@
 namespace xepan\base;
 
 class View_Activity extends \View{
+	public $from_date;
+	public $to_date;
+	public $contact_id;
 
 	function init(){
 	parent::init();
 
+
 	$activity_model=$this->add('xepan\base\Model_Activity');
 	$activity_model->addExpression('contact_type',$activity_model->refSQL('related_contact_id')->fieldQuery('type'));
 	
+	if($this->from_date){
+		$activity_model->addCondition('created_at','>=',$this->from_date);
+	}
+	if($this->to_date){
+		$activity_model->addCondition('created_at','<',$this->app->nextDate($this->to_date));
+	}
+	if($this->contact_id){
+		$activity_model->addCondition('related_contact_id',$this->contact_id);
+	}
+
 	$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
 	$grid->setModel($activity_model);
 
