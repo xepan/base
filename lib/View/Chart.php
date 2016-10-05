@@ -12,8 +12,8 @@
 namespace xepan\base;
 
 class View_Chart extends \View{
-	public $options = ["resize"=> true];
-	var $_debug;
+	public $options = [];
+	public $_debug;
 	public $data=array();
 	private $xAxis=array();
 	private $yAxis=array();
@@ -24,7 +24,7 @@ class View_Chart extends \View{
 		parent::init();
 		$this->_debug=false;
 
-		$this->options['bindto'] = '#'.$this->getJSId();
+		$this->options['bindto'] = '#'.$this->getJSId().'_chart';
 	}
 
 	function setLabels($labels){
@@ -58,14 +58,7 @@ class View_Chart extends \View{
 	}
 
 	function setTitle($title,$title_x_posistion=-20, $subtitle="",$subtitle_x_position=-20){
-		$this->options['title']=array(
-			'text'=>$title,
-			'x'=>$title_x_posistion
-			);
-		$this->options['subtitle']=array(
-			'text'=>$subtitle,
-			'x'=>$subtitle_x_position
-			);
+		$this->template->trySet('title',$title);
 		return $this;
 	}
 

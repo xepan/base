@@ -8,6 +8,8 @@ class Initiator extends \Controller_Addon {
 	function init(){
 		parent::init();        
         
+        // $this->app->forget($this->app->current_website_name.'_epan');
+        
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
             $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
             $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
@@ -343,7 +345,7 @@ class Initiator extends \Controller_Addon {
              ->set('epan_id',$epan->id)
              ->saveAs('xepan\base\Model_User_Active');
 
-        $this->app->auth->login($user);
+        // $this->app->auth->login($user);
 
         // Create Default Applications and INstall with all with root application
         
