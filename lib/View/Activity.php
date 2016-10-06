@@ -5,14 +5,21 @@ class View_Activity extends \View{
 	public $from_date;
 	public $to_date;
 	public $contact_id;
+	public $related_person_id;
+	public $department_id;
 
 	function init(){
 	parent::init();
-
-
+	
 	$activity_model=$this->add('xepan\base\Model_Activity');
 	$activity_model->addExpression('contact_type',$activity_model->refSQL('related_contact_id')->fieldQuery('type'));
-	
+	$activity_model->addExpression('department')->set(function($m,$q){
+		$employee = $this->add('xepan\hr\Model_Employee');
+		$employee->addCondition('id',$m->getField('contact_id'));
+		$employee->setLimit(1);
+		return $employee->fieldQuery('department_id');
+	});
+
 	if($this->from_date){
 		$activity_model->addCondition('created_at','>=',$this->from_date);
 	}
@@ -20,7 +27,13 @@ class View_Activity extends \View{
 		$activity_model->addCondition('created_at','<',$this->app->nextDate($this->to_date));
 	}
 	if($this->contact_id){
-		$activity_model->addCondition('related_contact_id',$this->contact_id);
+		$activity_model->addCondition('contact_id',$this->contact_id);
+	}
+	if($this->related_person_id){
+		$activity_model->addCondition('related_contact_id',$this->related_person_id);
+	}
+	if($this->department_id){
+		$activity_model->addCondition('department',$this->department_id);
 	}
 
 	$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
