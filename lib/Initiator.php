@@ -113,7 +113,7 @@ class Initiator extends \Controller_Addon {
         }else{
             $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
             $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
-            $m = $this->app->layout->add('xepan\base\Menu_TopBar',null,'User_Menu');
+            $m = $this->app->layout->add('xepan\base\Menu_TopRightBar',null,'User_Menu');
             $this->app->user_menu = $m->addMenu('My Menu');
                
         }
