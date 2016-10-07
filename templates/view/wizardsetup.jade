@@ -2,17 +2,22 @@
   header.main-box-header.clearfix
     .name {$addon}
   .main-box-body.clearfix
-    table.table-hover.footable(style="width:100%;")
-      thead.xepan-hover-hand
-          th.text-primary
-              span &nbsp;&nbsp;&nbsp;{$title} 
-      tbody
-          tr
-              td
-                .xepan-push
-                .col-md-9
-                  span.text-muted &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$message}
-                .col-md-2(style="margin-bottom:10px;")
-                    {$action_spot}
-                .col-md-1
-                  a.fa.fa-question-circle-o(style = "font-size: 25px;" href="{$url}")
+    .main-box-body.clearfix
+      table.table-hover.footable(style="width:100%;")
+        thead.xepan-hover-hand
+            th.text-primary
+                span {$title} 
+        tbody
+            tr
+                td
+                  .xepan-push
+                  .col-md-9
+                    .main-box-body.clearfix
+                      span.text-muted {$message}
+                    .main-box-body.clearfix
+                      i.fa.fa-hand-o-right
+                      .pull-left.text-muted{$helpmessage} &nbsp;
+                  .col-md-2(style="margin-bottom:10px;")
+                      {$action_spot}
+                  .col-md-1
+                    a.fa.fa-question-circle-o(style = "font-size: 25px;" href="{$url}")
