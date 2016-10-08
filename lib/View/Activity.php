@@ -72,7 +72,7 @@ class View_Activity extends \View{
 		if(!$g->model['related_contact_id']) $g->current_row_html['related_contact']= "Not Available";
 	});
 
-	$grid->addPaginator(10);
+	$grid->addPaginator(50);
 	$grid->addQuickSearch(['activity']);
 
 	}
