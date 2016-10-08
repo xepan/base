@@ -217,14 +217,14 @@ class Paginator extends \CompleteLister {
         }
 
         if($this->ajax_reload){
-            $this->js('click',$this->owner->js()->reload(array($this->skip_var=>$this->js()->_selectorThis()->attr('data-skip'),$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector')->val())))
+            $this->js('click',$this->owner->js()->reload(array($this->skip_var=>$this->js()->_selectorThis()->attr('data-skip'),$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector-'.$this->name)->val())))
                 ->_selector('#'.$this->name.' a');
 
             $this->js(true)->_load('select2.min')->_css('libs/select2');
-            $this->js(true)->_selector('#ipp-selector')->select2();
-            $this->js(true)->_selector('#ipp-selector')->select2('val',$this->ipp);
-            $this->js('change',$this->owner->js()->reload(array($this->skip_var=>0,$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector')->val())))
-                ->_selector('#ipp-selector');
+            $this->js(true)->_selector('#ipp-selector-'.$this->name)->select2();
+            $this->js(true)->_selector('#ipp-selector-'.$this->name)->select2('val',$this->ipp);
+            $this->js('change',$this->owner->js()->reload(array($this->skip_var=>0,$this->name.'_ipp'=>$this->js()->_selector('#ipp-selector-'.$this->name)->val())))
+                ->_selector('#ipp-selector-'.$this->name);
         }
 
 
