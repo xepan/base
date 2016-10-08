@@ -1,7 +1,15 @@
 
 <div class="main-box clearfix {$class} ">
   <header class="main-box-header clearfix">
-    <div class="name">{$addon}</div>
+    <div class="col-md-7">
+      <div class="name">{$addon}</div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+      <div class="main-box-body clearfix"><i class="fa fa-hand-o-down"></i>
+        <div class="pull-left text-muted">{$helpmessage} &nbsp;</div>
+      </div>
+    </div>
   </header>
   <div class="main-box-body clearfix">
     <div class="main-box-body clearfix">
@@ -15,9 +23,6 @@
               <div class="xepan-push"></div>
               <div class="col-md-9">
                 <div class="main-box-body clearfix"><span class="text-muted">{$message}</span></div>
-                <div class="main-box-body clearfix"><i class="fa fa-hand-o-right"></i>
-                  <div class="pull-left text-muted">{$helpmessage} &nbsp;</div>
-                </div>
               </div>
               <div style="margin-bottom:10px;" class="col-md-2">{$action_spot}</div>
               <div class="col-md-1"><a style="font-size: 25px;" href="{$url}" class="fa fa-question-circle-o"></a></div>
