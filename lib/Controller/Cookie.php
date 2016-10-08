@@ -27,8 +27,6 @@ class Controller_Cookie extends \AbstractController{
             if($id){
                 // Successfully validated user
                 $this->app->memorize('user_loggedin', $auth->model);
-                $auth->model['last_login_date'] = $this->app->now;
-                $auth->model->save();
                 $this->breakHook($id);
             }
         }
@@ -40,8 +38,8 @@ class Controller_Cookie extends \AbstractController{
         setcookie($auth->name."_password",$pass,time()+60*60*24*30*6);
     }
     function logout($auth){
-		// setcookie($auth->name."_username",null);
-		// setcookie($auth->name."_password",null);
+		setcookie($auth->name."_username",null);
+		setcookie($auth->name."_password",null);
     }
     function updateForm($auth){
         if ($this->show_checkbox) {
