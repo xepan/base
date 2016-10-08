@@ -37,6 +37,11 @@ class Initiator extends \Controller_Addon {
 
                             $this->api->db->beginTransaction();
                             $this->app->db->dsql()->expr($sql)->execute();
+                            
+                            $this->app->epan['epan_dbversion']=(int)$file_name[0];
+                            $this->app->epan->save();
+                            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+                            
                             $this->api->db->commit();
                         }elseif($file_name[1]=='php'){
                             include_once $file['name'];
@@ -48,15 +53,13 @@ class Initiator extends \Controller_Addon {
                             $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
                             $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
                             $this->api->db->rollback();
+                            
                         }
-                        // throw $e;
+                        throw $e;
                     }
                 }   
                 
             }
-            $this->app->epan['epan_dbversion']=(int)$db_model->max_count;
-            $this->app->epan->save();
-            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
 
         }   
 
@@ -131,13 +134,13 @@ class Initiator extends \Controller_Addon {
 
         });
         
-        $auth->addHook('loggedIn',function($auth,$user,$pass){
+        $auth->addHook('loggedIn',function($auth,$user,$pass){            
             $this->app->memorize('user_loggedin', $auth->model);
             $auth->model['last_login_date'] = $this->app->now;
             $auth->model->save();
         });
 
-        $auth->add('auth/Controller_Cookie');
+        $auth->add('xepan\base\Controller_Cookie');
 
         $this->api->addHook('post-init',function($app){
             if(!$this->app->getConfig('developer_mode',false) && !isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
