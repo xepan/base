@@ -34,6 +34,8 @@ class View_Document extends \View{
 
 	public $add_on_view=false;
 
+	public $page_reload =false;
+
 	function init(){
 		parent::init();
 
@@ -148,8 +150,10 @@ class View_Document extends \View{
 		if($this->action != 'view') {
 			$this->form->onSubmit(function($f){	
 				$f->save();
-				return $this->js(null,$this->js()->univ()->notify('Saved','Document Saved','user','attached','bouncyflip'))->univ()->location($this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action)]));
-				return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->reload(null,null,$this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action),'cut_object'=>$this->name]));
+				if($this->page_reload)
+					return $this->js(null,$this->js()->univ()->notify('Saved','Document Saved','user','attached','bouncyflip'))->univ()->location($this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action)]));
+				else
+					return $this->js(null,$this->js()->univ()->notify('user','Saved','attached','bouncyflip'))->reload(null,null,$this->api->url(null,[$this->id_field_on_reload=>$f->model->id,'action'=>($this->action=='add'?'edit':$this->action),'cut_object'=>$this->name]));
 			});	
 		}
 

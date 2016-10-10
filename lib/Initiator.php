@@ -7,57 +7,78 @@ class Initiator extends \Controller_Addon {
 
 	function init(){
 		parent::init();        
-
-        $this->app->epan = $this->recall(
-                            $this->app->current_website_name.'_epan',
-                            $this->memorize(
-                                $this->app->current_website_name.'_epan',
-                                $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name)
-                            )
-                        );
+        
+        // $this->app->forget($this->app->current_website_name.'_epan');
+        
+        if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
+            $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
+            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+        }
+                    
         if(!$this->app->epan->loaded()){
+            $this->app->forget($this->app->current_website_name.'_epan');
             die('No site found, forwarding to 404 service');
         }
+
         $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
 
-        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){
+        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){            
             foreach ($db_model as $file) {
                 if(!file_exists($path."/".$file['name'])) continue;
                 $file_name=explode('.', $file['name']);
                 if(isset($file_name[0]) && (int)$file_name[0] > $this->app->epan['epan_dbversion']){
                     try{
                         $sql = file_get_contents($path."/".$file['name']);
-                        $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
-                        $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
+                        if($file_name[1]=='sql'){
+                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+                            $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
 
-                        $this->api->db->beginTransaction();
-                        $this->app->db->dsql()->expr($sql)->execute();
-                        $this->api->db->commit();
+                            $this->api->db->beginTransaction();
+                            $this->app->db->dsql()->expr($sql)->execute();
+                            
+                            $this->app->epan['epan_dbversion']=(int)$file_name[0];
+                            $this->app->epan->save();
+                            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+                            
+                            $this->api->db->commit();
+                        }elseif($file_name[1]=='php'){
+                            include_once $file['name'];
+                        }
                     }catch(\Exception_StopInit $e){
 
                     }catch(\Exception $e){
-                        $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-                        $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
-                        $this->api->db->rollback();
+                        if($file_name[1]=='sql'){
+                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+                            $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
+                            $this->api->db->rollback();
+                            
+                        }
                         throw $e;
                     }
                 }   
                 
             }
-            $this->app->epan['epan_dbversion']=(int)$db_model->max_count;
-            $this->app->epan->save();
+
         }   
 
 
 
         $this->app->epan->config = $this->app->epan->ref('Configurations');
-        
-        date_default_timezone_set($this->app->epan->config->getConfig('TIME_ZONE')?:'UTC');
+        $misc_m = $this->add('xepan\base\Model_ConfigJsonModel',
+            [
+                'fields'=>[
+                            'time_zone'=>'DropDown'
+                            ],
+                    'config_key'=>'Miscellaneous_Technical_Settings',
+                    'application'=>'base'
+            ]);
+        $misc_m->tryLoadAny();
+
+        date_default_timezone_set($misc_m['time_zone']?:'UTC');
         $this->app->today = date('Y-m-d');
         $this->app->now   = date('Y-m-d H:i:s');
-
         //Todo load default location of a customer from browser or 
         $this->app->country = $this->app->recall('xepan-customer-current-country');
         $this->app->state = $this->app->recall('xepan-customer-current-state');
@@ -91,10 +112,15 @@ class Initiator extends \Controller_Addon {
             $this->app->add('xepan\base\Layout_Centered');
             $this->app->top_menu = new \Dummy;
             $this->app->side_menu = new \Dummy;
+            $this->app->user_menu = new \Dummy;
         }else{
             $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
             $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
+            $m = $this->app->layout->add('xepan\base\Menu_TopRightBar',null,'User_Menu');
+            $this->app->user_menu = $m->addMenu('My Menu');
+               
         }
+
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
             $f = $p->add('Form',null,null,['form/minimal']);
@@ -108,13 +134,13 @@ class Initiator extends \Controller_Addon {
 
         });
         
-        $auth->addHook('loggedIn',function($auth,$user,$pass){
+        $auth->addHook('loggedIn',function($auth,$user,$pass){            
             $this->app->memorize('user_loggedin', $auth->model);
             $auth->model['last_login_date'] = $this->app->now;
             $auth->model->save();
         });
 
-        $auth->add('auth/Controller_Cookie');
+        $auth->add('xepan\base\Controller_Cookie');
 
         $this->api->addHook('post-init',function($app){
             if(!$this->app->getConfig('developer_mode',false) && !isset($this->app->loggingin) && !$app->page_object instanceof \xepan\base\Page && !in_array($app->page, $app->auth->getAllowedPages())){
@@ -322,7 +348,7 @@ class Initiator extends \Controller_Addon {
              ->set('epan_id',$epan->id)
              ->saveAs('xepan\base\Model_User_Active');
 
-        $this->app->auth->login($user);
+        // $this->app->auth->login($user);
 
         // Create Default Applications and INstall with all with root application
         
@@ -360,18 +386,36 @@ class Initiator extends \Controller_Addon {
         $this->api->db->dsql()->expr(file_get_contents(realpath(getcwd().'/vendor/xepan/base/countriesstates.sql')))->execute();
         
         //Set Epan config 
-        $admin_config = $this->app->epan->config;
+        $config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+        [
+            'fields'=>[
+                        'reset_subject'=>'Line',
+                        'reset_body'=>'xepan\base\RichText',
+                        'update_subject'=>'Line',
+                        'update_body'=>'xepan\base\RichText',
+                        ],
+                'config_key'=>'ADMIN_LOGIN_RELATED_EMAIL',
+                'application'=>'communication'
+        ]);
+        $config_m->tryLoadAny();
+
+        // $admin_config = $this->app->epan->config;
         $file_reset_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_subject_admin.html'));
         $file_reset_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/reset_body_admin.html'));
         
-        $admin_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'communication');
-        $admin_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'communication');
-        
+        $config_m['reset_subject'] = $file_reset_subject_admin;
+        $config_m['reset_body'] = $file_reset_body_admin;
+        // $config_m->save();
+        // $admin_config->setConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN',$file_reset_subject_admin,'communication');
+        // $admin_config->setConfig('RESET_PASSWORD_BODY_FOR_ADMIN',$file_reset_body_admin,'communication');
+
         $file_update_subject_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_subject_admin.html'));
         $file_update_body_admin = file_get_contents(realpath(getcwd().'/vendor/xepan/base/templates/default/update_body_admin.html'));
-        
-        $admin_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'communication');
-        $admin_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'communication');
+        $config_m['update_subject'] = $file_update_subject_admin;
+        $config_m['update_body'] = $file_update_body_admin;
+        $config_m->save();
+        // $admin_config->setConfig('UPDATE_PASSWORD_SUBJECT_FOR_ADMIN',$file_update_subject_admin,'communication');
+        // $admin_config->setConfig('UPDATE_PASSWORD_BODY_FOR_ADMIN',$file_update_body_admin,'communication');
       
         // Do other tasks needed
         // Like empting any folder etc

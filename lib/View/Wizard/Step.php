@@ -19,6 +19,11 @@ class View_Wizard_Step extends \View {
 		return $this;
 	}
 
+	function setHelpMessage($helpmessage){
+		$this->template->set('helpmessage',$helpmessage);
+		return $this;
+	}
+
 	function setHelpURL($url){
 		$this->template->set('url',$url);
 		return $this;

@@ -24,7 +24,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\Contact','created_by_id');
+		$this->hasOne('xepan\base\ContactCreatedBY','created_by_id');
+		$this->hasOne('xepan\base\ContactAssignedTo','assign_to_id');
 		$this->hasOne('xepan\base\User',null,'username');
 		$this->hasOne('xepan\base\Country','country_id')->display(array('form' => 'xepan\commerce\DropDown'));
 		$this->hasOne('xepan\base\State','state_id')->display(array('form' => 'xepan\commerce\DropDown'));
@@ -43,6 +44,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('organization');
 		$this->addField('post')->caption('Post');
 		$this->addField('website');
+		$this->addField('code')->system(true);
 		
 		$this->addField('source');
 		$this->addField('remark')->type('text');
@@ -57,6 +59,15 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->add('xepan/filestore/Field_Image',['name'=>'image_id','deref_field'=>'thumb_url'])->allowHTML(true);
 
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]))->sortable(true);
+
+		$this->addExpression('effective_name',function($m,$q){
+			return $q->expr('IF(ISNULL([organization_name]) OR trim([organization_name])="" ,[contact_name],[organization_name])',
+						[
+							'contact_name'=>$m->getElement('name'),
+							'organization_name'=>$m->getElement('organization')
+						]
+					);
+		});
 
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
 		$this->hasMany('xepan\base\Contact_Phone',null,null,'Phones');
@@ -77,6 +88,11 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true);
 
+		$this->addExpression('contacts_comma_seperated')->set(function($m,$q){
+			$x = $m->add('xepan\base\Model_Contact_Phone',['table_alias'=>'contacts_str']);
+			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR ", ")',[$x->getElement('value')]));
+		})->allowHTML(true);
+
 		$this->addExpression('online_status')->set(function($m,$q){
 			return '"online"'; // or ideal or offline
 		});
@@ -92,6 +108,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContactRelations']);
 		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
+		$this->addHook('afterSave',[$this,'updateContactCode']);
 
 		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
 
@@ -102,6 +119,44 @@ class Model_Contact extends \xepan\base\Model_Table{
 				'user_id|unique_in_epan',
 				'type|to_trim|required'
 			]);
+	}
+
+	function updateContactCode(){
+		if(!$this->loaded()) throw new \Exception($this['type'] ." Model Must be Loaded", 1);
+			$type = $this['type'];
+			$company_info = $this->app->epan['name'];
+			$owner_code = substr($company_info, 0,3);
+
+			$code = "CON";
+			switch ($type) {
+					case 'Employee':
+							$code = $owner_code."EMP";
+						break;
+					case 'Customer':
+							$code = $owner_code."CUS";
+						break;
+					case 'Supplier':
+							$code = $owner_code."SUP";
+						break;
+					case 'OutsourceParty':
+							$code = $owner_code."OUT";
+						break;
+					case 'Lead':
+							$code = $owner_code."LEA";
+						break;
+					case 'Warehouse':
+							$code = $owner_code."WAR";
+						break;
+					case 'Affiliate':
+							$code = $owner_code."AFF";
+						break;
+					default:
+						//Code...							
+						break;
+			}			
+			$this['code'] = $code.$this->id;
+			$this->save();
+
 	}
 
 	function deleteContactEmails(){
@@ -138,8 +193,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
 		}
 
-		if($_GET['search']){
-			$communication->addExpression('Relevance')->set('MATCH(title,description,communication_type) AGAINST ("'.$_GET["search"].'")');
+		if($search = $this->app->stickyGET('search')){
+			$communication->addExpression('Relevance')->set('MATCH(title,description,communication_type) AGAINST ("'.$search.'")');
 			$communication->addCondition('Relevance','>',0);
  			$communication->setOrder('Relevance','Desc');
 		}
@@ -177,11 +232,14 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 
-	function getEmails(){
+	function getEmails($all=false){
 		if(!$this->loaded())
 			return [];
-		$emails = $this->ref('Emails')
-								->_dsql()->del('fields')->field('value')->getAll();
+		$emails = $this->ref('Emails')->_dsql();
+		
+		if(!$all) $emails->where('is_active',true)->where('is_valid',true);
+
+		$emails = $emails->del('fields')->field('value')->getAll();
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
 	}
 

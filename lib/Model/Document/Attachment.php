@@ -21,10 +21,16 @@ class Model_Document_Attachment extends \xepan\base\Model_Table{
 		parent::init();
 		
 		$this->hasOne('xepan\base\Document','document_id');
-		$this->add('filestore\Field_File','file_id');
+		$this->add('xepan\filestore\Field_File','file_id');
+
+		$this->addHook('beforeDelete',$this);
 
 		$this->is([
 				'file_id|required'
 			]);
+	}
+
+	function beforeDelete(){
+		$this->ref('file_id')->delete();
 	}
 }

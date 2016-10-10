@@ -25,10 +25,26 @@ class page_forgotpassword extends \Page{
 				
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
-				$reset_pass = $this->app->epan->config;
-				$email_subject=$reset_pass->getConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN');
-				$email_body=$reset_pass->getConfig('RESET_PASSWORD_BODY_FOR_ADMIN');
+				// $reset_pass = $this->app->epan->config;
+				$config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+		        [
+		            'fields'=>[
+		                        'reset_subject'=>'Line',
+		                        'reset_body'=>'xepan\base\RichText',
+		                        'update_subject'=>'Line',
+		                        'update_body'=>'xepan\base\RichText',
+		                        ],
+		                'config_key'=>'ADMIN_LOGIN_RELATED_EMAIL',
+		                'application'=>'communication'
+		        ]);
+		        $config_m->tryLoadAny();
+
+				// $email_subject=$reset_pass->getConfig('RESET_PASSWORD_SUBJECT_FOR_ADMIN');
+				// $email_body=$reset_pass->getConfig('RESET_PASSWORD_BODY_FOR_ADMIN');
 				// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
+				$email_subject=$config_m['reset_subject'];
+				$email_body=$config_m['reset_body'];
+				
 				$subject_temp=$this->add('GiTemplate');
 				$subject_temp->loadTemplateFromString($email_subject);
 				$temp=$this->add('GiTemplate');

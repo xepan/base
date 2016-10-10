@@ -9,6 +9,15 @@ class Tool_Location extends \xepan\cms\View_Tool{
 			];	
 	function init(){
 		parent::init();
+		
+		if(isset($_COOKIE['xepan_state_cookies']) AND isset($_COOKIE['xepan_country_cookies'])) {
+			$c_model = $this->add('xepan\base\Model_Country')->load($_COOKIE['xepan_country_cookies']);
+			$s_model = $this->add('xepan\base\Model_State')->load($_COOKIE['xepan_state_cookies']);
+			$this->app->memorize('xepan-customer-current-country',$c_model);
+			$this->app->memorize('xepan-customer-current-state',$s_model);
+			$this->app->country = $c_model;
+			$this->app->state = $s_model;
+		}
 
 		// $this->app->country = $this->add('xepan\base\Model_Country')->load(100); 
 		// $this->app->state = $this->add('xepan\base\Model_State')->load(95);
@@ -84,7 +93,12 @@ class Tool_Location extends \xepan\cms\View_Tool{
 			$this->app->memorize('xepan-customer-current-state',$s_model);
 			$this->app->country = $c_model;
 			$this->app->state = $s_model;
+			
+			setcookie('xepan_state_cookies',$form['state'], time()+31556926 ,'/' );
+			setcookie('xepan_country_cookies',$form['country'], time()+31556926 ,'/');;
+			// throw new \Exception(setcookie($cookie_state, $cookie_country), 1);
 			$this->app->redirect($_SERVER['HTTP_REFERER']);
+			
 		}
 		// if($this->app->country or $this->app->state)
 		// $this->template->tryDel('location_fetcher_wrapper');

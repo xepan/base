@@ -29,14 +29,14 @@ style.
     padding-right: 0px !important;
   }
 .paginator.hidden-xs(style='margin:5px 5px 0 0; float: left;')
-  select#ipp-selector
+  select(id="ipp-selector-{$_name}")
     option 5
     option 10
     option 25
     option 50
     option 100
     option 500
-    option All
+    //- option All
 ul.pagination.pull-left(id='{$_name}')
   li
   {prev}

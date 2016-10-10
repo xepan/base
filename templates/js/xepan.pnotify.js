@@ -6,7 +6,7 @@ $.each({
 				title: xTitle?xTitle:"Notification",
 				text: xText,
 				type: xType==null?"notice":xType,
-				hide: false,
+				hide: true,
 				desktop: {
 						desktop: true
 					}
