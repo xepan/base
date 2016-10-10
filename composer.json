@@ -19,7 +19,7 @@
     },
     "require": {
         "xepan/atk4": "4.3",
-        "xepan/filestore" : "dev-master as 1.0.0",
+        "xepan/filestore" : "1.0.0",
         "php": ">=5.3",
         "nette/utils": "~2.4",
         "tecnickcom/tcpdf": "^6.2",
