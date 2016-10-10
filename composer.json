@@ -26,7 +26,7 @@
         "studio-42/elfinder": "^2.1",
         "tinymce/tinymce": "^4.3",
         "cron/cron": "^1.0",
-        "xepan/captcha": "dev-master as 1.0.0",
+        "xepan/captcha": "1.0.0",
         "nesbot/carbon": "^1.21"
     },
     "autoload": {
