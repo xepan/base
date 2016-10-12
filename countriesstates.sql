@@ -26,13 +26,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `country`
 --
 
-CREATE TABLE `country` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `country` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `iso_code` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
-  `created_by_id` int(11) DEFAULT NULL
+  `created_by_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
@@ -292,14 +293,15 @@ INSERT INTO `country` (`id`, `name`, `type`, `iso_code`, `status`, `created_by_i
 -- Table structure for table `state`
 --
 
-CREATE TABLE `state` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `state` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `abbreviation` varchar(255) DEFAULT NULL,
   `country_id` int(11) DEFAULT NULL,
   `created_by_id` int(11) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL
+  `status` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
@@ -4033,14 +4035,14 @@ INSERT INTO `state` (`id`, `name`, `type`, `abbreviation`, `country_id`, `create
 --
 -- Indexes for table `country`
 --
-ALTER TABLE `country`
-  ADD PRIMARY KEY (`id`);
+-- ALTER TABLE `country`
+--   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `state`
 --
-ALTER TABLE `state`
-  ADD PRIMARY KEY (`id`);
+-- ALTER TABLE `state`
+--   ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
