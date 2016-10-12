@@ -19,9 +19,15 @@
     },
     "require": {
         "xepan/atk4": "4.3",
-        "xepan/filestore" : "dev-master",
+        "xepan/filestore" : "1.0.0",
         "php": ">=5.3",
-        "nette/utils": "~2.4"
+        "nette/utils": "~2.4",
+        "tecnickcom/tcpdf": "^6.2",
+        "studio-42/elfinder": "^2.1",
+        "tinymce/tinymce": "^4.3",
+        "cron/cron": "^1.0",
+        "xepan/captcha": "1.0.0",
+        "nesbot/carbon": "^1.21"
     },
     "autoload": {
         "psr-0": { "autocomplete": "lib" }
