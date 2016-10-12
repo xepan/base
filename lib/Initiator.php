@@ -3,13 +3,15 @@
 namespace xepan\base;
 
 class Initiator extends \Controller_Addon {
-	public $addon_name = 'xepan_base';
+    public $addon_name = 'xepan_base';
 
-	function init(){
-		parent::init();        
+    function init(){
+        parent::init();        
         
         // $this->app->forget($this->app->current_website_name.'_epan');
         
+        $this->addAppDateFunctions();
+
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
             $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
             $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
@@ -23,7 +25,7 @@ class Initiator extends \Controller_Addon {
         $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
-
+        
         if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){            
             foreach ($db_model as $file) {
                 if(!file_exists($path."/".$file['name'])) continue;
@@ -189,8 +191,7 @@ class Initiator extends \Controller_Addon {
         // throw new \Exception($this->app->employee->id, 1);
 
         return $this;
-	}
-
+	} 
     function setup_frontend(){
         $this->routePages('xepan_base');
         $this->addLocation(array('template'=>'templates','js'=>'templates/js','css'=>'templates/css'))
@@ -441,6 +442,162 @@ class Initiator extends \Controller_Addon {
         return $subdomains;
     }
 
+    function addAppdateFunctions(){
+        $this->app->addMethod('nextDate',function($app,$date=null){
+            
+            if(!$date) $date = $this->api->today;
+            $date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($date)) . " +1 DAY"));    
+            return $date;
+        });
 
+        $this->app->addMethod('setDate',function($app,$date){
+            $this->api->memorize('current_date',$date);
+            $this->now = date('Y-m-d H:i:s',strtotime($date));
+            $this->today = date('Y-m-d',strtotime($date));
+        
+        });
+
+        $this->app->addMethod('previousDate',function($app,$date=null){
+            if(!$date) $date = $this->api->today;
+            $date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($date)) . " -1 DAY"));    
+            return $date;
+        });
+
+        $this->app->addMethod('monthFirstDate',function($app,$date=null){
+            if(!$date) $date = $this->api->now;
+            return date('Y-m-01',strtotime($date));
+        });
+
+        $this->app->addMethod('monthLastDate',function($app,$date=null){
+            if(!$date) $date = $this->api->now;
+            return date('Y-m-t',strtotime($date));
+        });
+
+        $this->app->addMethod('isMonthLastDate',function($app,$date=null){
+            if(!$date) $date = $this->api->now;
+            $date = date('Y-m-d',strtotime($date));
+            return strtotime($date) == strtotime($this->monthLastDate());
+
+        });
+
+        $this->app->addMethod('nextMonth',function($app,$date=null){
+            if(!$date) $date=$this->api->today;
+            return date("Y-m-d", strtotime(date("Y-m-d", strtotime($date)) . " +1 MONTH"));
+        });
+
+        $this->app->addMethod('previousMonth',function($app,$date=null){
+            if(!$date) $date=$this->api->today;
+            return date("Y-m-d", strtotime(date("Y-m-d", strtotime($date)) . " -1 MONTH"));
+        });
+
+        $this->app->addMethod('nextYear',function($app,$date=null){
+            if(!$date) $date=$this->api->today;
+            return date("Y-m-d", strtotime(date("Y-m-d", strtotime($date)) . " +1 YEAR"));
+        });
+
+        $this->app->addMethod('previousYear',function($app,$date=null){
+            if(!$date) $date=$this->api->today;
+            return date("Y-m-d", strtotime(date("Y-m-d", strtotime($date)) . " -1 YEAR"));
+        });
+
+        $this->app->addMethod('getFinancialYear',function($app,$date=null,$start_end = 'both'){
+            if(!$date) $date = $this->api->now;
+            $month = date('m',strtotime($date));
+            $year = date('Y',strtotime($date));
+            if($month >=1 AND $month <=3  ){
+                $f_year_start = $year-1;
+                $f_year_end = $year;
+            }
+            else{
+                $f_year_start = $year;
+                $f_year_end = $year+1;
+            }
+
+            if(strpos($start_end, 'start') !==false){
+                return $f_year_start.'-04-01';
+            }
+            if(strpos($start_end, 'end') !==false){
+                return $f_year_end.'-03-31';
+            }
+
+            return array(
+                    'start_date'=>$f_year_start.'-04-01',
+                    'end_date'=>$f_year_end.'-03-31'
+                );
+
+            });
+
+    $this->app->addMethod('getFinancialQuarter',function ($date=null,$start_end = 'both'){
+        if(!$date) $date = $this->api->today;
+
+        $month = date('m',strtotime($date));
+        $year = date('Y',strtotime($date));
+        
+        switch ($month) {
+            case 1:
+            case 2:
+            case 3:
+                $q_month_start='-01-01';
+                $q_month_end='-03-31';
+                break;
+            case 4:
+            case 5:
+            case 6:
+                $q_month_start='-04-01';
+                $q_month_end='-06-30';
+                break;
+            case 7:
+            case 8:
+            case 9:
+                $q_month_start='-07-01';
+                $q_month_end='-09-30';
+                break;
+            case 10:
+            case 11:
+            case 12:
+                $q_month_start='-10-01';
+                $q_month_end='-12-31';
+                break;
+        }
+
+        
+        if(strpos($start_end, 'start') !== false){
+            return $year.$q_month_start;
+        }
+        if(strpos($start_end, 'end') !== false){
+            return $year.$q_month_end;
+        }
+
+        return array(
+                'start_date'=>$year.$q_month_start,
+                'end_date'=>$year.$q_month_end
+            );
+
+        });
+
+        $this->app->addMethod('my_date_diff',function($app,$d1,$d2){
+            $d1 = (is_string($d1) ? strtotime($d1) : $d1);
+            $d2 = (is_string($d2) ? strtotime($d2) : $d2);
+
+            $diff_secs = abs($d1 - $d2);
+            $base_year = min(date("Y", $d1), date("Y", $d2));
+
+            $diff = mktime(0, 0, $diff_secs, 1, 1, $base_year);
+            return [
+                    "years" => date("Y", $diff) - $base_year,
+                    "months_total" => (date("Y", $diff) - $base_year) * 12 + date("n", $diff) - 1,
+                    "months" => date("n", $diff) - 1,
+                    "days_total" => floor($diff_secs / (3600 * 24)),
+                    "days" => date("j", $diff) - 1,
+                    "hours_total" => floor($diff_secs / 3600),
+                    "hours" => date("G", $diff),
+                    "minutes_total" => floor($diff_secs / 60),
+                    "minutes" => (int) date("i", $diff),
+                    "seconds_total" => $diff_secs,
+                    "seconds" => (int) date("s", $diff)
+                ];
+        });
+
+    }
 
 }
