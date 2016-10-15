@@ -10,11 +10,13 @@
         i.fa.fa-circle
         |  {online_status}Online{/}
       {/}
-
-      {avatar_wrapper}
-      {avatar}
-      img.profile-img.img-responsive.center-block(alt='', src='')
-      {/}{/}
+      .image-wrapper
+        {avatar_wrapper}
+        {avatar}
+        img.profile-img.img-responsive.center-block(alt='', src='')
+        {/}{/}
+        p.image-caption
+          |Click Here to Upload Your Image
       {contact_type_wrapper}
       .profile-label
         span.label.label-danger {type}{/}
@@ -120,3 +122,15 @@
         {/}
       {/}  
       {$FormButtons}
+
+style.
+  .image-caption{
+    display:none;
+  }
+  .image-wrapper:hover .image-caption{
+    border:2px solid redd;
+    display:blockk;
+
+  }
+
+

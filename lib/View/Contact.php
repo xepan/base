@@ -128,8 +128,11 @@ class View_Contact extends \View{
 	}
 
 	function recursiveRender(){
+		$this->js('hover',$this->js()->slideToggle('slow')->_selector('.image-caption'))->_selector('.image-wrapper');
+	
 		$action = $this->api->stickyGET('action')?:'view';
 		if($action == 'edit')
+
 			$this->js('click')->_selector('.profile-img')->univ()->frameURL('Change Image',$this->vp->getURL());
 		return parent::recursiveRender();
 	}

@@ -7,9 +7,11 @@
     </header>
     <div class="main-box-body clearfix">{online_status_wrapper}
       <div class="profile-status"><i class="fa fa-circle"></i> {online_status}Online{/}</div>{/}
-      {avatar_wrapper}
-      {avatar}<img alt="" src="" class="profile-img img-responsive center-block"/>{/}{/}
-      {contact_type_wrapper}
+      <div class="image-wrapper">
+        {avatar_wrapper}
+        {avatar}<img alt="" src="" class="profile-img img-responsive center-block"/>{/}{/}
+        <p class="image-caption">Click Here to Upload Your Image</p>
+      </div>{contact_type_wrapper}
       <div class="profile-label"><span class="label label-danger">{type}{/}</span></div>{/}
       {contact_since_wrapper}
       <div class="profile-since">Contact since: {created_at}{/}</div>{/}
@@ -77,3 +79,13 @@
     </div>
   </div>
 </div>
+<style>
+  .image-caption{
+    display:none;
+  }
+  .image-wrapper:hover .image-caption{
+    border:2px solid redd;
+    display:blockk;
+  
+  }
+</style>
