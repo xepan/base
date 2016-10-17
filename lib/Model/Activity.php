@@ -17,7 +17,7 @@ class Model_Activity extends Model_Table{
 	function init(){
 		parent::init();
 
-		$this->hasOne('xepan\base\Epan');
+		// $this->hasOne('xepan\base\Epan');
 		$this->hasOne('xepan\base\Contact');
 		$this->hasOne('xepan\base\Document','related_document_id');
 		$this->hasOne('xepan\base\Contact','related_contact_id');
