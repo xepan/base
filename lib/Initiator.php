@@ -154,7 +154,7 @@ class Initiator extends \Controller_Addon {
         });
 
         $user = $this->add('xepan\base\Model_User_Active');
-        $user->addCondition('epan_id',$this->app->epan->id);
+        // $user->addCondition('epan_id',$this->app->epan->id);
         $user->addCondition('scope',['AdminUser','SuperUser']);
 
         $auth->usePasswordEncryption('md5');

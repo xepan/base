@@ -23,7 +23,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 	function init(){
 		parent::init();
 
-		$this->hasOne('xepan\base\Epan');
+		// $this->hasOne('xepan\base\Epan');
 		$this->hasOne('xepan\base\ContactCreatedBY','created_by_id');
 		$this->hasOne('xepan\base\ContactAssignedTo','assign_to_id');
 		$this->hasOne('xepan\base\User',null,'username');
@@ -113,7 +113,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
 
 		$this->is([
-				'epan_id|required',
+				// 'epan_id|required',
 				'first_name|to_trim|to_upper_words|required',
 				'last_name|to_trim|to_upper_words',
 				'user_id|unique_in_epan',
