@@ -42,6 +42,7 @@ class View_Activity extends \View{
 			$activity_comm_j = $activity_model->join('communication.from_id','contact_id');
 			$activity_comm_j->addField('communication_type');
 			$activity_model->addCondition('communication_type',$this->communication_type);
+			$activity_model->_dsql()->group($activity_model->dsql()->expr('[0]',[$activity_model->getElement('id')]));
 		}
 
 		$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
