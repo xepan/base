@@ -23,7 +23,7 @@ class View_Activity extends \View{
 
 
 		if($this->from_date){
-			$activity_model->addCondition('created_at','>=',$this->from_date);
+			$activity_model->addCondition('created_at','>=',$this->from_date);			
 		}
 		if($this->to_date){
 			$activity_model->addCondition('created_at','<',$this->app->nextDate($this->to_date));
@@ -38,11 +38,11 @@ class View_Activity extends \View{
 			$activity_model->addCondition('department',$this->department_id);
 		}
 
-		if($this->communication_type){			
+		if($this->communication_type){						
 			$activity_comm_j = $activity_model->join('communication.from_id','contact_id');
 			$activity_comm_j->addField('communication_type');
 			$activity_model->addCondition('communication_type',$this->communication_type);
-			$activity_model->_dsql()->group($activity_model->dsql()->expr('[0]',[$activity_model->getElement('id')]));
+			$activity_model->_dsql()->group($activity_model->dsql()->expr('[0]',[$activity_model->getElement('id')]));	
 		}
 
 		$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
