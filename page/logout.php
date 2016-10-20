@@ -7,11 +7,13 @@ class page_logout extends \xepan\base\Page{
 	function init(){
 		parent::init();
 
+		$this->app->hook('logout_page',[$this]);
 		$movement = $this->add('xepan\hr\Model_Employee_Movement');
 		
 		$form = $this->add('Form');
 		$form->setModel($movement,['reason','narration']);
 		$form->addSubmit('Logout')->addClass('btn btn-primary');
+
 
 		if($form->isSubmitted()){
 			$movement->addCondition('employee_id',$this->app->employee->id);
@@ -32,8 +34,6 @@ class page_logout extends \xepan\base\Page{
 				$attan_m->save();
 			}
 									
-
-
 			$this->app->hook('user_loggedout',[$this->app->auth->model,$this->app->employee]);
 			$this->app->auth->logout();
 			$this->app->redirect('/');
