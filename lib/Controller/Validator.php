@@ -39,7 +39,7 @@ class Controller_Validator extends \Controller_Validator{
     }
 
     function rule_unique_in_epan($a,$field){
-
+        return ;
         $q = clone $this->owner->dsql();
 
         $result = $q
@@ -57,7 +57,7 @@ class Controller_Validator extends \Controller_Validator{
     }
 
     function rule_unique_in_epan_for_type($a,$field){
-        
+        return ;
         $q = clone $this->owner->dsql();
 
         $result = $q
