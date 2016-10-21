@@ -40,8 +40,8 @@ class Menu_TopBar extends \Menu_Advanced{
                 $i->template->set('url',$url = $this->app->url($action));
                 if($url->isCurrent()){
                     if(count($match_qs_vars)===0){
-                        $i->addClass('active');
-                        $i->owner->addClass('active');
+                        $i->addClass('active-menu');
+                        $i->owner->addClass('active-menu');
                     }else{
                         $active=true;
                         $args= $action->arguments;
@@ -52,8 +52,8 @@ class Menu_TopBar extends \Menu_Advanced{
                             }
                         }
                         if($active){
-                            $i->addClass('active');
-                            $i->owner->addClass('active');
+                            $i->addClass('active-menu');
+                            $i->owner->addClass('active-menu');
                         }
                     }
                 }

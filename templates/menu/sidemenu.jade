@@ -1,7 +1,4 @@
-li(class="{$class} " "{$attributes}")
-  a.dropdown-toggle(href='#')
-    i.fa.fa-{icon}table{/}
-    span {Content}Tables{/Content}
-    i.fa.fa-angle-right.drop-icon
-  ul.submenu
-    |  {$SubMenu}
+.ui.dropdown.item(class="{$class}" '{$attributes}') {Content}New Item {/}
+    i.dropdown.icon
+    .menu
+      {$SubMenu}

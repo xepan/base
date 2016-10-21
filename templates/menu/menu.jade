@@ -1,6 +1,4 @@
-li.dropdown
-  a.btn.dropdown-toggle(data-toggle='dropdown' class="{$class}")
-    | {Content}New Item {/} 
-    span {$Badge} 
-    i.fa.fa-caret-down
-  ul.dropdown-menu{$SubMenu}
+.ui.dropdown.item(class="{$class}") {Content}New Item {/}
+    i.dropdown.icon
+    .menu
+      {$SubMenu}

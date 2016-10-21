@@ -1,29 +1,33 @@
-.column
-  h4.header
-    img.ui.image(src='img/logo.png', alt='' style="width:100px; height:65px;")
-    {$company_name}
-  .section
-    {Content}
-    {form_layout}
-    .input-group
-      i.glyphicon.glyphicon-user
-      .atk-form-row.atk-form-field{$username}
-    .input-group
-      i.glyphicon.glyphicon-lock
-      .atk-form-row.atk-form-field{$password}
-    #remember-me-wrapper
-      .row
-        .col-xs-6
-          .checkbox-nice
-            {$memorize}
-        a#login-forget-link.col-xs-6(href='?page=xepan_base_forgotpassword')
-          | Forgot password?
-    .row
-      .col-xs-12
-        button.btn.btn-success.col-xs-12(type='submit') Login
-    {/}
-    {/}
-.section
-        span(style="color:black;")| Powered by  
-          a(href='http://www.xavoc.com' target="_blank" style="color:#03A9A4")
-            | Xavoc Technocrats Pvt. Ltd.
+.ui.three.column.centered.grid
+  .column
+    h1.ui.teal.center.aligned.icon.header
+      img.ui.centered.small.image(src='img/logo.png', alt='xEpan')
+      .content.large {$company_name} 
+    .ui.large.form
+      {Content}
+      {form_layout} 
+      .ui.stacked.segment
+        .field
+          .ui.left.icon.input.atk-form-row.atk-form-field
+            i.user.icon
+            {$username}
+        .field
+          .ui.left.icon.input.atk-form-row.atk-form-field
+            i.lock.icon
+            {$password}
+        #remember-me-wrapper
+          .row
+            .col-xs-6
+              .checkbox-nice
+                {$memorize}
+            a#login-forget-link.col-xs-6(href='?page=xepan_base_forgotpassword')
+              | Forgot password?
+        .row
+          .col-xs-12
+            button.ui.fluid.large.teal.submit.button(type='submit') Login
+      {/}
+      {/}
+    .section
+            span(style="color:black;")| Powered by  
+              a(href='http://www.xavoc.com' target="_blank" style="color:#03A9A4")
+                | Xavoc Technocrats Pvt. Ltd.

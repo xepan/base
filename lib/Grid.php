@@ -24,6 +24,16 @@ class Grid extends \Grid{
         ' fa  fa-sort-desc'
     );
 
+    function addButton($label, $class = 'Button')
+    {
+        if (!$this->buttonset) {
+            $this->buttonset = $this->add('ButtonSet', null, 'grid_buttons')->setClass('ui buttons');
+        }
+        return $this->buttonset
+            ->add($class, 'gbtn'.count($this->elements))
+            ->set($label);
+    }
+
     function defaultTemplate(){
         if($this->defaultTemplate) return $this->defaultTemplate;
         return parent::defaultTemplate();

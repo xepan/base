@@ -1,28 +1,34 @@
 
-<div class="column">
-  <h4 class="header"><img src="img/logo.png" alt="" style="width:100px; height:65px;" class="ui image"/>{$company_name}</h4>
-  <div class="section">
-    {Content}
-    {form_layout}
-    <div class="input-group"><i class="glyphicon glyphicon-user"></i>
-      <div class="atk-form-row atk-form-field">{$username}</div>
+<div class="ui three column centered grid">
+  <div class="column">
+    <h1 class="ui teal center aligned icon header"><img src="img/logo.png" alt="xEpan" class="ui centered small image"/>
+      <div class="content large">{$company_name} </div>
+    </h1>
+    <div class="ui large form">
+      {Content}
+      {form_layout} 
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input atk-form-row atk-form-field"><i class="user icon"></i>{$username}</div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input atk-form-row atk-form-field"><i class="lock icon"></i>{$password}</div>
+        </div>
+        <div id="remember-me-wrapper">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="checkbox-nice">{$memorize}</div>
+            </div><a id="login-forget-link" href="?page=xepan_base_forgotpassword" class="col-xs-6">Forgot password?</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button type="submit" class="ui fluid large teal submit button">Login</button>
+          </div>
+        </div>
+      </div>{/}
+      {/}
     </div>
-    <div class="input-group"><i class="glyphicon glyphicon-lock"></i>
-      <div class="atk-form-row atk-form-field">{$password}</div>
-    </div>
-    <div id="remember-me-wrapper">
-      <div class="row">
-        <div class="col-xs-6">
-          <div class="checkbox-nice">{$memorize}</div>
-        </div><a id="login-forget-link" href="?page=xepan_base_forgotpassword" class="col-xs-6">Forgot password?</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <button type="submit" class="btn btn-success col-xs-12">Login</button>
-      </div>
-    </div>{/}
-    {/}
+    <div class="section"><span style="color:black;">Powered by  <a href="http://www.xavoc.com" target="_blank" style="color:#03A9A4">Xavoc Technocrats Pvt. Ltd.</a></span></div>
   </div>
 </div>
-<div class="section"><span style="color:black;">Powered by  <a href="http://www.xavoc.com" target="_blank" style="color:#03A9A4">Xavoc Technocrats Pvt. Ltd.</a></span></div>
