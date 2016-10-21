@@ -54,9 +54,9 @@ class View_Activity extends \View{
 			$activity_model->_dsql()->group($activity_model->dsql()->expr('[0]',[$activity_model->getElement('id')]));	
 		}
 
-		$grid = $this->add('xepan\base\Grid'/*,null,null,['view/activity/activities']*/);
-		$grid->setModel($activity_model,['post']);
-		return;
+		$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
+		$grid->setModel($activity_model);
+		
 		$grid->addHook('formatRow',function($g){
 			switch($g->model['contact_type']){
 				case 'Lead':
@@ -81,13 +81,17 @@ class View_Activity extends \View{
 		});
 
 		$grid->addHook('formatRow',function($g){
+			if(!$g->model['document_url']  AND $g->model['related_document_id']) 
+				$g->current_row_html['related_document_id'] = '';
+				
 			if(!$g->model['related_document_id'] && (strpos($g->model['activity'], 'Communicated') !== false) ) 
 				$g->current_row_html['related_document_id'] = 'See Communication Detail';
 			else
 				if(!$g->model['related_document_id'])	
 					$g->current_row_html['related_document_id'] = '';
 
-			if(!$g->model['related_contact_id']) $g->current_row_html['related_contact']= "";
+			if(!$g->model['related_contact_id']) 
+				$g->current_row_html['related_contact']= "";
 		});
 
 		$grid->addPaginator(50);
