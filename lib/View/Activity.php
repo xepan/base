@@ -9,6 +9,7 @@ class View_Activity extends \View{
 	public $department_id;
 	public $communication_type;
 	public $descendants = 'descendants';
+	public $self_activity;
 
 	function init(){
 		parent::init();
@@ -28,9 +29,12 @@ class View_Activity extends \View{
 			$employee->setLimit(1);
 			return $employee->fieldQuery('post_id');
 		});
-				
+		
 		// $activity_model->addCondition('post',array_unique($this->descendants));
 
+		if($this->self_activity == 'true'){											
+			$activity_model->addCondition('contact_id','<>',$this->app->employee->id);			
+		}
 		if($this->from_date){
 			$activity_model->addCondition('created_at','>=',$this->from_date);			
 		}
