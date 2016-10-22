@@ -53,6 +53,9 @@ class Model_Document extends \xepan\base\Model_Table{
 		
 		$integer_part = isset($currency_model['integer_part'])?$currency_model['integer_part']:"";
 		$fractional_part = isset($currency_model['fractional_part'])?$currency_model['fractional_part']:"";	    
+	    $prefix = isset($currency_model['prefix'])?$currency_model['prefix']:"";	    
+		$postfix = isset($currency_model['postfix'])?$currency_model['postfix']:"";	    
+	   
 	    $hyphen      = '-';
 	    $conjunction = ' ';
 	    // $conjunction = ' and ';
@@ -152,9 +155,14 @@ class Model_Document extends \xepan\base\Model_Table{
 	            break;
 	    }
 
+	    
+
 	    if (null !== $fraction && is_numeric($fraction)) {
 	    	// concating integer part
 	    	$string .= " ".$integer_part;
+
+		    if($prefix)
+		    	$string = $prefix . " " . $string;
 
 	        if($fraction > 0){
 		        $string .= $decimal;
@@ -166,6 +174,12 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		        // concating fractional part
 		        $string .= " ".$fractional_part;
+
+		        if($postfix)	
+			    	$string .= " ".$postfix;
+	        }else{
+	        	if($postfix)	
+			    	$string .= " ".$postfix;
 	        }
 	    }
 
