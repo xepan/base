@@ -61,8 +61,11 @@ class View_Activity extends \View{
 		$grid = $this->add('xepan\base\Grid',null,null,['view/activity/activities']);
 		$grid->setModel($activity_model);
 		
-		$grid->addHook('formatRow',function($g){
+		$grid->addHook('formatRow',function($g){			
 			switch($g->model['contact_type']){
+				case 'Contact':
+					$contact_url='xepan_marketing_leaddetails'.'&contact_id='.$g->model['related_contact_id'];
+					break;
 				case 'Lead':
 					$contact_url='xepan_marketing_leaddetails'.'&contact_id='.$g->model['related_contact_id'];
 					break;
@@ -80,7 +83,7 @@ class View_Activity extends \View{
 					break;
 				default:
 					$contact_url='xepan_base_contactdetail';
-			}
+			}			
 			$g->current_row['contact_url']= $contact_url;
 		});
 
