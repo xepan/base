@@ -29,8 +29,8 @@ class View_Activity extends \View{
 			$employee->setLimit(1);
 			return $employee->fieldQuery('post_id');
 		});
-		
-		// $activity_model->addCondition('post',array_unique($this->descendants));
+
+		$activity_model->addCondition('post',array_unique($this->descendants));
 
 		if($this->self_activity == 'true'){											
 			$activity_model->addCondition('contact_id','<>',$this->app->employee->id);			
