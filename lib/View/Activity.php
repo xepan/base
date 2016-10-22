@@ -28,8 +28,8 @@ class View_Activity extends \View{
 			$employee->setLimit(1);
 			return $employee->fieldQuery('post_id');
 		});
-
-		$activity_model->addCondition('post',array_unique($this->descendants));
+				
+		// $activity_model->addCondition('post',array_unique($this->descendants));
 
 		if($this->from_date){
 			$activity_model->addCondition('created_at','>=',$this->from_date);			
