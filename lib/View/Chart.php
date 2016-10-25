@@ -103,7 +103,7 @@ class View_Chart extends \View{
 	}
 
 	function setType($type){
-		$this->options['data']['type']=$type;
+		// $this->options['data']['type']=$type;
 		$this->type = $type;
 		return $this;
 	}
@@ -158,7 +158,11 @@ class View_Chart extends \View{
 			unset($this->options['data']['keys']['x']);
 			$this->options['data']['json']=$formatted_data;
 			$this->options['data']['keys']['value']=$formatted_values;
+
 		}
+		
+		if($this->type)
+			$this->options['data']['type']=$this->type;
 
 		parent::recursiveRender();
 	}
