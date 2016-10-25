@@ -12,29 +12,25 @@
             {header}
             thead
                 {cols}{col}
-                th Activity Message
-                th Created By
-                th Related Document Detail
-                th Related Person
+                th Title
+                th By
+                th To
                 th Created At
                 {/}{/}
             {/}
             {$subheader}
-            //- {contact}Vijay mali{/} &nbsp; {related_contact} Avengers Initiative{/}
             tbody
                 {rows}{row}
                 tr(class="{$odd_even}" data-id="{$id}" data-contacttype="{$contact_type}")
                     {cols}
                     td(style="font-size: 0.87em; font-weight: 400;")
-                        |{$activity}&nbsp;
+                        span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Communication Detail','?page={$document_url}');"){$title} &nbsp;
                     td
-                        span(style= "max-width:600px;"){$contact}
-                    td 
-                        span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');"){$related_document_id}
-                     td
-                        span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');"){$related_contact}
+                        span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$from}
                     td
-                     | {$created_at}
+                        span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');") {$to}
+                    td
+                     |  {$created_at}
                     {/}
                 {/}{/}
                 {not_found}
