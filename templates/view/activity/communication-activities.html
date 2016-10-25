@@ -9,20 +9,18 @@
   <div class="main-box-body clearfix table-responsive">
     <table style="width:100%" class="table user-list table-hover">{header}
       <thead>{cols}{col}
-        <th>Activity Message</th>
-        <th>Created By</th>
-        <th>Related Document Detail</th>
-        <th>Related Person</th>
+        <th>Title</th>
+        <th>By</th>
+        <th>To</th>
         <th>Created At</th>{/}{/}
       </thead>{/}
       {$subheader}
       <tbody>{rows}{row}
         <tr data-id="{$id}" data-contacttype="{$contact_type}" class="{$odd_even}">{cols}
-          <td style="font-size: 0.87em; font-weight: 400;">{$activity}&nbsp;</td>
-          <td><span style="max-width:600px;">{$contact}</span></td>
-          <td> <span style="cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');">{$related_document_id}</span></td>
-          <td><span style="cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');">{$related_contact}</span></td>
-          <td>{$created_at}</td>{/}
+          <td style="font-size: 0.87em; font-weight: 400;"><span style="cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Communication Detail','?page={$document_url}');">{$title} &nbsp;</span></td>
+          <td><span style="cursor:pointer; cursor: hand; max-width:600px;">{$from}</span></td>
+          <td><span style="cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');">{$to}</span></td>
+          <td> {$created_at}</td>{/}
         </tr>{/}{/}
         {not_found}
         <div class="row">
