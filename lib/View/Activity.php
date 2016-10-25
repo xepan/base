@@ -20,19 +20,24 @@ class View_Activity extends \View{
 			$model->addCondition('communication_type',$this->communication_type);
 			$related_contact = 'to_id';
 			$contact_id = 'from_id';
-			$columns = ['title','from','to','created_at'];
+			$columns = ['title','from','to','created_at','contact_type','to_id','from_id'];
 			$grid_template = ['view\activity\communication-activities'];
 		}else{
 			$model_name = 'activity';
 			$model = $this->add('xepan\base\Model_Activity');
 			$related_contact = 'related_contact_id';
 			$contact_id = 'contact_id';
-			$columns = ['activity','contact','related_document_id','related_contact','callback_date'];
+			$columns = ['activity','contact','related_document_id','related_contact','created_at','document_url','contact_type'];
 			$grid_template = ['view\activity\activities'];
 		}
 
-		$model->addExpression('contact_type',$model->refSQL($related_contact)->fieldQuery('type'));
-		
+		$model->addExpression('contact_type')->set(function($m,$q)use($related_contact){	
+			$contact = $this->add('xepan\base\Model_Contact');
+			$contact->addCondition('id',$m->getElement($related_contact));
+			$contact->setLimit(1);
+			return $contact->fieldQuery('type');
+		});
+
 		$model->addExpression('department')->set(function($m,$q)use($contact_id){
 			$employee = $this->add('xepan\hr\Model_Employee');
 			$employee->addCondition('id',$m->getField($contact_id));
@@ -68,10 +73,12 @@ class View_Activity extends \View{
 			$model->addCondition('department',$this->department_id);
 		}
 
+		$model->setOrder('created_at','desc');
+			
 		$grid = $this->add('xepan\base\Grid',null,null,$grid_template);
 		$grid->setModel($model,$columns);
 		
-		$grid->addHook('formatRow',function($g)use($related_contact){												
+		$grid->addHook('formatRow',function($g)use($related_contact){																		
 			switch($g->model['contact_type']){
 				case 'Contact':
 					$contact_url='xepan_marketing_leaddetails'.'&contact_id='.$g->model[$related_contact];
@@ -93,8 +100,8 @@ class View_Activity extends \View{
 					break;
 				default:
 					$contact_url='xepan_base_contactdetail';
-			}			
-			$g->current_row['contact_url']= $contact_url;
+			}
+				$g->current_row['contact_url']= $contact_url;
 		});
 
 		$grid->addHook('formatRow',function($g)use($model_name){
@@ -104,7 +111,7 @@ class View_Activity extends \View{
 				if(!$g->model['document_url']  AND $g->model['related_document_id']) 
 					$g->current_row_html['related_document_id'] = '';
 					
-				if(!$g->model['related_document_id'] && (strpos($g->model['activity'], 'Communicated') !== false) ) 
+				if(!$g->model['related_document_id'] && (strpos($g->model['activity'], 'Communicated') !== false)) 
 					$g->current_row_html['related_document_id'] = 'See Communication Detail';
 				else
 					if(!$g->model['related_document_id'])	

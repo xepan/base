@@ -14,7 +14,7 @@
                 {cols}{col}
                 th Activity Message
                 th Created By
-                th Related Document No.
+                th Related Document Detail
                 th Related Person
                 th Created At
                 {/}{/}
@@ -34,7 +34,7 @@
                      td
                         span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');"){$related_contact}
                     td
-                     | {$callback_date}
+                     | {$created_at}
                     {/}
                 {/}{/}
                 {not_found}
