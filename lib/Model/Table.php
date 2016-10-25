@@ -28,14 +28,14 @@ class Model_Table extends \Model_Table{
 
 		$this->add('xepan\base\Controller_Validator');
 
-		if(!$this->skip_epan_condition){
-			$this->addHook('afterAdd',function($e){			
-				if($e->hasElement('epan_id') && isset($e->app->epan->id)) {
+		// if(!$this->skip_epan_condition){
+		// 	$this->addHook('afterAdd',function($e){			
+		// 		if($e->hasElement('epan_id') && isset($e->app->epan->id)) {
 					// if(!isset($e->epan_condition_set)) // comment to mute
 		   //              $e->addCondition('epan_id',$e->app->epan->id);
 		   //          $e->epan_condition_set = true;  // Comment to mute
-	            }
-			});
-		}
+	  //           }
+			// });
+		// }
 	}
 }
