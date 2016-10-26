@@ -144,6 +144,7 @@ class View_Chart extends \View{
 
 	function setLabelToValue($choice){
 		if($choice) $this->setLabelToValue = true;
+		return $this;
 	}
 
 	function recursiveRender(){
