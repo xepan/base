@@ -20,6 +20,8 @@ class View_Chart extends \View{
 	private $library;
 	private $type;
 
+	private $setLabelToValue = false;
+
 	function init(){
 		parent::init();
 		$this->_debug=false;
@@ -103,7 +105,7 @@ class View_Chart extends \View{
 	}
 
 	function setType($type){
-		$this->options['data']['type']=$type;
+		// $this->options['data']['type']=$type;
 		$this->type = $type;
 		return $this;
 	}
@@ -140,6 +142,11 @@ class View_Chart extends \View{
 		return $this; //not returning model 
 	}
 
+	function setLabelToValue($choice){
+		if($choice) $this->setLabelToValue = true;
+		return $this;
+	}
+
 	function recursiveRender(){
 		if($this->model){
 			$data = $this->model->getRows();
@@ -158,7 +165,14 @@ class View_Chart extends \View{
 			unset($this->options['data']['keys']['x']);
 			$this->options['data']['json']=$formatted_data;
 			$this->options['data']['keys']['value']=$formatted_values;
+
+			if($this->setLabelToValue)
+				$this->options['pie']['label']['format']= $this->js(null,'return ev')->_enclose();
+
 		}
+		
+		if($this->type)
+			$this->options['data']['type']=$this->type;
 
 		parent::recursiveRender();
 	}
