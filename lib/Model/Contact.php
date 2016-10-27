@@ -176,6 +176,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 	function page_communication($page){		
+		$this->app->stickyGET('comm_type');
 		$communication = $this->add('xepan\communication\Model_Communication');
 
 		$communication->addCondition(
@@ -188,7 +189,6 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$contact_id = $this->id;
 		
 		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
-		
 		if($_GET['comm_type']){
 			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
 		}
@@ -208,7 +208,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$type_field = $form->addField('xepan\base\DropDown','communication_type');
 		$type_field->setAttr(['multiple'=>'multiple']);
 		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal']);
-		$form->addField('search');
+		$form->addField('search')->set($_GET['search']);
 		$form->addSubmit('Filter')->addClass('btn btn-primary btn-block');
 		
 		$temp = ['Email','Support','Call','Newsletter','SMS','Personal'];
