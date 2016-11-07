@@ -8,8 +8,11 @@ class View_Activity extends \View{
 	public $related_person_id;
 	public $department_id;
 	public $communication_type;
-	public $descendants = 'descendants';
+	public $descendants = [];
 	public $self_activity;
+	public $grid_title;
+	public $paginator_count;
+	public $activity_on_dashboard;
 
 	function init(){
 		parent::init();
@@ -29,6 +32,11 @@ class View_Activity extends \View{
 			$contact_id = 'contact_id';
 			$columns = ['activity','contact','related_document_id','related_contact','created_at','document_url','contact_type'];
 			$grid_template = ['view\activity\activities'];
+		}
+
+		if($this->activity_on_dashboard){
+			$columns = ['activity'];
+			$grid_template = null;
 		}
 
 		$model->addExpression('contact_type')->set(function($m,$q)use($related_contact){	
@@ -54,7 +62,7 @@ class View_Activity extends \View{
 
 		$model->addCondition('post',array_unique($this->descendants));
 
-		if($this->self_activity == 'true'){											
+		if($this->self_activity === 'true'){											
 			$model->addCondition($contact_id,'<>',$this->app->employee->id);			
 		}
 		if($this->from_date){
@@ -76,6 +84,7 @@ class View_Activity extends \View{
 		$model->setOrder('created_at','desc');
 			
 		$grid = $this->add('xepan\base\Grid',null,null,$grid_template);
+		$grid->template->trySet('grid_title',$this->grid_title);
 		$grid->setModel($model,$columns);
 		
 		$grid->addHook('formatRow',function($g)use($related_contact){																		
@@ -123,7 +132,7 @@ class View_Activity extends \View{
 				
 		});
 
-		$grid->addPaginator(50);
+		$grid->addPaginator($this->paginator_count);
 		$grid->addQuickSearch(['activity']);
 
 	}
