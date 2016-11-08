@@ -451,6 +451,8 @@ class Initiator extends \Controller_Addon {
 
         $activity_view = $page->add('xepan\base\View_Activity',['activity_on_dashboard'=>true,'paginator_count'=>10,'from_date'=>$from_date,'to_date'=>$to_date,'descendants'=>$descendants,'grid_title'=>'Activities']);
         $activity_view->addClass('col-md-4');
+        
+        $page->js(true)->univ()->setInterval($activity_view->js()->reload()->_enclose(),200000);
     }
 
     function addAppdateFunctions(){
