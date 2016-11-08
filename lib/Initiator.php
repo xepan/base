@@ -124,7 +124,7 @@ class Initiator extends \Controller_Addon {
             $this->app->user_menu = $m->addMenu('My Menu');
                
         }
-
+        $this->app->addHook('epan_dashboard_page',[$this,'epanDashboard']);
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
             $f = $p->add('Form',null,null,['form/minimal']);
@@ -442,6 +442,17 @@ class Initiator extends \Controller_Addon {
         $subdomains = rtrim(strstr($subdomains, $domain, true), '.');
 
         return $subdomains;
+    }
+
+    function epanDashboard($app,$page){
+        $descendants = $this->app->employee->ref('post_id')->descendantPosts();
+        $from_date = $_GET['from_date']?:$this->app->today;
+        $to_date = $_GET['to_date']?:$this->app->today;
+
+        $activity_view = $page->add('xepan\base\View_Activity',['activity_on_dashboard'=>true,'paginator_count'=>10,'from_date'=>$from_date,'to_date'=>$to_date,'descendants'=>$descendants,'grid_title'=>'Activities']);
+        $activity_view->addClass('col-md-4');
+        
+        $page->js(true)->univ()->setInterval($activity_view->js()->reload()->_enclose(),200000);
     }
 
     function addAppdateFunctions(){

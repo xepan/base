@@ -30,7 +30,15 @@
               .input-group
                 span.input-group-addon
                   i.fa.fa-key
-                .xepan-form-field{$retype_password}   
+                .xepan-form-field{$retype_password} 
+            {tnc_wrapper}
+            .form-group
+              span.input-group-addon
+                .col-md-2
+                  {$tnc} 
+                .col-md-10
+                  a(href = "{$tnc_page_url}" target='_blank') I accept Terms and conditions of usage 
+            {/}  
         .ro(style="padding-bottom:20px;")             
         .row
           .col-xs-12

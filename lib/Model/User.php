@@ -31,7 +31,7 @@ class Model_User extends \xepan\base\Model_Table{
 		parent::init();
 		
 		// $this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\Contact','created_by_id');
+		$this->hasOne('xepan\base\Contact','created_by_id')->display(array('form'=>'xepan\base\Basic'));
 
 		$this->addField('username')->sortable(true);
 		$this->addField('password')->type('password');
