@@ -4,6 +4,8 @@ namespace xepan\base;
 
 class Tool_UserPanel extends \xepan\cms\View_Tool{
 	public $options = [
+				'show_tnc'=>true,
+				'tnc_page_url'=>'',
 				'layout'=>'login_view',
 				'login_success_url'=>'index',
 				'logout_page'=>'logout',

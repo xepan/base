@@ -12,8 +12,19 @@ class View_User_Registration extends \View{
 			$f->addField('line','username','email_id')->validate('required|email');
 			$f->addField('password','password')->validate('required');
 			$f->addField('password','retype_password');
+			$f->addField('checkbox','tnc','');
+
+			if($this->options['show_tnc'] == false){				
+				$f->layout->template->tryDel('tnc_wrapper');
+			}else{
+				$f->layout->template->trySet('tnc_page_url',$this->options['tnc_page_url']);
+			}
 
 			$f->onSubmit(function($f){
+				if(!$f['tnc']){
+					$f->js()->univ()->alert('Accept TnC')->execute();
+				}
+
 				if($f['password']!= $f['retype_password']){
 					$f->displayError($f->getElement('retype_password'),'Password did not match');			
 				}

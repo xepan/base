@@ -34,6 +34,18 @@
 									input#user-panle-sucess-url(data-attr='login_success_url' data-shortname="success_url")
 						tr
 							.xepan-tool-option
+								td.xepan-tool-option-title Show TnC
+								td.xepan-tool-option-value
+									select#show_tnc(data-attr='show_tnc' data-defaultvalue="true")
+										option(value="true") Yes
+										option(value="false") No
+						tr
+							.xepan-tool-option
+								td.xepan-tool-option-title TnC URL
+								td.xepan-tool-option-value 
+									input#tnc_page_url(data-attr='tnc_page_url' data-shortname="tnc_url")									
+						tr
+							.xepan-tool-option
 								td.xepan-tool-option-title Logout Page
 								td.xepan-tool-option-value 
 									input#user-panle-logoutpage-layout(data-attr='logout_page_form_layout' data-shortname="logout_page")
