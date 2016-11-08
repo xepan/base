@@ -109,8 +109,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
 		$this->addHook('afterSave',[$this,'updateContactCode']);
-
+		
 		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
+		
+		$this->addHook('afterSave',[$this,'contact_category_association']);
 
 		$this->is([
 				// 'epan_id|required',
@@ -119,6 +121,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 				'user_id|unique_in_epan',
 				'type|to_trim|required'
 			]);
+	}
+
+	function contact_category_association(){		
+		$this->app->hook('contact_save',[$this]);
 	}
 
 	function updateContactCode(){
