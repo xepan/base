@@ -445,6 +445,26 @@ class Initiator extends \Controller_Addon {
     }
 
     function epanDashboard($app,$page){
+        $extra_info = $this->app->recall('epan_extra_info_array',false);
+        $valid_till = $extra_info['valid_till'];
+
+        $post = $this->add('xepan\hr\Model_Post');
+        $post->tryLoadBy('id',$this->app->employee['post_id']);
+        
+        if(!$post->loaded())
+            return;    
+        
+        if($valid_till AND ($post['parent_post_id'] == null OR $post['parent_post_id'] == $post['id'])){
+            $expiry_view = $page->add('xepan\base\View_Widget_SingleInfo',null,'top_bar');
+            $expiry_view->setIcon('fa fa-clock-o')
+                    ->setHeading('Expiring At')
+                    ->setValue(date('d M\'y',strtotime($valid_till)))
+                    ->makeDanger()
+                    ->addClass('col-md-4')
+                    ;                
+            $expiry_view->template->trySet('expiry_date',$valid_till);
+        }
+
         $descendants = $this->app->employee->ref('post_id')->descendantPosts();
         $from_date = $_GET['from_date']?:$this->app->today;
         $to_date = $_GET['to_date']?:$this->app->today;
