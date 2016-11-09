@@ -53,4 +53,22 @@ class Model_Country extends \xepan\base\Model_Table{
 			throw new \Exception("Cannot delete countries together, please delete countries individually");
 		}		
 	}
+
+	//activate Country
+	function activate(){
+		$this['status']='Active';
+		$this->app->employee
+            ->addActivity("Country : '".$this['name']."' now active", null/* Related Document ID*/, $this->id /*Related Contact ID*/,null,null,"xepan_commerce_customerdetail&contact_id=".$this->id."")
+            ->notifyWhoCan('deactivate','Active',$this);
+		$this->save();
+	}
+
+	//deactivate Country
+	function deactivate(){
+		$this['status']='InActive';
+		$this->app->employee
+            ->addActivity("Country : '". $this['name'] ."' has been deactivated", null /*Related Document ID*/, $this->id /*Related Contact ID*/,null,null,"xepan_commerce_customerdetail&contact_id=".$this->id."")
+            ->notifyWhoCan('activate','InActive',$this);
+		return $this->save();
+	}
 }
