@@ -481,6 +481,7 @@ class Initiator extends \Controller_Addon {
         $contact_grid->addClass('col-md-4');
         $contact_grid->setModel($contact_model,['name','type','created_by']);
         $contact_grid->grid->addPaginator(10);
+        $contact_grid->grid->template->trySet('grid_title','Recent Contacts');
     }
 
     function addAppdateFunctions(){
