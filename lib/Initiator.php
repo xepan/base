@@ -445,6 +445,26 @@ class Initiator extends \Controller_Addon {
     }
 
     function epanDashboard($app,$page){
+        $extra_info = $this->app->recall('epan_extra_info_array',false);
+        $valid_till = $extra_info['valid_till'];
+
+        $post = $this->add('xepan\hr\Model_Post');
+        $post->tryLoadBy('id',$this->app->employee['post_id']);
+        
+        if(!$post->loaded())
+            return;    
+        
+        if($valid_till AND ($post['parent_post_id'] == null OR $post['parent_post_id'] == $post['id'])){
+            $expiry_view = $page->add('xepan\base\View_Widget_SingleInfo',null,'top_bar');
+            $expiry_view->setIcon('fa fa-clock-o')
+                    ->setHeading('Expiring At')
+                    ->setValue(date('d M\'y',strtotime($valid_till)))
+                    ->makeDanger()
+                    ->addClass('col-md-4')
+                    ;                
+            $expiry_view->template->trySet('expiry_date',$valid_till);
+        }
+
         $descendants = $this->app->employee->ref('post_id')->descendantPosts();
         $from_date = $_GET['from_date']?:$this->app->today;
         $to_date = $_GET['to_date']?:$this->app->today;
@@ -453,6 +473,15 @@ class Initiator extends \Controller_Addon {
         $activity_view->addClass('col-md-4');
         
         $page->js(true)->univ()->setInterval($activity_view->js()->reload()->_enclose(),200000);
+        
+        $contact_model = $page->add('xepan\base\Model_Contact');
+        $contact_model->setOrder('created_at','desc');
+
+        $contact_grid = $page->add('xepan\hr\CRUD',['allow_add' =>false],null,['view\contact-grid']);
+        $contact_grid->addClass('col-md-4');
+        $contact_grid->setModel($contact_model,['name','type','created_by']);
+        $contact_grid->grid->addPaginator(10);
+        $contact_grid->grid->template->trySet('grid_title','Recent Contacts');
     }
 
     function addAppdateFunctions(){
