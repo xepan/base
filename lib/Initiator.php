@@ -473,6 +473,14 @@ class Initiator extends \Controller_Addon {
         $activity_view->addClass('col-md-4');
         
         $page->js(true)->univ()->setInterval($activity_view->js()->reload()->_enclose(),200000);
+        
+        $contact_model = $page->add('xepan\base\Model_Contact');
+        $contact_model->setOrder('created_at','desc');
+
+        $contact_grid = $page->add('xepan\hr\CRUD',['allow_add' =>false],null,['view\contact-grid']);
+        $contact_grid->addClass('col-md-4');
+        $contact_grid->setModel($contact_model,['name','type','created_by']);
+        $contact_grid->grid->addPaginator(10);
     }
 
     function addAppdateFunctions(){
