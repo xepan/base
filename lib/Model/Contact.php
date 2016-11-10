@@ -237,6 +237,16 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return true;
 	}
 
+	function addEmail($email,$head='Official',$active=true,$valid=true){
+		return $this->add('xepan\base\Model_Contact_Phone')
+			->set('contact_id',$this->id)
+			->set('head',$head)
+			->set('value',$email)
+			->set('is_active',$active)
+			->set('is_valid',$valid)
+			->save();
+
+	}
 
 	function getEmails($all=false){
 		if(!$this->loaded())
@@ -247,6 +257,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$emails = $emails->del('fields')->field('value')->getAll();
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
+	}
+
+	function addPhone($number,$head='Official',$active=true,$valid=true){
+		return $this->add('xepan\base\Model_Contact_Phone')
+			->set('contact_id',$this->id)
+			->set('head',$head)
+			->set('value',$number)
+			->set('is_active',$active)
+			->set('is_valid',$valid)
+			->save();
+
 	}
 
 	function getPhones(){
