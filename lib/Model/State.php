@@ -39,4 +39,22 @@ class Model_State extends \xepan\base\Model_Table{
 			throw new \Exception("Cannot delete states together, please delete states individually");
 		}		
 	}
+
+	//activate State
+	function activate(){
+		$this['status']='Active';
+		$this->app->employee
+            ->addActivity("State : '".$this['name']."' now active", null/* Related Document ID*/, $this->id /*Related Contact ID*/,null,null,"xepan_commerce_customerdetail&contact_id=".$this->id."")
+            ->notifyWhoCan('deactivate','Active',$this);
+		$this->save();
+	}
+
+	//deactivate State
+	function deactivate(){
+		$this['status']='InActive';
+		$this->app->employee
+            ->addActivity("State : '". $this['name'] ."' has been deactivated", null /*Related Document ID*/, $this->id /*Related Contact ID*/,null,null,"xepan_commerce_customerdetail&contact_id=".$this->id."")
+            ->notifyWhoCan('activate','InActive',$this);
+		return $this->save();
+	}
 }
