@@ -59,7 +59,9 @@ class View_Contact extends \View{
 
 		if($this->model->loaded()){
 
-			$email_m=$contact->ref('Emails');
+			$email_m = $this->add('xepan\base\Model_Contact_Email');
+			$email_m->addCondition('contact_id',$this->model->id);
+			
 			if($this->acl)
 				$email_m->acl=$this->acl;
 			$e = $this->document_view->addMany('Emails',null,'Emails',['view/addmany']);
