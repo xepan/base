@@ -6,6 +6,11 @@ namespace xepan\base;
 class Model_GraphicalReport extends \xepan\base\Model_Table{
 	public $table='graphical_report';
 
+	public $acl_type='GraphicalReport';
+
+	public $status=['All'];
+	public $actions=['All'=>['view','edit','delete','manage_widgets','manage_post_permissions']];
+
 	function init(){
 		parent::init();
 
@@ -15,5 +20,6 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 
 		$this->hasMany('xepan\base\GraphicalReport_Widget','graphical_report_id');
 
+		$this->addExpression('status','"All"');
 	}
 }

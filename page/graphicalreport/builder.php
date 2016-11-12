@@ -19,9 +19,8 @@ class page_graphicalreport_builder extends \xepan\base\Page {
 
 	function page_index(){
 		$m = $this->add('xepan\base\Model_GraphicalReport');
-		
 
-		$c = $this->add('xepan\base\CRUD');
+		$c = $this->add('xepan\hr\CRUD');
 		$c->setModel($m);
 		if(!$c->isEditing()){
 			$c->grid->addColumn('expander','widgets');

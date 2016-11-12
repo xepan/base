@@ -11,6 +11,7 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 	public $entity_list = [];
 
 	public $filter_form;
+	
 	function init(){
 		parent::init();
 
