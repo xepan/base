@@ -7,13 +7,15 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 
 	public $title ="Graphical Report";
 
-	public $widget_colection_data = ['widget_list'=>[],'filter_entities'=>[]];
+	public $widget_list = [];
+	public $entity_list = [];
 
 	public $filter_form;
 	function init(){
 		parent::init();
 
-		$this->app->hook('widget_collection',[&$this->widget_colection_data]);
+		$this->app->hook('widget_collection',[&$this->widget_list]);
+		$this->app->hook('entity_collection',[&$this->entity_list]);
 
 		$report_id = $this->api->stickyGET('report_id');
 
@@ -49,17 +51,17 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 
 	function enableFilterEntity($filter_entity){
 		
-		if(!in_array($filter_entity ,array_keys($this->widget_colection_data['filter_entities'])))
+		if(!in_array($filter_entity ,array_keys($this->entity_list)))
 			throw $this->exception('Required entity is not exported by any application')
 						->addMoreInfo('required_entity',$filter_entity)
 						;
 
 		if($this->filter_form->hasElement($filter_entity)) return;
 
-		$fld = $this->filter_form->addField($this->widget_colection_data['filter_entities'][$filter_entity]['type'],$filter_entity,$this->widget_colection_data['filter_entities'][$filter_entity]['caption']?:null);
+		$fld = $this->filter_form->addField($this->entity_list[$filter_entity]['type'],$filter_entity,$this->entity_list[$filter_entity]['caption']?:null);
 		
-		if($this->widget_colection_data['filter_entities'][$filter_entity]['model'])
-			$fld->setModel($this->widget_colection_data['filter_entities'][$filter_entity]['model']);
+		if($this->entity_list[$filter_entity]['model'])
+			$fld->setModel($this->entity_list[$filter_entity]['model']);
 		
 		if(isset($this->$filter_entity))
 			$fld->set($this->$filter_entity);
