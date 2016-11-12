@@ -90,6 +90,7 @@ class Initiator extends \Controller_Addon {
         $event_cont = $this->add('xepan\base\Controller_PointEventManager');
         $this->app->addHook('pointable_event',[$event_cont,'handleEvent']);
         $this->app->addHook('widget_collection',[$this,'exportWidgets']);
+        $this->app->addHook('entity_collection',[$this,'exportEntities']);
     }
 
     function setup_admin(){
@@ -308,10 +309,14 @@ class Initiator extends \Controller_Addon {
     }
 
     function exportWidgets($app,&$array){
-        $array['widget_list'][] = 'xepan\base\Widget';
+        $array[] = 'xepan\base\Widget';
 
-        $array['filter_entities']['date_range'] = ['caption'=>'Date Range', 'type'=>'DateRangePicker'];
-        $array['filter_entities']['contact'] = ['caption'=>'Contact','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Contact'];
+    }
+
+    function exportEntities($app,&$array){
+        $array['date_range'] = ['caption'=>'Date Range', 'type'=>'DateRangePicker'];
+        $array['contact'] = ['caption'=>'Contact','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Contact'];
+
     }
 
     function resetDB($write_sql=false,$install_apps=true){
