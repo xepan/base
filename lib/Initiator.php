@@ -313,6 +313,7 @@ class Initiator extends \Controller_Addon {
         $array[] = 'xepan\base\Widget_MyActivity';
         $array[] = 'xepan\base\Widget_GlobalActivity';
         $array[] = 'xepan\base\Widget_SubordinateActivity';
+        $array[] = 'xepan\base\Widget_RecentContacts';
     }
 
     function exportEntities($app,&$array){
