@@ -15,6 +15,7 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 		parent::init();
 
 		$this->addField('name');
+		$this->addField('created_by_id');
 		// allowed to which post :: hasmany or json {"12","23"} like id search  
 		// 
 
