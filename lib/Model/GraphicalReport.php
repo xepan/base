@@ -34,8 +34,27 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 
 	function page_manage_widgets($page){
 		$this->app->hook('widget_collection',[&$this->widget_list]);
+		$emp_scope = $this->app->employee->ref('department_id')->get('level');
+
+		$enum_array=[];
+		foreach ($this->widget_list as $widget) {
+			switch($emp_scope) {
+				case 'Global':
+					$to_add =true;
+					break;
+				case 'Department':
+					if(in_array($widget['level'], ['Indivudual','Department'])) $to_add=true;
+					break;
+				default:
+					$to_add=false;
+			}
+
+			if($to_add)
+				$enum_array[] = $widget[0];
+		}
+
 		$m = $page->add('xepan\base\Model_GraphicalReport_Widget');
-		$m->getElement('class_path')->enum($this->widget_list);
+		$m->getElement('class_path')->enum($enum_array);
 
 		$m->addCondition('graphical_report_id',$this->id);
 		$c = $page->add('xepan\base\CRUD');
