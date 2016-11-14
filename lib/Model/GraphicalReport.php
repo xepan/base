@@ -16,12 +16,13 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\Contact','created_by_id');
 		$this->addField('name');
 		$this->addField('permitted_post');
+		$this->addField('description')->type('text');
+		$this->addField('is_system')->type('boolean')->defaultValue(false)->system(true);
 
 		$this->hasMany('xepan\base\GraphicalReport_Widget','graphical_report_id');
 		$this->addExpression('status','"All"');
 
 		$this->addHook('beforeSave',$this);
-
 	}
 
 	function beforeSave(){

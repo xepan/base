@@ -10,6 +10,7 @@
     <table style="width:100%" class="table user-list table-hover">{header}
       <thead>{cols}{col}
         <th><span>Name</span></th>
+        <th><span>Description</span></th>
         <th><span>Run</span></th>
         <th></th>
         <th> </th>{/}{/}
@@ -18,6 +19,7 @@
       <tbody>{rows}{row}
         <tr data-id="{$id}" class="{$odd_even}">{cols}
           <td>{$name}</td>
+          <td>{$description} </td>
           <td>{$run}</td>
           <td>{$export}</td>
           <td>{action}Action Here{/}</td>
