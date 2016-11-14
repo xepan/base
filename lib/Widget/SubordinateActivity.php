@@ -34,6 +34,7 @@ class Widget_SubordinateActivity extends \xepan\base\Widget{
 
 		$this->grid->setModel($activity,['activity','created_at']);
 		$this->grid->addPaginator(10);
-		parent::recursiveRender();
+		
+		return parent::recursiveRender();
 	}
 }
