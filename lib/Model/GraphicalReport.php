@@ -45,6 +45,12 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 				case 'Department':
 					if(in_array($widget['level'], ['Indivudual','Department'])) $to_add=true;
 					break;
+				case 'Sibling':
+					if(in_array($widget['level'], ['Indivudual','Sibling'])) $to_add=true;
+					break;
+				case 'Individual':
+					if(in_array($widget['level'], ['Indivudual'])) $to_add=true;
+					break;
 				default:
 					$to_add=false;
 			}

@@ -308,11 +308,11 @@ class Initiator extends \Controller_Addon {
     }
 
     function exportWidgets($app,&$array){
-        $array[] = 'xepan\base\Widget';
-        $array[] = 'xepan\base\Widget_MyActivity';
-        $array[] = 'xepan\base\Widget_GlobalActivity';
-        $array[] = 'xepan\base\Widget_SubordinateActivity';
-        $array[] = 'xepan\base\Widget_RecentContacts';
+        $array[] = ['xepan\base\Widget','level'=>'Global'];
+        $array[] = ['xepan\base\Widget_MyActivity','level'=>'Individual'];
+        $array[] = ['xepan\base\Widget_GlobalActivity','level'=>'Global'];
+        $array[] = ['xepan\base\Widget_SubordinateActivity','level'=>'Sibling'];
+        $array[] = ['xepan\base\Widget_RecentContacts','level'=>'Global'];
     }
 
     function exportEntities($app,&$array){
