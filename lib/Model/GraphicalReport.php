@@ -67,5 +67,38 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 		$this['permitted_post']= json_encode($permission_array);
 		$this->save();		
 		return true;
-	}			
+	}		
+
+	function exportJson(){
+		$data = $this->get();
+		unset($data['id']);
+
+		$data['widget']=[];
+		foreach ($this->ref('xepan\base\GraphicalReport_Widget') as $widget) {
+			$reportwidget_data = $widget->get();
+			unset($reportwidget_data['id']);
+			unset($reportwidget_data['graphical_report_id']);
+			$data['widget'][] = $reportwidget_data;
+		}
+		return json_encode($data);
+	}	
+
+	function importJson($json){
+		$data=json_decode($json,true);
+		$graph_rprt_m=$this->add('xepan\base\Model_GraphicalReport');
+		$graph_rprt_m['name']=$data['name'];
+		$graph_rprt_m['permitted_post']=$data['permitted_post'];
+		$graph_rprt_m['status']=$data['status'];
+		$graph_rprt_m->save();
+
+		foreach ($data['widget'] as $wgt) {
+			$widget=$this->add('xepan\base\Model_GraphicalReport_Widget');
+			$widget['graphical_report_id']=$graph_rprt_m->id;
+			$widget['name']=$wgt['name'];
+			$widget['col_width']=$wgt['col_width'];
+			$widget['class_path']=$wgt['class_path'];
+			$widget->save();
+		}
+
+	}
 }
