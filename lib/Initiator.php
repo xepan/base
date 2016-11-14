@@ -310,7 +310,9 @@ class Initiator extends \Controller_Addon {
 
     function exportWidgets($app,&$array){
         $array[] = 'xepan\base\Widget';
-
+        $array[] = 'xepan\base\Widget_MyActivity';
+        $array[] = 'xepan\base\Widget_GlobalActivity';
+        $array[] = 'xepan\base\Widget_SubordinateActivity';
     }
 
     function exportEntities($app,&$array){
