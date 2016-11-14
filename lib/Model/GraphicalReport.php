@@ -37,8 +37,8 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 		$emp_scope = $this->app->employee->ref('post_id')->get('permission_level');
 
 		$enum_array=[];
-		$to_add = false;					
 		foreach ($this->widget_list as $widget) {
+			$to_add=false;
 			switch($emp_scope) {
 				case 'Global':
 					$to_add =true;					
@@ -52,8 +52,6 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 				case 'Individual':															
 					if(in_array($widget['level'], ['Individual'])) $to_add=true;
 					break;
-				default:
-					$to_add=false;
 			}
 
 			if($to_add)				
