@@ -177,6 +177,10 @@ class View_Chart extends \View{
 		parent::recursiveRender();
 	}
 
+	function onRender($callback){
+		$this->options['onrendered'] = $callback;
+	}
+
 	function render(){
 		$this->validateOptions();
 		

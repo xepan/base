@@ -15,6 +15,7 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 	function init(){
 		parent::init();
 
+		$this->js(true)->_load('masonry.pkgd.min')->masonry(['itemSelector'=>'.widget'])->_selector('.widget-grid');
 		$this->app->hook('widget_collection',[&$this->widget_list]);
 		$this->app->hook('entity_collection',[&$this->entity_list]);
 
@@ -25,7 +26,7 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 				$this->$get = $value;
 		}
 		
-		$this->filter_form = $this->add('Form');
+		$this->filter_form = $this->add('Form',null,'filter_form');
 
 		$rpt = $this->add('xepan\base\Model_GraphicalReport')->load($report_id);
 
@@ -33,6 +34,8 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 
 		foreach ($rpt->ref('xepan\base\GraphicalReport_Widget') as $widget) {
 			$w = $this->add('xepan\base\Widget_Wrapper');
+			$w->addClass('widget');
+			$w->addClass('col-md-'.$widget['col_width']);
 			$widget = $w->add($widget['class_path'],['report'=>$this]);
 			$widget->setFilterForm($this->filter_form);
 		}
@@ -74,6 +77,16 @@ class page_graphicalreport_runner extends \xepan\base\Page {
 
 		return $fld;
 
+	}
+
+	function defaultTemplate(){
+		return ['widget/runner'];
+	}
+
+	function render(){		
+		// $this->js(true)->_load('masonry.pkgd.min')->masonry(['itemSelector'=>'.widget'])->_selector('.widget-grid');
+		$this->app->js('chart_rendered','console.log(123)');//->masonry(['itemSelector'=>'.widget'])->_selector('.widget-grid');
+		return parent::render();
 	}
 
 }
