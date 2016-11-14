@@ -34,28 +34,29 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 
 	function page_manage_widgets($page){
 		$this->app->hook('widget_collection',[&$this->widget_list]);
-		$emp_scope = $this->app->employee->ref('department_id')->get('level');
+		$emp_scope = $this->app->employee->ref('post_id')->get('permission_level');
 
 		$enum_array=[];
+		$to_add = false;					
 		foreach ($this->widget_list as $widget) {
 			switch($emp_scope) {
 				case 'Global':
-					$to_add =true;
+					$to_add =true;					
 					break;
 				case 'Department':
-					if(in_array($widget['level'], ['Indivudual','Department'])) $to_add=true;
+					if(in_array($widget['level'], ['Individual','Department'])) $to_add=true;
 					break;
 				case 'Sibling':
-					if(in_array($widget['level'], ['Indivudual','Sibling'])) $to_add=true;
+					if(in_array($widget['level'], ['Individual','Sibling'])) $to_add=true;
 					break;
-				case 'Individual':
-					if(in_array($widget['level'], ['Indivudual'])) $to_add=true;
+				case 'Individual':															
+					if(in_array($widget['level'], ['Individual'])) $to_add=true;
 					break;
 				default:
 					$to_add=false;
 			}
 
-			if($to_add)
+			if($to_add)				
 				$enum_array[] = $widget[0];
 		}
 
