@@ -25,6 +25,7 @@ class Widget_GlobalActivity extends \xepan\base\Widget{
 
 		$this->grid->setModel($activity,['activity','created_at']);
 		$this->grid->addPaginator(10);
+		$this->js(true)->univ()->setInterval($this->grid->js()->reload()->_enclose(),200000);
 		
 		return parent::recursiveRender();
 	}
