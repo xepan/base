@@ -9,7 +9,7 @@ class Widget_GlobalActivity extends \xepan\base\Widget{
 		$this->report->enableFilterEntity('date_range');
 		$this->report->enableFilterEntity('employee');
 
-		$this->grid = $this->add('Grid');
+		$this->grid = $this->add('xepan\base\Grid');
 	}
 
 	function recursiveRender(){		
@@ -25,6 +25,9 @@ class Widget_GlobalActivity extends \xepan\base\Widget{
 
 		$this->grid->setModel($activity,['activity','created_at']);
 		$this->grid->addPaginator(10);
+		$this->grid->add('H2',null,'grid_buttons')->set('Global Activities')->addClass('text-muted');
+		$this->grid->removeSearchIcon();
+
 		$this->js(true)->univ()->setInterval($this->grid->js()->reload()->_enclose(),200000);
 		
 		return parent::recursiveRender();
