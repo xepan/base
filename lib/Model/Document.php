@@ -39,11 +39,19 @@ class Model_Document extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 		$this->addField('updated_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 
+		$this->addHook('beforeDelete',[$this,'DeleteAttachements']);
+
 		$this->is([
 				'created_at|required',
 				'type|to_trim|required'
 			]);
 
+	}
+
+	function DeleteAttachements(){
+		foreach($this->ref('Attachments') as $a){
+			$a->delete();
+		}
 	}
 
 	function amountInWords($number,$currency_id=null) {

@@ -6,7 +6,7 @@ class Widget_RecentContacts extends \xepan\base\Widget{
 	function init(){
 		parent::init();
 
-		$this->grid = $this->add('Grid');
+		$this->grid = $this->add('xepan\base\Grid');
 	}
 
 	function recursiveRender(){
@@ -15,7 +15,9 @@ class Widget_RecentContacts extends \xepan\base\Widget{
 
 		$this->grid->setModel($contact,['name','created_at','created_by','type']);
 		$this->grid->addPaginator(10);
-		
+		$this->grid->add('H2',null,'grid_buttons')->set('Recent Contacts')->addClass('text-muted');
+		$this->grid->removeSearchIcon();
+
 		return parent::recursiveRender();
 	}
 }
