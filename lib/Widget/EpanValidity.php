@@ -18,14 +18,17 @@ class Widget_EpanValidity extends \xepan\base\Widget{
         
         if(!$post->loaded())
             return;    
-        
-        if($valid_till AND ($post['parent_post_id'] == null OR $post['parent_post_id'] == $post['id'])){
+
+        if($valid_till AND ($post['parent_post_id'] == null OR $post['parent_post_id'] == $post['id'])){                        
             $expiry_view = $this->view;
             $expiry_view->setIcon('fa fa-clock-o')
                     	->setHeading('Expiring At')
                     	->setValue(date('d M\'y',strtotime($valid_till)))
-                    	->makeDanger();                
+                    	->makeDanger();
+
             $expiry_view->template->trySet('expiry_date',$valid_till);
         }
+
+        return parent::recursiveRender();
 	}
 }
