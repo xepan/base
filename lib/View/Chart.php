@@ -149,7 +149,17 @@ class View_Chart extends \View{
 
 	function recursiveRender(){
 		if($this->model){
-			$data = $this->model->getRows();
+			$t=array_merge($this->y_Axis_fields, [$this->x_Axis_field]);
+			$data_t = $this->model->getRows($t);
+			$data=[];
+
+			foreach ($data_t as $row) {
+				$r=[];
+				foreach ($t as $req_field) {
+					$r[$req_field] = $row[$req_field];
+				}
+				$data[] = $r;	
+			}
 			$this->options['data']['json']=$data;
 		}
 
@@ -192,14 +202,21 @@ class View_Chart extends \View{
 
 		// var_dump($this->options);
 		// exit;
-		$this->js(true)
-					->_load('d3.v3.min')
-					->_load('c3.min')
-					->_css('c3')
-					;
+		// $this->js(true)
+		// 			->_load('d3.v3.min')
+		// 			->_load('c3.min')
+		// 			->_css('c3')
+		// 			;
+		$this->app->jui->addStaticInclude('d3.v3.min');
+		$this->app->jui->addStaticInclude('c3.min');
+		$this->app->jui->addStaticstyleSheet('c3');
 
 		$this->js(true)->_library('c3')->generate($this->options);
 		parent::render();
+	}
+
+	function getJSID(){
+		return '_'. $this->name;
 	}
 
 	function defaultTemplate(){
