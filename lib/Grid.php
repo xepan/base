@@ -28,6 +28,11 @@ class Grid extends \Grid{
         if($this->defaultTemplate) return $this->defaultTemplate;
         return parent::defaultTemplate();
     }
+
+    function removeSearchIcon(){
+        $this->template->tryDel('quick_search_icon');
+        return $this;
+    }
 	
 	function precacheTemplate(){
 		if($this->template->template_file != 'grid'){
