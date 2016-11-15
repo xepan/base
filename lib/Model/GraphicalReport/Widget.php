@@ -12,6 +12,7 @@ class Model_GraphicalReport_Widget extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\GraphicalReport','graphical_report_id');
 		$this->addField('name');
 		$this->addField('col_width')->enum([1,2,3,4,5,6,7,8,9,10,11,12]);
+		// $this->addField('order');
 		// allowed to which post :: hasmany or json {"12","23"} like id search  
 		$this->addField('class_path');
 	}
