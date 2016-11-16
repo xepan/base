@@ -7,9 +7,6 @@ class Widget_EpanValidity extends \xepan\base\Widget{
 		parent::init();
 		
 		$this->view = $this->add('xepan\base\View_Widget_SingleInfo');
-	}
-
-	function recursiveRender(){
 		$extra_info = $this->app->recall('epan_extra_info_array',false);
         $valid_till = $extra_info['valid_till'];
 
@@ -27,7 +24,13 @@ class Widget_EpanValidity extends \xepan\base\Widget{
                     	->makeDanger();
 
             $expiry_view->template->trySet('expiry_date',$valid_till);
+        }else{
+            $this->destroy();
+            $this->owner->destroy();
         }
+    }
+
+    function recursiveRender(){
 
         return parent::recursiveRender();
 	}
