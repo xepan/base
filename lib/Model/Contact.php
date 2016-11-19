@@ -191,6 +191,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->ref('Events')->deleteAll();
 	}
 
+	function deactivateContactEmails($contact_id){		
+		$contact_info = $this->add('xepan\base\Model_Contact_Info');
+		$contact_info->addCondition('contact_id',$contact_id);
+		$contact_info->addCondition('type','Email');
+
+		foreach ($contact_info as $info){
+			$info['is_active'] = false;
+			$info->save();
+		}
+	}
+
 	function page_communication($page){		
 		$this->app->stickyGET('comm_type');
 		$communication = $this->add('xepan\communication\Model_Communication');
