@@ -84,9 +84,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		})->allowHTML(true)->sortable(true);
 
 		$this->addExpression('unique_name',function($m,$q){
-			return $q->expr("CONCAT([0],' : [',[1],'] - [', [2],']')",
+			return $q->expr("CONCAT([0],' : [',[1],'] - [',[2],'] - [', [3],']')",
 					[
-						$m->getElement('effective_name'),
+						$m->getElement('name'),
+						$m->getElement('organization'),
 						$m->getElement('type'),
 						$m->getElement('code')
 					]);
