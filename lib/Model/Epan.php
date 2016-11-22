@@ -37,10 +37,10 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\User',null,null,'Users');
 		$this->hasMany('xepan\base\Epan_Configuration',null,null,'Configurations');
 
-		$this->addHook('beforeDelete',[$this,'deleteAllEmailSettings']);
-		$this->addHook('beforeDelete',[$this,'deleteInstallApplications']);
-		$this->addHook('beforeDelete',[$this,'deleteContacts']);
-		$this->addHook('beforeDelete',[$this,'deleteUsers']);
+		// $this->addHook('beforeDelete',[$this,'deleteAllEmailSettings']);
+		// $this->addHook('beforeDelete',[$this,'deleteInstallApplications']);
+		// $this->addHook('beforeDelete',[$this,'deleteContacts']);
+		// $this->addHook('beforeDelete',[$this,'deleteUsers']);
 
 
 		$this->is([
@@ -76,19 +76,20 @@ class Model_Epan extends \xepan\base\Model_Table{
 		return $activity;
 	}
 
-	function deleteAllEmailSettings(){
-		$this->ref('EmailSettings')->deleteAll();
-	}
+	// function deleteAllEmailSettings(){
+		
+	// 	$this->ref('EmailSettings')->deleteAll();
+	// }
 
-	function deleteInstallApplications(){
-		$this->ref('InstalledApplications')->deleteAll();
-	}
+	// function deleteInstallApplications(){
+	// 	$this->ref('InstalledApplications')->deleteAll();
+	// }
 
-	function deleteContacts(){
-		$this->ref('xepan\base\Contact')->deleteAll();
-	}
+	// function deleteContacts(){
+	// 	$this->ref('xepan\base\Contact')->deleteAll();
+	// }
 
-	function deleteUsers(){
-		$this->ref('Users')->deleteAll();
-	}
+	// function deleteUsers(){
+	// 	$this->ref('Users')->deleteAll();
+	// }
 }
