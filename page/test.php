@@ -17,5 +17,14 @@ class page_test extends \Page {
 	function init(){
 		parent::init();
 
+		$btn = $this->add('Button')->set('PUSH');
+
+		if($btn->isClicked()){
+			$this->add('xepan\hr\Model_Activity')
+				->pushToWebSocket([$this->app->employee->id],'Test Message');
+			$this->js()->univ()->successMessage('Pushed')->execute();
+		}
+
+
 	}
 }
