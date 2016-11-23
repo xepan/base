@@ -55,12 +55,14 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 					break;
 			}
 
-			if($to_add)				
-				$enum_array[] = $widget[0];
+			if($to_add){
+				$enum_array[$widget[0]] = $widget['title'];
+			}				
+				
 		}
 
 		$m = $page->add('xepan\base\Model_GraphicalReport_Widget');
-		$m->getElement('class_path')->enum($enum_array);
+		$m->getElement('class_path')->setValueList($enum_array);
 
 		$m->addCondition('graphical_report_id',$this->id);
 		$c = $page->add('xepan\base\CRUD');
