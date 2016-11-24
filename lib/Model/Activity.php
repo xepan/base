@@ -48,7 +48,7 @@ class Model_Activity extends Model_Table{
 		});
 		
 		$this->addhook('afterLoad',function($m){
-			if(!$m['notification']) return;
+			if(!$m['notification']) $m['notification'] = $m['activity'];
 			if($this->isJson($m['notification']))
 				$m['notification'] = json_decode($m['notification'],true);
 			else

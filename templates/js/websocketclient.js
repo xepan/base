@@ -28,7 +28,7 @@ $.each({
 						if (("type" in $data) !=false) type = $data.type;
 						if (("desktop" in $data) ==false) desktop = undefined;
 						if (("sticky" in $data) ==false) skicky = undefined;						
-						if (("icon" in $data) ==false) icon = undefined;						
+						if (("icon" in $data) !=false) icon = undefined;						
 						$.univ().notify(title, $data.message, type, desktop, undefined, sticky, icon);
 				  }
 				  if (("js" in $data) !=false){
