@@ -37,10 +37,9 @@ class Model_Activity extends Model_Table{
 			return date('M d y',strtotime($m['created_at']));
 		});
 
-		$this->addHook('afterSave',$this);
 
 		$this->addhook('beforeSave',function($m){
-			if(!$m['notification']) return;
+			if(!$m['notification']) $m['notification'] = $m['activity'];
 
 			if(!is_array($m['notification']))
 				$m['notification'] = ['message'=>$m['notification']];
@@ -55,6 +54,7 @@ class Model_Activity extends Model_Table{
 				$m['notification'] = ['message'=>$m['notification']];
 		});
 
+		$this->addHook('afterSave',$this);
 	}
 
 	function isJson($string) {
