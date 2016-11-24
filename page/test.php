@@ -17,12 +17,15 @@ class page_test extends \Page {
 	function init(){
 		parent::init();
 
+		$v = $this->add('View')->set(rand(100,999));
+
 		$btn = $this->add('Button')->set('PUSH');
+		$assigntask_notify_msg = ['title'=>'New task','message'=>" Task Assigned to you : 'ABCD' by 'GVS' ",'type'=>'warning','sticky'=>false,'desktop'=>true, 'js'=>(string) $this->app->js(null, $v->js()->reload())];
 
 		if($btn->isClicked()){
 			$this->add('xepan\hr\Model_Activity')
-				->pushToWebSocket([$this->app->employee->id],'Test Message');
-			$this->js()->univ()->successMessage('Pushed')->execute();
+				->pushToWebSocket([$this->app->employee->id],$assigntask_notify_msg);
+			$this->js()->execute();
 		}
 
 
