@@ -53,6 +53,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('updated_at')->type('datetime')->defaultValue(@$this->app->now);
 
 		$this->addField('search_string')->type('text')->system(true)->defaultValue(null);
+		$this->addField('freelancer_type')->enum(['Public','Company','Not Applicable'])->defaultValue('Not Applicable');
 		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
