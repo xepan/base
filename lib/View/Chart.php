@@ -219,6 +219,24 @@ class View_Chart extends \View{
 		return '_'. $this->name;
 	}
 
+	function onClick($callback){
+		if(!isset($this->options['data'])) $this->options['data']=[];
+		$this->options['data']['onclick'] = $callback;
+		return $this;
+	}
+
+	function openOnClick($page){
+
+		$js=[$this->app->url($page)];
+		$js['x_axis']=$this->js(null,'this.categories()[ev.index]');
+		$js['details']=$this->js(null,'ev');
+
+		$this->onClick($this->app->js()->univ()->frameURL('Details',$js)->_enclose());
+		// console.log(this.categories()[ev.index]);
+
+		return $this;
+	}
+
 	function defaultTemplate(){
 		return array('view/chart');
 	}
