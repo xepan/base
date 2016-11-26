@@ -308,12 +308,12 @@ class Initiator extends \Controller_Addon {
     }
 
     function exportWidgets($app,&$array){
-        $array[] = ['xepan\base\Widget','level'=>'Global'];
-        $array[] = ['xepan\base\Widget_MyActivity','level'=>'Individual'];
-        $array[] = ['xepan\base\Widget_GlobalActivity','level'=>'Global'];
-        $array[] = ['xepan\base\Widget_SubordinateActivity','level'=>'Sibling'];
-        $array[] = ['xepan\base\Widget_RecentContacts','level'=>'Global'];
-        $array[] = ['xepan\base\Widget_EpanValidity','level'=>'Global'];
+        $array[] = ['xepan\base\Widget','level'=>'Global','title'=>'Basic Widget'];
+        $array[] = ['xepan\base\Widget_MyActivity','level'=>'Individual','title'=>'Personal Activities'];
+        $array[] = ['xepan\base\Widget_GlobalActivity','level'=>'Global','title'=>'Companies Activities'];
+        $array[] = ['xepan\base\Widget_SubordinateActivity','level'=>'Sibling','title'=>'Subordinates Activities'];
+        $array[] = ['xepan\base\Widget_RecentContacts','level'=>'Global','title'=>'Recent Contacts'];
+        $array[] = ['xepan\base\Widget_EpanValidity','level'=>'Global','title'=>'Epan Information'];
     }
 
     function exportEntities($app,&$array){

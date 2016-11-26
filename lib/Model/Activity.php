@@ -37,6 +37,60 @@ class Model_Activity extends Model_Table{
 			return date('M d y',strtotime($m['created_at']));
 		});
 
+
+		$this->addhook('beforeSave',function($m){
+			if(!$m['notification']) $m['notification'] = $m['activity'];
+
+			if(!is_array($m['notification']))
+				$m['notification'] = ['message'=>$m['notification']];
+			$m['notification'] = json_encode($m['notification']);
+		});
+		
+		$this->addhook('afterLoad',function($m){
+			if(!$m['notification']) $m['notification'] = $m['activity'];
+			if($this->isJson($m['notification']))
+				$m['notification'] = json_decode($m['notification'],true);
+			else
+				$m['notification'] = ['message'=>$m['notification']];
+		});
+
+		$this->addHook('afterSave',$this);
+	}
+
+	function isJson($string) {
+		json_decode($string);
+		return (json_last_error() == JSON_ERROR_NONE);
+	}
+
+
+	function afterSave(){
+		if($this->app->getConfig('websocket-notifications',false) && $this['notify_to']){
+			$this->pushToWebSocket(json_decode($this['notify_to'],true),$this['notification']?:$this['activity']);
+		}
+	}
+
+	function pushToWebSocket($employee_ids, $message){
+		if($this->app->getConfig('websocket-notifications',false)){
+			$response = $this->add('xepan\base\Controller_WebSocket')
+				->sendTo($employee_ids, is_array($message)?json_encode($message):$message);
+
+			$response = json_decode($response,true);
+			$notified_employees= [0];
+
+			foreach ($response as $id) {
+				$notified_employees[] = explode("_", $id)[1];
+			}
+
+			if($this->id){
+				$this->app->db->dsql()->table('employee')
+					->set('notified_till',$this->id)
+					->where('contact_id','in',$notified_employees)
+					->update();
+
+				$this->app->employee->reload();
+				$this->app->memorize($this->app->epan->id.'_employee', $this->app->employee);
+			}
+		}
 	}
 	
 }

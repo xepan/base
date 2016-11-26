@@ -22,6 +22,9 @@ class Model_Document_Attachment extends \xepan\base\Model_Table{
 		
 		$this->hasOne('xepan\base\Document','document_id');
 		$this->add('xepan\filestore\Field_File','file_id');
+		$this->addExpression('thumb_url')->set(function($m,$q){
+			return $q->expr('[0]',[$m->getElement('file')]);
+		});
 
 		$this->addHook('beforeDelete',$this);
 
