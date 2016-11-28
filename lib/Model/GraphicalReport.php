@@ -65,6 +65,7 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 		$m->getElement('class_path')->setValueList($enum_array);
 
 		$m->addCondition('graphical_report_id',$this->id);
+		$m->setOrder('order','asc');
 		$c = $page->add('xepan\base\CRUD');
 		$c->setModel($m);
 	}
