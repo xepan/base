@@ -15,6 +15,7 @@ class Controller_MultiDelete extends \AbstractController {
 
         if($this->owner instanceof \CRUD ){
         	$this->grid = $this->owner->grid;
+        	if($this->owner->isEditing()) return;
         }
 
         if($this->owner instanceof \Grid ){
@@ -45,12 +46,12 @@ class Controller_MultiDelete extends \AbstractController {
 
 			// delete all selected record one by one
 			$selected_record_for_delete = json_decode($this->form['record_tobe_delete'],true);
-			
+			$model = $this->add($model_class);
+
 			foreach ($selected_record_for_delete as $key => $record_id) {
-				
 				try{
 					$this->api->db->beginTransaction();
-					$model = $this->add($model_class)->load($record_id);
+					$model->load($record_id);
 					$model->delete();
 					$this->deleted_record[$record_id] = $record_id;
 					$this->api->db->commit();
