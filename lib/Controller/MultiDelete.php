@@ -14,6 +14,8 @@ class Controller_MultiDelete extends \AbstractController {
 
 
         if($this->owner instanceof \CRUD ){
+        	if($this->owner->isEditing())
+        		return;
         	$this->grid = $this->owner->grid;
         	if($this->owner->isEditing()) return;
         }
