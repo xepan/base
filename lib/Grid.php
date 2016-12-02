@@ -146,6 +146,10 @@ class Grid extends \Grid{
         $this->init_confirm($field);
     }
 
+    function format_gmdate($f){
+        $this->current_row[$f] = gmdate("H:i:s", $this->current_row[$f]);
+    }
+
     function render(){
         $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
         parent::render();
