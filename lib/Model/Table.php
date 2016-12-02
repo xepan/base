@@ -21,6 +21,8 @@ class Model_Table extends \Model_Table{
 		'*'=>['view','edit','delete']
 	];
 
+	public $assigable_by_field=false;
+
 	public $skip_epan_condition=false;
 
 	function init(){
