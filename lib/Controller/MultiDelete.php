@@ -11,7 +11,7 @@ class Controller_MultiDelete extends \AbstractController {
 
 	function init(){
         parent::init();
-
+        return;
 
         if($this->owner instanceof \CRUD ){
         	if($this->owner->isEditing())

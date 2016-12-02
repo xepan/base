@@ -117,6 +117,8 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 		$graph_rprt_m['name']=$data['name'];
 		$graph_rprt_m['permitted_post']=$data['permitted_post'];
 		$graph_rprt_m['status']=$data['status'];
+		$graph_rprt_m['description']=$data['description'];
+		$graph_rprt_m['is_system']=$data['is_system'];
 		$graph_rprt_m->save();
 
 		foreach ($data['widget'] as $wgt) {
@@ -125,6 +127,8 @@ class Model_GraphicalReport extends \xepan\base\Model_Table{
 			$widget['name']=$wgt['name'];
 			$widget['col_width']=$wgt['col_width'];
 			$widget['class_path']=$wgt['class_path'];
+			$widget['order']=$wgt['order'];
+			$widget['is_active']=$wgt['is_active'];
 			$widget->save();
 		}
 

@@ -229,7 +229,7 @@ class View_Chart extends \View{
 
 		$js=[$this->app->url($page)];
 		$js['x_axis']=$this->js(null,'this.categories()[ev.index]');
-		$js['details']=$this->js(null,'ev');
+		$js['details']=$this->js(null,'JSON.stringify(ev)');
 
 		$this->onClick($this->app->js()->univ()->frameURL('Details',$js)->_enclose());
 		// console.log(this.categories()[ev.index]);
