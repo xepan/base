@@ -40,8 +40,8 @@ $.each({
 		      socket.onclose = function (e) {
 		          console.log('connection is closed '+e.reason);
 		          setTimeout(function() {
-		          		console.log('raload auto '+host);
-		          		console.log('raload '+uu_id);
+		          		// console.log('raload auto '+host);
+		          		// console.log('raload '+uu_id);
 				      	$.univ().runWebSocketClient(host,uu_id);
 				    }, 5000);
 		          return;
