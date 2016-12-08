@@ -3,6 +3,7 @@
 namespace xepan\base;
 
 class Tool_UserPanel extends \xepan\cms\View_Tool{
+	public $reload_object;
 	public $options = [
 				'show_tnc'=>true,
 				'tnc_page_url'=>'',
@@ -54,7 +55,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			
 			switch ($this->options['layout']) {
 				case 'login_view':
-					$user_login=$this->add('xepan\base\View_User_LoginPanel',array('options'=>$this->options));
+					$user_login=$this->add('xepan\base\View_User_LoginPanel',array('options'=>$this->options,'reload_object'=>$this->reload_object));
 					$this->app->stickyForget('layout');
 				break;
 
