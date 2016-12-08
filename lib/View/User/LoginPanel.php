@@ -3,6 +3,7 @@ namespace xepan\base;
 
 class View_User_LoginPanel extends \View{
 	public $options = [];
+	public $reload_object;
 
 	function init(){
 		parent::init();
@@ -36,8 +37,14 @@ class View_User_LoginPanel extends \View{
 			if($next_url = $this->app->recall('next_url'))
 				$this->app->redirect($this->api->url($next_url))->execute();
 
-			if($success_url = $this->options['login_success_url'])
+			if($this->reload_object){
+				$object = $this->reload_object;
+				$this->js(null,$object->js()->reload())->univ()->successMessage('wait ... ')->execute();
+			}
+			else{
+				$success_url = $this->options['login_success_url'];
 				$this->app->redirect($this->app->url($success_url));
+			}
         }
 	}
 }
