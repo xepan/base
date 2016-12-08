@@ -1,5 +1,6 @@
 $.each({
 	runWebSocketClient: function(host, uu_id){
+
 		try {
 		      socket = new WebSocket(host);
 		      socket.onopen = function () {
@@ -36,9 +37,18 @@ $.each({
 				  }
 				return;
 		      };
-		      socket.onclose = function () {
-		          console.log('connection is closed');
+		      socket.onclose = function (e) {
+		          console.log('connection is closed '+e.reason);
+		          setTimeout(function() {
+		          		console.log('raload auto '+host);
+		          		console.log('raload '+uu_id);
+				      	$.univ().runWebSocketClient(host,uu_id);
+				    }, 5000);
 		          return;
+		      };
+		      socket.onerror = function(err){
+		      	console.log('connection on error');
+		      	return;
 		      };
 		  } catch (e) {
 		      console.log(e);
