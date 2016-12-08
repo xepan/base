@@ -20,5 +20,30 @@ class Model_PointSystem extends \xepan\base\Model_Table
 		$this->addField('landing_campaign_id')->defaultValue(0);
 		$this->addField('landing_content_id')->defaultValue(0);
 		$this->addField('created_at')->type('datetime')->defaultValue(@$this->app->now);
+
+		$this->addHook('afterSave',$this);
+		$this->addHook('beforeDelete',$this);
+	}
+
+	function afterSave($m){
+		$contact_m = $this->add('xepan\base\Model_Contact');
+		$contact_m->addCondition('id',$m['contact_id']);
+		$contact_m->tryLoadAny();
+
+		if($contact_m->loaded()){
+			$contact_m['score'] = $contact_m['score'] + $m['score'];
+			$contact_m->save();
+		}
+	}
+
+	function beforeDelete($m){
+		$contact_m = $this->add('xepan\base\Model_Contact');
+		$contact_m->addCondition('id',$m['contact_id']);
+		$contact_m->tryLoadAny();
+
+		if($contact_m->loaded()){
+			$contact_m['score'] = $contact_m['score'] - $m['score'];
+			$contact_m->save();
+		}
 	}
 }

@@ -48,6 +48,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		
 		$this->addField('source');
 		$this->addField('remark')->type('text');
+		$this->addField('score')->defaultValue(0)->sortable(true);
 		
 		$this->addField('created_at')->type('datetime')->defaultValue(@$this->app->now);
 		$this->addField('updated_at')->type('datetime')->defaultValue(@$this->app->now);

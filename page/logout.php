@@ -16,6 +16,9 @@ class page_logout extends \xepan\base\Page{
 
 
 		if($form->isSubmitted()){
+			if(!$form['reason'])
+				$form->displayError('reason','Reason is mandatory');
+						
 			$movement->addCondition('employee_id',$this->app->employee->id);
 			$movement->addCondition('movement_at',$this->app->now);
 			$movement->addCondition('direction','Out');
