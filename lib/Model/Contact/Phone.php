@@ -38,12 +38,12 @@ class Model_Contact_Phone extends Model_Contact_Info{
 			]);
 		$contactconfig_m->tryLoadAny();	
 
-		if($contactconfig_m['contact_no_duplcation_allowed'] != 'Duplication Allowed'){
+		if($contactconfig_m['contact_no_duplcation_allowed'] != 'duplication_allowed'){
 	        $contactphone_m = $this->add('xepan\base\Model_Contact_Phone');
 	        $contactphone_m->addCondition('id','<>',$this->id);
 	        $contactphone_m->addCondition('value',$this['value']);
 			
-			if($contactconfig_m['contact_no_duplcation_allowed'] == 'No Duplication Allowed'){
+			if($contactconfig_m['contact_no_duplcation_allowed'] == 'no_duplication_allowed_for_same_contact_type'){
 				$contactphone_m->addCondition('contact_type',$this['contact_type']);
 		        $contactphone_m->tryLoadAny();
 		 	}

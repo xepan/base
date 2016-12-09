@@ -40,12 +40,12 @@ class Model_Contact_Email extends Model_Contact_Info{
 			]);
 		$emailconfig_m->tryLoadAny();
 
-		if($emailconfig_m['email_duplication_allowed'] != 'Duplication Allowed'){
+		if($emailconfig_m['email_duplication_allowed'] != 'duplication_allowed'){
 	        $email_m = $this->add('xepan\base\Model_Contact_Email');
 	        $email_m->addCondition('id','<>',$this->id);
 	        $email_m->addCondition('value',$this['value']);
 			
-			if($emailconfig_m['email_duplication_allowed'] == 'No Duplication Allowed'){
+			if($emailconfig_m['email_duplication_allowed'] == 'no_duplication_allowed_for_same_contact_type'){
 				$email_m->addCondition('contact_type',$this['contact_type']);
 			}
 	        
