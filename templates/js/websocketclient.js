@@ -1,5 +1,6 @@
 $.each({
 	runWebSocketClient: function(host, uu_id){
+
 		try {
 		      socket = new WebSocket(host);
 		      socket.onopen = function () {
@@ -18,6 +19,7 @@ $.each({
 		        // console.log($data);
 		        // console.log($data.message.length);
 				if($data.message.length > 0){
+						
 						var title= "Notification";
 						var type= "notice";
 						var desktop = true;
@@ -26,9 +28,14 @@ $.each({
 
 						if (("title" in $data) !=false) title = $data.title;
 						if (("type" in $data) !=false) type = $data.type;
-						if (("desktop" in $data) ==false) desktop = undefined;
+						if (("desktop" in $data) ==false) 
+							desktop = undefined;	
+						else
+							desktop = $data.desktop;	
+
 						if (("sticky" in $data) ==false) skicky = undefined;						
 						if (("icon" in $data) !=false) icon = undefined;						
+
 						$.univ().notify(title, $data.message, type, desktop, undefined, sticky, icon);
 				  }
 				  if (("js" in $data) !=false){
@@ -36,9 +43,18 @@ $.each({
 				  }
 				return;
 		      };
-		      socket.onclose = function () {
-		          console.log('connection is closed');
+		      socket.onclose = function (e) {
+		          console.log('connection is closed '+e.reason);
+		          setTimeout(function() {
+		          		// console.log('raload auto '+host);
+		          		// console.log('raload '+uu_id);
+				      	$.univ().runWebSocketClient(host,uu_id);
+				    }, 5000);
 		          return;
+		      };
+		      socket.onerror = function(err){
+		      	console.log('connection on error');
+		      	return;
 		      };
 		  } catch (e) {
 		      console.log(e);
