@@ -4,7 +4,7 @@ $.each({
 			var nn = new PNotify(
 			{ 
 				title: xTitle?xTitle:"Notification",
-				text: xText,
+				text: (isDesktop ===true) ? xText : isDesktop,
 				type: xType==null?"notice":xType,
 				hide: true,
 				desktop: {

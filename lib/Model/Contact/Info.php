@@ -34,6 +34,9 @@ class Model_Contact_Info extends Model_Table{
 				'head|required'
 		]);
 
+		$this->addExpression('contact_type')->set(function($m,$q){
+			return $m->refSQL('contact_id')->fieldQuery('type');
+		});
 		$this->addHook('beforeSave',$this);
 	}
 
