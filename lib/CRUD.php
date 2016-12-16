@@ -16,12 +16,16 @@ class CRUD extends \CRUD{
 
 	protected function configureAdd($fields){
 		if($this->add_button)
-			$this->add_button->addClass(' btn btn-primary pull-right');
+			$this->add_button->addClass('ui red icon button');
 		if($this->action_page){
-			$this->add_button->setHTML('<i class="icon-plus"></i> Add '.htmlspecialchars($this->entity_name));
+			$this->add_button->setHTML('<i class="plus icon"></i> Add '.htmlspecialchars($this->entity_name));
 			$this->add_button->js('click')->univ()->location($this->api->url($this->action_page,['action'=>'add']));
 		}else
 			parent::configureAdd($fields);
+
+		if (!$this->isEditing() && $this->entity_name !== false) {
+            $this->add_button->setHTML('<i class="plus icon"></i> Add '.htmlspecialchars($this->entity_name));
+        }
 	}
 
 	protected function configureEdit($fields){
