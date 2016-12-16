@@ -48,11 +48,13 @@ class Model_Contact extends \xepan\base\Model_Table{
 		
 		$this->addField('source');
 		$this->addField('remark')->type('text');
+		$this->addField('score')->defaultValue(0)->sortable(true);
 		
 		$this->addField('created_at')->type('datetime')->defaultValue(@$this->app->now);
 		$this->addField('updated_at')->type('datetime')->defaultValue(@$this->app->now);
 
 		$this->addField('search_string')->type('text')->system(true)->defaultValue(null);
+		$this->addField('freelancer_type')->enum(['Public','Company','Not Applicable'])->defaultValue('Not Applicable');
 		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
 		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
 
@@ -83,6 +85,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 						->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
 		})->allowHTML(true)->sortable(true);
 
+		$this->addExpression('unique_name',function($m,$q){
+			return $q->expr("CONCAT([0],' : [',IFNULL([1],''),'] - [',[2],'] - [', IFNULL([3],''),']')",
+					[
+						$m->getElement('name'),
+						$m->getElement('organization'),
+						$m->getElement('type'),
+						$m->getElement('code')
+					]);
+		
+		});
+
 		$this->addExpression('contacts_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Phone',['table_alias'=>'contacts_str']);
 			return $x->addCondition('contact_id',$q->getField('id'))->_dsql()->del('fields')->field($q->expr('group_concat([0] SEPARATOR "<br/>")',[$x->getElement('value')]));
@@ -109,8 +122,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
 		$this->addHook('afterSave',[$this,'updateContactCode']);
-
+		
 		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
+		
+		$this->addHook('afterSave',[$this,'contact_category_association']);
 
 		$this->is([
 				// 'epan_id|required',
@@ -119,6 +134,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 				'user_id|unique_in_epan',
 				'type|to_trim|required'
 			]);
+	}
+
+	function contact_category_association(){		
+		$this->app->hook('contact_save',[$this]);
 	}
 
 	function updateContactCode(){
@@ -175,7 +194,19 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->ref('Events')->deleteAll();
 	}
 
+	function deactivateContactEmails($contact_id){		
+		$contact_info = $this->add('xepan\base\Model_Contact_Info');
+		$contact_info->addCondition('contact_id',$contact_id);
+		$contact_info->addCondition('type','Email');
+
+		foreach ($contact_info as $info){
+			$info['is_active'] = false;
+			$info->save();
+		}
+	}
+
 	function page_communication($page){		
+		$this->app->stickyGET('comm_type');
 		$communication = $this->add('xepan\communication\Model_Communication');
 
 		$communication->addCondition(
@@ -188,7 +219,6 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$contact_id = $this->id;
 		
 		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
-		
 		if($_GET['comm_type']){
 			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
 		}
@@ -208,7 +238,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$type_field = $form->addField('xepan\base\DropDown','communication_type');
 		$type_field->setAttr(['multiple'=>'multiple']);
 		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal']);
-		$form->addField('search');
+		$form->addField('search')->set($_GET['search']);
 		$form->addSubmit('Filter')->addClass('btn btn-primary btn-block');
 		
 		$temp = ['Email','Support','Call','Newsletter','SMS','Personal'];
@@ -231,6 +261,16 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return true;
 	}
 
+	function addEmail($email,$head='Official',$active=true,$valid=true){
+		return $this->add('xepan\base\Model_Contact_Phone')
+			->set('contact_id',$this->id)
+			->set('head',$head)
+			->set('value',$email)
+			->set('is_active',$active)
+			->set('is_valid',$valid)
+			->save();
+
+	}
 
 	function getEmails($all=false){
 		if(!$this->loaded())
@@ -241,6 +281,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$emails = $emails->del('fields')->field('value')->getAll();
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
+	}
+
+	function addPhone($number,$head='Official',$active=true,$valid=true){
+		return $this->add('xepan\base\Model_Contact_Phone')
+			->set('contact_id',$this->id)
+			->set('head',$head)
+			->set('value',$number)
+			->set('is_active',$active)
+			->set('is_valid',$valid)
+			->save();
+
 	}
 
 	function getPhones(){

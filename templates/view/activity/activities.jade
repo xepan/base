@@ -1,4 +1,5 @@
 .xepan-grid.main-box.clearfix.atk-table.atk-table-zebra.atk-table-bordered(id="{$_name}" class="{$class}")
+    h2.text-center {$grid_title}
     {Pannel}
     header.main-box-header.clearfix.atk-actions(class=" {$class} ")
         div.filter-block( style="100%")
@@ -14,7 +15,7 @@
                 {cols}{col}
                 th Activity Message
                 th Created By
-                th Related Document No.
+                th Related Document Detail
                 th Related Person
                 th Created At
                 {/}{/}
@@ -28,13 +29,13 @@
                     td(style="font-size: 0.87em; font-weight: 400;")
                         |{$activity}&nbsp;
                     td
-                        span(style= "cursor:pointer; cursor: hand; max-width:600px;"){$contact}
+                        span(style= "max-width:600px;"){$contact}
                     td 
                         span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');"){$related_document_id}
-                    td
+                     td
                         span(style= "cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Person Detail','?page={$contact_url}');"){$related_contact}
                     td
-                     | {$callback_date}
+                     | {$created_at}
                     {/}
                 {/}{/}
                 {not_found}

@@ -39,6 +39,8 @@ class Model_Document extends \xepan\base\Model_Table{
 		$this->addField('created_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 		$this->addField('updated_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 
+		$this->addHook('beforeDelete',[$this,'DeleteAttachements']);
+
 		$this->is([
 				'created_at|required',
 				'type|to_trim|required'
@@ -46,13 +48,109 @@ class Model_Document extends \xepan\base\Model_Table{
 
 	}
 
-	function amountInWords($number,$currency_id=null) {
+	function DeleteAttachements(){
+		foreach($this->ref('Attachments') as $a){
+			$a->delete();
+		}
+	}
+
+	function convertNumberToWords($number){
+		$words = array(
+				'0' => '', 
+				'1' => 'one', 
+				'2' => 'two',
+		    	'3' => 'three', 
+		    	'4' => 'four', 
+		    	'5' => 'five', 
+		    	'6' => 'six',
+			    '7' => 'seven', 
+			    '8' => 'eight', 
+			    '9' => 'nine',
+			    '10' => 'ten', 
+			    '11' => 'eleven', 
+			    '12' => 'twelve',
+			    '13' => 'thirteen', 
+			    '14' => 'fourteen',
+			    '15' => 'fifteen', 
+			    '16' => 'sixteen', 
+			    '17' => 'seventeen',
+			    '18' => 'eighteen', 
+			    '19' => 'nineteen', 
+			    '20' => 'twenty',
+			    '30' => 'thirty', 
+			    '40' => 'forty', 
+			    '50' => 'fifty',
+			    '60' => 'sixty', 
+			    '70' => 'seventy',
+			    '80' => 'eighty', 
+			    '90' => 'ninety'
+			);
+		$digits = array('', 'hundred', 'thousand', 'lakh', 'crore');
+		$amount = $number;
+		$no = round($number);
+		$point = round($number - $no, 2) * 100;
+		$hundred = null;
+		$digits_1 = strlen($no);
+		$i = 0;
+		$str = array();
+		while ($i < $digits_1) {
+			$divider = ($i == 2) ? 10 : 100;
+		 	$number = floor($no % $divider);
+		 	$no = floor($no / $divider);
+		 	$i += ($divider == 10) ? 1 : 2;
+		 	if ($number) {
+		    	$plural = (($counter = count($str)) && $number > 9) ? '' : null;
+		    	$hundred = ($counter == 1 && $str[0]) ? ' ' : null;
+		    	$str [] = ($number < 21) ? $words[$number] .
+			        " " . $digits[$counter] . $plural . " " . $hundred
+			        :
+			        $words[floor($number / 10) * 10]
+			        . " " . $words[$number % 10] . " "
+			        . $digits[$counter] . $plural . " " . $hundred;
+			} else $str[] = null;
+		}
+		$str = array_reverse($str);
+		return $result = implode('', $str);
+	}
+
+	function amountInWords($number, $currency_id=null){
+		$currency_model = $this->app->epan->default_currency;
+		if($currency_id)
+			$currency_model = $this->add('xepan\accounts\Model_Currency')->load($currency_id);
+		
+		$integer_part = isset($currency_model['integer_part'])?$currency_model['integer_part']:"";
+		$fractional_part = isset($currency_model['fractional_part'])?$currency_model['fractional_part']:"";	    
+	    $prefix = isset($currency_model['prefix'])?$currency_model['prefix']:"";	    
+		$postfix = isset($currency_model['postfix'])?$currency_model['postfix']:"";	    
+
+		$integer_number = 0;			
+		if (strpos($number, '.') !== false) {
+	       list($integer_number, $fraction) = explode('.', $number);
+		}
+
+		//integer part
+		$result = $this->convertNumberToWords($integer_number);
+		$amount_in_words = ($result?$result:" zero ")." ".$integer_part;
+
+		// fractional part 
+		if(isset($fraction) and $fraction > 0){
+			$result = $this->convertNumberToWords($fraction);
+			$amount_in_words .= " and ".$result." ".$fractional_part;
+		}
+
+		return ucwords($amount_in_words." ".$postfix);
+	}
+
+	function amountInWordsUK($number,$currency_id=null) {
 	    $currency_model = $this->app->epan->default_currency;
 		if($currency_id)
 			$currency_model = $this->add('xepan\accounts\Model_Currency')->load($currency_id);
 		
 		$integer_part = isset($currency_model['integer_part'])?$currency_model['integer_part']:"";
 		$fractional_part = isset($currency_model['fractional_part'])?$currency_model['fractional_part']:"";	    
+	    $prefix = isset($currency_model['prefix'])?$currency_model['prefix']:"";	    
+		$postfix = isset($currency_model['postfix'])?$currency_model['postfix']:"";	    
+	   
 	    $hyphen      = '-';
 	    $conjunction = ' ';
 	    // $conjunction = ' and ';
@@ -152,9 +250,14 @@ class Model_Document extends \xepan\base\Model_Table{
 	            break;
 	    }
 
+	    
+
 	    if (null !== $fraction && is_numeric($fraction)) {
 	    	// concating integer part
 	    	$string .= " ".$integer_part;
+
+		    if($prefix)
+		    	$string = $prefix . " " . $string;
 
 	        if($fraction > 0){
 		        $string .= $decimal;
@@ -166,6 +269,12 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		        // concating fractional part
 		        $string .= " ".$fractional_part;
+
+		        if($postfix)	
+			    	$string .= " ".$postfix;
+	        }else{
+	        	if($postfix)	
+			    	$string .= " ".$postfix;
 	        }
 	    }
 

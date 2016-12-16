@@ -17,7 +17,7 @@ div(id="{$_name}" class = "{$class}")
               .col-md-6 
                 {title}title of communication should come here{/}
                 {$attachment}
-              .col-md-2
+              .col-md-1
               .col-md-2
                 span.pull-right
                   {$created_at}
@@ -27,6 +27,11 @@ div(id="{$_name}" class = "{$class}")
               .col-md-1
                 span.pull-right
                   {$communication_type}
+              .col-md-1
+                a.do-view-delete-communication.pull-right.xepan-communication-action(data-id="{$id}")
+                  i.fa.fa-trash       
+                a.do-view-edit-communication.pull-right.xepan-communication-action(data-id="{$id}")
+                  i.fa.fa-edit       
         .panel-collapse.collapse(style='height: 2px;', id="details{$id}")
           .panel-body
             .row
@@ -69,4 +74,9 @@ div(id="{$_name}" class = "{$class}")
               {/}
 
   {/}{/}
+  
   {$Paginator}
+style.
+  .accordion .panel-title > a::after{
+    margin-top:0px!important;
+  }  

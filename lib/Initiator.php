@@ -89,6 +89,8 @@ class Initiator extends \Controller_Addon {
 
         $event_cont = $this->add('xepan\base\Controller_PointEventManager');
         $this->app->addHook('pointable_event',[$event_cont,'handleEvent']);
+        $this->app->addHook('widget_collection',[$this,'exportWidgets']);
+        $this->app->addHook('entity_collection',[$this,'exportEntities']);
     }
 
     function setup_admin(){
@@ -124,7 +126,6 @@ class Initiator extends \Controller_Addon {
             $this->app->user_menu = $m->addMenu('My Menu');
                
         }
-
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
             $f = $p->add('Form',null,null,['form/minimal']);
@@ -194,6 +195,8 @@ class Initiator extends \Controller_Addon {
 
         return $this;
 	} 
+
+
     function setup_frontend(){
         $this->routePages('xepan_base');
         $this->addLocation(array('template'=>'templates','js'=>'templates/js','css'=>'templates/css'))
@@ -302,6 +305,21 @@ class Initiator extends \Controller_Addon {
                 $addon_obj->$func();
             }
         }
+    }
+
+    function exportWidgets($app,&$array){
+        $array[] = ['xepan\base\Widget','level'=>'Global','title'=>'Basic Widget'];
+        $array[] = ['xepan\base\Widget_MyActivity','level'=>'Individual','title'=>'Personal Activities'];
+        $array[] = ['xepan\base\Widget_GlobalActivity','level'=>'Global','title'=>'Companies Activities'];
+        $array[] = ['xepan\base\Widget_SubordinateActivity','level'=>'Sibling','title'=>'Subordinates Activities'];
+        $array[] = ['xepan\base\Widget_RecentContacts','level'=>'Global','title'=>'Recent Contacts'];
+        $array[] = ['xepan\base\Widget_EpanValidity','level'=>'Global','title'=>'Epan Information'];
+    }
+
+    function exportEntities($app,&$array){
+        $array['date_range'] = ['caption'=>'Date Range', 'type'=>'DateRangePicker'];
+        $array['contact'] = ['caption'=>'Contact','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Contact'];
+
     }
 
     function resetDB($write_sql=false,$install_apps=true){
@@ -443,6 +461,46 @@ class Initiator extends \Controller_Addon {
 
         return $subdomains;
     }
+
+    // function epanDashboard($app,$page){
+    //     $extra_info = $this->app->recall('epan_extra_info_array',false);
+    //     $valid_till = $extra_info['valid_till'];
+
+    //     $post = $this->add('xepan\hr\Model_Post');
+    //     $post->tryLoadBy('id',$this->app->employee['post_id']);
+        
+    //     if(!$post->loaded())
+    //         return;    
+        
+    //     if($valid_till AND ($post['parent_post_id'] == null OR $post['parent_post_id'] == $post['id'])){
+    //         $expiry_view = $page->add('xepan\base\View_Widget_SingleInfo',null,'top_bar');
+    //         $expiry_view->setIcon('fa fa-clock-o')
+    //                 ->setHeading('Expiring At')
+    //                 ->setValue(date('d M\'y',strtotime($valid_till)))
+    //                 ->makeDanger()
+    //                 ->addClass('col-md-4')
+    //                 ;                
+    //         $expiry_view->template->trySet('expiry_date',$valid_till);
+    //     }
+
+    //     $descendants = $this->app->employee->ref('post_id')->descendantPosts();
+    //     $from_date = $_GET['from_date']?:$this->app->today;
+    //     $to_date = $_GET['to_date']?:$this->app->today;
+
+    //     $activity_view = $page->add('xepan\base\View_Activity',['activity_on_dashboard'=>true,'paginator_count'=>10,'from_date'=>$from_date,'to_date'=>$to_date,'descendants'=>$descendants,'grid_title'=>'Activities']);
+    //     $activity_view->addClass('col-md-4');
+        
+    //     $page->js(true)->univ()->setInterval($activity_view->js()->reload()->_enclose(),200000);
+        
+    //     $contact_model = $page->add('xepan\base\Model_Contact');
+    //     $contact_model->setOrder('created_at','desc');
+
+    //     $contact_grid = $page->add('xepan\hr\CRUD',['allow_add' =>false],null,['view\contact-grid']);
+    //     $contact_grid->addClass('col-md-4');
+    //     $contact_grid->setModel($contact_model,['name','type','created_by']);
+    //     $contact_grid->grid->addPaginator(10);
+    //     $contact_grid->grid->template->trySet('grid_title','Recent Contacts');
+    // }
 
     function addAppdateFunctions(){
         $this->app->addMethod('nextDate',function($app,$date=null){

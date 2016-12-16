@@ -31,7 +31,7 @@ class Model_User extends \xepan\base\Model_Table{
 		parent::init();
 		
 		// $this->hasOne('xepan\base\Epan');
-		$this->hasOne('xepan\base\Contact','created_by_id');
+		$this->hasOne('xepan\base\Contact','created_by_id')->display(array('form'=>'xepan\base\Basic'));
 
 		$this->addField('username')->sortable(true);
 		$this->addField('password')->type('password');
@@ -58,6 +58,7 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addExpression('related_contact_type')->set(function($m,$q){
 			return $m->refSQL('Contacts')->setLimit(1)->fieldQuery('type');
 		})->sortable(true);
+		$this->addHook('beforeDelete',[$this,'checkContactExistance']);
 
 	}
 
@@ -76,10 +77,19 @@ class Model_User extends \xepan\base\Model_Table{
 			return $this;
 	}
 
+	function checkContactExistance(){
+		if(!$this->loaded()) return;
+		if($this['related_contact_type'] == "Employee")
+			throw new \Exception("It is associated with an employee", 1);
+		else
+			throw new \Exception("It is associated with a '".$this['related_contact_type']."'", 1);
+			
+	}
+
 	function deactivate(){
 		$this['status']='InActive';
 		$this->app->employee
-            ->addActivity("User '". $this['username'] ."' has been deactivated", null/* Related Document ID*/, $this->id /*Related Contact ID*/)
+            ->addActivity("User : '". $this['username'] ."' has been deactivated", null/* Related Document ID*/, $this->id /*Related Contact ID*/)
             ->notifyWhoCan('activate','InActive',$this);
 		$this->save();
 	}
@@ -87,7 +97,7 @@ class Model_User extends \xepan\base\Model_Table{
 	function activate(){
 		$this['status']='Active';
 		$this->app->employee
-            ->addActivity("User '".$this['username']."' now active", null /*Related Document ID*/, $this->id /*Related Contact ID*/)
+            ->addActivity("User : '".$this['username']."' now active", null /*Related Document ID*/, $this->id /*Related Contact ID*/)
             ->notifyWhoCan('deactivate','Active',$this);
 		$this->save();
 	}

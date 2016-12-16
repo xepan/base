@@ -20,6 +20,8 @@ class View_Chart extends \View{
 	private $library;
 	private $type;
 
+	private $setLabelToValue = false;
+
 	function init(){
 		parent::init();
 		$this->_debug=false;
@@ -103,7 +105,7 @@ class View_Chart extends \View{
 	}
 
 	function setType($type){
-		$this->options['data']['type']=$type;
+		// $this->options['data']['type']=$type;
 		$this->type = $type;
 		return $this;
 	}
@@ -140,9 +142,24 @@ class View_Chart extends \View{
 		return $this; //not returning model 
 	}
 
+	function setLabelToValue($choice){
+		if($choice) $this->setLabelToValue = true;
+		return $this;
+	}
+
 	function recursiveRender(){
 		if($this->model){
-			$data = $this->model->getRows();
+			$t=array_merge($this->y_Axis_fields, [$this->x_Axis_field]);
+			$data_t = $this->model->getRows($t);
+			$data=[];
+
+			foreach ($data_t as $row) {
+				$r=[];
+				foreach ($t as $req_field) {
+					$r[$req_field] = $row[$req_field];
+				}
+				$data[] = $r;	
+			}
 			$this->options['data']['json']=$data;
 		}
 
@@ -158,9 +175,20 @@ class View_Chart extends \View{
 			unset($this->options['data']['keys']['x']);
 			$this->options['data']['json']=$formatted_data;
 			$this->options['data']['keys']['value']=$formatted_values;
+
+			if($this->setLabelToValue)
+				$this->options['pie']['label']['format']= $this->js(null,'return ev')->_enclose();
+
 		}
+		
+		if($this->type)
+			$this->options['data']['type']=$this->type;
 
 		parent::recursiveRender();
+	}
+
+	function onRender($callback){
+		$this->options['onrendered'] = $callback;
 	}
 
 	function render(){
@@ -174,14 +202,39 @@ class View_Chart extends \View{
 
 		// var_dump($this->options);
 		// exit;
-		$this->js(true)
-					->_load('d3.v3.min')
-					->_load('c3.min')
-					->_css('c3')
-					;
+		// $this->js(true)
+		// 			->_load('d3.v3.min')
+		// 			->_load('c3.min')
+		// 			->_css('c3')
+		// 			;
+		$this->app->jui->addStaticInclude('d3.v3.min');
+		$this->app->jui->addStaticInclude('c3.min');
+		$this->app->jui->addStaticstyleSheet('c3');
 
 		$this->js(true)->_library('c3')->generate($this->options);
 		parent::render();
+	}
+
+	function getJSID(){
+		return '_'. $this->name;
+	}
+
+	function onClick($callback){
+		if(!isset($this->options['data'])) $this->options['data']=[];
+		$this->options['data']['onclick'] = $callback;
+		return $this;
+	}
+
+	function openOnClick($page){
+
+		$js=[$this->app->url($page)];
+		$js['x_axis']=$this->js(null,'this.categories()[ev.index]');
+		$js['details']=$this->js(null,'JSON.stringify(ev)');
+
+		$this->onClick($this->app->js()->univ()->frameURL('Details',$js)->_enclose());
+		// console.log(this.categories()[ev.index]);
+
+		return $this;
 	}
 
 	function defaultTemplate(){
