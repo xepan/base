@@ -38,6 +38,11 @@ class Grid extends \Grid{
         if($this->defaultTemplate) return $this->defaultTemplate;
         return parent::defaultTemplate();
     }
+
+    function removeSearchIcon(){
+        $this->template->tryDel('quick_search_icon');
+        return $this;
+    }
 	
 	function precacheTemplate(){
 		if($this->template->template_file != 'grid'){
@@ -149,6 +154,10 @@ class Grid extends \Grid{
 
         // ask for confirmation
         $this->init_confirm($field);
+    }
+
+    function format_gmdate($f){
+        $this->current_row[$f] = gmdate("H:i:s", $this->current_row[$f]);
     }
 
     function render(){
