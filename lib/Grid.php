@@ -17,11 +17,12 @@ class Grid extends \Grid{
 	public $row_delete=true;
     public $defaultTemplate = null;
     public $paginator_class='xepan\base\Paginator';
+    public $quick_search_class = 'xepan\base\QuickSearch';
 
     public $sort_icons = array(
-        ' sort icon',
-        ' sort ascending icon',
-        ' sort descending icon'
+        ' sort icon ',
+        ' sort ascending icon ',
+        ' sort descending icon '
     );
 
     function addButton($label, $class = 'Button')
@@ -50,7 +51,7 @@ class Grid extends \Grid{
                 if (isset($column['sortable'])) {
                     $s = $column['sortable'];
                     $temp_template= $this->add('GiTemplate') 
-                        ->loadTemplateFromString('<i class="{$sorticon}" style= "cursor:pointer; cursor: hand;">');
+                        ->loadTemplateFromString('<i class="{$sorticon}" style= "cursor:pointer; cursor: hand;"></i>');
                     $temp_template->trySet('order', $s[0])
                         ->trySet('sorticon', $this->sort_icons[$s[0]]);
                     $this->template
