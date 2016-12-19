@@ -17,11 +17,12 @@ class Grid extends \Grid{
 	public $row_delete=true;
     public $defaultTemplate = null;
     public $paginator_class='xepan\base\Paginator';
+    public $quick_search_class = 'xepan\base\QuickSearch';
 
     public $sort_icons = array(
-        ' fa fa-sort',
-        ' fa fa-sort-asc',
-        ' fa  fa-sort-desc'
+        ' sort icon ',
+        ' sort ascending icon ',
+        ' sort descending icon '
     );
 
     function addButton($label, $class = 'Button')
@@ -49,8 +50,8 @@ class Grid extends \Grid{
             foreach ($this->columns as $name => $column) {
                 if (isset($column['sortable'])) {
                     $s = $column['sortable'];
-                    $temp_template= $this->add('GiTemplate')
-                        ->loadTemplateFromString('<span class="{$sorticon}">');
+                    $temp_template= $this->add('GiTemplate') 
+                        ->loadTemplateFromString('<i class="{$sorticon}" style= "cursor:pointer; cursor: hand;"></i>');
                     $temp_template->trySet('order', $s[0])
                         ->trySet('sorticon', $this->sort_icons[$s[0]]);
                     $this->template
@@ -73,16 +74,16 @@ class Grid extends \Grid{
 	    if($this->owner instanceof \CRUD){
             if(!$this->current_row_html['edit']){
                 if($this->row_edit)
-                    $this->current_row_html['edit']= '<a class="table-link pb_edit" href="#" data-id="'.$this->model->id.'"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span></a>';
+                    $this->current_row_html['edit']= '<a class="pb_edit ui orange icon button" href="#" data-id="'.$this->model->id.'"><i class="write icon"></i></a>';
                 else
-                    $this->current_row_html['edit']= '<span class="fa-stack table-link"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-pencil fa-stack-1x fa-inverse"></i></span>';
+                    $this->current_row_html['edit']= '<span class="ui icon button"><i class="write icon"></i></span>';
             }
 
             if(!$this->current_row_html['delete']){
     			if($this->row_delete)
-    			    $this->current_row_html['delete']= '<a class="table-link danger do-delete" href="#" data-id="'.$this->model->id.'"><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span></a>';
+    			    $this->current_row_html['delete']= '<a class="do-delete ui red icon button" href="#" data-id="'.$this->model->id.'"><i class="trash icon"></i></a>';
     			else
-    			    $this->current_row_html['delete']= '<span class="table-link fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-trash-o fa-stack-1x fa-inverse"></i></span>';
+    			    $this->current_row_html['delete']= '<span class="ui icon button"><i class="trash icon"></i></span>';
             }
 	    }
 	}
@@ -161,7 +162,7 @@ class Grid extends \Grid{
     }
 
     function render(){
-        $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
+        // $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
         parent::render();
     }
 
