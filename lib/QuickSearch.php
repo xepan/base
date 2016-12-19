@@ -63,8 +63,8 @@ class QuickSearch extends \Filter
                 ->add('HtmlElement')
                 ->setElement('A')
 	            ->setAttr('href','javascript:void(0)')
-                ->setClass('atk-button')
-                ->setHtml('<span class="icon-cancel atk-swatch-red"></span>')
+                ->setClass('ui middle aligned very compact icon button')
+                ->setHtml('<i class="red cancel icon"></i>')
                 ->js('click', array(
                     $this->search_field->js()->val(null),
                     $this->js()->submit()
@@ -75,8 +75,8 @@ class QuickSearch extends \Filter
         $this->add('HtmlElement',null,'form_buttons')
             ->setElement('A')
 	        ->setAttr('href','javascript:void(0)')
-            ->setClass('atk-button')
-            ->setHtml('<span class="icon-search"></span>')
+            ->setClass('ui very compact middle aligned icon button')
+            ->setHtml('<i class="search icon"></i>')
             ->js('click', $this->js()->submit());
     }
 
