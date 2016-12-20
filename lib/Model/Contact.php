@@ -77,6 +77,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact_IM',null,null,'IMs');
 		$this->hasMany('xepan\base\Contact_Event',null,null,'Events');
 
+		$this->add('misc/Field_Callback','callback_date')->set(function($m){
+			return date('M\' Y',strtotime($m['created_at']));
+		});
+		
 		$this->addExpression('emails_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Email',['table_alias'=>'emails_str']);
 			return $x->addCondition('contact_id',$q->getField('id'))
