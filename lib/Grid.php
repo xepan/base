@@ -74,16 +74,16 @@ class Grid extends \Grid{
 	    if($this->owner instanceof \CRUD){
             if(!$this->current_row_html['edit']){
                 if($this->row_edit)
-                    $this->current_row_html['edit']= '<a class="pb_edit ui orange icon button" href="#" data-id="'.$this->model->id.'"><i class="write icon"></i></a>';
+                    $this->current_row_html['edit']= '<a class="pb_edit ui orange mini icon button" href="#" data-id="'.$this->model->id.'"><i class="write icon"></i></a>';
                 else
-                    $this->current_row_html['edit']= '<span class="ui icon button"><i class="write icon"></i></span>';
+                    $this->current_row_html['edit']= '<span class="ui icon mini button"><i class="write icon"></i></span>';
             }
 
             if(!$this->current_row_html['delete']){
     			if($this->row_delete)
-    			    $this->current_row_html['delete']= '<a class="do-delete ui red icon button" href="#" data-id="'.$this->model->id.'"><i class="trash icon"></i></a>';
+    			    $this->current_row_html['delete']= '<a class="do-delete ui red icon mini button" href="#" data-id="'.$this->model->id.'"><i class="trash icon"></i></a>';
     			else
-    			    $this->current_row_html['delete']= '<span class="ui icon button"><i class="trash icon"></i></span>';
+    			    $this->current_row_html['delete']= '<span class="ui icon mini button"><i class="trash icon"></i></span>';
             }
 	    }
 	}
