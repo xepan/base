@@ -28,7 +28,7 @@ class Grid extends \Grid{
     function addButton($label, $class = 'Button')
     {
         if (!$this->buttonset) {
-            $this->buttonset = $this->add('ButtonSet', null, 'grid_buttons')->setClass('ui buttons');
+            $this->buttonset = $this->add('ButtonSet', null, 'grid_buttons')->setClass('ui mini buttons');
         }
         return $this->buttonset
             ->add($class, 'gbtn'.count($this->elements))
