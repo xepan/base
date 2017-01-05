@@ -1,4 +1,4 @@
-<a data-toggle="dropdown" class="btn dropdown-toggle"><i class="fa fa-envelope-o"></i><span class="count inter-msg-count">{message_count}16{/}</span></a>
+<a data-toggle="dropdown" class="btn dropdown-toggle"><i class="fa fa-envelope-o"></i><span class="count inter-msg-count">{message_count}{/}</span></a>
 <ul class="dropdown-menu notifications-list messages-list dropdown-menu-right">
   <li class="pointer">
     <div class="pointer-inner">
@@ -10,6 +10,7 @@
           Look, just because I don't be givin' no man a foot massage don't make it
           right for Marsellus to throw...
           {/}</span></span><span class="time"><i class="fa fa-clock-o"></i>{callback_date}13 min.{/}      </span></a></li>{/}{/}
+  {$no_record_found}
   <li class="item-footer"><a href="?page=xepan_communication_internalmsg">View all messages</a></li>
 </ul>
 <style>
