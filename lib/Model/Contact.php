@@ -55,8 +55,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->addField('search_string')->type('text')->system(true)->defaultValue(null);
 		$this->addField('freelancer_type')->enum(['Public','Company','Not Applicable'])->defaultValue('Not Applicable');
-		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
-		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
+		$this->addField('related_with');
+		$this->addField('related_id')->type('int');
 
 		$this->add('xepan/filestore/Field_Image',['name'=>'image_id','deref_field'=>'thumb_url'])->allowHTML(true);
 
