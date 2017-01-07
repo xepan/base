@@ -55,8 +55,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->addField('search_string')->type('text')->system(true)->defaultValue(null);
 		$this->addField('freelancer_type')->enum(['Public','Company','Not Applicable'])->defaultValue('Not Applicable');
-		// $this->addField('created_at')->type('datetime')->defaultValue($this->app->now);
-		// $this->addField('updated_at')->type('datetime')->defaultValue($this->app->now);
+		$this->addField('related_with');
+		$this->addField('related_id')->type('int');
 
 		$this->add('xepan/filestore/Field_Image',['name'=>'image_id','deref_field'=>'thumb_url'])->allowHTML(true);
 
@@ -232,16 +232,16 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$lister->setModel($communication)->setOrder(['created_at desc','id desc']);
 		$p = $lister->add('Paginator',null,'Paginator');
 		$p->setRowsPerPage(10);
-
+		
 		$form = $lister->add('Form',null,'form');
 		$form->setLayout('view\communication\filterform');
 		$type_field = $form->addField('xepan\base\DropDown','communication_type');
 		$type_field->setAttr(['multiple'=>'multiple']);
-		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal']);
+		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal','TeleMarketing'=>'TeleMarketing']);
 		$form->addField('search')->set($_GET['search']);
 		$form->addSubmit('Filter')->addClass('btn btn-primary btn-block');
 		
-		$temp = ['Email','Support','Call','Newsletter','SMS','Personal'];
+		$temp = ['Email','Support','Call','Newsletter','SMS','Personal','TeleMarketing'];
 		$type_field->set($_GET['comm_type']?explode(",", $_GET['comm_type']):$temp)->js(true)->trigger('changed');
 		
 		if($form->isSubmitted()){			
