@@ -205,10 +205,14 @@ class Model_Contact extends \xepan\base\Model_Table{
 		}
 	}
 
-	function page_communication($page){		
+	function page_communication($page){	
 		$this->app->stickyGET('comm_type');
-		$communication = $this->add('xepan\communication\Model_Communication');
+		
+		$tabs = $page->add('Tabs');
+        $communication_tab = $tabs->addTab('Communication');
+        $followup_tab = $tabs->addTab('Followups');
 
+		$communication = $page->add('xepan\communication\Model_Communication');
 		$communication->addCondition(
 						$communication->dsql()->orExpr()
 						->where('from_id',$this->id)
@@ -218,7 +222,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$communication->setOrder('created_at','desc');
 		$contact_id = $this->id;
 		
-		$lister=$page->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
+		$lister=$communication_tab->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
 		if($_GET['comm_type']){
 			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
 		}
@@ -247,6 +251,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if($form->isSubmitted()){			
 			$lister->js()->reload(['comm_type'=>$form['communication_type'],'search'=>$form['search']])->execute();
 		}
+		
+		$this->app->hook('communication_rendered',[$contact_id,$followup_tab]);
 	}
 
 	//load Logged In check for the user of contact loaded or not, 
