@@ -237,11 +237,11 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$form->setLayout('view\communication\filterform');
 		$type_field = $form->addField('xepan\base\DropDown','communication_type');
 		$type_field->setAttr(['multiple'=>'multiple']);
-		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal','TeleMarketing'=>'TeleMarketing']);
+		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal','Comment'=>'Comment','TeleMarketing'=>'TeleMarketing']);
 		$form->addField('search')->set($_GET['search']);
 		$form->addSubmit('Filter')->addClass('btn btn-primary btn-block');
 		
-		$temp = ['Email','Support','Call','Newsletter','SMS','Personal','TeleMarketing'];
+		$temp = ['Email','Support','Call','Newsletter','SMS','Personal','Comment','TeleMarketing'];
 		$type_field->set($_GET['comm_type']?explode(",", $_GET['comm_type']):$temp)->js(true)->trigger('changed');
 		
 		if($form->isSubmitted()){			
