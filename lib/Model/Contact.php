@@ -257,11 +257,14 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 	//load Logged In check for the user of contact loaded or not, 
 	//mainly used  for online contact account
-	function loadLoggedIn(){
+	function loadLoggedIn($type=null){
 		if($this->loaded()) $this->unload();
 		if(!$this->api->auth->isLoggedIn()) return false;
 		
 		$this->addCondition('user_id',$this->api->auth->model->id);
+		if($type)
+			$this->addCondition('type',$type);
+
 		$this->tryLoadAny();
 		if(!$this->loaded()) return false;
 		return true;
