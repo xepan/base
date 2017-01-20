@@ -7,7 +7,9 @@ class View_EasySetupWizard extends \View{
 	function init(){
 		parent::init();
 		
-		// --Country Setup Wizard--
+		/**************************************************************************
+			Country Setup Wizard
+		**************************************************************************/	
 		if($_GET[$this->name.'_set_countries']){
 			$this->api->db->dsql()->expr(file_get_contents(realpath(getcwd().'/vendor/xepan/base/countriesstates.sql')))->execute();
 			$this->js(true)->reload();
@@ -31,7 +33,9 @@ class View_EasySetupWizard extends \View{
 			->setHelpURL('#')
 			->setAction('Click Here',$action,$isDone);
 
-		//--Time Zone Set Up Wizard--
+		/**************************************************************************
+			Time Zone Set Up Wizard
+		**************************************************************************/	
 		if($_GET[$this->name.'_time_zone']){
 			
 			$this->js(true)->univ()->frameURL("Time Zone",$this->app->url('xepan_communication_generalsetting'));
@@ -64,7 +68,9 @@ class View_EasySetupWizard extends \View{
 			->setHelpURL('#')
 			->setAction('Click Here',$action,$isDone);
 
-		//--Email Duplication Allowed Configuration Set Up Wizard--
+		/**************************************************************************
+			Email Duplication Allowed Configuration Set Up Wizard
+		**************************************************************************/	
 		if($_GET[$this->name.'_email_duplication_allowed']){
 			$this->js(true)->univ()->frameURL("Email Duplication Allowed Configuration",$this->app->url('xepan_communication_generalsetting'));
 		}
@@ -96,7 +102,9 @@ class View_EasySetupWizard extends \View{
 			->setHelpURL('#')
 			->setAction('Click Here',$action,$isDone);
 
-		//--Contact No. Duplication Allowed Configuration Set Up Wizard
+		/**************************************************************************
+			Contact No. Duplication Allowed Configuration Set Up Wizard
+		**************************************************************************/	
 		if($_GET[$this->name.'_contact_no_duplcation_allowed']){
 			$this->js(true)->univ()->frameURL("Contact No. Duplication Allowed Configuration",$this->app->url('xepan_communication_generalsetting'));
 		}
