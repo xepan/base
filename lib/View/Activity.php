@@ -13,10 +13,11 @@ class View_Activity extends \View{
 	public $grid_title;
 	public $paginator_count;
 	public $activity_on_dashboard;
+	public $pass_descendants_condition;
 
 	function init(){
 		parent::init();
-
+		
 		if($this->communication_type){
 			$model_name = 'Communication';
 			$model = $this->add('xepan\communication\Model_Communication');
@@ -26,6 +27,7 @@ class View_Activity extends \View{
 			$columns = ['title','from','to','created_at','contact_type','to_id','from_id'];
 			$grid_template = ['view\activity\communication-activities'];
 		}else{
+			
 			$model_name = 'activity';
 			$model = $this->add('xepan\base\Model_Activity');
 			$related_contact = 'related_contact_id';
@@ -38,6 +40,7 @@ class View_Activity extends \View{
 			$columns = ['activity'];
 			$grid_template = null;
 		}
+
 
 		$model->addExpression('contact_type')->set(function($m,$q)use($related_contact){	
 			$contact = $this->add('xepan\base\Model_Contact');
@@ -60,7 +63,8 @@ class View_Activity extends \View{
 			return $employee->fieldQuery('post_id');
 		});
 
-		$model->addCondition('post',array_unique($this->descendants));
+		if($this->pass_descendants_condition != 'yes')	
+			$model->addCondition('post',array_unique($this->descendants));							
 
 		if($this->self_activity === 'true'){											
 			$model->addCondition($contact_id,'<>',$this->app->employee->id);			
