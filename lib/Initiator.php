@@ -25,8 +25,8 @@ class Initiator extends \Controller_Addon {
         $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
-        
-        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){ 
+            
+        if(!isset($this->app->is_install) AND $this->app->epan['epan_dbversion'] < (int)$db_model->max_count){ 
             $this->app->epan->reload();        
             $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
             foreach ($db_model as $file) {
