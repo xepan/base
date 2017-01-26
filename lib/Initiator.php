@@ -7,7 +7,7 @@ class Initiator extends \Controller_Addon {
 
     function init(){
         parent::init();        
-        
+                  
         // $this->app->forget($this->app->current_website_name.'_epan');
         
         $this->addAppDateFunctions();
@@ -16,7 +16,7 @@ class Initiator extends \Controller_Addon {
             $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
             $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
         }
-                    
+                                
         if(!$this->app->epan->loaded()){
             $this->app->forget($this->app->current_website_name.'_epan');
             die('No site found, forwarding to 404 service');
@@ -25,8 +25,8 @@ class Initiator extends \Controller_Addon {
         $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
         
         $db_model=$this->add('xepan/epanservices/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\epanservices'));
-        
-        if($this->app->epan['epan_dbversion'] < (int)$db_model->max_count){    
+            
+        if(!isset($this->app->is_install) AND $this->app->epan['epan_dbversion'] < (int)$db_model->max_count){ 
             $this->app->epan->reload();        
             $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
             foreach ($db_model as $file) {
@@ -187,8 +187,6 @@ class Initiator extends \Controller_Addon {
                 $app->layout->add('xepan\base\View_QuickSearch',null,'quick_search_form');
         });
 
-
-
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
         // throw new \Exception($this->app->employee->id, 1);
@@ -270,7 +268,8 @@ class Initiator extends \Controller_Addon {
 
 
     function setup_xepan_apps($side){
-         foreach ($this->app->epan->ref('InstalledApplications')->setOrder('application_id') as $apps) {
+        
+         foreach ($this->add('xepan\base\Model_Epan_InstalledApplication')->setOrder('application_id') as $apps) {
             $this->app->xepan_addons[] = $apps['application_namespace'];   
         }
 

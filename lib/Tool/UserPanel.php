@@ -25,6 +25,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'forgot_message'=>'We have sent you a password recovery mail. Check your e-mail address linked to the account.',
 				'reactive_message'=>'Verification mail sent. Check your e-mail address linked to the account.'
 			];	
+	public $active_view=null;
+
 	function init(){
 		parent::init();
 
@@ -46,7 +48,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		});
 
 		if($this->options['show_micro_login']){
-			$ml_view=$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
+			$this->active_view = $ml_view=$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
 			$this->app->stickyForget('options');	
 			return;
 		}
@@ -55,36 +57,37 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			
 			switch ($this->options['layout']) {
 				case 'login_view':
-					$user_login=$this->add('xepan\base\View_User_LoginPanel',array('options'=>$this->options,'reload_object'=>$this->reload_object));
+					$this->active_view = $user_login=$this->add('xepan\base\View_User_LoginPanel',array('options'=>$this->options,'reload_object'=>$this->reload_object));
 					$this->app->stickyForget('layout');
 				break;
 
 				case 'forget_password':
-					$f_view=$this->add('xepan\base\View_User_ForgotPassword',array('options'=>$this->options));
+					$this->active_view = $f_view=$this->add('xepan\base\View_User_ForgotPassword',array('options'=>$this->options));
 					$this->app->stickyForget('options');
 				break;
 
 				case 'new_registration':
-					$r_view=$this->add('xepan\base\View_User_Registration',array('options'=>$this->options));
+					$this->active_view = $r_view=$this->add('xepan\base\View_User_Registration',array('options'=>$this->options));
 					$this->app->stickyForget('options');
 				break;
 
 				case 'verify_account':
-					$v_view=$this->add('xepan\base\View_User_VerifyAccount',array('options'=>$this->options));
+					$this->active_view = $v_view=$this->add('xepan\base\View_User_VerifyAccount',array('options'=>$this->options));
 					$this->app->stickyForget('options');
 				break;
 
 				case 'verify_again':
-					$va_view=$this->add('xepan\base\View_User_VerifyAgain',array('options'=>$this->options));
+					$this->active_view = $va_view=$this->add('xepan\base\View_User_VerifyAgain',array('options'=>$this->options));
 					$this->app->stickyForget('options');
 				break;
 
 				case 'reset_form':
-					$va_view=$this->add('xepan\base\View_User_ResetPassword',array('options'=>$this->options));
+					$this->active_view = $va_view=$this->add('xepan\base\View_User_ResetPassword',array('options'=>$this->options));
 					$this->app->stickyForget('options');	
 				break;
 
-				case 'micro_login':					
+				case 'micro_login':	
+								
 				break;
 
 				default:
@@ -94,10 +97,18 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		}else{
 			$this->js()->univ()->loaction($this->api->url($this->options['redirect_url']));
 			if($this->options['layout'] == "micro_login")
-				$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
+				$this->active_view = $this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
 			else
-				$this->add('xepan\base\View_User_AlreadyLoggedin',array('options'=>$this->options));
+				$this->active_view = $this->add('xepan\base\View_User_AlreadyLoggedin',array('options'=>$this->options));
 		}
+	}
+
+	function getTemplate(){
+		return $this->active_view->template;
+	}
+
+	function getTemplateFile(){
+		return $this->active_view->template->origin_filename;
 	}
 
 }
