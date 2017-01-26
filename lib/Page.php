@@ -45,6 +45,8 @@ class Page extends \Page {
 
 		$br = $this->app->layout->add('CompleteLister',null,'breadcrumb',['layout/cube','breadcrumb']);
 		$br->setSource($breadcrumbs);
-		
+
+		$this->js(true)->_load('intro.min')->_css('introjs.min')->_load('xintroJS');
+		$this->js('click',$this->js()->univ()->runIntro())->_selector('.run-page-intro');
 	}
 }
