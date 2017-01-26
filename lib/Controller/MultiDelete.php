@@ -12,7 +12,7 @@ class Controller_MultiDelete extends \AbstractController {
 	function init(){
         parent::init();
         
-        if(!$this->app->auth->model->isSuperUser()) return;
+        // if(!$this->app->auth->model->isSuperUser()) return;
 
         if($this->owner instanceof \CRUD ){
         	if($this->owner->isEditing())
