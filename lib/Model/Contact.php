@@ -315,4 +315,29 @@ class Model_Contact extends \xepan\base\Model_Table{
 	function user(){
 		return $this->ref('user_id');
 	}
+
+	function page_manage_score($p){		
+		$score_view = $p->add('View_Info')->set('Current Score : '.$this['score'])->addClass('panel panel-default panel-heading xepan-push');
+		$form = $p->add('Form')->addClass('xepan-push-small');
+		$form->addField('score');
+		$form->addField('DropDown','do_what')->setValueList(['increase'=>'increase','decrease'=>'decrease']);
+		$form->addSubmit('Update Score')->addClass('btn btn-primary');
+
+		if($form->isSubmitted()){
+			$this->manage_score($form['do_what'],$form['score']);
+			return $this->app->page_action_result = $this->app->js(true,$p->js()->univ()->closeDialog())->univ()->successMessage('Done');
+		}
+	}
+
+	function manage_score($do_what,$score){		
+		if($score % 10 != 0)
+			throw new \Exception("Score Should Be Multiple Of 10");
+
+		if($do_what == 'increase')
+			$this['score'] += $score;
+		else
+			$this['score'] -= $score;
+		
+		$this->save();
+	}
 }
