@@ -4,6 +4,15 @@ class View_Message extends \CompleteLister{
 	function init(){
 		parent::init();
 
+		$unread_msg_m = $this->add('xepan\communication\Model_Communication_AbstractMessage');
+        $unread_msg_m->addCondition([
+            ['cc_raw','like','%"'.$this->app->employee->id.'"%'],
+            ['to_raw','like','%"'.$this->app->employee->id.'"%']
+            ]);
+        $unread_msg_m->addCondition('extra_info','not like','%'.$this->app->employee->id.'%');
+        $unread_msg_m->setLimit(3);
+        $this->setModel($unread_msg_m);
+
 	}
 	function setModel($m){
 		$m = parent::setModel($m);
