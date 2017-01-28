@@ -76,7 +76,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact_Relation',null,null,'Relations');
 		$this->hasMany('xepan\base\Contact_IM',null,null,'IMs');
 		$this->hasMany('xepan\base\Contact_Event',null,null,'Events');
-
+		$this->hasMany('xepan\base\Contact_CommunicationReadEmail','contact_id',null,'UnreadEmails');		
+		
 		$this->addExpression('emails_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Email',['table_alias'=>'emails_str']);
 			return $x->addCondition('contact_id',$q->getField('id'))
