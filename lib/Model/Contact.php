@@ -334,11 +334,14 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if($score % 10 != 0)
 			throw new \Exception("Score Should Be Multiple Of 10");
 
+		$model_point_system = $this->add('xepan\base\Model_PointSystem');
+		$model_point_system->addCondition('contact_id',$this->id);
+
 		if($do_what == 'increase')
-			$this['score'] += $score;
+			$model_point_system['score'] += $score;
 		else
-			$this['score'] -= $score;
+			$model_point_system['score'] -= $score;
 		
-		$this->save();
+		$model_point_system->save();
 	}
 }
