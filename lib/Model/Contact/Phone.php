@@ -33,7 +33,7 @@ class Model_Contact_Phone extends Model_Contact_Info{
 				'fields'=>[
 							'contact_no_duplcation_allowed'=>'DropDown'
 							],
-					'config_key'=>'Contact No Duplication Allowed Settings',
+					'config_key'=>'contact_no_duplication_allowed_settings',
 					'application'=>'base'
 			]);
 		$contactconfig_m->tryLoadAny();	
