@@ -319,6 +319,7 @@ class Initiator extends \Controller_Addon {
     function exportEntities($app,&$array){
         $array['date_range'] = ['caption'=>'Date Range', 'type'=>'DateRangePicker'];
         $array['contact'] = ['caption'=>'Contact','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Contact'];
+        $array['report_type'] = ['caption'=>'Type','type'=>'DropDown'];
 
     }
 
