@@ -14,6 +14,7 @@ namespace xepan\base;
 class Model_Contact_Info extends Model_Table{
 	public $table='contact_info';
 	public $acl='parent';
+	public $bypass_hook = false;
 
 	function init(){
 		parent::init();
@@ -40,7 +41,7 @@ class Model_Contact_Info extends Model_Table{
 		$this->addHook('beforeSave',$this);
 	}
 
-	function beforeSave($m){
-    	$this->app->hook('contact_info',[$this]);    	
+	function beforeSave($m){		
+    	$this->app->hook('contact_info',[$this,$this->bypass_hook]);    	
 	}
 }
