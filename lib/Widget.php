@@ -31,8 +31,8 @@ class Widget extends \View{
 		return parent::recursiveRender();
 	}
 
-	function isChart(){
-		return @$this->report->report_type === 'Chart';
+	function isChart(){		
+		return @$this->report->report_type === 'chart';
 	}
 
 }
