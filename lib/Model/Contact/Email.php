@@ -12,18 +12,20 @@
 namespace xepan\base;
 
 class Model_Contact_Email extends Model_Contact_Info{
-
+	public $skip_email_check=false;
+	
 	function init(){
 		parent::init();
 			
 		$this->getElement('head')->enum(['Official','Personal']);
 		$this->addCondition('type','Email');
 		$this->is(['value|to_trim|required|email']);
-		$this->addHook('beforeSave',[$this,'checkEmail']);
+		// if(!$this->skip_email_check)
+		// 	$this->addHook('beforeSave',[$this,'checkEmail']);
 	}
 
 	function checkEmail(){
-
+		
 
         $contact = $this->add('xepan\base\Model_Contact');
         
