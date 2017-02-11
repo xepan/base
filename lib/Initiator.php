@@ -314,6 +314,7 @@ class Initiator extends \Controller_Addon {
         $array[] = ['xepan\base\Widget_RecentContacts','level'=>'Global','title'=>'Recent Contacts'];
         $array[] = ['xepan\base\Widget_EpanValidity','level'=>'Global','title'=>'Epan Information'];
         $array[] = ['xepan\base\Widget_EmployeeSpecificActivities','level'=>'Global','title'=>'Employee Activities'];
+        $array[] = ['xepan\base\Widget_EmployeeContacts','level'=>'Global','title'=>'Contacts Added'];
     }
 
     function exportEntities($app,&$array){
