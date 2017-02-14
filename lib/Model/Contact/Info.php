@@ -42,6 +42,6 @@ class Model_Contact_Info extends Model_Table{
 	}
 
 	function beforeSave($m){		
-    	// $this->app->hook('contact_info',[$this,$this->bypass_hook]);    	
+    	$this->app->hook('contact_info',[$this,$this->bypass_hook]);    	
 	}
 }
