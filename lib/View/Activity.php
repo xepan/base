@@ -63,6 +63,9 @@ class View_Activity extends \View{
 			return $employee->fieldQuery('post_id');
 		});
 
+		if($this->app->employee['scope'] == 'SuperUser')
+			$this->pass_descendants_condition = 'yes';
+
 		if($this->pass_descendants_condition != 'yes')	
 			$model->addCondition('post',array_unique($this->descendants));							
 
