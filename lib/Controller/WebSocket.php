@@ -28,6 +28,9 @@ class Controller_WebSocket extends \AbstractController{
 		
 		if(!$this->server) return;
 		
+		if(!is_array($contact_ids_array) OR !count($contact_ids_array))
+			return false;
+
 		$response = null;
 
 		$uu_ids = [];
