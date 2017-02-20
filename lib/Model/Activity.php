@@ -70,6 +70,10 @@ class Model_Activity extends Model_Table{
 	}
 
 	function pushToWebSocket($employee_ids, $message){
+		if(!is_array($employee_ids) OR !count($employee_ids)){
+			return ;
+		}
+		
 		if($this->app->getConfig('websocket-notifications',false)){
 			$response = $this->add('xepan\base\Controller_WebSocket')
 				->sendTo($employee_ids, is_array($message)?json_encode($message):$message);
