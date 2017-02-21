@@ -10,6 +10,8 @@ class Widget_EmployeeContacts extends \xepan\base\Widget{
 		$this->report->enableFilterEntity('employee');
 
 		$this->grid = $this->add('xepan\base\Grid');
+		$this->grid->add('View',null,'grid_buttons')->setHtml('<b>Contacts Added</b>');
+		$this->grid->removeSearchIcon();
 	}
 
 	function recursiveRender(){
