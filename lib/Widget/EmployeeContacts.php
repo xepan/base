@@ -19,15 +19,20 @@ class Widget_EmployeeContacts extends \xepan\base\Widget{
 		
 		if(isset($this->report->start_date))
 			$contact_m->addCondition('created_at','>=',$this->report->start_date);
+		else
+			$contact_m->addCondition('created_at','>=',$this->app->today);
 
 		if(isset($this->report->end_date))
 			$contact_m->addCondition('created_at','<=',$this->app->nextDate($this->report->end_date));
-		
+		else
+			$contact_m->addCondition('created_at','<=',$this->app->nextDate($this->app->today));
+
 		if(isset($this->report->employee))
 			$contact_m->addCondition('created_by_id',$this->report->employee);
 
 		$this->grid->setModel($contact_m,['effective_name','type','created_at']);
-		
+		$this->grid->addPaginator(20);
+
 		parent::recursiveRender();
 	}
 }
