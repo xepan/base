@@ -30,6 +30,7 @@ class Model_Epan_InstalledApplication extends \xepan\base\Model_Table{
 		$this->addExpression('application_namespace')->set($this->refSQL('application_id')->fieldQuery('namespace'));
 
 		$this->addField('is_active')->type('boolean')->defaultValue(true);
+		$this->hasMany('xepan\hr\EmployeeDepartmentalAclAssociation','installed_app_id');
 		$this->addExpression('is_valid')->set(true); // TODO set based on actual condition, FREE, TIME BASED, LICENSE VALID etc.
 
 	}
