@@ -320,6 +320,12 @@ class Initiator extends \Controller_Addon {
     function exportEntities($app,&$array){
         $array['date_range'] = ['caption'=>'Date Range', 'type'=>'DateRangePicker'];
         $array['contact'] = ['caption'=>'Contact','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Contact'];
+        $array['User'] = ['caption'=>'User','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_User'];
+        $array['Country'] = ['caption'=>'Country','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Country'];
+        $array['Miscellaneous_Technical_Settings'] = ['caption'=>'Miscellaneous_Technical_Settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Miscellaneous_Technical_Settings'];
+        $array['Email_Duplication_Allowed_Settings'] = ['caption'=>'Email_Duplication_Allowed_Settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Email_Duplication_Allowed_Settings'];
+        $array['contact_no_duplication_allowed_settings'] = ['caption'=>'contact_no_duplication_allowed_settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_contact_no_duplication_allowed_settings'];
+        $array['GraphicalReport'] = ['caption'=>'GraphicalReport','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_GraphicalReport'];
         $array['report_type'] = ['caption'=>'Type','type'=>'DropDown'];
 
     }

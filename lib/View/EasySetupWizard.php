@@ -83,14 +83,14 @@ class View_EasySetupWizard extends \View{
 				'fields'=>[
 							'email_duplication_allowed'=>'DropDown'
 							],
-					'config_key'=>'Email Duplication Allowed Settings',
+					'config_key'=>'Email_Duplication_Allowed_Settings',
 					'application'=>'base'
 			]);
 		$email_m->tryLoadAny();	
 
 		if($email_m['email_duplication_allowed']){
 			$isDone = true;
-			$action = $this->js()->univ()->dialogOK("Already have Data",' You already have updated the email duplication allowed settings, visit page ? <a href="'. $this->app->url('xepan_communication_generalsetting')->getURL().'"> click here to go </a>');
+			$action = $this->js()->univ()->dialogOK("Already have Data",' You already have updated the Email_Duplication_Allowed_Settings, visit page ? <a href="'. $this->app->url('xepan_communication_generalsetting')->getURL().'"> click here to go </a>');
 		}	
 
 		$email_view = $this->add('xepan\base\View_Wizard_Step');
