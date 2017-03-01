@@ -18,7 +18,7 @@
       </thead>{/}
       {$subheader}
       <tbody>{rows}{row}
-        <tr data-id="{$id}" data-contacttype="{$contact_type}" class="{$odd_even}">{cols}
+        <tr data-id="{$id}" data-contacttype="{$contact_type}" class="{$odd_even} {$score_class}">{cols}
           <td style="font-size: 0.87em; font-weight: 400;">{$activity}&nbsp;</td>
           <td><span style="max-width:600px;">{$contact}</span></td>
           <td> <span style="cursor:pointer; cursor: hand; max-width:600px;" onclick="javascript:$.univ().frameURL('Document Detail','?page={$document_url}');">{$related_document_id}</span></td>

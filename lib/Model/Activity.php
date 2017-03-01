@@ -27,6 +27,7 @@ class Model_Activity extends Model_Table{
 		$this->addField('notify_to');
 		$this->addField('notification');
 		$this->addField('document_url');
+		$this->addField('score');
 
 		$this->addField('created_at')->type('datetime')->defaultValue($this->api->now);
 		$this->setOrder('created_at','desc');		

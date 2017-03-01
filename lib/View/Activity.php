@@ -24,7 +24,7 @@ class View_Activity extends \View{
 			$model->addCondition('communication_type',$this->communication_type);
 			$related_contact = 'to_id';
 			$contact_id = 'from_id';
-			$columns = ['title','from','to','created_at','contact_type','to_id','from_id'];
+			$columns = ['title','from','to','created_at','contact_type','to_id','from_id','score'];
 			$grid_template = ['view\activity\communication-activities'];
 		}else{
 			
@@ -32,7 +32,7 @@ class View_Activity extends \View{
 			$model = $this->add('xepan\base\Model_Activity');
 			$related_contact = 'related_contact_id';
 			$contact_id = 'contact_id';
-			$columns = ['activity','contact','related_document_id','related_contact','created_at','document_url','contact_type'];
+			$columns = ['activity','contact','related_document_id','related_contact','created_at','document_url','contact_type','score'];
 			$grid_template = ['view\activity\activities'];
 		}
 
@@ -136,6 +136,14 @@ class View_Activity extends \View{
 				if(!$g->model['related_contact_id']) 
 					$g->current_row_html['related_contact']= "";
 			}
+				
+
+			if($g->model['score'] > 0)
+				$g->current_row_html['score_class']="bg-success";
+			if($g->model['score'] < 0)
+				$g->current_row_html['score_class']="bg-danger";
+			if($g->model['score'] == 0)
+				$g->current_row_html['score_class']=" ";
 				
 		});
 
