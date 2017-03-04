@@ -31,7 +31,7 @@ class Controller_WebSocket extends \AbstractController{
 		// if(!is_array($contact_ids_array) OR !count($contact_ids_array))
 		// 	return false;
 
-		$response = null;
+		$response = [];
 
 		$uu_ids = [];
 		foreach ($contact_ids_array as $id) {
