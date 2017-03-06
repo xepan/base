@@ -55,7 +55,13 @@ class Model_Activity extends Model_Table{
 				$m['notification'] = ['message'=>$m['notification']];
 		});
 
+
+		$this->addHook('beforeSave',$this);
 		$this->addHook('afterSave',$this);
+	}
+
+	function beforeSave(){
+		if(!$this['score']) $this['score'] = 0;
 	}
 
 	function isJson($string) {
