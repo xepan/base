@@ -76,6 +76,20 @@ class Model_Epan extends \xepan\base\Model_Table{
 		return $activity;
 	}
 
+
+	function isApplicationInstalled($app){
+		
+		$installed  = $this->add('xepan\base\Model_Epan_InstalledApplication');
+		$installed->join('application','application_id')
+			->addField('namespace');
+
+		$installed
+					->addCondition('epan_id',$this->id)
+					->addCondition('namespace',$app)
+					->tryLoadAny();
+		return $installed->loaded();
+	}
+
 	// function deleteAllEmailSettings(){
 		
 	// 	$this->ref('EmailSettings')->deleteAll();
