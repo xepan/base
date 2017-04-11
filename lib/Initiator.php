@@ -201,14 +201,7 @@ class Initiator extends \Controller_Addon {
         ->setBaseURL('./vendor/xepan/base/')
         ;
         
-        $this->app->jui->addStaticInclude('pnotify.custom.min');
-        $this->app->jui->addStaticInclude('xepan.pnotify');
-        $this->app->jui->addStaticStyleSheet('pnotify.custom.min');
-        $this->app->jui->addStaticStyleSheet('animate');
-        $this->app->jui->addStaticInclude('xepan_jui');
-        $this->app->jui->addStaticInclude('xepan_jui');
-        $this->app->jui->addStaticStyleSheet('bootstrap.min');
-        $this->app->jui->addStaticInclude('bootstrap.min');
+    
 
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->usePasswordEncryption('md5');
@@ -236,7 +229,7 @@ class Initiator extends \Controller_Addon {
         $this->app->exportFrontEndTool('xepan\base\Tool_UserPanel');
         $this->app->exportFrontEndTool('xepan\base\Tool_Location');
 
-        $this->app->jui->addStaticStyleSheet('xepan-base');
+        // $this->app->jui->addStaticStyleSheet('xepan-base');
 
         if($_SERVER['SERVER_ADDR']){
             
