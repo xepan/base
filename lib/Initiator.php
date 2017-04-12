@@ -226,9 +226,6 @@ class Initiator extends \Controller_Addon {
             return $app->fronend_tool;
         });
 
-        $this->app->exportFrontEndTool('xepan\base\Tool_UserPanel');
-        $this->app->exportFrontEndTool('xepan\base\Tool_Location');
-
         // $this->app->jui->addStaticStyleSheet('xepan-base');
 
         if($_SERVER['SERVER_ADDR']){
