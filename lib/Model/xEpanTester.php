@@ -31,7 +31,11 @@ class Model_xEpanTester extends \Model {
          * This model automatically sets its source by traversing 
          * and searching for suitable files
          */
-        $p= scandir($this->api->pathfinder->base_location->base_path.'/../vendor/'.str_replace("\\","/",$this->namespace)."/page/".$this->dir);
+        $path= $this->api->pathfinder->base_location->base_path.'/../vendor/'.str_replace("\\","/",$this->namespace)."/page/".$this->dir;
+        if(!file_exists($path))
+            $path = $this->api->pathfinder->base_location->base_path.'/../shared/apps/'.str_replace("\\","/",$this->namespace)."/page/".$this->dir;
+
+        $p= scandir($path);
         // $p=$this->api->pathfinder->searchDir($this->type,$this->dir);
 
         unset($p[0]);
