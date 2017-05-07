@@ -278,7 +278,7 @@ class Page_Tester extends \xepan\base\Page {
                 if($this->proper_responses[$k]==$result && isset($this->proper_responses[$k])){
                     $row[$key.'_res']='<font color="green">PASS</font><br/>'.htmlspecialchars(is_array($result)?print_r($result,true):$result);
                 }elseif($this->proper_responses[$k]){
-                    $row[$key.'_res']='<font color="red">'.htmlspecialchars(is_array($result)?print_r($result,true):$result).'</font><br/>'.
+                    $row[$key.'_res']='<font color="red">'.htmlspecialchars(is_array($result)?print_r($this->arrayRecursiveDiff($result,$this->proper_responses[$k]),true):$result).'</font><br/>'.
                         var_export($this->proper_responses[$k],true);
                 }
 
@@ -306,5 +306,25 @@ class Page_Tester extends \xepan\base\Page {
         }
         return array($this->add($t),$result);
     }
+
+    function arrayRecursiveDiff($aArray1, $aArray2) {
+      $aReturn = array();
+
+      foreach ($aArray1 as $mKey => $mValue) {
+        if (array_key_exists($mKey, $aArray2)) {
+          if (is_array($mValue)) {
+            $aRecursiveDiff = $this->arrayRecursiveDiff($mValue, $aArray2[$mKey]);
+            if (count($aRecursiveDiff)) { $aReturn[$mKey] = $aRecursiveDiff; }
+          } else {
+            if ($mValue != $aArray2[$mKey]) {
+              $aReturn[$mKey] = $mValue;
+            }
+          }
+        } else {
+          $aReturn[$mKey] = $mValue;
+        }
+      }
+      return $aReturn;
+    } 
 
 }
