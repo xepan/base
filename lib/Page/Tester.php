@@ -289,6 +289,7 @@ class Page_Tester extends \xepan\base\Page {
             $data[]=$row;
         }
         $this->grid->setSource($data);
+        $this->grid->removeCOlumn('id');
     }
     function formatResult(&$row,$key,$result){
         $row[$key.'_res']=$result;
