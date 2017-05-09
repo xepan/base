@@ -95,6 +95,19 @@ class Controller_Validator extends \Controller_Validator{
         return $a;
     }
 
+    function rule_date_after_without_time($a){
+        $b=$this->pullRule();
+        $b_val=$this->get($b);
+
+        if($a=="") return $a;
+
+        $a = date('Y-m-d',strtotime($a));
+        $b_val = date('Y-m-d',strtotime($b_val));
+        if(strtotime($a) < strtotime($b_val)) $this->fail('Value "{{arg1}}" must be greater then {{arg2}}',$a,$b_val);
+
+        return $a;
+    }
+
     function rule_to_strip_tags($a)
     {
         return strip_tags($a);
