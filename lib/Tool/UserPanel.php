@@ -11,6 +11,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'login_success_url'=>'index',
 				'logout_page'=>'logout',
 				'login_page'=>'login',
+				'registration_page_extranal_url'=>null,
 				'show_micro_login'=>false,
 				'show_footer'=>true,
 				'show_login_link'=>true,
@@ -39,13 +40,19 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		if($layout){			
 			$this->options['layout']=$layout;
 		}
-
 		
 		$view_url = $this->api->url(null,['cut_object'=>$this->name]);
 
-		$this->on('click','a.xepan-login-panl-loadview',function($js,$data)use($view_url){
-			return $this->js()->reload(['layout'=>$data['showview']],null,$view_url);
-		});
+		if($this->options['registration_page_extranal_url']){
+			$this->on('click','a.xepan-login-panl-loadview',function($js,$data)use($view_url){
+				return $this->app->redirect($this->api->url($this->options['registration_page_extranal_url']))->execute();
+			});
+
+		}else{
+			$this->on('click','a.xepan-login-panl-loadview',function($js,$data)use($view_url){
+				return $this->js()->reload(['layout'=>$data['showview']],null,$view_url);
+			});
+		}
 
 		if($this->options['show_micro_login']){
 			$this->active_view = $ml_view=$this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
