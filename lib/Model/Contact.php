@@ -344,4 +344,69 @@ class Model_Contact extends \xepan\base\Model_Table{
 		
 		$model_point_system->save();
 	}
+
+	function checkEmail($email,$value,$model,$obj){
+		$contact = $this->add('xepan\commerce\Model_'.$model['type']);
+        if($model->id)
+	        $contact->load($model->id);
+
+		$emailconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			[
+				'fields'=>[
+							'email_duplication_allowed'=>'DropDown'
+							],
+					'config_key'=>'Email_Duplication_Allowed_Settings',
+					'application'=>'base'
+			]);
+		$emailconfig_m->tryLoadAny();
+		
+		if($emailconfig_m['email_duplication_allowed'] != 'duplication_allowed'){
+	        $email_m = $this->add('xepan\base\Model_Contact_Email');
+	        if($email->id)
+	        $email_m->addCondition('id','<>',$email_id);
+	        $email_m->addCondition('value',$value);
+			
+			if($emailconfig_m['email_duplication_allowed'] == 'no_duplication_allowed_for_same_contact_type'){
+				$email_m->addCondition('contact_type',$email['head']);
+			}
+	        $email_m->tryLoadAny();
+	        if($email_m->loaded()){
+	            throw $this->exception('This Email Already Used','ValidityCheck')->setField($value);
+	        }
+
+		}
+	}
+
+	function checkPhoneNo($contactm,$value,$model,$form){
+		$contact = $this->add('xepan\commerce\Model_'.$model['type']);
+        if($model->id)
+	        $contact->load($model->id);
+
+		// Contact No Setting
+		$contactconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			[
+				'fields'=>[
+							'contact_no_duplcation_allowed'=>'DropDown'
+							],
+					'config_key'=>'contact_no_duplication_allowed_settings',
+					'application'=>'base'
+			]);
+		$contactconfig_m->tryLoadAny();
+		
+		if($contactconfig_m['contact_no_duplcation_allowed'] != 'duplication_allowed'){
+	        $contact_m = $this->add('xepan\base\Model_Contact_Email');
+	        if($contactm->id)
+	        $cotnact_m->addCondition('id','<>',$contactm_id);
+	        $contact_m->addCondition('value',$value);
+			
+			if($contactconfig_m['contact_no_duplcation_allowed'] == 'no_duplication_allowed_for_same_contact_type'){
+				$contact_m->addCondition('contact_type',$contactm['head']);
+			}
+	        $contact_m->tryLoadAny();
+	        if($contact_m->loaded()){
+	            throw $this->exception('This Email Already Used','ValidityCheck')->setField($value);
+	        }
+
+		}	
+	}
 }
