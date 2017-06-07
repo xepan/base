@@ -79,10 +79,13 @@ class Model_User extends \xepan\base\Model_Table{
 
 	function checkContactExistance(){
 		if(!$this->loaded()) return;
-		if($this['related_contact_type'] == "Employee")
-			throw new \Exception("It is associated with an employee", 1);
-		else
-			throw new \Exception("It is associated with a '".$this['related_contact_type']."'", 1);
+		
+		if($this->add('xepan\base\Model_Contact')->addCondition('user_id',$this->id)->tryLoadAny()->loaded()){
+			if($this['related_contact_type'] == "Employee")
+				throw new \Exception("It is associated with an employee", 1);
+			else
+				throw new \Exception("It is associated with a '".$this['related_contact_type']."'", 1);
+		}
 			
 	}
 
