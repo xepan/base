@@ -43,10 +43,15 @@ class Model_User extends \xepan\base\Model_Table{
 		$this->addCondition('type','User');
 		$this->hasMany('xepan\base\Contact','user_id',null,'Contacts');
 		$this->is([
-				'username|unique|to_trim|required|email',
+				'username|unique|to_trim|required',
 				'status|required'
 			]);
 
+		if($this->app->getConfig('username_is_email',true)){
+			$this->is([
+					'username|email'
+				]);
+		}
 		// $this->app->auth->addEncryptionHook($this);
 
 
