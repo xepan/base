@@ -241,8 +241,8 @@ class Initiator extends \Controller_Addon {
                                 ->del('fields')->get();
                 // throw new \Exception(var_dump($s), 1);
                 // exit;
-                $ip_country= $this->add('xepan\base\Model_Country')->tryLoadBy('name',$s['country']); 
-                $ip_state = $this->add('xepan\base\Model_State')->tryLoadBy('name',$s['state']);
+                $ip_country= $this->add('xepan\base\Model_Country')->tryLoadBy('name',$s['0']['country']); 
+                $ip_state = $this->add('xepan\base\Model_State')->tryLoadBy('name',$s['0']['country']);
                 $this->app->memorize('xepan-customer-current-country',$ip_country);
                 $this->app->memorize('xepan-customer-current-state',$ip_state);
             }
