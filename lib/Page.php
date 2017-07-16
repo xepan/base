@@ -44,6 +44,10 @@ class Page extends \Page {
 				$breadcrumbs[] = ['title'=>$title,'url'=>$url,'active'=>$active];
 			}
 
+			if(abs(strtotime(date('Y-m-d H:i:s',strtotime($this->api->now))) - strtotime(date('Y-m-d H:i:s'))) > 10) {
+				$breadcrumbs[] = ['title'=>$this->app->now, 'url'=>'#', 'active'=>'label-danger'];
+			}
+
 			$br = $this->app->layout->add('CompleteLister',null,'breadcrumb',['layout/cube','breadcrumb']);
 			$br->setSource($breadcrumbs);
 			
