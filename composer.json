@@ -27,6 +27,7 @@
         "cron/cron": "^1.0",
         "xepan/captcha": "dev-master",
         "nesbot/carbon": "^1.21",
+        "backup-manager/backup-manager": "*",
         "php": ">=5.3"
     },
     "autoload": {
