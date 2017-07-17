@@ -81,8 +81,11 @@ class Initiator extends \Controller_Addon {
         $misc_m->tryLoadAny();
 
         date_default_timezone_set($misc_m['time_zone']?:'UTC');
-        $this->app->today = date('Y-m-d');
-        $this->app->now   = date('Y-m-d H:i:s');
+        // $this->app->today = date('Y-m-d');
+        // $this->app->now   = date('Y-m-d H:i:s');
+        $this->app->today = date('Y-m-d',strtotime($this->app->recall('current_date',date('Y-m-d'))));
+        $this->app->now = date('Y-m-d H:i:s',strtotime($this->app->recall('current_date',date('Y-m-d H:i:s'))));
+
         //Todo load default location of a customer from browser or 
         $this->app->country = $this->app->recall('xepan-customer-current-country');
         $this->app->state = $this->app->recall('xepan-customer-current-state');
@@ -241,8 +244,8 @@ class Initiator extends \Controller_Addon {
                                 ->del('fields')->get();
                 // throw new \Exception(var_dump($s), 1);
                 // exit;
-                $ip_country= $this->add('xepan\base\Model_Country')->tryLoadBy('name',$s['country']); 
-                $ip_state = $this->add('xepan\base\Model_State')->tryLoadBy('name',$s['state']);
+                $ip_country= $this->add('xepan\base\Model_Country')->tryLoadBy('name',$s['0']['country']); 
+                $ip_state = $this->add('xepan\base\Model_State')->tryLoadBy('name',$s['0']['country']);
                 $this->app->memorize('xepan-customer-current-country',$ip_country);
                 $this->app->memorize('xepan-customer-current-state',$ip_state);
             }
@@ -510,8 +513,8 @@ class Initiator extends \Controller_Addon {
 
         $this->app->addMethod('setDate',function($app,$date){
             $this->api->memorize('current_date',$date);
-            $this->now = date('Y-m-d H:i:s',strtotime($date));
-            $this->today = date('Y-m-d',strtotime($date));
+            $this->api->now = date('Y-m-d H:i:s',strtotime($date));
+            $this->api->today = date('Y-m-d',strtotime($date));
         
         });
 
