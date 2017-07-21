@@ -18,6 +18,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				// THESE OPTIONS ARE NOT YET IMPLEMENTED, TIME TO JUMP ON TO FRONTEND
 				'show_forgotpassword_link'=>true,
 				'show_registration_link'=>true,
+				'show_activation_link'=>true,
 				'show_verification_link'=>true,
 				'show_resendverification_link'=>true,
 				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
@@ -62,6 +63,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			$this->app->stickyForget('options');	
 			return;
 		}
+
+		
 
 		if(!$this->app->auth->isLoggedIn()){
 			

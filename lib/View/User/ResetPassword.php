@@ -14,6 +14,17 @@ class View_User_ResetPassword extends \View{
 
 		$form->addField('password','password')->validateNotNull();
 		$form->addField('password','retype_password')->validateNotNull();
+		if(!$this->options['show_forgotpassword_link']){
+			$form->layout->template->del('forgot_wrapper');        	
+        }
+
+        if(!$this->options['show_registration_link']){
+			$form->layout->template->del('register_wrapper');        	
+        }
+
+        if(!$this->options['show_activation_link']){
+			$form->layout->template->del('activate_wrapper');        	
+        }
 
 		$form->onSubmit(function($f){
 			$user=$this->app->auth->model;	

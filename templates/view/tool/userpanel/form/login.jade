@@ -21,14 +21,14 @@
             button.btn.btn-success.col-xs-12(type='submit') Login  
   {footer_wrapper}
   .panel-footer.row(style="margin:auto")
-    {login_wrapper}
-    a#login-forget-link.forgotpassword.xepan-login-panl-loadview.pull-left(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='forget_password') Forgot password
+    {forgot_wrapper}
+    a#login-forget-link.forgotpassword.xepan-login-panl-loadview(class="{$forgot_class}" style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='forget_password') Forgot password
     {/}
     {register_wrapper}
-    a.col-xs-6.text-center.reg_view.xepan-login-panl-loadview1.xepan-registration-load-panl(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='new_registration')  Register now 
+    a.col-xs-6.text-center.reg_view.xepan-login-panl-loadview1.xepan-registration-load-panl(class="{$registration_class}" style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='new_registration')  Register now 
     {/}
     {activate_wrapper}
-    a.reg_view.xepan-login-panl-loadview.pull-right(style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='verify_account')
+    a.reg_view.xepan-login-panl-loadview(class="{$activation_class}" style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='verify_account')
       | Activate
       #login-box-footer
     {/} 
