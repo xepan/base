@@ -16,7 +16,20 @@ class View_User_LoginPanel extends \View{
         if(!$this->options['show_footer']){
 			$f->layout->template->del('footer_wrapper');        	
         }
-        
+
+        if(!$this->options['show_forgotpassword_link']){
+			$f->layout->template->del('forgot_wrapper');        	
+        }
+
+        if(!$this->options['show_registration_link']){
+			$f->layout->template->del('register_wrapper');        	
+        }
+
+        if(!$this->options['show_activation_link']){
+			$f->layout->template->del('activate_wrapper');        	
+        }
+
+
         $f->addField('Line','username','Email address');
         $f->addField('Password','password','Password');
     	$auth=$this->app->auth;

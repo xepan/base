@@ -23,6 +23,34 @@
 										option(value="verify_again")|Verify Again
 				.xepan-cms-groups-panel.collapse.in(id="xepan-cms-groups-panel")
 				.xepan-cms-group-panel.clearfix
+					div.panel.panel-heading.panel-primary.collapsed(data-toggle="collapse" data-target="#user-tool-show-url-links" aria-expanded="false")
+						span Show Links
+				#user-tool-show-url-links.xepan-cms-tools-bar-panel.row-fluid.collapse
+					table.table.table-condensed.table-hover
+						tr
+							.xepan-tool-option
+								td.xepan-tool-option-title Show Registration Link
+								td.xepan-tool-option-value
+									select#show_tnc(data-attr='show_registration_link' data-defaultvalue="true")
+										option(value="true") Yes
+										option(value="false") No
+						tr
+							.xepan-tool-option
+								td.xepan-tool-option-title Show ForgotPassword Link
+								td.xepan-tool-option-value
+									select#show_tnc(data-attr='show_forgotpassword_link' data-defaultvalue="true")
+										option(value="true") Yes
+										option(value="false") No
+						tr
+							.xepan-tool-option
+								td.xepan-tool-option-title Show Activate Link
+								td.xepan-tool-option-value
+									select#show_tnc(data-attr='show_activation_link' data-defaultvalue="true")
+										option(value="true") Yes
+										option(value="false") No								
+
+				.xepan-cms-groups-panel.collapse.in(id="xepan-cms-groups-panel")
+				.xepan-cms-group-panel.clearfix
 					div.panel.panel-heading.panel-primary.collapsed(data-toggle="collapse" data-target="#user-tool-page-links" aria-expanded="false")
 						span Page Links
 				#user-tool-page-links.xepan-cms-tools-bar-panel.row-fluid.collapse
@@ -43,7 +71,7 @@
 							.xepan-tool-option
 								td.xepan-tool-option-title TnC URL
 								td.xepan-tool-option-value 
-									input#tnc_page_url(data-attr='tnc_page_url' data-shortname="tnc_url")									
+									input#tnc_page_url(data-attr='tnc_page_url' data-shortname="tnc_url")
 						tr
 							.xepan-tool-option
 								td.xepan-tool-option-title Logout Page
