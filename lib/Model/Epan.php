@@ -29,6 +29,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('aliases')->type('text');
 		$this->addField('xepan_template_id');	
 		$this->addField('epan_dbversion');	
+		$this->addField('is_template')->type('boolean');
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
 		$this->hasMany('xepan\communication\Communication_EmailSetting',null,null,'EmailSettings');
@@ -42,7 +43,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		// $this->addHook('beforeDelete',[$this,'deleteContacts']);
 		// $this->addHook('beforeDelete',[$this,'deleteUsers']);
 
-
+		$this->add('dynamic_model/Controller_AutoCreator');
 		$this->is([
 				'epan_category_id|required',
 				'name|required|to_trim|unique',
