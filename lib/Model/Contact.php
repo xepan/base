@@ -19,6 +19,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 	public $status=[];
 	public $actions=[];
+	public $type = "Contact";
 
 	function init(){
 		parent::init();
@@ -31,7 +32,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\State','state_id')->display(array('form' => 'xepan\commerce\DropDown'));
 
 		$this->addField('type');
-		$this->getElement('type')->defaultValue('Contact');
+		$this->getElement('type')->defaultValue($this->type);
 		
 		$this->addField('first_name');
 		$this->addField('last_name');
@@ -378,6 +379,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 	function checkPhoneNo($contactm,$value,$model,$form){
+		
 		$contact = $this->add('xepan\commerce\Model_'.$model['type']);
         if($model->id)
 	        $contact->load($model->id);
