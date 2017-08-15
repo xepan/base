@@ -17,12 +17,19 @@ class Grid extends \Grid{
 	public $row_delete=true;
     public $defaultTemplate = null;
     public $paginator_class='xepan\base\Paginator';
+    public $sno=1;
+    public $order=null;
 
     public $sort_icons = array(
         ' fa fa-sort',
         ' fa fa-sort-asc',
         ' fa  fa-sort-desc'
     );
+
+    function init(){
+        parent::init();
+        $this->order = $this->addOrder();
+    }
 
     function defaultTemplate(){
         if($this->defaultTemplate) return $this->defaultTemplate;
@@ -155,4 +162,13 @@ class Grid extends \Grid{
         parent::render();
     }
 
+    function addSno(){
+        $this->addColumn('sno','s_no');
+        $this->order->move('s_no','first')->now();
+    }
+
+    function format_sno($field){
+        if($this->model->loaded())
+            $this->current_row[$field] = (($this->sno++) + ($_GET[$this->name.'_paginator_skip']?:0));
+    }
 }
