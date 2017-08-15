@@ -168,7 +168,8 @@ class Grid extends \Grid{
     }
 
     function format_sno($field){
-        if($this->model->loaded())
-            $this->current_row[$field] = (($this->sno++) + ($_GET[$this->name.'_paginator_skip']?:0));
+        if($this->model->loaded()){
+            $this->current_row[$field] = (($this->sno++) + ($_GET[$this->name.'_xepan_base_paginator_skip']?:0));
+        }
     }
 }
