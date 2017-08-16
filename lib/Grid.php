@@ -40,6 +40,10 @@ class Grid extends \Grid{
         $this->template->tryDel('quick_search_icon');
         return $this;
     }
+
+    function removeAttachment(){
+        $this->removeColumn('attachment_icon');
+    }
 	
 	function precacheTemplate(){
 		if($this->template->template_file != 'grid'){
