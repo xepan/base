@@ -162,8 +162,8 @@ class Grid extends \Grid{
         parent::render();
     }
 
-    function addSno(){
-        $this->addColumn('sno','s_no');
+    function addSno($name = 's_no'){
+        $this->addColumn('sno','s_no',$name);
         $this->order->move('s_no','first')->now();
     }
 
