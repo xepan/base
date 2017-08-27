@@ -10,7 +10,7 @@ namespace xepan\base;
 		->showLables(true)
 		->makePanelsCoppalsible(true)
 		->layout([
-				'first_name~FIield New Cpation'=>'Name Section~c1~4',
+				'first_name~Field New Cpation'=>'Name Section|panel-type~c1~4',
 				'nick_name'=>'c2~4',
 				'last_name'=>'c3~4',
 				'city'=>'Location~c1~4~closed', // closed to make panel default collapsed
@@ -71,7 +71,7 @@ class Controller_FLC extends \AbstractController {
 
 			list($title,$column,$width,$collapsed) = explode("~", $detail);
 
-			if(strlen($title)<3){
+			if(strlen($title)<=3){
 				$width=$column?:'auto';
 				$column=$title;
 				$title='';
@@ -98,7 +98,11 @@ class Controller_FLC extends \AbstractController {
 
 		$template_str="";
 		foreach ($rows as $title => $row) {
-			$template_str .= "<div class='row panel panel-default xepan-flc-form'>";
+			$title_arr = explode("|", $title);
+			$title=$title_arr[0];
+			$panel_type = isset($title_arr[1])?$title_arr[1]:'default';
+
+			$template_str .= "<div class='row panel panel-$panel_type xepan-flc-form'>";
 			if(!is_numeric($title)){
 				$id=$this->app->normalizeName($title);
 				$data_str="";
