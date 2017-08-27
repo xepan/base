@@ -181,10 +181,10 @@ class Grid extends \Grid{
         if($this->model->loaded()){
 
             if($this->sno_decending){                
-                $this->current_row[$field] = (($this->sno--) - ($_GET[$this->paginator->name.'_skip']?:0));
+                $this->current_row[$field] = (($this->sno--) - ($_GET[@$this->paginator->name.'_skip']?:0));
             }
             else{
-                $this->current_row[$field] = (($this->sno++) + ($_GET[$this->paginator->name.'_skip']?:0));
+                $this->current_row[$field] = (($this->sno++) + ($_GET[@$this->paginator->name.'_skip']?:0));
             }
         }
     }
