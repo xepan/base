@@ -122,12 +122,22 @@ class Initiator extends \Controller_Addon {
             $this->app->top_menu = new \Dummy;
             $this->app->side_menu = new \Dummy;
             $this->app->user_menu = new \Dummy;
+            $this->app->report_menu = new \Dummy;
         }else{
             $this->app->top_menu = $this->app->layout->add('xepan\base\Menu_TopBar',null,'Main_Menu');
             $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
             $m = $this->app->layout->add('xepan\base\Menu_TopRightBar',null,'User_Menu');
-            $this->app->user_menu = $m->addMenu('My Menu');
-               
+        
+            if(!$this->app->getConfig('hidden_user_menu',false)) 
+                $this->app->user_menu = $m->addMenu('My Menu');
+            else
+                $this->app->user_menu = new \Dummy;
+
+            if(!$this->app->getConfig('hidden_report_menu',false)) 
+                $this->app->report_menu = $this->app->top_menu->addMenu('Reports');
+            else
+                $this->app->report_menu = new \Dummy;
+
         }
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            

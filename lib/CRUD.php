@@ -60,5 +60,9 @@ class CRUD extends \CRUD{
 		return false;		
 	}
 	
+	function removeAttachment(){
+		if(!$this->isEditing())
+			$this->grid->removeAttachment();
+	}
 
 }
