@@ -34,6 +34,7 @@ class page_logout extends \xepan\base\Page{
 
 			if($movement['reason'] != 'Official Outing'){
 				$attan_m['to_date'] = $this->app->now;
+				$attan_m['total_movement_out'] = $attan_m['total_movement_out'] + 1;
 				$attan_m->save();
 			}
 									
