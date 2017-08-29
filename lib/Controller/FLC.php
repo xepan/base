@@ -11,7 +11,7 @@ namespace xepan\base;
 		->makePanelsCoppalsible(true)
 		->layout([
 				'first_name~Field New Cpation'=>'Name Section|panel-type~c1~4',
-				'nick_name'=>'c2~4',
+				'nick_name'=>'c2~4~closed or any other text as field hint',
 				'last_name'=>'c3~4',
 				'city'=>'Location~c1~4~closed', // closed to make panel default collapsed
 				'state'=>'c2~4',
@@ -23,6 +23,7 @@ class Controller_FLC extends \AbstractController {
 	public $collepsible_panel = false; 
 	public $add_lables = true; 
 	public $addContent = false; 
+	public $debug = false;
 
 	function init(){
 		parent::init();
@@ -65,13 +66,16 @@ class Controller_FLC extends \AbstractController {
 	function layout($array=null){
 		$rows=[];
 		$collapsed_sections=[];
+		$field_hints=[];
 
 		$last=null;
 		foreach ($array as $field => $detail) {
 
-			list($title,$column,$width,$collapsed) = explode("~", $detail);
+			list($title,$column,$width,$collapsed,$field_hint) = explode("~", $detail);
 
 			if(strlen($title)<=3){
+				$field_hint = $collapsed;
+				$collapsed = $width;
 				$width=$column?:'auto';
 				$column=$title;
 				$title='';
@@ -86,8 +90,16 @@ class Controller_FLC extends \AbstractController {
 
 			$rows[$title][$column]['fields'][] = $field;
 
-			if($collapsed=='closed'){
-				$collapsed_sections[]=$title;
+			if($collapsed){
+				if($collapsed=='closed'){
+					$collapsed_sections[]=$title;
+				}else{
+					$field_hint = $collapsed;
+				}
+			}
+
+			if($field_hint){
+				$field_hints[$field] = $field_hint;
 			}
 
 		}
@@ -109,9 +121,11 @@ class Controller_FLC extends \AbstractController {
 				$collapse_in_handler_class= "";
 				$collapse_in= "";
 				$cursor="";
+				$xepan_collepsable="";
 				if($this->collepsible_panel){
 					$data_str ="  data-toggle='collapse' data-target='#$id'";
-					$collapse_in="collapse in";
+					$collapse_in="collapse in ";
+					$xepan_collepsable="xepan-flc-collasable-form";
 					
 					if(in_array($title, $collapsed_sections)){
 						$collapse_in_handler_class= "collapsed";
@@ -120,20 +134,20 @@ class Controller_FLC extends \AbstractController {
 
 					$cursor="style='cursor:pointer'";
 				}
-				$template_str .= "<div class='panel-heading $collapse_in_handler_class' $data_str $cursor>$title</div>";
+				$template_str .= "<div class='panel-heading $collapse_in_handler_class $xepan_collepsable' $data_str $cursor>$title</div>";
 				$template_str .="<div class='panel-body $collapse_in' id='$id'>";
 			}
 				foreach ($row as $col) {
 					$template_str.="<div class='col-md-".$col['width']."'>";
 						foreach ($col['fields'] as $field) {
+							$field_hint = isset($field_hints[$field])?'<small class="text-muted">'.$field_hints[$field].'</small>':'';
 							$field_arr=explode("~", $field);
 							$field=$field_arr[0];
 							$field_caption=isset($field_arr[1])?$field_arr[1]:ucwords(str_replace('_', ' ', $field));
-
-							if($this->add_lables){
-								$template_str.=$field_caption.'<br/>';
+							if($this->add_lables && $field_caption){
+								$template_str.= '<b>'.$field_caption.'</b><br/>';
 							}
-								$template_str.= '<div class="atk-form-field atk-form-row">{$'.$field.'}</div>';
+								$template_str.= '<div class="atk-form-field atk-form-row">{$'.$field.'}'.$field_hint.'</div>';
 							if($this->add_lables){
 							}
 						}
@@ -149,10 +163,18 @@ class Controller_FLC extends \AbstractController {
 			$template_str .='<div>{$Content}</div>';
 		}
 
+		if($this->debug){
+			$this->owner->add('View')->setElement('pre')->set($template_str);
+		}
 
 		$t = $this->add('GiTemplate')->loadTemplateFromString($template_str);
 		$this->owner->setLayout($t);
 
+	}
+
+	function debug(){
+		$this->debug=true;
+		return $this;
 	}
 
 	function layoutComplex(){
