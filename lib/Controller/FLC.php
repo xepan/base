@@ -121,9 +121,11 @@ class Controller_FLC extends \AbstractController {
 				$collapse_in_handler_class= "";
 				$collapse_in= "";
 				$cursor="";
+				$xepan_collepsable="";
 				if($this->collepsible_panel){
 					$data_str ="  data-toggle='collapse' data-target='#$id'";
-					$collapse_in="collapse in";
+					$collapse_in="collapse in ";
+					$xepan_collepsable="xepan-flc-collasable-form";
 					
 					if(in_array($title, $collapsed_sections)){
 						$collapse_in_handler_class= "collapsed";
@@ -132,7 +134,7 @@ class Controller_FLC extends \AbstractController {
 
 					$cursor="style='cursor:pointer'";
 				}
-				$template_str .= "<div class='panel-heading $collapse_in_handler_class' $data_str $cursor>$title</div>";
+				$template_str .= "<div class='panel-heading $collapse_in_handler_class $xepan_collepsable' $data_str $cursor>$title</div>";
 				$template_str .="<div class='panel-body $collapse_in' id='$id'>";
 			}
 				foreach ($row as $col) {
