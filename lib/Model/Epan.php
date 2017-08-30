@@ -43,7 +43,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		// $this->addHook('beforeDelete',[$this,'deleteContacts']);
 		// $this->addHook('beforeDelete',[$this,'deleteUsers']);
 
-		$this->add('dynamic_model/Controller_AutoCreator');
+		// $this->add('dynamic_model/Controller_AutoCreator');
 		$this->is([
 				'epan_category_id|required',
 				'name|required|to_trim|unique',
