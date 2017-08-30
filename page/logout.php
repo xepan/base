@@ -23,8 +23,8 @@ class page_logout extends \xepan\base\Page{
 			$movement->addCondition('employee_id',$this->app->employee->id);
 			$movement->addCondition('movement_at',$this->app->now);
 			$movement->addCondition('direction','Out');
-			$movement->addCondition('reason',$form['reason']);
-			$movement->addCondition('narration',$form['narration']);
+			// $movement->addCondition('reason',$form['reason']);
+			// $movement->addCondition('narration',$form['narration']);
 			$movement->save();
 
 			$attan_m = $this->add("xepan\hr\Model_Employee_Attandance");
