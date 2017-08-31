@@ -32,6 +32,8 @@ class page_logout extends \xepan\base\Page{
 			$attan_m->addCondition('fdate',$this->app->today);
 			$attan_m->setOrder('id','desc');
 			$attan_m->tryLoadAny();
+			if($attan_m->loaded()){
+				
 
 			// initially it was considered that official outing is not actually outing, you are working
 			// for office but just out of premises... then changed.. if it is so .. just don't log out
@@ -42,6 +44,7 @@ class page_logout extends \xepan\base\Page{
 				$attan_m['total_movement_out'] = $attan_m['total_movement_out'] + 1;
 				$attan_m->save();
 			// }
+			}
 									
 			$this->app->hook('user_loggedout',[$this->app->auth->model,$this->app->employee]);
 			$this->app->auth->logout();
