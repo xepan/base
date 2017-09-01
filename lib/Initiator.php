@@ -152,11 +152,12 @@ class Initiator extends \Controller_Addon {
 
         });
         
-        $auth->addHook('loggedIn',function($auth,$user,$pass){            
+        $auth->addHook('loggedIn',function($auth,$user,$pass){
             $this->app->memorize('user_loggedin', $auth->model);
             $auth->model['last_login_date'] = $this->app->now;
             $auth->model->save();
         });
+
 
         $auth->add('xepan\base\Controller_Cookie');
 
@@ -177,6 +178,11 @@ class Initiator extends \Controller_Addon {
         $auth->setModel($user,'username','password');
         
         $auth->check();
+        
+        // if old session is continues and day is changed, consider it as new login of day
+        if($auth->isLoggedIn() && strtotime(date('Y-m-d',strtotime($auth->model['last_login_date']))) != strtotime($this->app->today)){
+            $auth->hook('loggedIn',[$auth->model,null]);
+        }
                
         if(!$this->app->isAjaxOutput()) {
             $this->app->jui->addStaticInclude('pace.min');
