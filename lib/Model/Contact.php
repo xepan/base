@@ -119,6 +119,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->addHook('beforeSave',function($m){$m['updated_at']=$this->app->now;});
 
+		$this->addHook('beforeDelete',[$this,'memoriseUserID']);
+		$this->addHook('afterDelete',[$this,'removeAssociatedUser']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEmails']);
 		$this->addHook('beforeDelete',[$this,'deleteContactPhones']);
 		$this->addHook('beforeDelete',[$this,'deleteContactRelations']);
@@ -141,6 +143,16 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 	function contact_category_association(){		
 		$this->app->hook('contact_save',[$this]);
+	}
+
+	function memoriseUserID(){
+		$this->app->memorize('user_id_4_removed_customer',$this['user_id']);
+	}
+
+	function removeAssociatedUser(){
+		$user = $this->add('xepan\base\Model_User')->addCondition('id',$this->app->recall('user_id_4_removed_customer',0))->tryLoadAny();
+		if($user->loaded()) $user->delete();
+		$this->app->forget('user_id_4_removed_customer');
 	}
 
 	function updateContactCode(){
