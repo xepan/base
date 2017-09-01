@@ -62,6 +62,7 @@ class View_User_Registration extends \View{
 
 				// $frontend_config = $this->app->epan->config;
 				$reg_type = $frontend_config_m['user_registration_type'];
+
 				if($reg_type =='default_activated'){
 					$user['status'] = 'Active';
 					$user->save();
@@ -75,7 +76,9 @@ class View_User_Registration extends \View{
 					$user['hash']=rand(9999,100000);
 					$user->save();
 					$contact=$user->ref('Contacts')->tryLoadAny();
-					$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
+					$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')
+						->addCondition('is_active',true)
+						->tryLoadAny();
 					$mail = $this->add('xepan\communication\Model_Communication_Email');
 
 					$merge_model_array=[];
@@ -113,7 +116,8 @@ class View_User_Registration extends \View{
 					$mail->addTo($f['username']);
 					$mail->setSubject($subject_v->getHtml());
 					$mail->setBody($body_v->getHtml());
-					$mail->send($email_settings);						
+					$mail->send($email_settings);
+
 				}
 				
 				$this->app->hook('userCreated',[$f['first_name'],$f['last_name'],$user]);
