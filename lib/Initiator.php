@@ -228,11 +228,23 @@ class Initiator extends \Controller_Addon {
         $user = $this->add('xepan\base\Model_User_Active');
         $user->addCondition('scope',['WebsiteUser','SuperUser','AdminUser']);
         $auth->setModel($user,'username','password');
+        
         if(strpos($this->app->page,'_admin_')!==false){
             $user->addCondition('scope',['SuperUser','AdminUser']);
             $auth->setModel($user,'username','password');
             $auth->check();
         }
+
+        if($_GET['access_token']){    
+            $u = $this->add('xepan\base\Model_User_Active');
+            $u->addCondition('access_token',$_GET['access_token']);
+            $u->addCondition('access_token_expiry','>',$this->app->now);
+            $u->debug()->tryLoadAny();
+            if($u->loaded()){
+                $auth->login($u);
+            }
+        }
+
 
 
         $this->app->addMethod('exportFrontEndTool',function($app,$tool, $group='Basic'){
