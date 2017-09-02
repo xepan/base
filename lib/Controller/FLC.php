@@ -114,7 +114,7 @@ class Controller_FLC extends \AbstractController {
 			$title=$title_arr[0];
 			$panel_type = isset($title_arr[1])?$title_arr[1]:'default';
 
-			$template_str .= "<div class='row panel panel-$panel_type xepan-flc-form'>";
+			$template_str .= "<div class='panel panel-$panel_type xepan-flc-form'>";
 			if(!is_numeric($title)){
 				$id=$this->app->normalizeName($title);
 				$data_str="";
@@ -135,7 +135,7 @@ class Controller_FLC extends \AbstractController {
 					$cursor="style='cursor:pointer'";
 				}
 				$template_str .= "<div class='panel-heading $collapse_in_handler_class $xepan_collepsable' $data_str $cursor>$title</div>";
-				$template_str .="<div class='panel-body $collapse_in' id='$id'>";
+				$template_str .="<div class='row panel-body $collapse_in' id='$id'>";
 			}
 				foreach ($row as $col) {
 					$template_str.="<div class='col-md-".$col['width']."'>";
@@ -167,8 +167,13 @@ class Controller_FLC extends \AbstractController {
 			$this->owner->add('View')->setElement('pre')->set($template_str);
 		}
 
-		$t = $this->add('GiTemplate')->loadTemplateFromString($template_str);
-		$this->owner->setLayout($t);
+		if($this->owner instanceof \Form){
+			$t = $this->add('GiTemplate')->loadTemplateFromString($template_str);
+			$this->owner->setLayout($t);
+		}
+		else{
+			$this->owner->template->loadTemplateFromString($template_str);
+		}
 
 	}
 
