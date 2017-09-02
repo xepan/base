@@ -239,9 +239,12 @@ class Initiator extends \Controller_Addon {
             $u = $this->add('xepan\base\Model_User_Active');
             $u->addCondition('access_token',$_GET['access_token']);
             $u->addCondition('access_token_expiry','>',$this->app->now);
-            $u->debug()->tryLoadAny();
+            $u->tryLoadAny();
             if($u->loaded()){
                 $auth->login($u);
+                $this->app->redirect($this->app->url());
+            }else{
+                $auth->logout();
             }
         }
 
