@@ -127,9 +127,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addHook('beforeDelete',[$this,'deleteContactIMs']);
 		$this->addHook('beforeDelete',[$this,'deleteContactEvents']);
 		$this->addHook('afterSave',[$this,'updateContactCode']);
-		
-		$this->addHook('beforeSave',function($m){$m['updated_at'] = $m->app->now;});
-		
+				
 		$this->addHook('afterSave',[$this,'contact_category_association']);
 
 		$this->is([
@@ -364,22 +362,37 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if(!$contact->loaded()) 
 			throw $this->exception('Cannot check as contact is not loaded');
 
-		$emailconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+		if($type=='Email'){
+
+			$emailconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+				[
+					'fields'=>[
+								'email_duplication_allowed'=>'DropDown'
+								],
+						'config_key'=>'Email_Duplication_Allowed_Settings',
+						'application'=>'base'
+				]);
+			$emailconfig_m->tryLoadAny();
+			$config_field ='email_duplication_allowed';
+		}elseif($type=='Phone'){
+			$contactconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
 			[
 				'fields'=>[
-							'email_duplication_allowed'=>'DropDown'
+							'contact_no_duplcation_allowed'=>'DropDown'
 							],
-					'config_key'=>'Email_Duplication_Allowed_Settings',
+					'config_key'=>'contact_no_duplication_allowed_settings',
 					'application'=>'base'
 			]);
-		$emailconfig_m->tryLoadAny();
+			$contactconfig_m->tryLoadAny();
+			$config_field ='contact_no_duplcation_allowed';
+		}
 
-		if($emailconfig_m['email_duplication_allowed'] === 'duplication_allowed') return true;
+		if($emailconfig_m[$config_field] === 'duplication_allowed') return true;
 
 		$other_values = $this->add('xepan\base\Model_Contact_'.$type);
 		$other_values->addCondition('contact_id','<>',$contact->id);
 
-		if($emailconfig_m['email_duplication_allowed'] == 'no_duplication_allowed_for_same_contact_type'){
+		if($emailconfig_m[$config_field] == 'no_duplication_allowed_for_same_contact_type'){
 			$other_values->addCondition('contact_type',$contact['type']);
 		}
 
