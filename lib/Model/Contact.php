@@ -359,7 +359,51 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$model_point_system->save();
 	}
 
-	function checkEmail($email,$value,$model,$obj){
+	function checkContactInfo($type,$value,$contact=null,$field=null){
+		if(!$contact) $contact = $this;
+		if(!$contact->loaded()) 
+			throw $this->exception('Cannot check as contact is not loaded');
+
+		$emailconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			[
+				'fields'=>[
+							'email_duplication_allowed'=>'DropDown'
+							],
+					'config_key'=>'Email_Duplication_Allowed_Settings',
+					'application'=>'base'
+			]);
+		$emailconfig_m->tryLoadAny();
+
+		if($emailconfig_m['email_duplication_allowed'] === 'duplication_allowed') return true;
+
+		$other_values = $this->add('xepan\base\Model_Contact_'.$type);
+		$other_values->addCondition('contact_id','<>',$contact->id);
+
+		if($emailconfig_m['email_duplication_allowed'] == 'no_duplication_allowed_for_same_contact_type'){
+			$other_values->addCondition('contact_type',$contact['type']);
+		}
+
+		$other_values->tryLoadAny();
+
+		if($field && $other_values->loaded())
+			throw $this->exception($type.' Already used','ValidityCheck')->setField($field);
+		
+		return !$other_values->loaded();
+
+	}
+
+	function checkEmail($email,$contact=null,$field=null){
+		return $this->checkContactInfo('Email',$email,$contact,$field);
+	}
+
+	function checkPhone($phone,$contact=null,$field=null){
+		return $this->checkContactInfo('Phone',$email,$contact,$field);
+	}
+
+
+// ======================= OLD FUNCTIONS CAN BE REMOVED ONCE STABLE VERSION RELEASED
+
+	function checkEmail_remove($email,$value,$model,$obj){
 		$contact = $this->add('xepan\commerce\Model_'.$model['type']);
         if($model->id)
 	        $contact->load($model->id);
@@ -391,7 +435,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		}
 	}
 
-	function checkPhoneNo($contactm,$value,$model,$form){
+	function checkPhoneNo_removed($contactm,$value,$model,$form){
 		
 		$contact = $this->add('xepan\commerce\Model_'.$model['type']);
         if($model->id)
