@@ -284,6 +284,9 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 	function addEmail($email,$head='Official',$active=true,$valid=true,$field=null){
+		$email = trim($email);
+		if($email=='') return;
+
 		if(!$this->checkEmail($email,null,$field))
 			throw new \Exception("$email already exists",1);
 			
@@ -309,9 +312,12 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 	function addPhone($number,$head='Official',$active=true,$valid=true,$field=null){
+		$number = trim($number);
+
+		if($number=='') return;
 		if(!$this->checkPhone($number,null,$field))
 			throw new \Exception("$number already exists",1);
-		
+
 		return $this->add('xepan\base\Model_Contact_Phone')
 			->set('contact_id',$this->id)
 			->set('head',$head)
