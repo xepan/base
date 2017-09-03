@@ -283,7 +283,13 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return true;
 	}
 
-	function addEmail($email,$head='Official',$active=true,$valid=true){
+	function addEmail($email,$head='Official',$active=true,$valid=true,$field=null,$validate=true){
+		$email = trim($email);
+		if($email=='') return;
+
+		if($validate && !$this->checkEmail($email,null,$field))
+			throw new \Exception("$email already exists",1);
+			
 		return $this->add('xepan\base\Model_Contact_Phone')
 			->set('contact_id',$this->id)
 			->set('head',$head)
@@ -305,7 +311,13 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($emails)),false);
 	}
 
-	function addPhone($number,$head='Official',$active=true,$valid=true){
+	function addPhone($number,$head='Official',$active=true,$valid=true,$field=null,$validate=true){
+		$number = trim($number);
+
+		if($number=='') return;
+		if($validate && !$this->checkPhone($number,null,$field))
+			throw new \Exception("$number already exists",1);
+
 		return $this->add('xepan\base\Model_Contact_Phone')
 			->set('contact_id',$this->id)
 			->set('head',$head)
