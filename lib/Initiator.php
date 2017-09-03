@@ -228,11 +228,26 @@ class Initiator extends \Controller_Addon {
         $user = $this->add('xepan\base\Model_User_Active');
         $user->addCondition('scope',['WebsiteUser','SuperUser','AdminUser']);
         $auth->setModel($user,'username','password');
+        
         if(strpos($this->app->page,'_admin_')!==false){
             $user->addCondition('scope',['SuperUser','AdminUser']);
             $auth->setModel($user,'username','password');
             $auth->check();
         }
+
+        if($_GET['access_token']){    
+            $u = $this->add('xepan\base\Model_User_Active');
+            $u->addCondition('access_token',$_GET['access_token']);
+            $u->addCondition('access_token_expiry','>',$this->app->now);
+            $u->tryLoadAny();
+            if($u->loaded()){
+                $auth->login($u);
+                $this->app->redirect($this->app->url());
+            }else{
+                $auth->logout();
+            }
+        }
+
 
 
         $this->app->addMethod('exportFrontEndTool',function($app,$tool, $group='Basic'){
@@ -335,7 +350,7 @@ class Initiator extends \Controller_Addon {
         $array['Email_Duplication_Allowed_Settings'] = ['caption'=>'Email_Duplication_Allowed_Settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Email_Duplication_Allowed_Settings'];
         $array['contact_no_duplication_allowed_settings'] = ['caption'=>'contact_no_duplication_allowed_settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_contact_no_duplication_allowed_settings'];
         $array['GraphicalReport'] = ['caption'=>'GraphicalReport','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_GraphicalReport'];
-        $array['report_type'] = ['caption'=>'Type','type'=>'DropDown'];
+        $array['report_type'] = ['caption'=>'Type','type'=>'DropDown','values'=>['chart'=>'Chart','report'=>'Report']];
 
     }
 
