@@ -290,7 +290,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if($validate && !$this->checkEmail($email,null,$field))
 			throw new \Exception("$email already exists",1);
 			
-		return $this->add('xepan\base\Model_Contact_Phone')
+		return $this->add('xepan\base\Model_Contact_Email')
 			->set('contact_id',$this->id)
 			->set('head',$head)
 			->set('value',$email)
@@ -376,7 +376,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		if($type=='Email'){
 
-			$emailconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			$config_m = $this->add('xepan\base\Model_ConfigJsonModel',
 				[
 					'fields'=>[
 								'email_duplication_allowed'=>'DropDown'
@@ -384,10 +384,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 						'config_key'=>'Email_Duplication_Allowed_Settings',
 						'application'=>'base'
 				]);
-			$emailconfig_m->tryLoadAny();
+			$config_m->tryLoadAny();
 			$config_field ='email_duplication_allowed';
 		}elseif($type=='Phone'){
-			$contactconfig_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			$config_m = $this->add('xepan\base\Model_ConfigJsonModel',
 			[
 				'fields'=>[
 							'contact_no_duplcation_allowed'=>'DropDown'
@@ -395,21 +395,22 @@ class Model_Contact extends \xepan\base\Model_Table{
 					'config_key'=>'contact_no_duplication_allowed_settings',
 					'application'=>'base'
 			]);
-			$contactconfig_m->tryLoadAny();
+			$config_m->tryLoadAny();
 			$config_field ='contact_no_duplcation_allowed';
 		}
 
-		if($emailconfig_m[$config_field] === 'duplication_allowed') return true;
+		if($config_m[$config_field] === 'duplication_allowed') return true;
 
 		$other_values = $this->add('xepan\base\Model_Contact_'.$type);
+		$other_values->addCondition('value',$value);
 		$other_values->addCondition('contact_id','<>',$contact->id);
 
-		if($emailconfig_m[$config_field] == 'no_duplication_allowed_for_same_contact_type'){
+		if($config_m[$config_field] == 'no_duplication_allowed_for_same_contact_type'){
 			$other_values->addCondition('contact_type',$contact['type']);
 		}
-
+			
 		$other_values->tryLoadAny();
-
+		
 		if($field && $other_values->loaded())
 			throw $this->exception($type.' Already used','ValidityCheck')->setField($field);
 		
@@ -422,7 +423,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 	}
 
 	function checkPhone($phone,$contact=null,$field=null){
-		return $this->checkContactInfo('Phone',$email,$contact,$field);
+		return $this->checkContactInfo('Phone',$phone,$contact,$field);
 	}
 
 
