@@ -402,14 +402,15 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if($config_m[$config_field] === 'duplication_allowed') return true;
 
 		$other_values = $this->add('xepan\base\Model_Contact_'.$type);
+		$other_values->addCondition('value',$value);
 		$other_values->addCondition('contact_id','<>',$contact->id);
 
 		if($config_m[$config_field] == 'no_duplication_allowed_for_same_contact_type'){
 			$other_values->addCondition('contact_type',$contact['type']);
 		}
-
+			
 		$other_values->tryLoadAny();
-
+		
 		if($field && $other_values->loaded())
 			throw $this->exception($type.' Already used','ValidityCheck')->setField($field);
 		
