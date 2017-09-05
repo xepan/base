@@ -188,4 +188,68 @@ class Grid extends \Grid{
             }
         }
     }
+
+    function init_expanderplus($field)
+    {
+        // set column style
+        @$this->columns[$field]['thparam'] .= ' style="width:40px; text-align:center"';
+
+        // set column refid - referenced model table for example
+        if (!isset($this->columns[$field]['refid'])) {
+
+            if ($this->model) {
+                $refid = $this->model->table;
+            } elseif ($this->dq) {
+                $refid = $this->dq->args['table'];
+            } else {
+                $refid = preg_replace('/.*_/', '', $this->app->page);
+            }
+
+            $this->columns[$field]['refid'] = $refid;
+        }
+
+        // initialize button widget on page load
+        $class = $this->name.'_'.$field.'_expander';
+        $this->js(true)->find('.'.$class)->button();
+
+        // initialize expander
+        $this->js(true)
+            ->_selector('.'.$class)
+            ->_load('ui.atk4_expander')
+            ->atk4_expander();
+    }
+
+    function format_expanderplus($field, $column)
+    {
+        if (!@$this->current_row[$field]) {
+            $this->current_row[$field] = $column['descr'];
+        }
+
+        // TODO:
+        // reformat this using Button, once we have more advanced system to
+        // bypass rendering of sub-elements.
+        // $this->current_row[$field] = $this->add('Button',null,false)
+        $key   = $this->name . '_' . $field . '_';
+        $id    = $key . $this->app->normalizeName($this->model->id);
+        $class = $key . 'expander';
+
+        @$this->current_row_html[$field] =
+            '<input type="button" '.
+                'class="'.$class.' btn btn-primary" '.
+                'value="'.$column['descr'].'"'.
+                'id="'.$id.'" '.
+                'rel="'.$this->app->url(
+                    $column['page'] ?: './'.$field,
+                    array(
+                        'expander' => $field,
+                        'expanded' => $this->name,
+                        'cut_page' => 1,
+                        // TODO: id is obsolete
+                        //'id' => $this->model->id,
+                        $this->columns[$field]['refid'].'_'.$this->model->id_field => $this->model->id
+                    )
+                ).'" '.
+            '/>'.
+            '<label for="'.$id.'"></label>';
+    }
 }

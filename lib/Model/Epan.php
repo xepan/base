@@ -30,6 +30,8 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('xepan_template_id');	
 		$this->addField('epan_dbversion');	
 		$this->addField('is_template')->type('boolean');
+		$this->addField('expiry_date')->type('date');
+
 
 		$this->hasMany('xepan\base\Epan_InstalledApplication',null,null,'InstalledApplications');
 		$this->hasMany('xepan\communication\Communication_EmailSetting',null,null,'EmailSettings');
