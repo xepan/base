@@ -411,7 +411,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$other_values->tryLoadAny();
 
 		if($field && $other_values->loaded())
-			throw $this->exception($type.' Already used','ValidityCheck')->setField($field);
+			throw $this->exception($type.' ('.$value.')'.' Already used','ValidityCheck')->setField($field);
 		
 		return !$other_values->loaded();
 
