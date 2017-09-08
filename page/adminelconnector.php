@@ -30,12 +30,14 @@ class page_adminelconnector extends \xepan\base\Page {
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_asset,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets'
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets',
+		            'uploadMaxSize'=>'20M'
 		        ),
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_www,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/www',
+		            'uploadMaxSize'=>'20M' 
 		        )
 		    )
 		);
