@@ -12,6 +12,65 @@ class View_User_Registration extends \View{
 			$f->addField('line','username','email_id')->validate('required|email');
 			$f->addField('password','password')->validate('required');
 			$f->addField('password','retype_password');
+
+			$custom_field = [];
+			if($this->options['show_field_country']){
+				$c_field = $f->addField('xepan\base\DropDownNormal','country');
+				$c_model = $this->add('xepan\base\Model_Country')->addCondition('status','Active');
+				$c_field->setModel($c_model);
+				$c_field->setEmptyText('Please Select Country');
+				$custom_field["country"] = 0;
+			}else{
+				$f->layout->template->tryDel('country_wrapper');
+			}
+
+			if($this->options['show_field_state']){
+				$s_field = $f->addField('xepan\base\DropDownNormal','state');
+				$s_model = $this->add('xepan\base\Model_State')->addCondition('status','Active');
+				$s_field->setModel($s_model);
+				$s_field->setEmptyText('Please Select State');
+				$custom_field["state"] = 0;
+			}else{
+				$f->layout->template->tryDel('state_wrapper');
+			}
+
+			if($this->options['show_field_country'] && $this->options['show_field_state']){
+
+				if($country_id = $this->app->stickyGET('r_c_id')){
+					$s_field->getModel()->addCondition('country_id',$country_id);
+				}				
+				$c_field->js('change',$s_field->js()->reload(null,null,[$this->app->url(null,['cut_object'=>$s_field->name]),'r_c_id'=>$c_field->js()->val()]));
+			}
+
+
+			if($this->options['show_field_city']){
+				$f->addField('city');
+				$custom_field["city"] = "";
+			}else{
+				$f->layout->template->del('city_wrapper');
+			}
+
+			if($this->options['show_field_address']){
+				$f->addField('text','address');
+				$custom_field["address"] = "";
+			}else{
+				$f->layout->template->tryDel('address_wrapper');
+			}
+
+			if($this->options['show_field_pin_code']){
+				$f->addField('pin_code');
+				$custom_field["pin_code"] = "";
+			}else{
+				$f->layout->template->tryDel('pin_code_wrapper');
+			}
+
+			if($this->options['show_field_mobile_no']){
+				$f->addField('Number','mobile_no');
+				$custom_field["mobile_no"] = "";
+			}else{
+				$f->layout->template->tryDel('mobile_no_wrapper');
+			}
+
 			$f->addField('checkbox','tnc','');
 
 			if($this->options['show_tnc'] == false){				
@@ -21,6 +80,7 @@ class View_User_Registration extends \View{
 			}
 
 			$f->onSubmit(function($f){
+
 				if(!$f['tnc']){
 					$f->js()->univ()->alert('Accept TnC')->execute();
 				}
@@ -120,7 +180,8 @@ class View_User_Registration extends \View{
 
 				}
 				
-				$this->app->hook('userCreated',[$f['first_name'],$f['last_name'],$user]);
+
+				$this->app->hook('userCreated',[$f->get(),$user]);
 			
 			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>$this->options['registration_message']])))->univ()->successMessage('Account Verification Mail Sent');
 			});
