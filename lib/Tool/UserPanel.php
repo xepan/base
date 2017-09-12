@@ -21,6 +21,15 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'show_activation_link'=>true,
 				'show_verification_link'=>true,
 				'show_resendverification_link'=>true,
+
+				// field to show
+				'show_field_country'=>0,
+				'show_field_state'=>0,
+				'show_field_city'=>0,
+				'show_field_address'=>0,
+				'show_field_pin_code'=>0,
+				'show_field_mobile_no'=>0,
+
 				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
 				'verify_message'=>'Your account is validated. Login with your username and password to enjoy our services.',
 				'registration_message'=>'Registration mail sent. Check your email address linked to the account.',
