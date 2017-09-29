@@ -9,7 +9,7 @@ class Widget_EmployeeSpecificActivities extends \xepan\base\Widget{
 		$this->addClass('panel panel-default panel-body');
 
 		$this->report->enableFilterEntity('date_range');
-		$this->report->enableFilterEntity('employee');
+		$this->report->enableFilterEntity('Employee');
 
 		$contact_id = $this->app->employee->id;
 		if(isset($this->report->employee))
