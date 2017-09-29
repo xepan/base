@@ -252,4 +252,14 @@ class Grid extends \Grid{
             '/>'.
             '<label for="'.$id.'"></label>';
     }
+
+    function addButton($label, $class = 'Button')
+    {
+        if (!$this->buttonset) {
+            $this->buttonset = $this->add('ButtonSet', null, 'grid_buttons')->setClass('atk-actions btn-group');
+        }
+        return $this->buttonset
+            ->add($class, 'gbtn'.count($this->elements))
+            ->set($label);
+    }
 }
