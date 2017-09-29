@@ -7,7 +7,7 @@ class Widget_EmployeeContacts extends \xepan\base\Widget{
 		parent::init();
 
 		$this->report->enableFilterEntity('date_range');
-		$this->report->enableFilterEntity('employee');
+		$this->report->enableFilterEntity('Employee');
 
 		$this->grid = $this->add('xepan\base\Grid');
 		$this->grid->add('View',null,'grid_buttons')->setHtml('<b>Contacts Added</b>');
