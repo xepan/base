@@ -41,7 +41,7 @@ class Controller_Backup extends \AbstractController {
 		if(!$path)
 			$path = $this->getPath();
 		
-		$this->file_name = $path."/".$this->app->normalizeName($file_name);
+		$this->file_name = $path."/".$file_name;
 		return $this;
 	}
 
