@@ -26,7 +26,8 @@ class page_backup extends \Page {
 		// size formatter
 		$crud->grid->addHook('formatRow',function($g){
 			$decimals = 2;
-			$bytes = filesize($g->model->getPath()."/".$g->model['name']);
+			$file_path = $g->model->getPath()."/".$g->model['name'];
+			$bytes = filesize($file_path);
 			$sz = 'BKMGTP';
 			$factor = floor((strlen($bytes) - 1) / 3);
 			$dimention = @$sz[$factor];
@@ -35,12 +36,12 @@ class page_backup extends \Page {
 			else
 				$dimention .= "B";
 			$g->current_row_html['size'] = sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) ." ". $dimention;
+			
+			$relative_path = 'websites/'.$this->app->current_website_name.'/backup/'.$g->model['name'];
+			$g->current_row_html['name'] = '<a href="'.$relative_path.'" download>'.$g->model['name'].'</a>';
 		});
 
 		$crud->grid->addColumn('size');
-		$crud->grid->addColumn('Import');
-
 		$crud->grid->addSno();
-
 	}
 }

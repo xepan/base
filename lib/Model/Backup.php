@@ -21,12 +21,16 @@ class Model_Backup extends \Model {
         /**
          * This model automatically sets its source by traversing 
          * and searching for suitable files
-         */
-        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/./websites/'.$this->app->current_website_name.'/www/'.$this->dir;
+        */
+        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/./websites/'.$this->app->current_website_name.'/'.$this->dir;
+        $p = [];        
+        if(!file_exists($path)){
+            mkdir($path);
+        }
+
         $p = scandir($path);
         unset($p[0]);
         unset($p[1]);
-
         arsort($p);
 
         $this->setSource('Array',$p);
@@ -50,7 +54,7 @@ class Model_Backup extends \Model {
     }
 
     function getPath(){
-        return $this->api->pathfinder->base_location->base_path.'/./websites/'.$this->app->current_website_name.'/www/backup';
+        return $this->api->pathfinder->base_location->base_path.'/./websites/'.$this->app->current_website_name.'/backup';
     }
 
 }

@@ -67,7 +67,7 @@ class Controller_Backup extends \AbstractController {
 	}
 
 	function getPath(){
-		return $this->api->pathfinder->base_location->base_path.'/./websites/'.$this->app->current_website_name.'/www/'.$this->dir;
+		return $this->api->pathfinder->base_location->base_path.'/./websites/'.$this->app->current_website_name.'/'.$this->dir;
 	}
 
 	function generateFileName(){
