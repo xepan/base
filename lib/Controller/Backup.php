@@ -35,6 +35,7 @@ class Controller_Backup extends \AbstractController {
       		$this->setDBName($matches[7]);
         }
 		$this->dump = new Dump;
+		$this->dump->disableForeignKeyChecks(true);
 	}
 
 	function setFileName($file_name,$path=null){
