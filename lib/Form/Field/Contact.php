@@ -9,18 +9,8 @@ class Form_Field_Contact extends  Form_Field_Basic {
 	public $include_status='Active'; // all, no condition
 	public $contact_class = 'xepan\base\Model_Contact';
 
-
-	public $editing_in_crud=false;
 	function init(){
 		parent::init();
-
-		$form = $this->owner;
-		if(!($this->owner instanceof \Form)){
-			$form= $this->owner->owner ; // looks like layout added
-		}
-		if($form->owner instanceof \CRUD){
-			if($form->owner->isEditing('edit')) $this->editing_in_crud = true;
-		}
 	}
 
 	function setType($type=null){
@@ -50,7 +40,7 @@ class Form_Field_Contact extends  Form_Field_Basic {
 
 	function recursiveRender(){
 		$contact = $this->add($this->contact_class);
-		if(!$this->editing_in_crud and $this->include_status) $contact->addCondition('status',$this->include_status);
+		if($this->include_status) $contact->addCondition('status',$this->include_status);
 		$this->setModel($contact,$this->id_field, $this->title_field);
 		parent::recursiveRender();
 	}
