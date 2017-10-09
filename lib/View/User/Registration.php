@@ -19,6 +19,10 @@ class View_User_Registration extends \View{
 				$c_model = $this->add('xepan\base\Model_Country')->addCondition('status','Active');
 				$c_field->setModel($c_model);
 				$c_field->setEmptyText('Please Select Country');
+
+				if($this->options['country_is_mandatory'])
+					$c_field->validate('required');
+
 				$custom_field["country"] = 0;
 			}else{
 				$f->layout->template->tryDel('country_wrapper');
@@ -29,6 +33,9 @@ class View_User_Registration extends \View{
 				$s_model = $this->add('xepan\base\Model_State')->addCondition('status','Active');
 				$s_field->setModel($s_model);
 				$s_field->setEmptyText('Please Select State');
+				if($this->options['state_is_mandatory'])
+					$s_field->validate('required');
+
 				$custom_field["state"] = 0;
 			}else{
 				$f->layout->template->tryDel('state_wrapper');
@@ -44,28 +51,43 @@ class View_User_Registration extends \View{
 
 
 			if($this->options['show_field_city']){
-				$f->addField('city');
+				$city_field = $f->addField('city');
+
+				if($this->options['city_is_mandatory'])
+					$city_field->validate('required');
+
 				$custom_field["city"] = "";
 			}else{
 				$f->layout->template->del('city_wrapper');
 			}
 
 			if($this->options['show_field_address']){
-				$f->addField('text','address');
+				$address_field = $f->addField('text','address');
+
+				if($this->options['address_is_mandatory'])
+					$address_field->validate('required');
+
 				$custom_field["address"] = "";
 			}else{
 				$f->layout->template->tryDel('address_wrapper');
 			}
 
 			if($this->options['show_field_pin_code']){
-				$f->addField('pin_code');
+				$pin_code_field = $f->addField('pin_code');
+				if($this->options['pin_code_is_mandatory'])
+					$pin_code_field->validate('required');
+
 				$custom_field["pin_code"] = "";
 			}else{
 				$f->layout->template->tryDel('pin_code_wrapper');
 			}
 
 			if($this->options['show_field_mobile_no']){
-				$f->addField('Number','mobile_no');
+				$mobile_no_field = $f->addField('Number','mobile_no');
+				
+				if($this->options['mobile_no_is_mandatory'])
+					$mobile_no_field->validate('required');
+
 				$custom_field["mobile_no"] = "";
 			}else{
 				$f->layout->template->tryDel('mobile_no_wrapper');
