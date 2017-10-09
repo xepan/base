@@ -10,6 +10,11 @@ class Form_Field_State extends  Form_Field_DropDown {
 	public $country_field=null;
 	public $country_id=null;
 
+	function init(){
+		parent::init();
+		$this->setEmptyText('Please Select');
+	}
+
 	function setIdField($id_field){
 		$this->id_field = $id_field;
 	}

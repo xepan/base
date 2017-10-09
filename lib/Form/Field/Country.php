@@ -8,6 +8,11 @@ class Form_Field_Country extends  Form_Field_DropDown {
 	public $title_field=null;
 	public $include_status='Active'; // all, no condition
 
+	function init(){
+		parent::init();
+		$this->setEmptyText('Please Select');
+	}
+
 	function setIdField($id_field){
 		$this->id_field = $id_field;
 	}
