@@ -11,10 +11,12 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'login_success_url'=>'index',
 				'logout_page'=>'logout',
 				'login_page'=>'login',
+				'member_panel_page'=>'',
 				'registration_page_extranal_url'=>null,
 				'show_micro_login'=>false,
 				'show_footer'=>true,
 				'show_login_link'=>true,
+
 				// THESE OPTIONS ARE NOT YET IMPLEMENTED, TIME TO JUMP ON TO FRONTEND
 				'show_forgotpassword_link'=>true,
 				'show_registration_link'=>true,
@@ -53,7 +55,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		}
 
 		$layout = $this->app->stickyGET('layout');
-		if($layout){			
+		if($layout){
 			$this->options['layout']=$layout;
 		}
 		
