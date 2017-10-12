@@ -1,6 +1,7 @@
 <?php
 namespace xepan\base;
 class View_User_MicroLogin extends \View{
+	public $options = [];
 	function init(){
 		parent::init();
 		
@@ -19,8 +20,8 @@ class View_User_MicroLogin extends \View{
 			$this->template->tryDel('logout_wrapper');
 			$this->template->trySet('login_url',$this->app->url($this->options['login_page']));
 		}
-
-
+		
+		$this->template->trySet('member_panel_url',$this->app->url($this->options['member_panel_page']));
 	}
 
 	function defaultTemplate(){		
