@@ -1,6 +1,7 @@
 <?php
 namespace xepan\base;
 
+// $popup->js()->modal() to show modal
 class View_ModelPopup extends \View{
 	public $options = [
 					'addCloseButton'=>true,
