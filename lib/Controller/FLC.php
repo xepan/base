@@ -24,6 +24,7 @@ class Controller_FLC extends \AbstractController {
 	public $add_lables = true; 
 	public $addContent = false; 
 	public $debug = false;
+	public $closeOtherPanels = false;
 
 	function init(){
 		parent::init();
@@ -40,6 +41,11 @@ class Controller_FLC extends \AbstractController {
 
 	function makePanelsCoppalsible(){
 		$this->collepsible_panel = true;
+		return $this;
+	}
+
+	function closeOtherPanels(){
+		$this->closeOtherPanels = true;
 		return $this;
 	}
 
@@ -108,7 +114,7 @@ class Controller_FLC extends \AbstractController {
 		// print_r($rows);
 		// echo "</pre>";
 
-		$template_str="";
+		$template_str="<div id='".$this->name."_p'>";
 		foreach ($rows as $title => $row) {
 			$title_arr = explode("|", $title);
 			$title=$title_arr[0];
@@ -124,6 +130,9 @@ class Controller_FLC extends \AbstractController {
 				$xepan_collepsable="";
 				if($this->collepsible_panel){
 					$data_str ="  data-toggle='collapse' data-target='#$id'";
+					if($this->closeOtherPanels){
+						$data_str .=" data-parent='#".$this->name."_p'";
+					}
 					$collapse_in="collapse in ";
 					$xepan_collepsable="xepan-flc-collasable-form";
 					
@@ -162,6 +171,8 @@ class Controller_FLC extends \AbstractController {
 		if($this->addContent){
 			$template_str .='<div>{$Content}</div>';
 		}
+
+		$template_str.="</div>";
 
 		if($this->debug){
 			$this->owner->add('View')->setElement('pre')->set($template_str);
