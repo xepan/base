@@ -1,293 +1,285 @@
 
 <div id="{$_name}" style="display:none" for-xepan-component="xepan/base/Tool_UserPanel" class="xepan-tool-options">
+  <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse"></div>
+  <div class="xepan-cms-group-panel clearfix">
+    <div data-toggle="collapse" data-target="#user-tool-form-layouts" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Layouts</span><i class="fa fa-chevron-down pull-right"></i></div>
+  </div>
+  <div id="user-tool-form-layouts" class="xepan-cms-tools-bar-panel row-fluid collapse">
+    <table class="table-condensed table-hover xepan-cms-tool-table">
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Layout</td>
+          <td class="xepan-tool-option-value"> 
+            <select id="user-panel-layout" data-attr="layout">
+              <option value="login_view">Login</option>
+              <option value="forget_password">Forgot Password</option>
+              <option value="new_registration">New Registration</option>
+              <option value="verify_account">Aerify Account</option>
+              <option value="verify_again">Verify Again</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+    </table>
+  </div>
   <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
   <div class="xepan-cms-group-panel clearfix">
-    <h3 data-toggle="collapse" data-target="#collapse-user-panel" aria-expanded="false" class="collapsed"><span>User Panel Options</span></h3>
-    <div id="collapse-user-panel" class="xepan-cms-tools-bar-panel row-fluid collapse">
-      <div class="panel-body">
-        <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
-        <div class="xepan-cms-group-panel clearfix">
-          <div data-toggle="collapse" data-target="#user-tool-form-layouts" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Layouts</span></div>
+    <div data-toggle="collapse" data-target="#user-tool-show-url-links" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Show/Hide Links/Fields</span><i class="fa fa-chevron-down pull-right"></i></div>
+  </div>
+  <div id="user-tool-show-url-links" class="xepan-cms-tools-bar-panel row-fluid collapse">
+    <table class="table-condensed table-hover xepan-cms-tool-table">
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show Registration Link</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_tnc" data-attr="show_registration_link" data-defaultvalue="true">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </td>
         </div>
-        <div id="user-tool-form-layouts" class="xepan-cms-tools-bar-panel row-fluid collapse">
-          <table class="table table-condensed table-hover">
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Layout</td>
-                <td class="xepan-tool-option-value"> 
-                  <select id="user-panel-layout" data-attr="layout">
-                    <option value="login_view">Login</option>
-                    <option value="forget_password">Forgot Password</option>
-                    <option value="new_registration">New Registration</option>
-                    <option value="verify_account">Aerify Account</option>
-                    <option value="verify_again">Verify Again</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-          </table>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show ForgotPassword Link</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_tnc" data-attr="show_forgotpassword_link" data-defaultvalue="true">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </td>
         </div>
-        <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
-        <div class="xepan-cms-group-panel clearfix">
-          <div data-toggle="collapse" data-target="#user-tool-show-url-links" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Show/Hide Links/Fields</span></div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show Activate Link</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_tnc" data-attr="show_activation_link" data-defaultvalue="true">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </td>
         </div>
-        <div id="user-tool-show-url-links" class="xepan-cms-tools-bar-panel row-fluid collapse">
-          <table class="table table-condensed table-hover">
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show Registration Link</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_tnc" data-attr="show_registration_link" data-defaultvalue="true">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show ForgotPassword Link</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_tnc" data-attr="show_forgotpassword_link" data-defaultvalue="true">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show Activate Link</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_tnc" data-attr="show_activation_link" data-defaultvalue="true">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show Country Field</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_field_country" data-attr="show_field_country" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Country is mandatory</td>
-                <td class="xepan-tool-option-value">
-                  <select id="country_is_mandatory" data-attr="country_is_mandatory" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show State Field</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_field_state" data-attr="show_field_state" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">State is mandatory</td>
-                <td class="xepan-tool-option-value">
-                  <select id="state_is_mandatory" data-attr="state_is_mandatory" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show City Field</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_field_city" data-attr="show_field_city" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">City is mandatory</td>
-                <td class="xepan-tool-option-value">
-                  <select id="city_is_mandatory" data-attr="city_is_mandatory" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show Address Field</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_field_address" data-attr="show_field_address" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Address is mandatory</td>
-                <td class="xepan-tool-option-value">
-                  <select id="address_is_mandatory" data-attr="address_is_mandatory" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show Pin Code Field</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_field_pin_code" data-attr="show_field_pin_code" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Pin Code is mandatory</td>
-                <td class="xepan-tool-option-value">
-                  <select id="pin_code_is_mandatory" data-attr="pin_code_is_mandatory" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show Mobile No Field</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_field_mobile_no" data-attr="show_field_mobile_no" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Mobile No  is mandatory</td>
-                <td class="xepan-tool-option-value">
-                  <select id="mobile_no_is_mandatory" data-attr="mobile_no_is_mandatory" data-defaultvalue="0">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-          </table>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show Country Field</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_field_country" data-attr="show_field_country" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
         </div>
-        <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
-        <div class="xepan-cms-group-panel clearfix">
-          <div data-toggle="collapse" data-target="#user-tool-page-links" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Page Links</span></div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Country is mandatory</td>
+          <td class="xepan-tool-option-value">
+            <select id="country_is_mandatory" data-attr="country_is_mandatory" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
         </div>
-        <div id="user-tool-page-links" class="xepan-cms-tools-bar-panel row-fluid collapse">
-          <table class="table table-condensed table-hover">
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Success URL</td>
-                <td class="xepan-tool-option-value"> 
-                  <input id="user-panle-sucess-url" data-attr="login_success_url" data-shortname="success_url"/>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Show TnC</td>
-                <td class="xepan-tool-option-value">
-                  <select id="show_tnc" data-attr="show_tnc" data-defaultvalue="true">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">TnC URL</td>
-                <td class="xepan-tool-option-value"> 
-                  <input id="tnc_page_url" data-attr="tnc_page_url" data-shortname="tnc_url"/>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Logout Page</td>
-                <td class="xepan-tool-option-value"> 
-                  <input id="user-panle-logoutpage-layout" data-attr="logout_page" data-shortname="logout_page"/>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Login Page</td>
-                <td class="xepan-tool-option-value"> 
-                  <input id="user-panle-loginpage-layout" data-attr="login_page" data-shortname="login_page"/>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Registration Page</td>
-                <td class="xepan-tool-option-value"> 
-                  <input id="user-panle-registration-page-layout" data-attr="registration_page_extranal_url"/>
-                </td>
-              </div>
-            </tr>
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Member Panel Page</td>
-                <td class="xepan-tool-option-value"> 
-                  <input id="user-panle-member-page" data-attr="member_panel_page"/>
-                </td>
-              </div>
-            </tr>
-          </table>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show State Field</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_field_state" data-attr="show_field_state" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
         </div>
-        <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
-        <div class="xepan-cms-group-panel clearfix">
-          <div data-toggle="collapse" data-target="#user-tool-micro-login" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Micro Login</span></div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">State is mandatory</td>
+          <td class="xepan-tool-option-value">
+            <select id="state_is_mandatory" data-attr="state_is_mandatory" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
         </div>
-        <div id="user-tool-micro-login" class="xepan-cms-tools-bar-panel row-fluid collapse">
-          <table class="table table-condensed table-hover">
-            <tr>
-              <div class="xepan-tool-option">
-                <td class="xepan-tool-option-title">Micro Login</td>
-                <td class="xepan-tool-option-value"> 
-                  <select id="user-panel-micrologin" data-attr="show_micro_login" data-shortname="micro_login">
-                    <option value="true">True</option>
-                    <option value="false">False																							</option>
-                  </select>
-                </td>
-              </div>
-            </tr>
-          </table>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show City Field</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_field_city" data-attr="show_field_city" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
         </div>
-      </div>
-    </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">City is mandatory</td>
+          <td class="xepan-tool-option-value">
+            <select id="city_is_mandatory" data-attr="city_is_mandatory" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show Address Field</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_field_address" data-attr="show_field_address" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Address is mandatory</td>
+          <td class="xepan-tool-option-value">
+            <select id="address_is_mandatory" data-attr="address_is_mandatory" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show Pin Code Field</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_field_pin_code" data-attr="show_field_pin_code" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Pin Code is mandatory</td>
+          <td class="xepan-tool-option-value">
+            <select id="pin_code_is_mandatory" data-attr="pin_code_is_mandatory" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show Mobile No Field</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_field_mobile_no" data-attr="show_field_mobile_no" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Mobile No  is mandatory</td>
+          <td class="xepan-tool-option-value">
+            <select id="mobile_no_is_mandatory" data-attr="mobile_no_is_mandatory" data-defaultvalue="0">
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+    </table>
+  </div>
+  <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
+  <div class="xepan-cms-group-panel clearfix">
+    <div data-toggle="collapse" data-target="#user-tool-page-links" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Page Links</span><i class="fa fa-chevron-down pull-right"></i></div>
+  </div>
+  <div id="user-tool-page-links" class="xepan-cms-tools-bar-panel row-fluid collapse">
+    <table class="table-condensed table-hover xepan-cms-tool-table">
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Success URL</td>
+          <td class="xepan-tool-option-value"> 
+            <input id="user-panle-sucess-url" data-attr="login_success_url" data-shortname="success_url"/>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Show TnC</td>
+          <td class="xepan-tool-option-value">
+            <select id="show_tnc" data-attr="show_tnc" data-defaultvalue="true">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">TnC URL</td>
+          <td class="xepan-tool-option-value"> 
+            <input id="tnc_page_url" data-attr="tnc_page_url" data-shortname="tnc_url"/>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Logout Page</td>
+          <td class="xepan-tool-option-value"> 
+            <input id="user-panle-logoutpage-layout" data-attr="logout_page" data-shortname="logout_page"/>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Login Page</td>
+          <td class="xepan-tool-option-value"> 
+            <input id="user-panle-loginpage-layout" data-attr="login_page" data-shortname="login_page"/>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Registration Page</td>
+          <td class="xepan-tool-option-value"> 
+            <input id="user-panle-registration-page-layout" data-attr="registration_page_extranal_url"/>
+          </td>
+        </div>
+      </tr>
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Member Panel Page</td>
+          <td class="xepan-tool-option-value"> 
+            <input id="user-panle-member-page" data-attr="member_panel_page"/>
+          </td>
+        </div>
+      </tr>
+    </table>
+  </div>
+  <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
+  <div class="xepan-cms-group-panel clearfix">
+    <div data-toggle="collapse" data-target="#user-tool-micro-login" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Micro Login</span><i class="fa fa-chevron-down pull-right"></i></div>
+  </div>
+  <div id="user-tool-micro-login" class="xepan-cms-tools-bar-panel row-fluid collapse">
+    <table class="table-condensed table-hover xepan-cms-tool-table">
+      <tr>
+        <div class="xepan-tool-option">
+          <td class="xepan-tool-option-title">Micro Login</td>
+          <td class="xepan-tool-option-value"> 
+            <select id="user-panel-micrologin" data-attr="show_micro_login" data-shortname="micro_login">
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </td>
+        </div>
+      </tr>
+    </table>
   </div>
   <script>
     $('#{$_name} [data-attr]').on('change',function(){
