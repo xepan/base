@@ -6,10 +6,10 @@ class Initiator extends \Controller_Addon {
     public $addon_name = 'xepan_base';
 
     function init(){
-        parent::init();        
-                  
+        parent::init();
+
         // $this->app->forget($this->app->current_website_name.'_epan');
-        
+
         $this->addAppDateFunctions();
 
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
