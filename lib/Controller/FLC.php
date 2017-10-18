@@ -39,9 +39,13 @@ class Controller_FLC extends \AbstractController {
 
 	}
 
-	function makePanelsCoppalsible(){
+	function makePanelCollepsible(){
 		$this->collepsible_panel = true;
 		return $this;
+	}
+
+	function makePanelsCoppalsible(){
+		return $this->makePanelCollepsible();
 	}
 
 	function closeOtherPanels(){
