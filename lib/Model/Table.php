@@ -15,6 +15,7 @@ class Model_Table extends \Model_Table{
 
 	public $acl=true; // true/false/"model_name string";
 	public $acl_type=null;
+	public $namespace =null;
 
 	public $status=[];
 	public $actions = [
