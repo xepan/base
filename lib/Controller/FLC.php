@@ -69,6 +69,29 @@ class Controller_FLC extends \AbstractController {
 		'state'=>'~c2~4',
 		'country'=>'~c3~4',
 	 */
+
+	 /** == second version -- not production ready but workingon 
+	 * 
+		'r1c1~w8'=>[
+			first_name'=>'Name Section~c1~6',
+			'nick_name'=>'~c1',
+			'last_name'=>'~c2~6',
+			'city'=>'Location~c1~4',
+			'state'=>'~c2~4',
+			'country'=>'~c3~4',
+		],
+		'r1c2~w4'=>[
+			...
+		],
+		'r1c2~n1'=>[
+			... added no-1 in r1c2 column
+		],
+		'r1c2~n2'=>[
+			... added no-2 in r1c2 column
+		],
+		'r1c2~w6'=>[
+		]
+	 */
 	function layout($array=null){
 		$rows=[];
 		$collapsed_sections=[];
