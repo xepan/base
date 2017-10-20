@@ -128,8 +128,10 @@ class Initiator extends \Controller_Addon {
             $this->app->side_menu = $this->app->layout->add('xepan\base\Menu_SideBar',null,'Side_Menu');
             $m = $this->app->layout->add('xepan\base\Menu_TopRightBar',null,'User_Menu');
         
-            if(!$this->app->getConfig('hidden_user_menu',false)) 
+            if(!$this->app->getConfig('hidden_user_menu',false)) {
                 $this->app->user_menu = $m->addMenu('My Menu');
+                $this->app->user_menu->addItem(['Logout','icon'=>'fa fa-power-off'],$this->app->url('xepan_base_logout'));
+            }
             else
                 $this->app->user_menu = new \Dummy;
 
