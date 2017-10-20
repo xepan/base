@@ -19,6 +19,8 @@ class Model_ConfigJsonModel extends \Model{
 	public $application='base';
 	public $namespace='xepan\base';
 
+	public $acl_type=null;
+
 	public $acl=true;
 
 	public $status=[
@@ -38,7 +40,7 @@ class Model_ConfigJsonModel extends \Model{
 		if(!$this->config_key)
 			throw new \Exception("must define epan config key");
 
-		$this->acl_type = $this->config_key;
+		if(!$this->acl_type) $this->acl_type = $this->config_key;
 		$this->namespace = 'xepan\\'.$this->application;
 
 		foreach ($this->fields as $name => $type) {
