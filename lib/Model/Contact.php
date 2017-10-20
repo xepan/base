@@ -225,47 +225,10 @@ class Model_Contact extends \xepan\base\Model_Table{
         $communication_tab = $tabs->addTab('Communication');
         $followup_tab = $tabs->addTab('Followups');
 
-		$communication = $page->add('xepan\communication\Model_Communication');
-		$communication->addCondition(
-						$communication->dsql()->orExpr()
-						->where('from_id',$this->id)
-						->where('to_id',$this->id)
-					);
-
-		$communication->setOrder('created_at','desc');
-		$contact_id = $this->id;
+		$comm = $communication_tab->add('xepan\communication\View_Communication');
+		$comm->setCommunicationsWith($this);
 		
-		$lister=$communication_tab->add('xepan\communication\View_Lister_Communication',['contact_id'=>$contact_id],null,null);
-		if($_GET['comm_type']){
-			$communication->addCondition('communication_type',explode(",", $_GET['comm_type']));
-		}
-
-		if($search = $this->app->stickyGET('search')){
-			$communication->addExpression('Relevance')->set('MATCH(title,description,communication_type) AGAINST ("'.$search.'")');
-			$communication->addCondition('Relevance','>',0);
- 			$communication->setOrder('Relevance','Desc');
-		}
-
-		$lister->setModel($communication)->setOrder(['created_at desc','id desc']);
-		$p = $lister->add('Paginator',null,'Paginator');
-		$p->setRowsPerPage(10);
-		
-		$form = $lister->add('Form',null,'form');
-		$form->setLayout('view\communication\filterform');
-		$type_field = $form->addField('xepan\base\DropDown','communication_type');
-		$type_field->setAttr(['multiple'=>'multiple']);
-		$type_field->setValueList(['Email'=>'Email','Support'=>'Support','Call'=>'Call','Newsletter'=>'Newsletter','SMS'=>'SMS','Personal'=>'Personal','Comment'=>'Comment','TeleMarketing'=>'TeleMarketing']);
-		$form->addField('search')->set($_GET['search']);
-		$form->addSubmit('Filter')->addClass('btn btn-primary btn-block');
-		
-		$temp = ['Email','Support','Call','Newsletter','SMS','Personal','Comment','TeleMarketing'];
-		$type_field->set($_GET['comm_type']?explode(",", $_GET['comm_type']):$temp)->js(true)->trigger('changed');
-		
-		if($form->isSubmitted()){			
-			$lister->js()->reload(['comm_type'=>$form['communication_type'],'search'=>$form['search']])->execute();
-		}
-		
-		$this->app->hook('communication_rendered',[$contact_id,$followup_tab]);
+		$this->app->hook('communication_rendered',[$this->id,$followup_tab]);
 	}
 
 	//load Logged In check for the user of contact loaded or not, 
