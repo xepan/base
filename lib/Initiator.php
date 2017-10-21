@@ -212,6 +212,9 @@ class Initiator extends \Controller_Addon {
         $this->setup_xepan_apps('admin');
         // throw new \Exception($this->app->employee->id, 1);
 
+        $this->app->addMethod('normalizeSlugUrl',function($app,$name){
+            return strtolower(str_replace("_", "-", $this->app->normalizeName($name)));
+        });
         return $this;
 	} 
 
@@ -250,7 +253,9 @@ class Initiator extends \Controller_Addon {
             }
         }
 
-
+        $this->app->addMethod('normalizeSlugUrl',function($app,$name){
+            return str_replace("_", "-", $this->app->normalizeName($name));
+        });
 
         $this->app->addMethod('exportFrontEndTool',function($app,$tool, $group='Basic'){
             if(!isset($app->fronend_tool)) $app->fronend_tool=[];
