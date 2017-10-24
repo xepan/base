@@ -8,11 +8,15 @@ class Page extends \Page {
 	public $breadcrumb=[
 						'Dashboard'=>'/'
 					];
-
+	public $allow_frontend = false;
 	function init(){
 		parent::init();
 
-		if(!$this->app->auth->isLoggedIn() || !in_array($this->app->auth->model['scope'] , ['AdminUser','SuperUser'])){
+		$allowed_scope = ['AdminUser','SuperUser'];
+		if($this->allow_frontend)
+			$allowed_scope[] = 'WebsiteUser';
+		
+		if(!$this->app->auth->isLoggedIn() || !in_array($this->app->auth->model['scope'] , $allowed_scope)){
 			throw $this->exception('You are not authorised to access this page')
 						->addMoreInfo('User Type',$this->app->auth->model['scope'])
 						->addMoreInfo('User_id',$this->app->auth->model->id)
