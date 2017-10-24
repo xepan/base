@@ -36,8 +36,13 @@ $.each({
 	richtext: function(obj,options,frontend){
 		tinymce.baseURL = "./vendor/tinymce/tinymce";
 
-        tinymce.editors=[];
-        tinymce.activeEditors=[];
+        // tinymce.editors=[];
+        // tinymce.activeEditors=[];
+        $(tinymce.editors).each(function(index, el) {
+            if(el.id == $(obj).attr('id')) {
+                $(obj).tinymce().remove();
+            }
+        });
 
         $(document).on('focusin', function(event) {
             if ($(event.target).closest(".mce-window").length) {
