@@ -4,23 +4,22 @@ $.each({
 	// http://stackoverflow.com/questions/7315556/jquery-ui-autocomplete-select-event-not-working-with-mouse-click
 	// http://jqueryui.com/demos/autocomplete/#events (check focus and select events)
 
-	myelimage: function(other_field){
+	myelimage: function(other_field,$replace_value){
 
 		var q=this.jquery;
-		console.log(other_field);
 		var fm = $('<div/>').dialogelfinder({
 												url : 'index.php?page=xepan_base_elconnector&cut_page=true',
 												lang : 'en',
 												width : 840,
 												destroyOnClose : true,
 												getFileCallback : function(files, fm) {
-													$(other_field).val(files.url);
+													$(other_field).val(files.url.replace($replace_value, ''));
 												},
 												onlyMimes: ['image'],
 												commandsOptions : {
 													getfile : {
 														oncomplete : 'close',
-														folders : true
+														folders : false
 													}
 												}
 											}).dialogelfinder('instance');
