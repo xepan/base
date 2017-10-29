@@ -87,9 +87,10 @@ class Model_Epan extends \xepan\base\Model_Table{
 			->addField('namespace');
 
 		$installed
-					->addCondition('epan_id',$this->id)
+					// ->addCondition('epan_id',$this->id)
 					->addCondition('namespace',$app)
 					->tryLoadAny();
+		
 		return $installed->loaded();
 	}
 
