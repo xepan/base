@@ -17,6 +17,8 @@ class Grid extends \Grid{
 	public $row_delete=true;
     public $defaultTemplate = null;
     public $paginator_class='xepan\base\Paginator';
+    
+    public $add_sno=true;
     public $sno=1;
     public $sno_decending=false;
     public $order=null;
@@ -167,13 +169,19 @@ class Grid extends \Grid{
         parent::render();
     }
 
+    function noSno(){
+        $this->add_sno = false;
+    }
+
     function addSno($name = 's_no',$descending=false){
+        if(!$this->add_sno) return;
         $this->sno_decending = $descending;
         $this->addColumn('sno','s_no',$name);
         $this->order->move('s_no','first')->now();
     }
 
     function init_sno($field){
+        if(!$this->add_sno) return;
         if($this->sno_decending) $this->sno = $this->model->count()->getOne();
     }
 
@@ -261,5 +269,10 @@ class Grid extends \Grid{
         return $this->buttonset
             ->add($class, 'gbtn'.count($this->elements))
             ->set($label);
+    }
+
+    function recursiveRender(){
+        $this->addSno();
+        return parent::recursiveRender();
     }
 }
