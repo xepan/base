@@ -1,4 +1,5 @@
 "no use strict";
+window.define = window.define || ace.define;
 ;(function(window) {
 if (typeof window.window != "undefined" && window.document)
     return;
