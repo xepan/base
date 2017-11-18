@@ -10,9 +10,6 @@ class Initiator extends \Controller_Addon {
 
         // $this->app->forget($this->app->current_website_name.'_epan');
 
-        if(isset($this->app->layout))
-            $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
-
         $this->addAppDateFunctions();
 
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
@@ -211,6 +208,8 @@ class Initiator extends \Controller_Addon {
             if($app->layout->template->hasTag('quick_search_form'))
                 $app->layout->add('xepan\base\View_QuickSearch',null,'quick_search_form');
         });
+
+        $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
 
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
