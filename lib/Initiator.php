@@ -10,7 +10,7 @@ class Initiator extends \Controller_Addon {
 
         // $this->app->forget($this->app->current_website_name.'_epan');
 
-        $this->app->layout->template->set('xepan_version',file_get_contents('../version'));
+        $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
 
         $this->addAppDateFunctions();
 
