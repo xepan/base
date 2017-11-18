@@ -10,6 +10,8 @@ class Initiator extends \Controller_Addon {
 
         // $this->app->forget($this->app->current_website_name.'_epan');
 
+        $this->app->layout->template->set('xepan_version',file_get_contents('../version'));
+
         $this->addAppDateFunctions();
 
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
@@ -94,6 +96,7 @@ class Initiator extends \Controller_Addon {
         $this->app->addHook('pointable_event',[$event_cont,'handleEvent']);
         $this->app->addHook('widget_collection',[$this,'exportWidgets']);
         $this->app->addHook('entity_collection',[$this,'exportEntities']);
+
     }
 
     function setup_admin(){
