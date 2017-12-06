@@ -97,7 +97,7 @@ class View_EasySetupWizard extends \View{
 
 		$email_view->setAddOn('Application - Base')
 			->setTitle('Update Email Duplication Allowed Configuration')
-			->setMessage('Update settings accoding your organization norms. For update settings click here and Go to tab of Misc Setting')
+			->setMessage('Update settings accoding your organization norms. For update settings click here and Go to tab of Duplicate Emails')
 			->setHelpMessage('Need help ! click on the help icon')
 			->setHelpURL('#')
 			->setAction('Click Here',$action,$isDone);
@@ -131,7 +131,7 @@ class View_EasySetupWizard extends \View{
 
 		$contact_no_view->setAddOn('Application - Base')
 			->setTitle('Update Contact Number Duplication Allowed Configuration')
-			->setMessage('Update settings accoding your organization norms. For update settings click here and Go to tab of Misc Setting')
+			->setMessage('Update settings accoding your organization norms. For update settings click here and Go to tab of Duplicate Conatct')
 			->setHelpMessage('Need help ! click on the help icon')
 			->setHelpURL('#')
 			->setAction('Click Here',$action,$isDone);
