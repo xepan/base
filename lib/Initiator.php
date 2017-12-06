@@ -94,6 +94,7 @@ class Initiator extends \Controller_Addon {
         $this->app->addHook('pointable_event',[$event_cont,'handleEvent']);
         $this->app->addHook('widget_collection',[$this,'exportWidgets']);
         $this->app->addHook('entity_collection',[$this,'exportEntities']);
+
     }
 
     function setup_admin(){
@@ -207,6 +208,8 @@ class Initiator extends \Controller_Addon {
             if($app->layout->template->hasTag('quick_search_form'))
                 $app->layout->add('xepan\base\View_QuickSearch',null,'quick_search_form');
         });
+
+        $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
 
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
@@ -412,7 +415,7 @@ class Initiator extends \Controller_Addon {
 
         // Create Default Applications and INstall with all with root application
         
-        $addons = ['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog','xepan\\epanservices'];
+        $addons = ['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog'/*,'xepan\\epanservices'*/];
 
         foreach ($addons as $ad) {
             $ad_array = explode("\\", $ad);
