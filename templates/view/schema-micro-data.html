@@ -66,13 +66,13 @@
     { "@context": "http://schema.org",
     "@type": "BlogPosting",
     "headline": "{title}14 Ways Json Can Improve Your SEO{/}",
-    "alternativeHeadline": "{tag}and the women who love them{/}",
+    "alternativeHeadline": "{slug_url}and the women who love them{/}",
     "image": ["{$blog_image}"],
     "award": "Best article ever written",
     "editor": "{created_by}John Doe{/}",
-    "genre": "search engine optimization",
-    "keywords": "seo sales b2b",
-    "wordcount": "1120",
+    "genre": "{categories}search engine optimization{/}",
+    "keywords": {$keywords},
+    "wordcount": "{word_count}{/}",
     "publisher": {
         "@type": "Organization" , "name": "{created_by}Xavoc technocrats Pvt. Ltd.{/}" , "logo":["{$blog_image}"]},
     
@@ -81,8 +81,8 @@
     "datePublished": "{created_at}2015-09-20{/}",
     "dateCreated": "{created_at}2015-09-20{/}",
     "dateModified": "{created_at}2015-09-20{/}",
-    "description": "{blog_description}We love to do stuff to help people and stuff{/}",
-    "articleBody": "{meta_description}You can paste your entire post in here, and yes it can get really really long.{/}",
+    "description": {meta_description}We love to do stuff to help people and stuff{/},
+    "articleBody": {blog_description}You can paste your entire post in here, and yes it can get really really long.{/},
     
     "mainEntityOfPage": {"@type": "WebPage","@id": "{url}http://cathscafe.example.com{/}"},
     "author": {"@type": "Person","name": "{$created_by}"}
