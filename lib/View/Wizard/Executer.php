@@ -10,7 +10,12 @@ class View_Wizard_Executer extends \View{
 		$apps= $this->app->xepan_addons;
 		// $apps=['xepan\base','xepan\hr'];
 		foreach ($apps as $addon) {
-         	$this->add($addon.'/View_EasySetupWizard');   
+			try{
+         		$this->add($addon.'/View_EasySetupWizard');   
+			}catch(\Exception $e){
+				
+			}
+
 		}
 	}
 }
