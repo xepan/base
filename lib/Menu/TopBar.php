@@ -67,6 +67,48 @@ class Menu_TopBar extends \Menu_Advanced{
         return $i;
     }
 
+
+    // $this->app->top_menu->getMenuName('HR/Department',true)->destroy();
+    // $this->app->top_menu->getMenuName('HR',true)->destroy();
+    // $this->app->top_menu->getMenuName('HR'); // return key string
+
+    // or
+
+    // $this->app->top_menu->add('Order')
+    //     ->move($this->app->top_menu->getMenuName('HR'),'last')
+    //     ->now();
+    
+    function getMenuName($menu,$obj = false){
+        // foreach ($this->app->layout->getElement('xepan_base_menu_topbar')->elements as $key => $value) {
+        //     echo $key. ' => ' . print_r($value->template->get('Content'),true) . ' <br/>';
+        //     foreach ($value->elements as $key1 => $value1) {
+        //         echo ' - '. $key1. ' => '.print_r($value1->template->get('Content'),true) .'<br/>';
+        //     }
+        // }
+
+        $menu_arr = explode("/", $menu);
+
+        foreach ($this->app->layout->getElement('xepan_base_menu_topbar')->elements as $key => $value) {
+            if($value->template->get('Content')[0] == $menu_arr[0]){
+                if(count($menu_arr) == 1) {
+                    if($obj)
+                        return $this->app->layout->getElement('xepan_base_menu_topbar')->getElement($key);
+                    else
+                        return $key;
+                }
+                foreach ($value->elements as $key1 => $value1) {
+                    if($value1->template->get('Content')[0] == $menu_arr[1]) 
+                        if($obj)
+                            return $this->app->layout->getElement('xepan_base_menu_topbar')->getElement($key)->getElement($key1);
+                        else
+                            return $key.'/'.$key1;
+                }
+            }
+        }
+        
+        return null;
+    }
+
 	function defaultTemplate() {
         return array('menu/bar');
     }
