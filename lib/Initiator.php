@@ -202,6 +202,10 @@ class Initiator extends \Controller_Addon {
             $this->app->js(true,'PNotify.prototype.options.styling = "fontawesome"');
             $this->app->js(true)->_library('PNotify.desktop')->permission();
             $this->app->js(true)->_load('jquery.bootstrap-responsive-tabs.min')->_selector('.responsive-tabs')->responsiveTabs("accordionOn: ['xs', 'sm']");
+
+
+            $this->addGlobalShortcuts();
+
         }
        
         $this->app->addHook('post-init',function($app){
@@ -362,6 +366,20 @@ class Initiator extends \Controller_Addon {
         $array['GraphicalReport'] = ['caption'=>'GraphicalReport','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_GraphicalReport'];
         $array['report_type'] = ['caption'=>'Type','type'=>'DropDown','values'=>['chart'=>'Chart','report'=>'Report']];
 
+    }
+
+    function addGlobalShortcuts(){
+        $this->app->js(true)->_load('shortcut')->_load('fuse.min')->_load('xepan_shortcuts');
+        
+        // Because all applications yet to have run their initiators and how they will catch event then ??
+        $this->api->addHook('post-init',function($app){
+            $shortcuts=[];
+            $this->app->hook('collect_shortcuts',[&$shortcuts]);
+            $popup = $this->app->add('xepan\base\View_ModelPopup');
+            $popup->setTitle('Quick Menu');
+            $popup->options['addSaveButton']=false;
+            $this->app->js(true)->univ()->setup_shortcuts($shortcuts,$popup);
+        });
     }
 
     function resetDB($write_sql=false,$install_apps=true){
