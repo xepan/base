@@ -1,6 +1,6 @@
 $.each({
   setup_shortcuts: function(shortcuts,popup){
-        shortcut.add("Ctrl+q", function(event) {
+        shortcut.add("Alt+q", function(event) {
           $(popup).find('.modal-body').html('');
           $input = $('<input>');
           $resultdiv= $('<div>');
@@ -13,12 +13,15 @@ $.each({
               $resultdiv.html('');
           }) 
 
-          $input.keypress(function(event) {
+          $input.keydown(function(event) {
             var options = {
               shouldSort: true,
-              threshold: 0.4,
+              tokenize: true,
+              matchAllTokens: false,
+              findAllMatches: true,
+              threshold: 0.5,
               location: 0,
-              distance: 100,
+              distance: 1000,
               maxPatternLength: 32,
               minMatchCharLength: 1,
               keys: [
@@ -32,7 +35,7 @@ $.each({
             $resultdiv.html('');
             $.each(result, function(index, obj) {
                 // console.log(obj);
-                $resultblock = $('<div><h4>'+obj.title+'</h4><p>'+obj.description+'</p></div>');
+                $resultblock = $('<div><h4>'+obj.title+'</h4><p>'+obj.description+'</p><span class="label label-primary">'+obj.normal_access+'</span></div><hr/>');
                 $resultdiv.append($resultblock);
                 $resultblock.click(function(event) {
                   if(obj.mode =='frame'){
@@ -48,7 +51,7 @@ $.each({
                 });
             });
           });
-
+          event.preventDefault();
           event.stopPropagation();
         });
 
