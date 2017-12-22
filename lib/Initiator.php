@@ -375,7 +375,7 @@ class Initiator extends \Controller_Addon {
         $this->api->addHook('post-init',function($app){
             $shortcuts=[];
             $this->app->hook('collect_shortcuts',[&$shortcuts]);
-            $popup = $this->app->add('xepan\base\View_ModelPopup');
+            $popup = $this->app->add('xepan\base\View_ModelPopup')->setStyle('z-index','4096');
             $popup->setTitle('Quick Menu');
             $popup->options['addSaveButton']=false;
             $this->app->js(true)->univ()->setup_shortcuts($shortcuts,$popup);
