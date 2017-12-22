@@ -21,7 +21,7 @@ $.each({
               findAllMatches: true,
               threshold: 0.5,
               location: 0,
-              distance: 1000,
+              distance: 500,
               maxPatternLength: 32,
               minMatchCharLength: 1,
               keys: [
@@ -40,14 +40,12 @@ $.each({
                 $resultblock.click(function(event) {
                   if(obj.mode =='frame'){
                     $.univ().frameURL(obj.title, obj.url);
-                    return;
-                  }
-
-                  if(obj.mode =='fullframe'){
+                  }else if(obj.mode =='fullframe'){
                     $.univ().frameURL(obj.title, obj.url,{'width':$(window).width(), 'height': $(window).height(), 'left':'0px','top':'0px'});
-                    return;
+                  }else{
+                    document.location=obj.url;
                   }
-                  document.location=obj.url;
+                  $(popup).modal('hide');
                 });
             });
           });
