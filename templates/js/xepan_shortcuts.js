@@ -11,33 +11,35 @@ $.each({
           $(popup).on('shown.bs.modal', function () {
               $input.focus();
               $resultdiv.html('');
-          }) 
+          });
 
-          $input.keydown(function(event) {
-            var options = {
-              shouldSort: true,
-              tokenize: true,
-              matchAllTokens: false,
-              findAllMatches: true,
-              threshold: 0.5,
-              location: 0,
-              distance: 500,
-              maxPatternLength: 32,
-              minMatchCharLength: 1,
-              keys: [
-                "title",
-                "keywords",
-                "description"
-            ]
-            };
-            var fuse = new Fuse(shortcuts, options); // "list" is the item array
-            var result = fuse.search($(this).val());
-            $resultdiv.html('');
-            $.each(result, function(index, obj) {
-                // console.log(obj);
-                $resultblock = $('<div><h4>'+obj.title+'</h4><p>'+obj.description+'</p><span class="label label-primary">'+obj.normal_access+'</span></div><hr/>');
-                $resultdiv.append($resultblock);
-                $resultblock.click(function(event) {
+          var fuse = new Fuse(shortcuts, {
+                                                  shouldSort: true,
+                                                  tokenize: true,
+                                                  matchAllTokens: false,
+                                                  findAllMatches: true,
+                                                  threshold: 0.6,
+                                                  location: 0,
+                                                  distance: 500,
+                                                  maxPatternLength: 32,
+                                                  minMatchCharLength: 1,
+                                                  keys: [
+                                                    "title",
+                                                    "keywords",
+                                                    "description"
+                                                  ]
+                                                }
+                                      ); // "list" is the item array
+          $input.autocomplete({
+            appendTo: $(popup).find('.modal-content'),
+            source: function(request, response) {
+                    var new_arr = $.map(fuse.search(request.term), function(item) {
+                      return {label : item.title , value : item.normal_access , title: item.title, description: item.description, normal_access: item.normal_access, url: item.url, mode: item.mode, keywords: item.keywords};
+                    });                    
+                    response(new_arr);
+              },
+              select: function(event, ui) {
+                  var obj = ui.item;
                   if(obj.mode =='frame'){
                     $.univ().frameURL(obj.title, obj.url);
                   }else if(obj.mode =='fullframe'){
@@ -46,13 +48,14 @@ $.each({
                     document.location=obj.url;
                   }
                   $(popup).modal('hide');
-                });
-            });
-          });
-          event.preventDefault();
-          event.stopPropagation();
-        });
-
-
+                  return false;
+              }
+            }).data("ui-autocomplete")._renderItem  = function(ul, item) {
+                $resultblock = $('<li><div><h4>'+item.title+'</h4><p>'+item.description+'</p><span class="label label-primary">'+item.normal_access+'</span></div><hr/></li>');
+                return $resultblock
+                    .data("ui-autocomplete-item", item)
+                    .appendTo(ul);
+            }
+  });
   }
 },$.univ._import);
