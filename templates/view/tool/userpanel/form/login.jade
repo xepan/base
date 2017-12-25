@@ -2,6 +2,9 @@
   .panel-heading.text-center
     strong Sign in to continue
   .panel-body(style='margin-top:30px;margin-bottom:30px;')
+    {message_wrapper}
+    .text-center.text-primary.alert.alert-danger {$message}
+    {/message_wrapper}
     form(role='form', action='#', method='POST')
       fieldset
         .row(style='padding-bottom:20px;')
@@ -22,19 +25,17 @@
   {footer_wrapper}
   .panel-footer.row(style="margin:auto")
     {forgot_wrapper}
-    a#login-forget-link.forgotpassword.xepan-login-panl-loadview(class="{$forgot_class}" style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='forget_password') Forgot password
+    a#login-forget-link.col-md-4.col-xs-12.col-sm-12.text-center.forgotpassword.xepan-login-panl-loadview(class="{$forgot_class}" style='cursor:pointer; cursor: hand;', data-showview='forget_password') Forgot password
     {/}
     {register_wrapper}
-    a.col-xs-6.text-center.reg_view.xepan-login-panl-loadview1.xepan-registration-load-panl(class="{$registration_class}" style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='new_registration')  Register now 
+    a.col-md-4.col-xs-12.col-sm-12.text-center.reg_view.xepan-login-panl-loadview1.xepan-registration-load-panl(class="{$registration_class}" style='cursor:pointer; cursor: hand;', data-showview='new_registration')  Register now 
     {/}
     {activate_wrapper}
-    a.reg_view.xepan-login-panl-loadview(class="{$activation_class}" style='cursor:pointer; cursor: hand; max-width:600px;', data-showview='verify_account')
+    a.col-md-4.col-xs-12.col-sm-12.text-center.reg_view.xepan-login-panl-loadview(class="{$activation_class}" style='cursor:pointer; cursor: hand;', data-showview='verify_account')
       | Activate
       #login-box-footer
     {/} 
   {/}
-
-div.text-center.text-primary {$message}        
 style.
     #{$_name} input{
       width:100%;
