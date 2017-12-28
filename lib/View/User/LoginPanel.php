@@ -10,8 +10,11 @@ class View_User_LoginPanel extends \View{
 
         $f = $this->add('Form',null,null,['form/minimal']);
         $f->setLayout('view/tool/userpanel/form/login');
-        if($message = $this->app->stickyGET('message'))
+        if($message = $this->app->stickyGET('message')){
    	 		$f->layout->template->trySet('message',$message);
+        }else{
+        	$f->layout->template->tryDel('message_wrapper');
+        }
 
         if(!$this->options['show_footer']){
 			$f->layout->template->del('footer_wrapper');        	
@@ -32,19 +35,25 @@ class View_User_LoginPanel extends \View{
 
         $f->addField('Line','username','Email address');
         $f->addField('Password','password','Password');
-    	$auth=$this->app->auth;
  		
         if($f->isSubmitted()){
-			if(!$credential = $this->app->auth->verifyCredentials($f['username'],$f['password'])){
-				$f->displayError($f->getElement('password'),'wrong credentials');
+
+        	
+        	
+			$auth = $this->add('BasicAuth');
+			$auth->setModel('xepan\base\Model_User','username','password');
+			$auth->usePasswordEncryption('md5');
+
+			if(!$credential = $auth->verifyCredentials($f['username'],$f['password'])){
+				$f->displayError($f->getElement('password'),'Wrong credentials');
 			}
 					
 			$user = $this->add('xepan\base\Model_User')->load($credential);
 			
-			if($user['status']=='Inactive')
-				$f->displayError('username','Please Activate Your Account First');
+			if($user['status']=='InActive')
+				$f->displayError('username','Please Activate Your Account First, check email (Including Spam/Junk folders)');
 			
-			$auth->login($f['username']);
+			$this->app->auth->login($f['username']);
 			$this->app->hook('login_panel_user_loggedin',[$auth->model]);
 
 			if($next_url = $this->app->recall('next_url'))
