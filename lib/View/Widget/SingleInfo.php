@@ -51,10 +51,21 @@ class View_Widget_SingleInfo extends \View{
 
 	function recursiveRender(){
 		$this->addClass($this->class);
-		$this->template->trySet('icon',$this->icon);
-		$this->template->trySetHtml('heading',$this->heading);
-		$this->template->trySetHtml('value',$this->value);
+		if(!$this->icon)
+			$this->template->tryDel('icon_wrapper');
+		else
+			$this->template->trySet('icon',$this->icon);
 
+		if($this->heading){
+			$this->template->trySetHtml('heading',$this->heading);
+		}else
+			$this->template->tryDel('heading_wrapper');
+
+		if($this->value){
+			$this->template->trySetHtml('value',$this->value);
+		}else
+			$this->template->tryDel('value_wrapper');
+		
 		parent::recursiveRender();
 	}
 
