@@ -2,16 +2,23 @@
 
 namespace xepan\base;
 
-class View_Widget_SingleInfo extends \View{
+class View_Widget_ProgressStatus extends \View{
 	
-	public $icon = "fa fa-envelope";
-	public $class = "emerald-bg";
-	public $heading = "message";
+	public $heading = "heading";
+	public $icon = "";
 	public $value = "";
+	public $style = "progress-bar-default";
+	public $class = "";
+	public $progress_percentage = "70";
 
 	function setHeading($heading){
 		$this->heading = $heading;
 		return $this;
+	}
+
+	function setProgressPercentage($value){
+		$this->progress_percentage = $value;
+		return $this;	
 	}
 
 	function setIcon($icon_class){
@@ -24,23 +31,33 @@ class View_Widget_SingleInfo extends \View{
 		return $this;
 	}
 
+	function setStyle($class){
+		$this->style = $class;
+		return $this;
+	}
+
 	function makeInfo(){
-		$this->setClass('emerald-bg');
+		$this->setStyle('progress-bar-default');
 		return $this;
 	}
 
 	function makeSuccess(){
-		$this->setClass('green-bg');
+		$this->setStyle('progress-bar-success');
 		return $this;
 	}
 	
+	function makeWarning(){
+		$this->setStyle('progress-bar-warning');
+		return $this;
+	}
+
 	function makeDanger(){
-		$this->setClass('red-bg');
+		$this->setStyle('progress-bar-danger');
 		return $this;
 	}
 
 	function makePurple(){
-		$this->setClass('purple-bg');
+		$this->setStyle('progress-bar-info');
 		return $this;
 	}
 
@@ -51,6 +68,7 @@ class View_Widget_SingleInfo extends \View{
 
 	function recursiveRender(){
 		$this->addClass($this->class);
+
 		if(!$this->icon)
 			$this->template->tryDel('icon_wrapper');
 		else
@@ -61,15 +79,18 @@ class View_Widget_SingleInfo extends \View{
 		}else
 			$this->template->tryDel('heading_wrapper');
 
-		if($this->value == null || $this->value == ""){
-			$this->template->tryDel('value_wrapper');
-		}else
+		// if($this->value){
 			$this->template->trySetHtml('value',$this->value);
+		// }else
+		// 	$this->template->tryDel('value_wrapper');
+
+		$this->template->trySet('progress_bar_style',$this->style);
+		$this->template->trySet('progress_percentage',$this->progress_percentage);
 		
 		parent::recursiveRender();
 	}
 
 	function defaultTemplate(){
-		return ['view/widget/singleinfo'];
+		return ['view/widget/progressstatus'];
 	}
 }
