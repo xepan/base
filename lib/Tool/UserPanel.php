@@ -125,7 +125,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			}
 			
 		}else{
-			$this->js()->univ()->loaction($this->api->url($this->options['redirect_url']));
+			// $this->js()->univ()->loaction($this->api->url($this->options['redirect_url']));
 			if($this->options['layout'] == "micro_login")
 				$this->active_view = $this->add('xepan\base\View_User_MicroLogin',array('options'=>$this->options));
 			else
