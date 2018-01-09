@@ -10,6 +10,9 @@ class View_User_AlreadyLoggedin extends \View{
 		$auth = $this->app->auth;
 		$auth->login($this->app->auth->model['username']);
 		$this->app->hook('login_panel_user_loggedin',[$auth->model]);
+
+		$this->app->redirect($this->app->url($this->options['login_success_url']));
+		
 	}
 	
 	function defaultTemplate(){
