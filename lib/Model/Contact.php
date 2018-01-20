@@ -305,6 +305,31 @@ class Model_Contact extends \xepan\base\Model_Table{
 		return $this->ref('user_id');
 	}
 
+	function updateUser($user_name,$password=null,$scope="WebsiteUser",$status="Active"){
+		
+		if(!$this['user_id']){
+			$user_model = $this->add('xepan\base\Model_User');
+		}else
+			$user_model = $this->user();
+
+		$user_model->addCondition('username',$user_name);
+		$user_model->tryLoadAny();
+		
+		$user_model['status'] = $status;
+		$user_model['scope'] = $scope;
+		$user_model->save();
+
+		if(!$this['first_name'])
+			$this['first_name'] = $user_name;
+		$this['user_id'] = $user_model->id;
+		$this->save();
+		
+		if($password)
+			$user_model->updatePassword($password);
+
+		return $user_model;
+	}
+
 	function page_manage_score($p){		
 		$score_view = $p->add('View_Info')->set('Current Score : '.$this['score'])->addClass('panel panel-default panel-heading xepan-push');
 		$form = $p->add('Form')->addClass('xepan-push-small');
