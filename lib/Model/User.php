@@ -79,9 +79,14 @@ class Model_User extends \xepan\base\Model_Table{
 
 	function updatePassword($new_password){
 		if(!$this->loaded()) return false;
-			$this['password']=$new_password;
-			$this->save();
-			return $this;
+
+		$this->add('BasicAuth')
+			->usePasswordEncryption('md5')
+			->addEncryptionHook($this);
+		
+		$this['password'] = $new_password;
+		$this->save();
+		return $this;
 	}
 
 	function checkContactExistance(){
