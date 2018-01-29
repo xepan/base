@@ -91,6 +91,13 @@ class View_Contact extends \View{
 			$phone->setModel($phone_m);
 			$phone->template->tryDel('Pannel');
 
+			$OtherContactInfos_m=$contact->ref('OtherContactInfos');
+			if($this->acl)
+				$OtherContactInfos_m->acl=$this->acl;
+			$OtherContactInfos = $this->document_view->addMany('OtherContactInfos',null,'OtherContactInfos',['view/addmanywithhead']);
+			$OtherContactInfos->setModel($OtherContactInfos_m);
+			$OtherContactInfos->template->tryDel('Pannel');
+
 			$ims_m=$contact->ref('IMs');
 			if($this->acl)
 				$ims_m->acl=$this->acl;

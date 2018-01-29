@@ -21,6 +21,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 	public $actions=[];
 	public $type = "Contact";
 
+	public $addOtherInfo=false;
+
 	function init(){
 		parent::init();
 
@@ -78,8 +80,26 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact_Relation',null,null,'Relations');
 		$this->hasMany('xepan\base\Contact_IM',null,null,'IMs');
 		$this->hasMany('xepan\base\Contact_Event',null,null,'Events');
+		$this->hasMany('xepan\base\Contact_Other',null,null,'OtherContactInfos');
 		$this->hasMany('xepan\base\Contact_CommunicationReadEmail','contact_id',null,'UnreadEmails');		
 		
+		if($this->addOtherInfo){
+			$emp_other_info_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+							[
+								'fields'=>[
+											'contact_other_info_fields'=>"Text",
+											],
+								'config_key'=>'Contact_Other_Info_Fields',
+								'application'=>'base'
+							]);
+			$emp_other_info_config_m->tryLoadAny();
+			foreach (explode(",",$emp_other_info_config_m['contact_other_info_fields']) as $ot_fields) {
+				$this->addExpression($this->app->normalizeName($ot_fields))->set(function($m,$q)use($ot_fields){
+					return $m->refSQL('OtherContactInfos')->addCondition('head',$ot_fields)->fieldQuery('value');
+				});
+			}
+		}
+
 		$this->addExpression('emails_str')->set(function($m,$q){
 			$x = $m->add('xepan\base\Model_Contact_Email',['table_alias'=>'emails_str']);
 			return $x->addCondition('contact_id',$q->getField('id'))

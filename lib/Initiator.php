@@ -203,7 +203,7 @@ class Initiator extends \Controller_Addon {
             $this->app->js(true)->_library('PNotify.desktop')->permission();
             $this->app->js(true)->_load('jquery.bootstrap-responsive-tabs.min')->_selector('.responsive-tabs')->responsiveTabs("accordionOn: ['xs', 'sm']");
 
-
+            $this->app->addHook('collect_shortcuts',[$this,'collect_shortcuts']);
             $this->addGlobalShortcuts();
 
         }
@@ -365,7 +365,11 @@ class Initiator extends \Controller_Addon {
         $array['contact_no_duplication_allowed_settings'] = ['caption'=>'contact_no_duplication_allowed_settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_contact_no_duplication_allowed_settings'];
         $array['GraphicalReport'] = ['caption'=>'GraphicalReport','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_GraphicalReport'];
         $array['report_type'] = ['caption'=>'Type','type'=>'DropDown','values'=>['chart'=>'Chart','report'=>'Report']];
+        $array['Contact_Other_Info_Fields'] = ['caption'=>'Contact_Other_Info_Fields','type'=>"Line"];
+    }
 
+    function collect_shortcuts($app,&$shortcuts){
+        $shortcuts[]=["title"=>"Contact Other Info","keywords"=>"contact other info fields custom","description"=>"Manage custom fields to be added in conatcts","normal_access"=>"Generl Settings -> Contact Other Info Fields","url"=>$this->app->url('xepan/communication/generalsetting',['cut_page'=>1,'cut_object'=>'admin_layout_cube_generalsetting_tabs_contact-info-fields']),'mode'=>'frame'];
     }
 
     function addGlobalShortcuts(){
