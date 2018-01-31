@@ -5,15 +5,16 @@ $.each({
 	// http://jqueryui.com/demos/autocomplete/#events (check focus and select events)
 
 	myelimage: function(other_field,$replace_value){
-
 		var q=this.jquery;
 		var fm = $('<div/>').dialogelfinder({
 												url : 'index.php?page=xepan_base_elconnector&cut_page=true',
 												lang : 'en',
 												width : 840,
 												destroyOnClose : true,
+												// autoOpen:true,
 												getFileCallback : function(files, fm) {
 													$(other_field).val(files.url.replace($replace_value, ''));
+
 												},
 												onlyMimes: ['image'],
 												commandsOptions : {
