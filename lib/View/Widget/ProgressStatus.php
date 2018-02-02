@@ -5,11 +5,13 @@ namespace xepan\base;
 class View_Widget_ProgressStatus extends \View{
 	
 	public $heading = "heading";
+	public $heading_class = "pull-left";
 	public $icon = "";
 	public $value = "";
 	public $style = "progress-bar-default";
 	public $class = "";
 	public $progress_percentage = "70";
+	public $footer = "";
 
 	function setHeading($heading){
 		$this->heading = $heading;
@@ -66,6 +68,11 @@ class View_Widget_ProgressStatus extends \View{
 		return $this;
 	}
 
+	function setFooter($value){
+		$this->footer = $value;
+		return $this;
+	}
+
 	function recursiveRender(){
 		$this->addClass($this->class);
 
@@ -83,9 +90,13 @@ class View_Widget_ProgressStatus extends \View{
 			$this->template->trySetHtml('value',$this->value);
 		// }else
 		// 	$this->template->tryDel('value_wrapper');
+		if($this->footer){
+			$this->template->trySetHtml('footer',$this->footer);
+		}
 
 		$this->template->trySet('progress_bar_style',$this->style);
 		$this->template->trySet('progress_percentage',$this->progress_percentage);
+		$this->template->trySet('heading_class',$this->heading_class);
 		
 		parent::recursiveRender();
 	}
