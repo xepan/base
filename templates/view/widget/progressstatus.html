@@ -2,7 +2,7 @@
 <ul class="graph-stats {$class}" id="{$_name}" style="{$style}">
 	<li>
 		<div class="clearfix">
-			{heading_wrapper}<div class="title pull-left">{$heading}</div>{/}
+			{heading_wrapper}<div class="title {$heading_class}">{$heading}</div>{/}
 			{value_wrapper}
 			<div class="value pull-right" title="">
 				{$value}
@@ -19,5 +19,7 @@
 				</div>
 			</div>
 		{/}
+		{$footer}
+		{$Content}
 	</li>
 </ul>
