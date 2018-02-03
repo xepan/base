@@ -93,7 +93,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 								'application'=>'base'
 							]);
 			$emp_other_info_config_m->tryLoadAny();
-			foreach (explode(",",$emp_other_info_config_m['contact_other_info_fields']) as $ot_fields) {
+			$other_fields = explode(",",$emp_other_info_config_m['contact_other_info_fields']);
+
+			foreach ($other_fields as $ot_fields) {
+				if(!trim($ot_fields)) continue;
 				$this->addExpression($this->app->normalizeName($ot_fields))->set(function($m,$q)use($ot_fields){
 					return $m->refSQL('OtherContactInfos')->addCondition('head',$ot_fields)->fieldQuery('value');
 				});
