@@ -40,7 +40,13 @@ $.each({
         // tinymce.activeEditors=[];
         $(tinymce.editors).each(function(index, el) {
             if(el.id == $(obj).attr('id')) {
-                $(obj).tinymce().remove();
+                try{
+                        $(obj).tinymce().remove();
+                }catch(err){
+                        console.log(err);
+                        console.log('tineymce.remove() on ');
+                        console.log(el);
+                }
             }
         });
 
