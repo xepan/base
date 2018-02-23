@@ -96,6 +96,7 @@ $.each({
             verify_html: true,
             // cleanup: false,
             convert_urls: false,
+            document_base_url : $('head base').attr('href'),
             // valid_elements: '*[*]',
             // force_br_newlines: false,
             // force_p_newlines: false,
