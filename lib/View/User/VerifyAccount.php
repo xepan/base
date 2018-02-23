@@ -10,15 +10,15 @@ class View_User_VerifyAccount extends \View{
 		
 		$form=$this->add('Form',null,null,['form/empty']);
 		$form->setLayout('view/tool/userpanel/form/xepanverify');
-		$form->addField('line','email')->set($activate_email);	
+		$form->addField('line','email','User name')->set($activate_email);	
 		$form->addField('line','activation_code')->set($secret_code);
-
+		
 		$form->onSubmit(function($f){
 			$user=$this->add('xepan\base\Model_User');	
 			$user->addCondition('username',$f['email']);
 			$user->tryLoadAny();
 			if(!$user->loaded())
-				$f->displayError('email','This E-mail Id is not registered');
+				$f->displayError('email','This username is not registered');
 			
 			if($f['activation_code']!=$user['hash'])
 				$f->displayError('activation_code','Activation code did not match');

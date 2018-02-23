@@ -5,11 +5,36 @@ class View_User_VerifyAgain extends \View{
 	function init(){
 		parent::init();
 
+		$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
+			[
+				'fields'=>[
+							'user_registration_type'=>'DropDown',
+							'reset_subject'=>'Line',
+							'reset_body'=>'xepan\base\RichText',
+							'reset_sms_content'=>'Text',
+							'update_subject'=>'Line',
+							'update_body'=>'xepan\base\RichText',
+							'update_sms_content'=>'Text',
+							'registration_subject'=>'Line',
+							'registration_body'=>'xepan\base\RichText',
+							'registration_sms_content'=>'Text',
+							'verification_subject'=>'Line',
+							'verification_body'=>'xepan\base\RichText',
+							'verification_sms_content'=>'Text',
+							'subscription_subject'=>'Line',
+							'subscription_body'=>'xepan\base\RichText',
+						],
+					'config_key'=>'FRONTEND_LOGIN_RELATED_EMAIL',
+					'application'=>'communication'
+			]);
+		$frontend_config_m->tryLoadAny();
+
 		$form=$this->add('Form',null,null,['form/empty']);
 		$form->setLayout('view/tool/userpanel/form/xepanverifyagain');
-		$form->addField('line','email');
+		$form->addField('line','username');
 
 		$form->onSubmit(function($f){
+
 			try {
 				$user=$this->add('xepan\base\Model_User');
 				$user->addCondition('username',$f['email']);
@@ -20,25 +45,8 @@ class View_User_VerifyAgain extends \View{
 				$contact=$user->ref('Contacts');
 				$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
-				$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
-				[
-					'fields'=>[
-								'user_registration_type'=>'DropDown',
-								'reset_subject'=>'xepan\base\RichText',
-								'reset_body'=>'xepan\base\RichText',
-								'update_subject'=>'Line',
-								'update_body'=>'xepan\base\RichText',
-								'registration_subject'=>'Line',
-								'registration_body'=>'xepan\base\RichText',
-								'verification_subject'=>'Line',
-								'verification_body'=>'xepan\base\RichText',
-								'subscription_subject'=>'Line',
-								'subscription_body'=>'xepan\base\RichText',
-								],
-						'config_key'=>'FRONTEND_LOGIN_RELATED_EMAIL',
-						'application'=>'communication'
-				]);
-				$frontend_config_m->tryLoadAny();
+
+				
 
 				// $reg_model=$this->app->epan->config;
 				// $email_subject=$reg_model->getConfig('REGISTRATION_SUBJECT');
