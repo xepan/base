@@ -59,7 +59,7 @@ class View_User_ForgotPassword extends \View{
 				$merge_model_array = array_merge($merge_model_array,$contact->get());
 				
 				if($this->options['registration_mode'] === "email"){
-					$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')->tryLoadAny();
+					$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')->tryLoadAny();
 					$mail = $this->add('xepan\communication\Model_Communication_Email');
 					
 					$email_subject = $frontend_config_m['reset_subject'];

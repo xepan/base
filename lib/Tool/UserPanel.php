@@ -50,7 +50,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 	function init(){
 		parent::init();
 
-		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login'])){
+		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login','verify_again','verify_account'])){
 			$this->add('View_Error')->set('View ('.$this->options['layout'].') Not Found');
 			return;
 		}

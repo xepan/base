@@ -14,6 +14,7 @@ class View_User_Registration extends \View{
 			$f->addField('line','last_name');
 
 			if($this->registration_mode === "sms"){
+				$f->layout->template->trySet('username_icon','fa-mobile-phone');
 				$username_field = $f->addField('line','username','Mobile No');
 				if(!$this->options['username_validation_regular_expression'])
 					$username_field->validate('required|number');
@@ -188,7 +189,7 @@ class View_User_Registration extends \View{
 					$merge_model_array = array_merge($merge_model_array,$contact->get());
 
 					if($this->registration_mode === "email"){
-						$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')
+						$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')
 							->addCondition('is_active',true)
 							->tryLoadAny();
 
