@@ -37,7 +37,8 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'pin_code_is_mandatory'=>0,
 				'show_field_mobile_no'=>0,
 				'mobile_no_is_mandatory'=>0,
-
+				'registration_mode'=>'email',
+				'username_validation_regular_expression'=>'',
 				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
 				'verify_message'=>'Your account is validated. Login with your username and password to enjoy our services.',
 				'registration_message'=>'Registration mail sent. Check your email address linked to the account.',

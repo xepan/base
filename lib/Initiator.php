@@ -567,6 +567,17 @@ class Initiator extends \Controller_Addon {
     // }
 
     function addAppdateFunctions(){
+
+        $this->app->addMethod('print_r',function($app,$arr,$die=false){
+            echo "<pre>";
+            if(is_array($arr))
+                print_r($arr);
+            else
+                echo $arr;
+            echo "</pre>";
+            if($die) die();
+        });
+
         $this->app->addMethod('nextDate',function($app,$date=null){
             
             if(!$date) $date = $this->api->today;
