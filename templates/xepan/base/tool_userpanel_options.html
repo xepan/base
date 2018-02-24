@@ -7,18 +7,31 @@
   <div id="user-tool-form-layouts" class="xepan-cms-tools-bar-panel row-fluid collapse">
     <table class="table-condensed table-hover xepan-cms-tool-table">
       <tr>
-        <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Layout</td>
-          <td class="xepan-tool-option-value"> 
-            <select id="user-panel-layout" data-attr="layout">
-              <option value="login_view">Login</option>
-              <option value="forget_password">Forgot Password</option>
-              <option value="new_registration">New Registration</option>
-              <option value="verify_account">Aerify Account</option>
-              <option value="verify_again">Verify Again</option>
-            </select>
-          </td>
-        </div>
+        <td class="xepan-tool-option-title">Layout</td>
+        <td class="xepan-tool-option-value">
+          <select id="user-panel-layout" data-attr="layout">
+            <option value="login_view">Login</option>
+            <option value="forget_password">Forgot Password</option>
+            <option value="new_registration">New Registration</option>
+            <option value="verify_account">Verify Account</option>
+            <option value="verify_again">Verify Again</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td class="xepan-tool-option-title">Registration Mode</td>
+        <td class="xepan-tool-option-value">
+          <select data-attr="registration_mode" data-defaultvalue="email" data-togglevalue="sms" data-toggleclass="#{$_name} .username-regular-expression">
+            <option value="email">Email</option>
+            <option value="sms">SMS</option>
+          </select>
+        </td>
+      </tr>
+      <tr class="username-regular-expression">
+        <td class="xepan-tool-option-title">Username Validation Regular Expreesion</td>
+        <td class="xepan-tool-option-value">
+          <input data-attr="username_validation_regular_expression" />
+        </td>
       </tr>
     </table>
   </div>
@@ -262,7 +275,9 @@
       </tr>
     </table>
   </div>
-  <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in"></div>
+  <div id="xepan-cms-groups-panel" class="xepan-cms-groups-panel collapse in">
+    
+  </div>
   <div class="xepan-cms-group-panel clearfix">
     <div data-toggle="collapse" data-target="#user-tool-micro-login" aria-expanded="false" class="panel panel-heading panel-primary collapsed"><span>Micro Login</span><i class="fa fa-chevron-down pull-right"></i></div>
   </div>
@@ -281,9 +296,54 @@
       </tr>
     </table>
   </div>
+  <!-- custom message -->
+  <div class="xepan-cms-group-panel clearfix">
+    <div data-toggle="collapse" data-target="#user-tool-message-config" aria-expanded="false" class="panel panel-heading panel-primary collapsed">
+        <span>Custom Message Display </span>
+        <i class="fa fa-chevron-down pull-right"></i>
+    </div>
+  </div>
+  <div id="user-tool-message-config" class="xepan-cms-tools-bar-panel row-fluid collapse">
+    <table class="table-condensed table-hover xepan-cms-tool-table">
+      <tr>
+        <td class="xepan-tool-option-title">Verify Message</td>
+        <td class="xepan-tool-option-value">
+          <textarea data-attr="verify_message" data-defaultvalue="Your account is validated. Login with your username and password to enjoy our services."></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="xepan-tool-option-title">Registration Message</td>
+        <td class="xepan-tool-option-value">
+          <textarea data-attr="registration_message" data-defaultvalue="Registration mail sent. Check your email address linked to the account."></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="xepan-tool-option-title">Forgot Message</td>
+        <td class="xepan-tool-option-value">
+          <textarea data-attr="forgot_message" data-defaultvalue="We have sent you a password recovery mail. Check your e-mail address linked to the account."></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td class="xepan-tool-option-title">Reactive Message</td>
+        <td class="xepan-tool-option-value">
+          <textarea data-attr="reactive_message" data-defaultvalue="Verification mail sent. Check your e-mail address linked to the account."></textarea>
+        </td>
+      </tr>
+
+    </table>
+  </div>
   <script>
     $('#{$_name} [data-attr]').on('change',function(){
     	$(current_selected_component).attr($(this).data('attr'),$(this).val());
+
+      if($(this).data('toggleclass')){
+        var value = $(this).data('togglevalue').toString();
+        if($(this).val() === value){
+          $($(this).data('toggleclass')).show();
+        }else
+          $($(this).data('toggleclass')).hide();
+      }
+
     });
     
     $('#{$_name}').on('show',function(event){
