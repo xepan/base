@@ -10,11 +10,27 @@ class View_User_MicroLogin extends \View{
 			$customer_id = $this->app->auth->model['id'];
 			$customer = $this->add('xepan/commerce/Model_Customer')->addCondition('user_id',$customer_id);
 			$customer->tryLoadAny();
-									
+			
+			$contact = $this->add('xepan\base\Model_Contact')->addCondition('user_id',$this->app->auth->model->id);
+			$contact->tryLoadAny();
+
 			$this->template->tryDel('login_wrapper');
 			$this->template->trySet('logout_url',$this->app->url($this->options['logout_page']));
 			$this->template->trySet('name',$customer['first_name']);
-			$this->setModel($this->app->auth->model);
+				
+			$temp = [];
+			foreach ($contact->data as $key => $value) {
+				$temp["contact_".$key] = $value;
+			}
+
+			foreach ($customer->data as $key => $value) {
+				$temp["customer_".$key] = $value;
+			}
+
+			$data = array_merge($temp, $this->app->auth->model->data);
+			$this->template->set($data);
+			
+			// $this->setModel($this->app->auth->model);
 		}
 		else{
 			$this->template->tryDel('logout_wrapper');
