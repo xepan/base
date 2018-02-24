@@ -437,9 +437,11 @@ class Initiator extends \Controller_Addon {
 
         // Create Default Applications and INstall with all with root application
         
-        $addons = ['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog'/*,'xepan\\epanservices'*/];
+        $addons = $this->app->getConfig('xepan_available_addons',['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog'/*,'xepan\\epanservices'*/]);
 
         foreach ($addons as $ad) {
+            if($ad==='xepan\\base' or $ad==='xepan\base') continue;
+            
             $ad_array = explode("\\", $ad);
             $app = $this->add('xepan\base\Model_Application')
                 ->set('name',array_pop($ad_array))
