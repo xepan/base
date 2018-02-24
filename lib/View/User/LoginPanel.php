@@ -33,12 +33,10 @@ class View_User_LoginPanel extends \View{
         }
 
 
-        $f->addField('Line','username','Email address');
+        $f->addField('Line','username');
         $f->addField('Password','password','Password');
  		
         if($f->isSubmitted()){
-
-        	
         	
 			$auth = $this->add('BasicAuth');
 			$auth->setModel('xepan\base\Model_User','username','password');

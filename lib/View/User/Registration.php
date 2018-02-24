@@ -5,11 +5,24 @@ class View_User_Registration extends \View{
 
 	function init(){
 		parent::init();
+			
+			$this->registration_mode = $this->options['registration_mode'];
+			
 			$f=$this->add('Form',null,null,['form/empty']);
 			$f->setLayout('view/tool/userpanel/form/registration');
 			$f->addField('line','first_name');
 			$f->addField('line','last_name');
-			$f->addField('line','username','email_id')->validate('required|email');
+
+			if($this->registration_mode === "sms"){
+				$f->layout->template->trySet('username_icon','fa-mobile-phone');
+				$username_field = $f->addField('line','username','Mobile No');
+				if(!$this->options['username_validation_regular_expression'])
+					$username_field->validate('required|number');
+			}else{
+				$username_field = $f->addField('line','username','Email Id');
+				$username_field->validate('required|email');
+			}
+
 			$f->addField('password','password')->validate('required');
 			$f->addField('password','retype_password');
 
@@ -42,10 +55,9 @@ class View_User_Registration extends \View{
 			}
 
 			if($this->options['show_field_country'] && $this->options['show_field_state']){
-
 				if($country_id = $this->app->stickyGET('r_c_id')){
 					$s_field->getModel()->addCondition('country_id',$country_id);
-				}				
+				}
 				$c_field->js('change',$s_field->js()->reload(null,null,[$this->app->url(null,['cut_object'=>$s_field->name]),'r_c_id'=>$c_field->js()->val()]));
 			}
 
@@ -95,7 +107,7 @@ class View_User_Registration extends \View{
 
 			$f->addField('checkbox','tnc','');
 
-			if($this->options['show_tnc'] == false){				
+			if($this->options['show_tnc'] == false){
 				$f->layout->template->tryDel('tnc_wrapper');
 			}else{
 				$f->layout->template->trySet('tnc_page_url',$this->options['tnc_page_url']);
@@ -103,40 +115,53 @@ class View_User_Registration extends \View{
 
 			$f->onSubmit(function($f){
 
-				if(!$f['tnc']){
+				if($this->options['show_tnc'] && !$f['tnc']){
 					$f->js()->univ()->alert('Accept TnC')->execute();
 				}
 
 				if($f['password']!= $f['retype_password']){
 					$f->displayError($f->getElement('retype_password'),'Password did not match');			
 				}
-				if( ! filter_var(trim($f['username']), FILTER_VALIDATE_EMAIL))
-					$f->displayError($f->getElement('username'),'not a valid email address');			
+
+				if($this->registration_mode === "email"){
+					if(!filter_var(trim($f['username']), FILTER_VALIDATE_EMAIL))
+						$f->displayError($f->getElement('username'),'not a valid email address');
+				}
+
+				if($this->registration_mode === "sms" && $reg = $this->options['username_validation_regular_expression']){
+					$validate = preg_match($reg,$f['username']);
+					if(!$validate)
+						$f->displayError($f->getElement('username'),'Please input a valid mobile number');
+				}
 				
 				$user=$this->add('xepan\base\Model_User');
 				$this->add('BasicAuth')
 				->usePasswordEncryption('md5')
 				->addEncryptionHook($user);
 
-				$user['epan_id']=$this->app->epan->id;
-				$user['username']=$f['username'];
-				$user['password']=$f['password'];
+				$user['epan_id'] = $this->app->epan->id;
+				$user['username'] = $f['username'];
+				$user['password'] = $f['password'];
 				
 				$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
 				[
 					'fields'=>[
-								'user_registration_type'=>'DropDown',
-								'reset_subject'=>'xepan\base\RichText',
-								'reset_body'=>'xepan\base\RichText',
-								'update_subject'=>'Line',
-								'update_body'=>'xepan\base\RichText',
-								'registration_subject'=>'Line',
-								'registration_body'=>'xepan\base\RichText',
-								'verification_subject'=>'Line',
-								'verification_body'=>'xepan\base\RichText',
-								'subscription_subject'=>'Line',
-								'subscription_body'=>'xepan\base\RichText',
-								],
+							'user_registration_type'=>'DropDown',
+							'reset_subject'=>'Line',
+							'reset_body'=>'xepan\base\RichText',
+							'reset_sms_content'=>'Text',
+							'update_subject'=>'Line',
+							'update_body'=>'xepan\base\RichText',
+							'update_sms_content'=>'Text',
+							'registration_subject'=>'Line',
+							'registration_body'=>'xepan\base\RichText',
+							'registration_sms_content'=>'Text',
+							'verification_subject'=>'Line',
+							'verification_body'=>'xepan\base\RichText',
+							'verification_sms_content'=>'Text',
+							'subscription_subject'=>'Line',
+							'subscription_body'=>'xepan\base\RichText',
+						],
 						'config_key'=>'FRONTEND_LOGIN_RELATED_EMAIL',
 						'application'=>'communication'
 				]);
@@ -157,54 +182,65 @@ class View_User_Registration extends \View{
 					$user['status'] = 'InActive';
 					$user['hash']=rand(9999,100000);
 					$user->save();
-					$contact=$user->ref('Contacts')->tryLoadAny();
-					$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')
-						->addCondition('is_active',true)
-						->tryLoadAny();
-					$mail = $this->add('xepan\communication\Model_Communication_Email');
+					$contact = $user->ref('Contacts')->tryLoadAny();
 
 					$merge_model_array=[];
 					$merge_model_array = array_merge($merge_model_array,$user->get());
 					$merge_model_array = array_merge($merge_model_array,$contact->get());
 
-					// $reg_model=$this->app->epan->config;
-					// $email_subject=$reg_model->getConfig('REGISTRATION_SUBJECT');
-					// $email_body=$reg_model->getConfig('REGISTRATION_BODY');
-					// $email_body=str_replace("{{name}}",$employee['name'],$email_body);
-					$email_subject = $frontend_config_m['registration_subject'];
-					$email_body = $frontend_config_m['registration_body'];
-					$temp=$this->add('GiTemplate');
-					$temp->loadTemplateFromString($email_body);
-					$url=$this->api->url(null,
-												[
-												'secret_code'=>$user['hash'],
-												'activate_email'=>$f['username'],
-												'layout'=>'verify_account',
-												]
-										)->useAbsoluteURL();
+					if($this->registration_mode === "email"){
+						$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')
+							->addCondition('is_active',true)
+							->tryLoadAny();
 
-					$tag_url="<a href=\"".$url."\">Click Here </a>"	;
+						$mail = $this->add('xepan\communication\Model_Communication_Email');
+						$email_subject = $frontend_config_m['registration_subject'];
+						$email_body = $frontend_config_m['registration_body'];
+						$temp=$this->add('GiTemplate');
+						$temp->loadTemplateFromString($email_body);
+						$url=$this->api->url(null,
+													[
+													'secret_code'=>$user['hash'],
+													'activate_email'=>$f['username'],
+													'layout'=>'verify_account',
+													]
+											)->useAbsoluteURL();
 
-					$subject_temp=$this->add('GiTemplate');
-					$subject_temp->loadTemplateFromString($email_subject);
-					$subject_v=$this->add('View',null,null,$subject_temp);
-					$subject_v->template->trySet($merge_model_array);
+						$tag_url="<a href=\"".$url."\">Click Here </a>"	;
 
-					$body_v=$this->add('View',null,null,$temp);
-					$body_v->template->trySet($merge_model_array);					
-					$t=$body_v->template->trySetHTML('click_here',$tag_url);		
-					$t=$body_v->template->trySetHTML('url',$url);		
-					$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
-					$mail->addTo($f['username']);
-					$mail->setSubject($subject_v->getHtml());
-					$mail->setBody($body_v->getHtml());
-					$mail->send($email_settings);
+						$subject_temp=$this->add('GiTemplate');
+						$subject_temp->loadTemplateFromString($email_subject);
+						$subject_v=$this->add('View',null,null,$subject_temp);
+						$subject_v->template->trySet($merge_model_array);
 
+						$body_v=$this->add('View',null,null,$temp);
+						$body_v->template->trySet($merge_model_array);					
+						$t=$body_v->template->trySetHTML('click_here',$tag_url);		
+						$t=$body_v->template->trySetHTML('url',$url);		
+						$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
+						$mail->addTo($f['username']);
+						$mail->setSubject($subject_v->getHtml());
+						$mail->setBody($body_v->getHtml());
+						$mail->send($email_settings);
+					}
+
+					if($this->registration_mode === "sms"){
+						if($message = $frontend_config_m['registration_sms_content']){
+							$temp = $this->add('GiTemplate');
+							$temp->loadTemplateFromString($message);
+							$msg = $this->add('View',null,null,$temp);
+							$msg->template->trySet($merge_model_array);
+							$this->add('xepan\communication\Controller_Sms')->sendMessage($f['username'],$msg->getHtml());
+						}
+					}
 				}
 				
+				$form_data = $f->get();
+				if($this->registration_mode === "sms" && !isset($form_data['mobile_no']))
+					$form_data['mobile_no'] = $form_data['username'];
 
-				$this->app->hook('userCreated',[$f->get(),$user]);
-			
+				$this->app->hook('userCreated',[$form_data,$user]);
+				
 			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>$this->options['registration_message']])))->univ()->successMessage('Account Verification Mail Sent');
 			});
 	}

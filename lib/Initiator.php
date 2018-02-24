@@ -437,9 +437,11 @@ class Initiator extends \Controller_Addon {
 
         // Create Default Applications and INstall with all with root application
         
-        $addons = ['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog'/*,'xepan\\epanservices'*/];
+        $addons = $this->app->getConfig('xepan_available_addons',['xepan\\communication', 'xepan\\hr','xepan\\projects','xepan\\marketing','xepan\\accounts','xepan\\commerce','xepan\\production','xepan\\crm','xepan\\cms','xepan\\blog'/*,'xepan\\epanservices'*/]);
 
         foreach ($addons as $ad) {
+            if($ad==='xepan\\base' or $ad==='xepan\base') continue;
+            
             $ad_array = explode("\\", $ad);
             $app = $this->add('xepan\base\Model_Application')
                 ->set('name',array_pop($ad_array))
@@ -567,6 +569,17 @@ class Initiator extends \Controller_Addon {
     // }
 
     function addAppdateFunctions(){
+
+        $this->app->addMethod('print_r',function($app,$arr,$die=false){
+            echo "<pre>";
+            if(is_array($arr))
+                print_r($arr);
+            else
+                echo $arr;
+            echo "</pre>";
+            if($die) die();
+        });
+
         $this->app->addMethod('nextDate',function($app,$date=null){
             
             if(!$date) $date = $this->api->today;
