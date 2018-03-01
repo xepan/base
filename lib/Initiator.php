@@ -215,13 +215,16 @@ class Initiator extends \Controller_Addon {
 
         $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
 
+        $this->app->page_top_right_button_set = $this->app->layout->add('ButtonSet',null,'page_top_right');
+
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
         // throw new \Exception($this->app->employee->id, 1);
 
         $this->app->addMethod('normalizeSlugUrl',function($app,$name){
             return strtolower(str_replace("_", "-", $this->app->normalizeName($name)));
-        });
+        });        
+
         return $this;
 	} 
 
