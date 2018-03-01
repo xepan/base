@@ -24,7 +24,7 @@ class Model_Epan extends \xepan\base\Model_Table{
 		$this->addField('type')->defaultValue('Epan')->system(true);
 		$this->addField('status')->defaultValue('Trial');
 		$this->addField('created_at')->type('datetime')->defaultValue(isset($this->app->now)?$this->app->now:null)->system(true);
-		$this->addField('is_published')->defaultValue(null);
+		$this->addField('is_published')->type('boolean')->defaultValue(false);
 		$this->addField('extra_info')->type('text');
 		$this->addField('aliases')->type('text');
 		$this->addField('xepan_template_id');	
