@@ -31,13 +31,13 @@ class page_elconnector extends \Page {
 		    'roots'  => array(
 		        array(
 		            'driver' => 'LocalFileSystem',
-		            'path'   => $path_asset,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets'
+		            'path'   => $path_www,
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
 		        ),
 		        array(
 		            'driver' => 'LocalFileSystem',
-		            'path'   => $path_www,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
+		            'path'   => $path_asset,
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets'
 		        )
 		    )
 		);
