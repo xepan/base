@@ -46,10 +46,6 @@ class page_installapp extends \xepan\base\Page {
 			$c->out('Cloing application now');
 			
 			$output= shell_exec('git clone '. $_GET['git_path'].' '. $namespace_arr[1]);
-			if($output === null){
-				$c->err('Could not clone. apps/'.$namespace_arr[0]. ' looks unwritable');
-				return;
-			}
 			$c->out('<pre>'.$output.'</pre>');
 
 			$c->out('Installing application');
