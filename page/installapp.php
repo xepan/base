@@ -57,7 +57,12 @@ class page_installapp extends \xepan\base\Page {
 			$application['user_installable']=1;
 			$application->save();
 
-			$this->app->epan->installApp($application);
+			try{
+				$this->app->epan->installApp($application);
+			}catch(\Exception $e){
+				$c->err($e->getMessage());
+			}
+
 			$c->out('Back in '. getcwd());
 			chdir('../../../admin');
 			$c->out('Executing Initiator Reset DB');
