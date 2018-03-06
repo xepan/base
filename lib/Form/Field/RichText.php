@@ -86,6 +86,10 @@ class Form_Field_RichText extends \Form_Field_Text{
 	public $mention_options=[];
 	public $mention_delimiter_source=[];
 
+	public $extra_options=[];
+
+	public $js_widget='xepan_richtext_admin';
+
 	function init(){
 		parent::init();
 		$this->addClass('tinymce');
@@ -128,11 +132,11 @@ class Form_Field_RichText extends \Form_Field_Text{
 		$this->js(true)
 				->_load('tinymce.min')
 				->_load('jquery.tinymce.min')
-				->_load('xepan-richtext-admin1')
+				->_load($this->js_widget)
 				->_css('../js/tinymce-plugins/mention/css/rte-content')
 				->_css('../js/tinymce-plugins/mention/css/autocomplete')
 				;
-		$this->js(true)->univ()->richtext($this,$this->options,null,$this->mention_options);
+		$this->js(true)->univ()->{$this->js_widget}($this,$this->options,null,$this->mention_options,$this->extra_options);
 		parent::render();
 	}
 }
