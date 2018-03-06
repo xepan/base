@@ -37,6 +37,9 @@ Advanced Mention Used static data
 					'render'=>$this->js(null,"function(item) { return '<li>' +'<a href=\"javascript:;\"><span>' + item.id+ ' : ' + item.name + '</span></a>' +'</li>';}")
 				];
 	$f->mention_options['items']=10000; // maximum records to show in list
+	$f->addStaticHelperList($groups,'G',false);
+	$f->addStaticHelperList($ledgers,'L',false);
+	$f->addStaticHelperList($bshead,'H',false);
 
 // --- COMPLEX WAY FOR SAME BUT TO UNDERSTAND HOW IT WORKS ---
 	$f->mention_options=[
@@ -57,6 +60,7 @@ Advanced ajax use
 ===================
 $tag_helper = $this->add('VirtualPage')
 				->set(function($page){
+					// $_GET['delimiter']  & $_GET['query']
 					if($_GET['delimiter']=='!')
 						echo json_encode([['name'=>'{$a !}'],['name'=>'{$b !}'],['name'=>'{$c !}']]);
 					if($_GET['delimiter']=='$')
@@ -64,6 +68,12 @@ $tag_helper = $this->add('VirtualPage')
 					exit;
 				});
 $f = $crud->form->getElement('layout');
+
+// --- simpler way ---
+
+			$f->addAjaxHelper($any_virtual_page->getURL(),['#','@']);
+
+// --- COMPLEX WAY FOR SAME BUT TO UNDERSTAND HOW IT WORKS ---
 			$f->mention_options=[
 					'delimiter'=>['!',"$"],
 					'source'=> $this->js(null,'function(query, process, delimiter){$.getJSON("'.$tag_helper->getURL().'&delimiter="+delimiter, function (data) {process(data)});}')
@@ -96,6 +106,11 @@ class Form_Field_RichText extends \Form_Field_Text{
 		}
 		$this->mention_delimiter_source[$delimiter] = $final_list;
 		return $this;
+	}
+
+	function addAjaxHelper($url,$delimiter=['@']){
+		$this->mention_options['delimiter'] = $delimiter;
+		$this->mention_options['source']= $this->js(null,'function(query, process, delimiter){$.getJSON("'.$url.'&delimiter="+delimiter+"&query="+query, function (data) {process(data)});}');
 	}
 
 	function render(){
