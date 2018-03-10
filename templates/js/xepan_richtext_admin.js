@@ -83,7 +83,7 @@ $.each({
                 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
                 "save table contextmenu directionality emoticons template paste textcolor colorpicker imagetools mention"
             ],
-            external_plugins:{'mention':'/vendor/xepan/base/templates/js/tinymce-plugins/mention/mention/plugin.min.js'},
+            external_plugins:{'mention':'../../xepan/base/templates/js/tinymce-plugins/mention/mention/plugin.min.js'},
             mentions: $.extend({
                 renderDropdown: function() {
                     //add twitter bootstrap dropdown-menu class
