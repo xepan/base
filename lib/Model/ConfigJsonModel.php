@@ -71,8 +71,8 @@ class Model_ConfigJsonModel extends \Model{
 		// if(!$this->id)
 		// 	throw new \Exception("ConfigJsonModel id not defined", 1);
 		
-		// unset($this->config_data[$this->id]);
-		// $this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
+		unset($this->config_data[$this->id]);
+		$this->config_model->setConfig($this->config_key,json_encode($this->config_data),$this->application);
 	}
 
 }
