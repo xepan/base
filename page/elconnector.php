@@ -25,21 +25,33 @@ class page_elconnector extends \Page {
 		
 		\elFinder::$netDrivers['ftp'] = 'FTP';
 		\elFinder::$netDrivers['dropbox'] = 'Dropbox';
-		
-		$opts = array(
-		    'locale' => '',
-		    'roots'  => array(
+
+		$roots=array(
+		        array(
+		            'driver' => 'LocalFileSystem',
+		            'path'   => $path_www,
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
+		        ),
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_asset,
 		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets'
-		        ),
+		        )
+		    );
+
+		if($_GET['www_root']){
+			$roots=array(
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_www,
 		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
 		        )
-		    )
+		    );
+		}
+		
+		$opts = array(
+		    'locale' => '',
+		    'roots'  => $roots
 		);
 
 		// run elFinder

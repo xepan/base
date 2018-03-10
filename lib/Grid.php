@@ -23,6 +23,9 @@ class Grid extends \Grid{
     public $sno_decending=false;
     public $order=null;
 
+    public $add_footable=true;
+    public $fixed_header=true;
+
     public $sort_icons = array(
         ' fa fa-sort',
         ' fa fa-sort-asc',
@@ -165,7 +168,16 @@ class Grid extends \Grid{
     }
 
     function render(){
-        $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
+        if($this->add_footable)
+            $this->js(true)->_load('footable')->_css('libs/footable.core')->find('table')->footable();
+        if($this->fixed_header){
+            $options=['zIndex'=>1];
+            if($this->app->isAjaxOutput()){
+                // $options['scrollContainer']=$this->js(null,"return ev.closest('.atk-table')")->_enclose();
+                // $options['position']='absolute';
+            }
+            $this->js(true)->_load('jquery.floatThead.min')->find('table')->floatThead($options);
+        }
         parent::render();
     }
 

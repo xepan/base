@@ -256,7 +256,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 	//load Logged In check for the user of contact loaded or not, 
 	//mainly used  for online contact account
-	function loadLoggedIn($type=null){
+	function loadLoggedIn($type=null,$return_contact=false){
 		if($this->loaded()) $this->unload();
 		if(!$this->api->auth->isLoggedIn()) return false;
 		
@@ -266,6 +266,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		$this->tryLoadAny();
 		if(!$this->loaded()) return false;
+		if($return_contact) return $this;
 		return true;
 	}
 

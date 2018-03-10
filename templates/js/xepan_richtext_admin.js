@@ -33,7 +33,7 @@ $.each({
 		$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
 		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
 	},
-	richtext: function(obj,options,frontend){
+	xepan_richtext_admin: function(obj,options,frontend,mention_options){
 		tinymce.baseURL = "./vendor/tinymce/tinymce";
 
         // tinymce.editors=[];
@@ -73,7 +73,7 @@ $.each({
                     commandsOptions: {
                         getfile: {
                             oncomplete: 'close',
-                            folders: true
+                            folders: false
                         }
                     }
                 }).dialogelfinder('instance');
@@ -81,8 +81,18 @@ $.each({
             plugins: [
                 "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
                 "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "save table contextmenu directionality emoticons template paste textcolor colorpicker imagetools"
+                "save table contextmenu directionality emoticons template paste textcolor colorpicker imagetools mention"
             ],
+            external_plugins:{'mention':'../../xepan/base/templates/js/tinymce-plugins/mention/mention/plugin.min.js'},
+            mentions: $.extend({
+                renderDropdown: function() {
+                    //add twitter bootstrap dropdown-menu class
+                    return '<ul class="rte-autocomplete" style="z-index:3000"></ul>';
+                },
+                source: [],
+                delimiter: []
+            }, mention_options),
+            
             toolbar1: "insertfile undo redo | styleselect | bold italic fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
             image_advtab: true,
