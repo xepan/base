@@ -1,6 +1,9 @@
 <?php
 
 
+// add following line in setup_admin or setup_frontend or where you need to check to make application license dependent
+// if(!$this->add('xepan\base\Controller_License')->check(__NAMESPACE__)) return;
+
 namespace xepan\base;
 
 class Controller_License extends \AbstractController {
