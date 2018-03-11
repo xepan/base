@@ -176,7 +176,7 @@ class Grid extends \Grid{
                 // $options['scrollContainer']=$this->js(null,"return ev.closest('.atk-table')")->_enclose();
                 // $options['position']='absolute';
             }
-            $this->js(true)->_load('jquery.floatThead.min')->find('table')->floatThead($options);
+            $this->js(true)->_load('jquery.floatThead.min')->find('table:not(.ui-dialog table)')->floatThead($options);
         }
         parent::render();
     }
