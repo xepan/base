@@ -21,6 +21,7 @@ class Grid extends \Grid{
     public $add_sno=true;
     public $sno=1;
     public $sno_decending=false;
+    public $skip_sno = false;
     public $order=null;
 
     public $add_footable=true;
@@ -198,7 +199,7 @@ class Grid extends \Grid{
     }
 
     function format_sno($field){
-        if($this->model->loaded()){
+        if($this->model->loaded() AND !$this->skip_sno){
 
             if($this->sno_decending){                
                 $this->current_row[$field] = (($this->sno--) - ($_GET[@$this->paginator->name.'_skip']?:0));
