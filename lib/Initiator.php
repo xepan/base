@@ -180,7 +180,20 @@ class Initiator extends \Controller_Addon {
         $auth->usePasswordEncryption('md5');
         $auth->setModel($user,'username','password');
         
+        if($_GET['access_token']){    
+            $u = $this->add('xepan\base\Model_User_Active');
+            $u->addCondition('access_token',$_GET['access_token']);
+            $u->addCondition('access_token_expiry','>',$this->app->now);
+            $u->tryLoadAny();
+            if($u->loaded()){
+                $auth->login($u);
+                $this->app->redirect($this->app->url());
+            }else{
+                $auth->logout();
+            }
+        }
         $auth->check();
+
         
         // if old session is continues and day is changed, consider it as new login of day
         if($auth->isLoggedIn() && strtotime(date('Y-m-d',strtotime($auth->model['last_login_date']))) != strtotime($this->app->today)){
