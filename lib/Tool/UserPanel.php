@@ -24,6 +24,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'show_activation_link'=>true,
 				'show_verification_link'=>true,
 				'show_resendverification_link'=>true,
+				'redirect_to_success_page_if_logged_in'=>false,
 
 				// field to show
 				'show_field_country'=>0,
