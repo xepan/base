@@ -52,7 +52,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 	function init(){
 		parent::init();
 
-		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login','verify_again','verify_account'])){
+		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login','verify_again','verify_account','reset_form'])){
 			$this->add('View_Error')->set('View ('.$this->options['layout'].') Not Found');
 			return;
 		}
@@ -86,9 +86,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			return;
 		}
 
-		
-
-		if(!$this->app->auth->isLoggedIn()){
+		if(!$this->app->auth->isLoggedIn() OR $this->options['layout'] == "reset_form"){
 			
 			switch ($this->options['layout']) {
 				case 'login_view':
@@ -118,7 +116,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 
 				case 'reset_form':
 					$this->active_view = $va_view=$this->add('xepan\base\View_User_ResetPassword',array('options'=>$this->options));
-					$this->app->stickyForget('options');	
+					$this->app->stickyForget('options');
 				break;
 
 				case 'micro_login':	
