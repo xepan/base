@@ -25,6 +25,7 @@ class Controller_FLC extends \AbstractController {
 	public $addContent = false; 
 	public $debug = false;
 	public $closeOtherPanels = false;
+	public $layout_array=[];
 
 	function init(){
 		parent::init();
@@ -100,6 +101,8 @@ class Controller_FLC extends \AbstractController {
 		$rows=[];
 		$collapsed_sections=[];
 		$field_hints=[];
+
+		$this->layout_array = $array;
 
 		$last=null;
 		foreach ($array as $field => $detail) {
@@ -213,6 +216,17 @@ class Controller_FLC extends \AbstractController {
 			$this->owner->template->loadTemplateFromString($template_str);
 		}
 
+		return $this;
+
+	}
+
+	function getFields(){
+		$fields=[];
+		foreach ($this->layout_array as $field => $details) {
+			$fields[] = explode("~", $field)[0];
+		}
+
+		return $fields;
 	}
 
 	function debug(){
