@@ -215,17 +215,21 @@
   <div id="user-tool-page-links" class="xepan-cms-tools-bar-panel row-fluid collapse">
     <table class="table-condensed table-hover xepan-cms-tool-table">
       <tr>
-        <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Success URL</td>
-          <td class="xepan-tool-option-value"> 
+          <td class="xepan-tool-option-value">
+          <div class="xepan-tool-option-title">Login Success URL</div>
             <input id="user-panle-sucess-url" data-attr="login_success_url" data-shortname="success_url"/>
           </td>
-        </div>
+      </tr>
+      <tr>
+          <td class="xepan-tool-option-value">
+          <div class="xepan-tool-option-title">Registration Success URL</div>
+            <input data-attr="registration_success_url"/>
+          </td>
       </tr>
       <tr>
         <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Show TnC</td>
           <td class="xepan-tool-option-value">
+            <div class="xepan-tool-option-title">Show TnC</div>
             <select id="show_tnc" data-attr="show_tnc" data-defaultvalue="true">
               <option value="true">Yes</option>
               <option value="false">No</option>
@@ -235,40 +239,40 @@
       </tr>
       <tr>
         <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">TnC URL</td>
           <td class="xepan-tool-option-value"> 
+            <div class="xepan-tool-option-title">TnC URL</div>
             <input id="tnc_page_url" data-attr="tnc_page_url" data-shortname="tnc_url"/>
           </td>
         </div>
       </tr>
       <tr>
         <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Logout Page</td>
           <td class="xepan-tool-option-value"> 
+            <div class="xepan-tool-option-title">Logout Page</div>
             <input id="user-panle-logoutpage-layout" data-attr="logout_page" data-shortname="logout_page"/>
           </td>
         </div>
       </tr>
       <tr>
         <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Login Page</td>
           <td class="xepan-tool-option-value"> 
+            <div class="xepan-tool-option-title">Login Page</div>
             <input id="user-panle-loginpage-layout" data-attr="login_page" data-shortname="login_page"/>
           </td>
         </div>
       </tr>
       <tr>
         <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Registration Page</td>
-          <td class="xepan-tool-option-value"> 
+          <td class="xepan-tool-option-value">
+            <div class="xepan-tool-option-title">Registration Page</div>
             <input id="user-panle-registration-page-layout" data-attr="registration_page_extranal_url"/>
           </td>
         </div>
       </tr>
       <tr>
         <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Member Panel Page</td>
           <td class="xepan-tool-option-value"> 
+            <div class="xepan-tool-option-title">Member Panel Page</div>
             <input id="user-panle-member-page" data-attr="member_panel_page"/>
           </td>
         </div>
@@ -284,15 +288,13 @@
   <div id="user-tool-micro-login" class="xepan-cms-tools-bar-panel row-fluid collapse">
     <table class="table-condensed table-hover xepan-cms-tool-table">
       <tr>
-        <div class="xepan-tool-option">
-          <td class="xepan-tool-option-title">Micro Login</td>
           <td class="xepan-tool-option-value"> 
+            <div class="xepan-tool-option-title">Micro Login</div>
             <select id="user-panel-micrologin" data-attr="show_micro_login" data-shortname="micro_login">
               <option value="true">True</option>
               <option value="false">False</option>
             </select>
           </td>
-        </div>
       </tr>
     </table>
   </div>
@@ -306,26 +308,26 @@
   <div id="user-tool-message-config" class="xepan-cms-tools-bar-panel row-fluid collapse">
     <table class="table-condensed table-hover xepan-cms-tool-table">
       <tr>
-        <td class="xepan-tool-option-title">Verify Message</td>
         <td class="xepan-tool-option-value">
-          <textarea data-attr="verify_message" data-defaultvalue="Your account is validated. Login with your username and password to enjoy our services."></textarea>
+          <div class="xepan-tool-option-title">Verify Message</div>
+           <textarea data-attr="verify_message" data-defaultvalue="Your account is validated. Login with your username and password to enjoy our services."></textarea>
         </td>
       </tr>
       <tr>
-        <td class="xepan-tool-option-title">Registration Message</td>
         <td class="xepan-tool-option-value">
+          <div class="xepan-tool-option-title">Registration Message</div>
           <textarea data-attr="registration_message" data-defaultvalue="Registration mail sent. Check your email address linked to the account."></textarea>
         </td>
       </tr>
       <tr>
-        <td class="xepan-tool-option-title">Forgot Message</td>
         <td class="xepan-tool-option-value">
+          <div class="xepan-tool-option-title">Forgot Message</div>
           <textarea data-attr="forgot_message" data-defaultvalue="We have sent you a password recovery mail. Check your e-mail address linked to the account."></textarea>
         </td>
       </tr>
       <tr>
-        <td class="xepan-tool-option-title">Reactive Message</td>
         <td class="xepan-tool-option-value">
+          <div class="xepan-tool-option-title">Reactive Message</div>
           <textarea data-attr="reactive_message" data-defaultvalue="Verification mail sent. Check your e-mail address linked to the account."></textarea>
         </td>
       </tr>

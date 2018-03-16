@@ -9,6 +9,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'tnc_page_url'=>'',
 				'layout'=>'login_view',
 				'login_success_url'=>'index',
+				'registration_success_url'=>null,
 				'logout_page'=>'logout',
 				'login_page'=>'login',
 				'member_panel_page'=>'',
