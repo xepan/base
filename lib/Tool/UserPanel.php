@@ -63,9 +63,11 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		}
 		
 		$view_url = $this->api->url(null,['cut_object'=>$this->name]);
-
+		
 		if($this->options['registration_page_extranal_url']){
 			$this->on('click','a.xepan-registration-load-panl',function($js,$data)use($view_url){
+				if($this->app->page == $this->options['registration_page_extranal_url'])
+					return $this->js()->reload(['layout'=>$data['showview']],null,$view_url);
 				return $this->app->redirect($this->api->url($this->options['registration_page_extranal_url']))->execute();
 			});
 
