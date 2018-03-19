@@ -6,6 +6,7 @@ class Tool_Location extends \xepan\cms\View_Tool{
 	public $options = [
 				"show_country_name"=>true,
 				"show_state_name"=>true,
+				'custom_template'=>'location'
 			];	
 	function init(){
 		parent::init();
@@ -106,7 +107,15 @@ class Tool_Location extends \xepan\cms\View_Tool{
 	}
 
 	function defaultTemplate(){
-		return['view\tool\location\location'];
+
+		if($temp = $this->options['custom_template']){
+			$path = getcwd()."/websites/".$this->app->current_website_name."/www/view/tool/location/".$this->options['custom_template'].".html";
+			if(!file_exists($path)){
+				$temp = 'location';
+				$this->add('View_Warning')->set('template not found');
+			}
+		}
+		return['view\tool\location\/'.$temp];
 	}
 
 	function render(){
