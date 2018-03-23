@@ -9,6 +9,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'tnc_page_url'=>'',
 				'layout'=>'login_view',
 				'login_success_url'=>'index',
+				'registration_success_url'=>null,
 				'logout_page'=>'logout',
 				'login_page'=>'login',
 				'member_panel_page'=>'',
@@ -23,6 +24,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'show_activation_link'=>true,
 				'show_verification_link'=>true,
 				'show_resendverification_link'=>true,
+				'redirect_to_success_page_if_logged_in'=>false,
 
 				// field to show
 				'show_field_country'=>0,
@@ -50,7 +52,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 	function init(){
 		parent::init();
 
-		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login','verify_again','verify_account'])){
+		if(!in_array($this->options['layout'], ['login_view','forget_password','new_registration','micro_login','verify_again','verify_account','reset_form'])){
 			$this->add('View_Error')->set('View ('.$this->options['layout'].') Not Found');
 			return;
 		}
@@ -61,9 +63,11 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 		}
 		
 		$view_url = $this->api->url(null,['cut_object'=>$this->name]);
-
+		
 		if($this->options['registration_page_extranal_url']){
 			$this->on('click','a.xepan-registration-load-panl',function($js,$data)use($view_url){
+				if($this->app->page == $this->options['registration_page_extranal_url'])
+					return $this->js()->reload(['layout'=>$data['showview']],null,$view_url);
 				return $this->app->redirect($this->api->url($this->options['registration_page_extranal_url']))->execute();
 			});
 
@@ -82,9 +86,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 			return;
 		}
 
-		
-
-		if(!$this->app->auth->isLoggedIn()){
+		if(!$this->app->auth->isLoggedIn() OR $this->options['layout'] == "reset_form"){
 			
 			switch ($this->options['layout']) {
 				case 'login_view':
@@ -114,7 +116,7 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 
 				case 'reset_form':
 					$this->active_view = $va_view=$this->add('xepan\base\View_User_ResetPassword',array('options'=>$this->options));
-					$this->app->stickyForget('options');	
+					$this->app->stickyForget('options');
 				break;
 
 				case 'micro_login':	

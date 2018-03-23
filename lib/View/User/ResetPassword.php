@@ -1,21 +1,34 @@
 <?php
+
 namespace xepan\base;
 class View_User_ResetPassword extends \View{
 	public $options = [];
+
 	function init(){
 		parent::init();
 
-		$secret_code=$this->app->stickyGET('secret_code');
-		$activate_email=$this->app->stickyGET('activate_email');
+		$secret_code = $this->app->stickyGET('secret_code');
+		$activate_email = $this->app->stickyGET('activate_email');
 
 		$form = $this->add('Form');
 		$form->setLayout('view/tool/userpanel/form/xepanrestpassword');
 
-		$form->addField('line','email','username')->set($_GET['activate_email'])->validateNotNull();
+		$userfield = $form->addField('line','email','Username')
+				->validateNotNull();
+		if($this->app->auth->model->loaded()){
+			$userfield->set($this->app->auth->model['username']);
+		}else{
+			$userfield->set($_GET['activate_email']);
+		}
 
-		$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
+		if($this->app->auth->model->loaded()){
+			$form->addField('password','secret_code','Old Password')->validateNotNull();
+		}else{
+			$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
+		}
+
 		$form->addField('password','password')->validateNotNull();
-		$form->addField('password','retype_password')->validateNotNull();
+		$form->addField('password','retype_password','Retype New Password')->validateNotNull();
 
 		if(!$this->options['show_forgotpassword_link']){
 			$form->layout->template->del('forgot_wrapper');        	
@@ -31,20 +44,30 @@ class View_User_ResetPassword extends \View{
 
 		$form->onSubmit(function($f){
 
-			$user=$this->app->auth->model;	
-			$user->addCondition('username',$f['email']);
-			$user->tryLoadAny();
+			$user = $this->app->auth->model;
 			
-			if($f['secret_code']!=$user['hash'])
-				$f->displayError('secret_code','Activation Code Not Match');
+			if($user->loaded() && $user['username'] != $f['email']){
+				$f->displayError('email','username not match');
+			}else{
+				$user->addCondition('username',$f['email']);
+				$user->tryLoadAny();
+			}
+
+			if($user->loaded()){
+				if(!$this->app->auth->verifyCredentials($f['email'],$f['secret_code']))
+					$f->displayError('secret_code','Password not match');
+			}else{
+				if($f['secret_code'] != $user['hash'])
+					$f->displayError('secret_code','Activation Code Not Match');
+			}
 			
 			if($f['password']=='')
-				$f->displayError($f->getElement('password'),'Password Required Field');
+				$f->displayError($f->getElement('password'),'Password must not be empty');
 			
 			if($f['password']!= $f['retype_password'])
 				$f->displayError($f->getElement('retype_password'),'Password did not match');
 
-			$contact=$user->ref('Contacts')->tryLoadAny();
+			$contact = $user->ref('Contacts')->tryLoadAny();
 			
 			$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
 			[
@@ -112,10 +135,12 @@ class View_User_ResetPassword extends \View{
 				}
 			}
 
-			$user['password']=$f['password'];
-			$user->save();
+			if($user->updatePassword($f['password'])){
+				return $f->js(null,$f->js()->redirect($this->app->url($this->options['login_success_url'],['layout'=>'login_view','message'=>"Password Changed Successfully"])))->univ()->successMessage('Password Changed Successfully');
+			}
+			// $user['password'] = $f['password'];
+			// $user->save();
 
-			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>"Password  SuccessFully Changed"])))->univ()->successMessage('Password SuccessFully Changed');
 			// return $f->js()->univ()->successMessage('Password  SuccessFully Changed');
 		});
 	}

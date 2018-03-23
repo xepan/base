@@ -114,7 +114,7 @@ class View_User_Registration extends \View{
 			}
 
 			$f->onSubmit(function($f){
-
+				
 				if($this->options['show_tnc'] && !$f['tnc']){
 					$f->js()->univ()->alert('Accept TnC')->execute();
 				}
@@ -241,7 +241,21 @@ class View_User_Registration extends \View{
 
 				$this->app->hook('userCreated',[$form_data,$user]);
 				
-			return $f->js(null,$f->js()->redirect($this->app->url('login',['layout'=>'login_view','message'=>$this->options['registration_message']])))->univ()->successMessage('Account Verification Mail Sent');
+				if($this->options['registration_success_url']){
+					return $f->js(null,
+						$f->js()->redirect(
+							$this->app->url($this->options['registration_success_url'],
+										['message'=>$this->options['registration_message']]
+									)
+							));
+				}
+
+				return $f->js(null,
+					$f->js()->redirect(
+						$this->app->url(null,
+									['message'=>$this->options['registration_message'],'layout'=>'verify_account']
+								)
+						));
 			});
 	}
 }
