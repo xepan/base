@@ -22,52 +22,7 @@ class Initiator extends \Controller_Addon {
             die('No site found, forwarding to 404 service');
         }
 
-        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/epanservices/dbversion';
-        
-        $db_model = $this->add('xepan/base/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\base'));
-            
-        if(!isset($this->app->is_install) AND $this->app->epan['epan_dbversion'] < (int)$db_model->max_count){ 
-            $this->app->epan->reload();        
-            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
-            foreach ($db_model as $file) {
-                if(!file_exists($path."/".$file['name'])) continue;
-                $file_name=explode('.', $file['name']);
-                if(isset($file_name[0]) && (int)$file_name[0] > $this->app->epan['epan_dbversion']){
-                    try{
-                        $sql = file_get_contents($path."/".$file['name']);
-                        if($file_name[1]=='sql'){
-                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
-                            $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
-
-                            $this->api->db->beginTransaction();
-                            $this->app->db->dsql()->expr($sql)->execute();
-                            
-                            $this->app->epan['epan_dbversion']=(int)$file_name[0];
-                            $this->app->epan->save();
-                            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
-                            
-                            $this->api->db->commit();
-                        }elseif($file_name[1]=='php'){
-                            include_once $file['name'];
-                        }
-                    }catch(\Exception_StopInit $e){
-
-                    }catch(\Exception $e){
-                        if($file_name[1]=='sql'){
-                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
-                            $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
-                            $this->api->db->rollback();
-                            
-                        }
-                        throw $e;
-                    }
-                }   
-                
-            }
-
-        }   
-
-
+        $this->runDBVersionUpdate();
 
         $this->app->epan->config = $this->app->epan->ref('Configurations');
         $misc_m = $this->add('xepan\base\Model_ConfigJsonModel',
@@ -94,6 +49,55 @@ class Initiator extends \Controller_Addon {
         $this->app->addHook('pointable_event',[$event_cont,'handleEvent']);
         $this->app->addHook('widget_collection',[$this,'exportWidgets']);
         $this->app->addHook('entity_collection',[$this,'exportEntities']);
+
+    }
+
+    function runDBVersionUpdate(){
+
+        $db_model = $this->add('xepan/base/Model_DbVersion',array('dir'=>'dbversion','namespace'=>'xepan\base'));
+        $path = $this->path = $this->api->pathfinder->base_location->base_path.'/vendor/xepan/base/dbversion';
+        $this->app->epan->reload();        
+        if(!isset($this->app->is_install) AND $this->app->epan['epan_dbversion'] < $db_model->max_count){ 
+            $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+            foreach ($db_model as $file) {
+                if(!file_exists($path."/".$file['name'])) continue;
+                $file_name=explode('.', $file['name']);
+                // echo "working on ".$file['name'].'<br/>';
+                if(isset($file_name[0]) && (int)$file_name[0] > $this->app->epan['epan_dbversion']){
+                    try{
+                        $sql = file_get_contents($path."/".$file['name']);
+                        if($file_name[1]=='sql'){
+                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 0;')->execute();
+                            $this->app->db->dsql()->expr('SET unique_checks=0;')->execute();
+
+                            $this->api->db->beginTransaction();
+                            $this->app->db->dsql()->expr($sql)->execute();
+                            
+                            
+                            $this->api->db->commit();
+                        }elseif($file_name[1]=='php'){
+                            include_once $path."/".$file['name'];
+                            // echo "including_file ". $file['name'];
+                        }
+                        $this->app->epan['epan_dbversion']=(int)$file_name[0];
+                        $this->app->epan->save();
+                        $this->app->memorize($this->app->current_website_name.'_epan', $this->app->epan);
+                    }catch(\Exception_StopInit $e){
+
+                    }catch(\Exception $e){
+                        if($file_name[1]=='sql'){
+                            $this->app->db->dsql()->expr('SET FOREIGN_KEY_CHECKS = 1;')->execute();
+                            $this->app->db->dsql()->expr('SET unique_checks=1;')->execute();
+                            $this->api->db->rollback();
+                            
+                        }
+                        throw $e;
+                    }
+                }   
+                
+            }
+
+        }   
 
     }
 
