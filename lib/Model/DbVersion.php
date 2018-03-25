@@ -44,10 +44,9 @@ class Model_DbVersion extends \Model {
                     $this->max_count = $temp[0];
             }
 
-            if(strpos($file, ".sql")===false) unset($p[$i]);
+            if(strpos($file, ".sql")===false && strpos($file, ".php")===false) unset($p[$i]);
             $i++;
         }
-
         asort($p);
         $this->setSource('Array',$p);
 

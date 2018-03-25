@@ -40,20 +40,27 @@ class page_update extends \Page {
 				
 				$root = getcwd();
 
+				$c->err('Root in start is '. $root);
+
 				// update root
 				$c->out('In Dir <b>'. getcwd() .'</b><br/>');
 				$c->out('Pulling origin master <br/>');
-				$output= "shell_exec('git checkout origin master && git reset --hard origin/master && git pull origin master')";
+				$output= shell_exec('git checkout origin master && git reset --hard origin/master && git pull origin master');
 				$c->out("output:<br/> <pre>$output</pre>");
 
 				// update base app and call admin first
 				chdir('vendor/xepan/base');
 				$c->out('In Dir <b>'. getcwd() .'</b><br/>');
 				$c->out('Pulling origin master <br/>');
-				$output= "shell_exec('git checkout origin master && git reset --hard origin/master && git pull origin master')";
+				$output= shell_exec('git checkout origin master && git reset --hard origin/master && git pull origin master');
 				$c->out("output:<br/> <pre>$output</pre>");
 				
 				chdir($root);
+
+				$c->out('***** BASE DONE NOW RUNNING ADMIN WITH WGET ******');
+				$c->out('wget '.$this->app->url('/')->absolute());
+				$output = shell_exec('wget '.$this->app->url('/')->absolute());
+				$c->out("output:<br/> <pre>$output</pre>");
 
 				$apps = array_column($this->add('xepan\base\Model_Epan_InstalledApplication')->getRows(),'application_namespace');
 				foreach ($apps as $app_namespace) {
@@ -66,9 +73,14 @@ class page_update extends \Page {
 					}
 
 					chdir($root);
-					$c->out($path);
 					chdir($path);
-					$c->out(getcwd());
+
+					$c->out('In Dir <b>'. getcwd() .'</b><br/>');
+					$c->out('Pulling origin master <br/>');
+					$output= shell_exec('git checkout origin master && git reset --hard origin/master && git pull origin master');
+					$c->out("output:<br/> <pre>$output</pre>");
+
+					chdir($root);
 				}
 
 			}catch(\Exception $e){
