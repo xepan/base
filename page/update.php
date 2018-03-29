@@ -58,8 +58,8 @@ class page_update extends \Page {
 				chdir($root);
 
 				$c->out('***** BASE DONE NOW RUNNING ADMIN WITH WGET ******');
-				$c->out('wget '.$this->app->url('/')->absolute());
-				$output = shell_exec('wget '.$this->app->url('/')->absolute());
+				$c->out('wget -O /dev/null -o /dev/null "'.$this->app->url('/')->absolute().'"');
+				$output = shell_exec('wget -O /dev/null -o /dev/null "'.$this->app->url('/')->absolute().'"');
 				$c->out("output:<br/> <pre>$output</pre>");
 
 				$apps = array_column($this->add('xepan\base\Model_Epan_InstalledApplication')->getRows(),'application_namespace');
