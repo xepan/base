@@ -180,8 +180,11 @@ class Model_Contact extends \xepan\base\Model_Table{
 	function updateContactCode(){
 		if(!$this->loaded()) throw new \Exception($this['type'] ." Model Must be Loaded", 1);
 			$type = $this['type'];
+			$company_m = $this->add('xepan\base\Model_Config_CompanyInfo');
+			$company_m->tryLoadAny();
+
 			$company_info = $this->app->epan['name'];
-			$owner_code = substr($company_info, 0,3);
+			$owner_code = $company_m['company_code']?:substr($company_info, 0,3);
 
 			$code = "CON";
 			switch ($type) {
