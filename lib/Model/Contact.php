@@ -181,7 +181,6 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if(!$this->loaded()) throw new \Exception($this['type'] ." Model Must be Loaded", 1);
 			$type = $this['type'];
 			$company_m = $this->add('xepan\base\Model_Config_CompanyInfo');
-			// $company_m->add('xepan\hr\Controller_ACL');
 			$company_m->tryLoadAny();
 
 			$company_info = $this->app->epan['name'];
