@@ -115,6 +115,10 @@ class View_User_Registration extends \View{
 
 			$f->onSubmit(function($f){
 				
+				$form_data = $f->get();
+				if($this->registration_mode === "sms" && !isset($form_data['mobile_no']))
+					$form_data['mobile_no'] = $form_data['username'];
+
 				if($this->options['show_tnc'] && !$f['tnc']){
 					$f->js()->univ()->alert('Accept TnC')->execute();
 				}
@@ -142,6 +146,7 @@ class View_User_Registration extends \View{
 				$user['epan_id'] = $this->app->epan->id;
 				$user['username'] = $f['username'];
 				$user['password'] = $f['password'];
+
 				
 				$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
 				[
@@ -173,15 +178,18 @@ class View_User_Registration extends \View{
 				if($reg_type =='default_activated'){
 					$user['status'] = 'Active';
 					$user->save();
+					$this->app->hook('userCreated',[$form_data,$user]);
 				}elseif($reg_type =='admin_activated'){
 					$user['status'] = 'InActive';
 					$user->save();
+					$this->app->hook('userCreated',[$form_data,$user]);
 				
 				}else{
 
 					$user['status'] = 'InActive';
 					$user['hash']=rand(9999,100000);
 					$user->save();
+					$this->app->hook('userCreated',[$form_data,$user]);
 					$contact = $user->ref('Contacts')->tryLoadAny();
 
 					$merge_model_array=[];
@@ -235,11 +243,6 @@ class View_User_Registration extends \View{
 					}
 				}
 				
-				$form_data = $f->get();
-				if($this->registration_mode === "sms" && !isset($form_data['mobile_no']))
-					$form_data['mobile_no'] = $form_data['username'];
-
-				$this->app->hook('userCreated',[$form_data,$user]);
 				
 				if($this->options['registration_success_url']){
 					return $f->js(null,
