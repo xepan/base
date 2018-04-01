@@ -66,7 +66,25 @@ class Model_User extends \xepan\base\Model_Table{
 			return $m->refSQL('Contacts')->setLimit(1)->fieldQuery('type');
 		})->sortable(true);
 		$this->addHook('beforeDelete',[$this,'checkContactExistance']);
+		$this->addHook('beforeSave',[$this,'checkLimits']);
 
+	}
+
+	function checkLimits(){
+		$extra_info = $this->app->recall('epan_extra_info_array',false);
+
+        if((isset($extra_info ['specification']['Backend User Limit'])) AND ($extra_info ['specification']['Backend User Limit'] > 0)){
+        	$user_count = $this->add('xepan\base\Model_User')
+        				->addCondition('type',['AdminUser','SuperUser'])
+						->count()->getOne();
+        	
+        	if($user_count > $extra_info ['specification']['Backend User Limit']){
+        		throw $this->exception("Sorry ! You cannot add more Backend User. Your Limit is over")
+        				->addMoreInfo('Employee Count',$emp_count)
+        				->addMoreInfo('Employee Limit',$extra_info ['specification']['Backend User Limit'])
+        			;
+        	}
+        }
 	}
 
 	function isSuperUser(){
