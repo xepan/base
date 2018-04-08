@@ -185,9 +185,10 @@ class Form_Field_Upload extends \Form_Field {
         echo "<html><head><script>window.top.$('#".
             $_GET[$this->name.'_upload_action']."').atk4_uploader('uploadComplete',".
             json_encode($data).");</script></head></html>";
-        if($this->app->db->inTransaction()) $this->app->db->commit();
+        while($this->app->db->inTransaction()) $this->app->db->commit();
         exit;
     }
+    
     function uploadFailed($message){
 
         $d='';
