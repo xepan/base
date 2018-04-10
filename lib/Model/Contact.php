@@ -76,6 +76,17 @@ class Model_Contact extends \xepan\base\Model_Table{
 					);
 		});
 
+		$this->addExpression('name_with_type',function($m,$q){
+			return $q->expr('CONCAT_WS("::",[name],[organization],[type],[code])',
+						[
+							'name'=>$m->getElement('name'),
+							'organization'=>$m->getElement('organization'),
+							'type'=>$m->getElement('type'),
+							'code'=>$m->getElement('code')
+						]
+					);
+		});
+
 		$this->hasMany('xepan\base\Contact_Email',null,null,'Emails');
 		$this->hasMany('xepan\base\Contact_Phone',null,null,'Phones');
 		$this->hasMany('xepan\base\Contact_Relation',null,null,'Relations');
@@ -248,7 +259,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 	function page_communication($page){	
 		$this->app->stickyGET('comm_type');
 		
-		$tabs = $page->add('Tabs');
+		$tabs = $page->add('TabsDefault');
         $communication_tab = $tabs->addTab('Communication');
         $followup_tab = $tabs->addTab('Followups');
 
