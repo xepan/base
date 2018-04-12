@@ -284,6 +284,69 @@ class Grid extends \Grid{
             ->set($label);
     }
 
+    // function format_datetime($field)
+    // {
+    //     $d = $this->current_row[$field];
+    //     if (!$d) {
+    //         $this->current_row[$field] = '-';
+    //     } else {
+    //         if ($d instanceof MongoDate) {
+    //             $this->current_row[$field] = date(
+    //                 $this->app->getConfig('locale/datetime', 'd/m/Y H:i:s'),
+    //                 $d->sec
+    //             );
+    //         } elseif (is_numeric($d)) {
+    //             $this->current_row[$field] = date(
+    //                 $this->app->getConfig('locale/datetime', 'd/m/Y H:i:s'),
+    //                 $d
+    //             );
+    //         } else {
+    //             $d = strtotime($d);
+    //             $this->current_row[$field] = $d
+    //                 ? date(
+    //                     $this->app->getConfig('locale/datetime', 'd/m/Y H:i:s'),
+    //                     $d
+    //                 )
+    //                 : '-';
+    //         }
+    //     }
+    // }
+
+
+    // /**
+    //  * Format field as date
+    //  *
+    //  * @param string $field
+    //  *
+    //  * @return void
+    //  */
+    // function format_date($field)
+    // {
+    //     if (!$this->current_row[$field]) {
+    //         $this->current_row[$field] = '-';
+    //     } else {
+    //         $this->current_row_html[$field] = date(
+    //             $this->app->getConfig('locale/date', 'd/m/Y'),
+    //             strtotime($this->current_row[$field])
+    //         );
+    //     }
+    // }
+
+    // /**
+    //  * Format field as time
+    //  *
+    //  * @param string $field
+    //  *
+    //  * @return void
+    //  */
+    // function format_time($field)
+    // {
+    //     $this->current_row_html[$field] = date(
+    //         $this->app->getConfig('locale/time', 'H:i:s'),
+    //         strtotime($this->current_row[$field])
+    //     );
+    // }
+
     function recursiveRender(){
         $this->addSno();
         return parent::recursiveRender();
