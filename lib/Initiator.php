@@ -476,7 +476,8 @@ class Initiator extends \Controller_Addon {
         $fv = $this->add('xepan\filestore\Model_Volume');
         $fv->addCondition('name','upload');
         $fv->tryLoadAny();
-        $fv['dirname']='upload';
+        // $fv['dirname']='upload'; // It is now expression to return as per current website folder
+        $fv['dirname_field']='upload';
         $fv['total_space'] = '1000000000';
         $fv['used_space'] = '0';
         $fv['stored_files_count'] = '0';
