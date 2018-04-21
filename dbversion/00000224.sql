@@ -1,4 +1,4 @@
-CREATE TABLE `xepan2`.`xepan_auditlog` (
+CREATE TABLE `xepan_auditlog` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`user_id` int,
 	`contact_id` int,
