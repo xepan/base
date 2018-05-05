@@ -386,6 +386,7 @@ class Initiator extends \Controller_Addon {
         $array['GraphicalReport'] = ['caption'=>'GraphicalReport','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_GraphicalReport'];
         $array['report_type'] = ['caption'=>'Type','type'=>'DropDown','values'=>['chart'=>'Chart','report'=>'Report']];
         $array['Contact_Other_Info_Fields'] = ['caption'=>'Contact_Other_Info_Fields','type'=>"Line"];
+        $array['Rules'] = ['caption'=>'Point_System_Rule','type'=>"xepan\base\Rule", 'model'=>'xepan\base\Model_Rules'];
     }
 
     function collect_shortcuts($app,&$shortcuts){
