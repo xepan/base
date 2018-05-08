@@ -144,10 +144,10 @@ class Controller_Validator extends \Controller_Validator{
         substr($value, 0, $limit).$end;
     }
 
-    function rule_len($a)
-    {
-         return mb_strlen($a, $this->encoding);
-    }
+    // function rule_len($a)
+    // {
+    //      return mb_strlen($a, $this->encoding);
+    // }
 
     function mb_str_len($str){
         return mb_strlen($str);
