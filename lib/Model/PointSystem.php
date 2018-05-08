@@ -20,6 +20,7 @@ class Model_PointSystem extends \xepan\base\Model_Table
 		$this->addField('timesheet_id')->defaultValue(0);
 		$this->addField('qty')->defaultValue(0);
 		$this->addField('score')->defaultValue(0);
+		$this->addField('remarks');
 		$this->addField('landing_campaign_id')->defaultValue(0);
 		$this->addField('landing_content_id')->defaultValue(0);
 		$this->addField('created_at')->type('datetime')->defaultValue(@$this->app->now);
