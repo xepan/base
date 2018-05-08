@@ -24,6 +24,10 @@ class Model_RuleGroup extends \xepan\base\Model_Table
 		$this->hasMany('xepan\base\Rules','rulegroup_id');
 
 		$this->addHook('beforeDelet',[$this,'checkRulesInGroup']);
+
+		$this->is([
+			'name|to_trim|required|len|>3'
+		]);
 	}
 
 	function checkRulesInGroup(){

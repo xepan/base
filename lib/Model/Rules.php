@@ -30,6 +30,10 @@ class Model_Rules extends \xepan\base\Model_Table
 
 		$this->hasMany('xepan\base\RulesOption','rule_id');
 		$this->hasMany('xepan\base\PointSystem','rule_id');
+
+		$this->is([
+			'rulegroup_id|required'
+		]);
 	}
 
 }
