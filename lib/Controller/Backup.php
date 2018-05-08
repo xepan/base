@@ -20,6 +20,8 @@ class Controller_Backup extends \AbstractController {
 	function init(){
 		parent::init();
 
+		set_time_limit(0);
+		
 		$dsn = $this->app->getConfig('dsn');
 		if (is_string($dsn)) {
             preg_match(
