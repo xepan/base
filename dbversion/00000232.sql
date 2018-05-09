@@ -1,1 +1,1 @@
-ALTER TABLE `point_system` MODIFY COLUMN `score_per_qty` DECIMAL(10,4);
+ALTER TABLE `rule_options` MODIFY COLUMN `score_per_qty` DECIMAL(10,4);
