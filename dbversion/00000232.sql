@@ -1,0 +1,1 @@
+ALTER TABLE `point_system` MODIFY COLUMN `score_per_qty` DECIMAL(10,4);
