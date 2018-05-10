@@ -18,6 +18,8 @@ class Model_RulesOption extends \xepan\base\Model_Table
 		$this->addField('description')->type('text')->display(['form'=>'xepan\base\RichText']);
 		$this->addField('score_per_qty')->caption('Score Per Unit');
 
+		$this->addExpression('name_with_score')->set('CONCAT(name," [",score_per_qty,"]")');
+
 		$this->hasMany('xepan\base\PointSystem','rule_option_id');
 	}
 }
