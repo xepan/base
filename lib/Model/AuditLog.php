@@ -1,5 +1,5 @@
 <?php
-
+namespace xepan\base;
 class Model_AuditLog extends Model_Table {
 	var $table= "xepan_auditlog";
 	function init(){
@@ -7,7 +7,7 @@ class Model_AuditLog extends Model_Table {
 
 		$this->hasOne('xepan\base\User','user_id')->defaultValue(@$this->api->auth->model->id);
 		$this->hasOne('xepan\base\Contact','contact_id')->defaultValue(@$this->api->employee->id);
-
+		
 		$this->addField('model_class');
 		$this->addField('pk_id')->type('int');
 
