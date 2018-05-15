@@ -174,10 +174,12 @@ class View_User_Registration extends \View{
 
 				// $frontend_config = $this->app->epan->config;
 				$reg_type = $frontend_config_m['user_registration_type'];
+				$after_registration_layout = "verify_account";
 
 				if($reg_type =='default_activated'){
 					$user['status'] = 'Active';
 					$user->save();
+					$after_registration_layout = "login_view";
 					$this->app->hook('userCreated',[$form_data,$user]);
 				}elseif($reg_type =='admin_activated'){
 					$user['status'] = 'InActive';
@@ -256,7 +258,7 @@ class View_User_Registration extends \View{
 				return $f->js(null,
 					$f->js()->redirect(
 						$this->app->url(null,
-									['message'=>$this->options['registration_message'],'layout'=>'verify_account']
+									['message'=>$this->options['registration_message'],'layout'=>$after_registration_layout]
 								)
 						));
 			});
