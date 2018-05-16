@@ -44,14 +44,8 @@ class View_EasySetupWizard extends \View{
 		$isDone = false;
 		
 		$action = $this->js()->reload([$this->name.'_time_zone'=>1]);
-		$misc_m = $this->add('xepan\base\Model_ConfigJsonModel',
-		[
-			'fields'=>[
-						'time_zone'=>'DropDown'
-						],
-				'config_key'=>'Miscellaneous_Technical_Settings',
-				'application'=>'base'
-		]);
+		$misc_m = $this->add('xepan\base\Model_Config_Misc');
+		
 		$misc_m->tryLoadAny();	
 
 		if($misc_m['time_zone']){
