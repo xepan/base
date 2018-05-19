@@ -72,19 +72,24 @@ class Model_User extends \xepan\base\Model_Table{
 
 	function checkLimits(){
 		$extra_info = $this->app->recall('epan_extra_info_array',false);
+		// 0 means unlimited backend user add
 
-        if((isset($extra_info ['specification']['Backend User Limit'])) AND ($extra_info ['specification']['Backend User Limit'] > 0)){
+        if((isset($extra_info ['specification']['Backend User Limit'])) AND ($extra_info ['specification']['Backend User Limit'] > 0) AND in_array($this['scope'], ['AdminUser','SuperUser'])){
         	$user_count = $this->add('xepan\base\Model_User')
-        				->addCondition('type',['AdminUser','SuperUser'])
-						->count()->getOne();
-        	
-        	if($user_count > $extra_info ['specification']['Backend User Limit']){
+        				->addCondition('scope',['AdminUser','SuperUser']);
+        	if($this->loaded()){
+        		$user_count->addCondition('id','<>',$this->id);
+        	}
+        	$user_count = $user_count->count()->getOne();
+			
+        	if($user_count >= $extra_info ['specification']['Backend User Limit']){
         		throw $this->exception("Sorry ! You cannot add more Backend User. Your Limit is over")
-        				->addMoreInfo('Employee Count',$emp_count)
-        				->addMoreInfo('Employee Limit',$extra_info ['specification']['Backend User Limit'])
+        				->addMoreInfo('Back end Count',$user_count)
+        				->addMoreInfo('Back end Limit',$extra_info ['specification']['Backend User Limit'])
         			;
         	}
         }
+
 	}
 
 	function isSuperUser(){
