@@ -47,7 +47,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('organization');
 		$this->addField('post')->caption('Post');
 		$this->addField('website');
-		$this->addField('code')->system(true);
+		$this->addField('code')->system(true)->defaultValue('general-lead');
 		
 		$this->addField('source');
 		$this->addField('remark')->type('text');

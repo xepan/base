@@ -25,14 +25,8 @@ class Initiator extends \Controller_Addon {
         $this->runDBVersionUpdate();
 
         $this->app->epan->config = $this->app->epan->ref('Configurations');
-        $misc_m = $this->add('xepan\base\Model_ConfigJsonModel',
-            [
-                'fields'=>[
-                            'time_zone'=>'DropDown'
-                            ],
-                    'config_key'=>'Miscellaneous_Technical_Settings',
-                    'application'=>'base'
-            ]);
+        $misc_m = $this->add('xepan\base\Model_Config_Misc');
+
         $misc_m->tryLoadAny();
 
         date_default_timezone_set($misc_m['time_zone']?:'UTC');
@@ -160,6 +154,16 @@ class Initiator extends \Controller_Addon {
         });
         
         $auth->addHook('loggedIn',function($auth,$user,$pass){
+            $config = $this->add('xepan\base\Model_Config_Misc');
+            $config->tryLoadAny();
+            if($config['admin_restricted_ip']){
+                $allowed_ips = explode(",",$config['admin_restricted_ip']);
+                $allowed_ips = array_map('trim', $allowed_ips);
+                if(!in_array($_SERVER['REMOTE_ADDR'],$allowed_ips)){
+                    $this->app->auth->logout();
+                    $this->app->redirect('/');
+                }
+            }
             $this->app->memorize('user_loggedin', $auth->model);
             $auth->model['last_login_date'] = $this->app->now;
             $auth->model->save();
@@ -380,7 +384,7 @@ class Initiator extends \Controller_Addon {
         $array['contact'] = ['caption'=>'Contact','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Contact'];
         $array['User'] = ['caption'=>'User','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_User'];
         $array['Country'] = ['caption'=>'Country','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Country'];
-        $array['Miscellaneous_Technical_Settings'] = ['caption'=>'Miscellaneous_Technical_Settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Miscellaneous_Technical_Settings'];
+        $array['Miscellaneous_Technical_Settings'] = ['caption'=>'Miscellaneous_Technical_Settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Config_Misc'];
         $array['Email_Duplication_Allowed_Settings'] = ['caption'=>'Email_Duplication_Allowed_Settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_Email_Duplication_Allowed_Settings'];
         $array['contact_no_duplication_allowed_settings'] = ['caption'=>'contact_no_duplication_allowed_settings','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_contact_no_duplication_allowed_settings'];
         $array['GraphicalReport'] = ['caption'=>'GraphicalReport','type'=>'xepan\base\Basic','model'=>'xepan\base\Model_GraphicalReport'];
