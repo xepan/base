@@ -25,19 +25,44 @@ class page_adminelconnector extends \xepan\base\Page {
 		\elFinder::$netDrivers['dropbox'] = 'Dropbox';
 		
 		$opts = array(
+			'bind' => array(
+	 			'upload.pre mkdir.pre mkfile.pre rename.pre archive.pre ls.pre' => array(
+	 				'Plugin.Sanitizer.cmdPreprocess'
+	 			),
+	 			'ls' => array(
+	 				'Plugin.Sanitizer.cmdPostprocess'
+	 			),
+	 			'upload.presave' => array(
+	 				'Plugin.Sanitizer.onUpLoadPreSave'
+	 			)
+	 		),
 		    'locale' => '',
 		    'roots'  => array(
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_asset,
 		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets',
-		            'uploadMaxSize'=>'20M'
+		            'uploadMaxSize'=>'20M',
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
 		        ),
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_www,
 		            'URL'    => 'websites/'.$this->app->current_website_name.'/www',
-		            'uploadMaxSize'=>'20M' 
+		            'uploadMaxSize'=>'20M',
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
 		        )
 		    )
 		);

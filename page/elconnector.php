@@ -30,12 +30,26 @@ class page_elconnector extends \Page {
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_www,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/www',
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
 		        ),
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_asset,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets'
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/assets',
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
 		        )
 		    );
 
@@ -44,12 +58,30 @@ class page_elconnector extends \Page {
 		        array(
 		            'driver' => 'LocalFileSystem',
 		            'path'   => $path_www,
-		            'URL'    => 'websites/'.$this->app->current_website_name.'/www'
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/www',
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
 		        )
 		    );
 		}
 		
 		$opts = array(
+			'bind' => array(
+	 			'upload.pre mkdir.pre mkfile.pre rename.pre archive.pre ls.pre' => array(
+	 				'Plugin.Sanitizer.cmdPreprocess'
+	 			),
+	 			'ls' => array(
+	 				'Plugin.Sanitizer.cmdPostprocess'
+	 			),
+	 			'upload.presave' => array(
+	 				'Plugin.Sanitizer.onUpLoadPreSave'
+	 			)
+	 		),
 		    'locale' => '',
 		    'roots'  => $roots
 		);
