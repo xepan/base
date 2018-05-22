@@ -332,7 +332,11 @@ class Initiator extends \Controller_Addon {
     function setup_xepan_apps($side){
         
          foreach ($this->add('xepan\base\Model_Epan_InstalledApplication')->addCondition('is_active',true)->setOrder('application_id') as $apps) {
-            $this->app->xepan_addons[] = $apps['application_namespace'];   
+            if($apps['is_hidden']){
+                $this->app->setConfig('hidden_'.str_replace("\\", "_", $apps['application_namespace']),true);
+            }else{
+                $this->app->xepan_addons[] = $apps['application_namespace'];   
+            }
         }
 
         foreach ($this->app->xepan_addons as $addon) {

@@ -52,16 +52,18 @@ class Model_Epan extends \xepan\base\Model_Table{
 			]);
 	}
 
-	function installApp($application){
+	function installApp($application,$hidden=false){
 		$installed  = $this->add('xepan\base\Model_Epan_InstalledApplication')
 								->addCondition('epan_id',$this->id)
 								->addCondition('application_id',$application->id)
 								->tryLoadAny();
+
 		if($installed->loaded())
 			throw $this->exception('Application Already Installed','ValidityCheck')
 						->setField('application_id')
 						->addMoreInfo('App',$application['name']);
 
+		$installed['is_hidden']=$hidden;
 
 		$installed->saveAndUnload();
 
