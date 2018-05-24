@@ -236,7 +236,7 @@ class Initiator extends \Controller_Addon {
 
         $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
 
-        $this->app->page_top_right_button_set = $this->app->layout->add('ButtonSet',null,'page_top_right');
+        $this->app->page_top_right_button_set = $this->app->layout->add('ButtonSet',null,'page_top_right')->addClass('btn-group-sm');
 
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
