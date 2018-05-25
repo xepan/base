@@ -13,6 +13,8 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 			throw $this->exception('Please add SideBarStatusFilter Controller on main model of page only')
 						->addMoreInfo('current_owner',$this->owner);
 
+		if($this->app->isAjaxOutput()) return;
+
 		$status=$this->api->stickyGET('status');
 
 		$count_m = $this->owner->owner->add(get_class($this->owner));

@@ -30,8 +30,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\ContactCreatedBY','created_by_id');
 		$this->hasOne('xepan\base\ContactAssignedTo','assign_to_id');
 		$this->hasOne('xepan\base\User',null,'username');
-		$this->hasOne('xepan\base\Country','country_id')->display(array('form' => 'xepan\commerce\DropDown'));
-		$this->hasOne('xepan\base\State','state_id')->display(array('form' => 'xepan\commerce\DropDown'));
+		$this->hasOne('xepan\base\Country','country_id')->display(array('form' => 'xepan\base\Country'));
+		$this->hasOne('xepan\base\State','state_id')->display(array('form' => 'xepan\base\State'));
 
 		$this->addField('type');
 		$this->getElement('type')->defaultValue($this->type);
@@ -96,14 +96,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\base\Contact_CommunicationReadEmail','contact_id',null,'UnreadEmails');		
 		
 		if($this->addOtherInfo){
-			$emp_other_info_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
-							[
-								'fields'=>[
-											'contact_other_info_fields'=>"Text",
-											],
-								'config_key'=>'Contact_Other_Info_Fields',
-								'application'=>'base'
-							]);
+			$emp_other_info_config_m = $this->add('xepan\base\Model_Config_ContactOtherInfo');
 			$emp_other_info_config_m->tryLoadAny();
 			$other_fields = explode(",",$emp_other_info_config_m['contact_other_info_fields']);
 
