@@ -11,7 +11,7 @@
 
 namespace xepan\base;
 
-class page_update extends \Page {
+class page_update extends \xepan\base\Page {
 	public $title='xEpan Updator';
 
 	function init(){
@@ -21,13 +21,13 @@ class page_update extends \Page {
 		set_time_limit(0);
 
 		$vp = $this->add('VirtualPage');
-		$vp->set([$this,'update']);
+		$vp->set([$this,'updateZip']);
 
 		$btn = $this->add('Button')->addClass('btn btn-primary btn-block')->set('UPDATE XEPAN AND ALL APPLICATIONS');
 		$btn->js('click')->univ()->frameURL('UPDATE RUNNNING, DO NO CLOSE THIS WINDOW',$vp->getURL());
 	}
 
-	function update($page){
+	function updateGit($page){
 		$page->add('View_Console')
 		->set(function($c){
 			if($this->app->epan['name'] != "www"){
@@ -45,7 +45,12 @@ class page_update extends \Page {
 				// update root
 				$c->out('In Dir <b>'. getcwd() .'</b><br/>');
 				$c->out('Pulling origin master <br/>');
-				$output= shell_exec('git checkout origin master && git reset --hard origin/master && git pull origin master');
+				$output= shell_exec('git init 2>&1');
+				$output= shell_exec('git remote remove origin 2>&1');
+				$output= shell_exec('git remote add origin https://github.com/xepan/xepan2.git 2>&1');
+				$output= shell_exec('git fetch --all 2>&1');
+				$output.= shell_exec('git reset --hard origin/master 2>&1');
+				// $output.= shell_exec('git pull origin master 2>&1');
 				$c->out("output:<br/> <pre>$output</pre>");
 
 				// update base app and call admin first
@@ -89,5 +94,57 @@ class page_update extends \Page {
 			}
 
 		});
+	}
+
+	function updateZip($page){
+		$page->add('View_Console')
+		->set(function($c){
+			
+			chdir('..');
+			$root = getcwd();
+
+			if(file_exists('.git')){
+				$c->err('Looks like it is managed by git repositories, update by git manually');
+				$c->err('NOT UPDATED');
+				return;
+			}			
+
+			$source = $this->app->getConfig('epan_base_path').'/xepan2.zip'; // THE FILE URL
+			
+			$c->out('Moved to '. $root);
+			$c->out('Downloading zip from '.$source);
+			
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $source);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$data = curl_exec ($ch);
+			curl_close ($ch);
+			// save as wordpress.zip
+			$c->out('File downloaded, saving to local zip');
+			
+			$destination = "xepan2.zip"; // NEW FILE LOCATION
+			$file = fopen($destination, "w+");
+			fputs($file, $data);
+			fclose($file);
+
+			$c->out('File Saved');
+
+			$zip = new \xepan\base\zip;
+			$res = $zip->extractZip('xepan2.zip','.'); // zip datei
+			if ($res === TRUE) {
+			    $c->out('Zip Extracted');
+			    unlink('xepan2.zip');
+			    $c->out('xepan2.zip removed');
+			} else {
+			    $c->err('Unzip Error');
+			}
+
+		});
+	}
+
+	function checkIfCommandExists($cmd){
+	    $prefix = strpos(strtolower(PHP_OS),'win') > -1 ? 'where' : 'which';
+	    exec("{$prefix} {$cmd}", $output, $returnVal);
+	    $returnVal !== 0;
 	}
 }
