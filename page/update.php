@@ -35,6 +35,7 @@ class page_update extends \xepan\base\Page {
 				return;
 			}
 			try{
+				set_time_limit(0);
 
 				chdir('..');
 				
@@ -104,6 +105,8 @@ class page_update extends \xepan\base\Page {
 				$c->err('You are not authorised or you are already on hosted service and do not requires to update.');
 				return;
 			}
+
+			set_time_limit(0);
 
 			chdir('..');
 			$root = getcwd();
