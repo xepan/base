@@ -139,7 +139,7 @@ class page_update extends \xepan\base\Page {
 			if ($res === TRUE) {
 			    $c->out('Zip Extracted');
 			    unlink('xepan2.zip');
-			    // $c->out('xepan2.zip removed');
+			    $c->out('xepan2.zip removed');
 			} else {
 			    $c->err('Unzip Error');
 			}
