@@ -35,6 +35,7 @@ class page_update extends \xepan\base\Page {
 				return;
 			}
 			try{
+				set_time_limit(0);
 
 				chdir('..');
 				
@@ -105,6 +106,8 @@ class page_update extends \xepan\base\Page {
 				return;
 			}
 
+			set_time_limit(0);
+
 			chdir('..');
 			$root = getcwd();
 
@@ -119,9 +122,12 @@ class page_update extends \xepan\base\Page {
 			$c->out('Moved to '. $root);
 			$c->out('Downloading zip from '.$source);
 			
+			$this->c = $c;
+
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $source);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, array($this, 'progress'));
 			$data = curl_exec ($ch);
 			curl_close ($ch);
 			// save as wordpress.zip
@@ -145,6 +151,19 @@ class page_update extends \xepan\base\Page {
 			}
 
 		});
+	}
+
+	function progress($resource, $downloadSize, $downloaded, $uploadSize, $uploaded)
+	{
+	    $this->c->out('Download Status', $downloadSize .'/'.$downloaded);
+	    // emit the progress
+	    // Cache::put('download_status', [
+	    //     'resource' => $resource,
+	    //     'download_size' => $downloadSize,
+	    //     'downloaded' => $downloaded,
+	    //     'upload_size' => $uploadSize,
+	    //     'uploaded' => $uploaded
+	    // ], 10);
 	}
 
 	function checkIfCommandExists($cmd){
