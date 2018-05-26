@@ -127,14 +127,14 @@ class page_update extends \xepan\base\Page {
 			fputs($file, $data);
 			fclose($file);
 
-			$c->out('File Saved');
+			$c->out('File Saved, extracting zip now ...');
 
 			$zip = new \xepan\base\zip;
 			$res = $zip->extractZip('xepan2.zip','.'); // zip datei
 			if ($res === TRUE) {
 			    $c->out('Zip Extracted');
 			    unlink('xepan2.zip');
-			    $c->out('xepan2.zip removed');
+			    // $c->out('xepan2.zip removed');
 			} else {
 			    $c->err('Unzip Error');
 			}
