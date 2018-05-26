@@ -100,6 +100,11 @@ class page_update extends \xepan\base\Page {
 		$page->add('View_Console')
 		->set(function($c){
 			
+			if($this->app->epan['name'] != "www" || $this->app->getConfig('xepan-service-host',false) !== false){
+				$c->err('You are not authorised or you are already on hosted service and do not requires to update.');
+				return;
+			}
+
 			chdir('..');
 			$root = getcwd();
 
