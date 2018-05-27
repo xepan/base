@@ -20,6 +20,8 @@ class page_update extends \xepan\base\Page {
 		ini_set('memory_limit', '2048M');
 		set_time_limit(0);
 
+		$this->add('H2')->set('IMPORTANT NOTICE: Please take backup first before proceedings, both database and filesystems');
+
 		$vp = $this->add('VirtualPage');
 		$vp->set([$this,'updateZip']);
 

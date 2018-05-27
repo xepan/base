@@ -6,6 +6,8 @@ namespace xepan\base;
 class Controller_TopBarStatusFilter extends \AbstractController{
 	public $add_all=true;
 
+	public $extra_conditions=null;
+
 	function init(){
 		parent::init();
 
@@ -18,6 +20,9 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 		$status=$this->api->stickyGET('status');
 
 		$count_m = $this->owner->owner->add(get_class($this->owner));
+		if($this->extra_conditions) {
+			$count_m->addCondition($this->extra_conditions);			
+		}
 		$counts = $count_m->_dsql()->del('fields')->field('status')->field('count(*) counts')->group('Status')->get();
 		$counts_redefined =[];
 		$total=0;
