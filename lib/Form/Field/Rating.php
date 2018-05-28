@@ -3,7 +3,10 @@
 namespace xepan\base;
 
 class Form_Field_Rating extends  \xepan\base\Form_Field_DropDownNormal{
-	
+	public $theme = 'bootstrap-stars';
+	public $initialRating = 5;
+	public $readonly = false;
+
 	function init(){
 		parent::init();
 
@@ -14,8 +17,10 @@ class Form_Field_Rating extends  \xepan\base\Form_Field_DropDownNormal{
 			->_load('jquery.barrating.min')
 			->_css('../js/barthemes/bootstrap-stars')
 			->barrating([
-				'theme'=> 'bootstrap-stars'
-			]);
+					'theme'=>$this->theme,
+					'initialRating'=>$this->initialRating,
+					'readonly'=>$this->readonly
+				]);
 
 		parent::render();
 	}
