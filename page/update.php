@@ -20,6 +20,8 @@ class page_update extends \xepan\base\Page {
 		ini_set('memory_limit', '2048M');
 		set_time_limit(0);
 
+		$this->add('H2')->set('IMPORTANT NOTICE: Please take backup first before proceedings, both database and filesystems');
+
 		$vp = $this->add('VirtualPage');
 		$vp->set([$this,'updateZip']);
 
@@ -35,6 +37,7 @@ class page_update extends \xepan\base\Page {
 				return;
 			}
 			try{
+				set_time_limit(0);
 
 				chdir('..');
 				
@@ -100,6 +103,13 @@ class page_update extends \xepan\base\Page {
 		$page->add('View_Console')
 		->set(function($c){
 			
+			if($this->app->epan['name'] != "www" || $this->app->getConfig('xepan-service-host',false) !== false){
+				$c->err('You are not authorised or you are already on hosted service and do not requires to update.');
+				return;
+			}
+
+			set_time_limit(0);
+
 			chdir('..');
 			$root = getcwd();
 
@@ -114,9 +124,12 @@ class page_update extends \xepan\base\Page {
 			$c->out('Moved to '. $root);
 			$c->out('Downloading zip from '.$source);
 			
+			$this->c = $c;
+
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $source);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, array($this, 'progress'));
 			$data = curl_exec ($ch);
 			curl_close ($ch);
 			// save as wordpress.zip
@@ -127,7 +140,7 @@ class page_update extends \xepan\base\Page {
 			fputs($file, $data);
 			fclose($file);
 
-			$c->out('File Saved');
+			$c->out('File Saved, extracting zip now ...');
 
 			$zip = new \xepan\base\zip;
 			$res = $zip->extractZip('xepan2.zip','.'); // zip datei
@@ -140,6 +153,19 @@ class page_update extends \xepan\base\Page {
 			}
 
 		});
+	}
+
+	function progress($resource, $downloadSize, $downloaded, $uploadSize, $uploaded)
+	{
+	    $this->c->out('Download Status', $downloadSize .'/'.$downloaded);
+	    // emit the progress
+	    // Cache::put('download_status', [
+	    //     'resource' => $resource,
+	    //     'download_size' => $downloadSize,
+	    //     'downloaded' => $downloaded,
+	    //     'upload_size' => $uploadSize,
+	    //     'uploaded' => $uploaded
+	    // ], 10);
 	}
 
 	function checkIfCommandExists($cmd){
