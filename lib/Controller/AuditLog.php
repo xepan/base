@@ -5,6 +5,7 @@ namespace xepan\base;
 class Controller_AuditLog extends \AbstractController{
 
 	public $skip_fields = [];
+	public $extra_info=[];
 
 	function init(){
 		parent::init();
@@ -24,11 +25,20 @@ class Controller_AuditLog extends \AbstractController{
 				foreach ($model->dirty as $dirty_field=>$changed) {
 					if(in_array($dirty_field, $this->skip_fields)) continue;
 
-					if($old_m[$dirty_field] != $model[$dirty_field])
+					if($old_m[$dirty_field] != $model[$dirty_field]){
+						if(strtolower($old_m->getElement($dirty_field)->type()) == 'datetime'){
+							if(strtotime($old_m[$dirty_field]) == strtotime($model[$dirty_field])) continue;
+						}
 						$changes[$dirty_field]=array('from'=>$old_m[$dirty_field],'to'=>$model[$dirty_field]);
+					}
 				}
 
 				if(!count($changes)) return;
+
+				foreach ($this->extra_info as $field) {
+					if(!isset($changes['extra_info'])) $changes['extra_info']=[];
+					$changes['extra_info'][$field] = $model[$field];
+				}
 
 				$log = $model->add('xepan\base\Model_AuditLog');
 				$log['model_class'] = get_class($model);
