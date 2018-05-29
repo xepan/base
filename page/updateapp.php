@@ -44,10 +44,10 @@ class page_updateapp extends \xepan\base\Page {
 		$page->add('View_Console')
 		->set(function($c){
 			
-			// if($this->app->epan['name'] != "www" || $this->app->getConfig('xepan-service-host',false) !== false){
-			// 	$c->err('You are not authorised or you are already on hosted service and do not requires to update.');
-			// 	return;
-			// }
+			if($this->app->epan['name'] != "www" || $this->app->getConfig('xepan-service-host',false) !== false){
+				$c->err('You are not authorised or you are already on hosted service and do not requires to update.');
+				return;
+			}
 
 			set_time_limit(0);
 
@@ -63,11 +63,11 @@ class page_updateapp extends \xepan\base\Page {
 				return;
 			}
 
-			// if(file_exists($destination.'/.git')){
-			// 	$c->err('Looks like '.$destination.' is managed by git repositories, update by git manually');
-			// 	$c->err('NOT UPDATING');
-			// 	return;
-			// }			
+			if(file_exists($destination.'/.git')){
+				$c->err('Looks like '.$destination.' is managed by git repositories, update by git manually');
+				$c->err('NOT UPDATING');
+				return;
+			}			
 
 			chdir($destination);
 			$c->out('Moved to '. $destination);
