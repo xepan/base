@@ -128,4 +128,40 @@ $test->extractZip('./toto.zip', './new/');
         elseif (is_file($dir))
             $zip->addFile($dir, str_replace($racine, '', $dir));
     }
+
+    function extract_zip_subdir($zipfile, $subpath, $destination, $temp_cache, $traverse_first_subdir=true){
+        $zip = new ZipArchive;
+        // echo "extracting $zipfile... ";
+        if(substr($temp_cache, -1) !== DIRECTORY_SEPARATOR) {
+            $temp_cache .= DIRECTORY_SEPARATOR;
+        }
+        $res = $zip->open($zipfile);
+        if ($res === TRUE) {
+            if ($traverse_first_subdir==true){
+                $zip_dir = $temp_cache . $zip->getNameIndex(0);
+                $subpath='';
+            }
+            else {
+                $temp_cache = $temp_cache . basename($zipfile, ".zip");
+                $zip_dir = $temp_cache;
+            }
+            // echo "  to $temp_cache... \n";
+            $zip->extractTo($temp_cache);
+            $zip->close();
+            // echo "ok\n";
+            // echo "moving subdir... ";
+            // echo "\n $zip_dir$subpath -- to -- >  $destination\n";
+            // rename($zip_dir . $subpath, $destination);
+            \Nette\Utils\FileSystem::copy($zip_dir.$subpath,$destination,true);
+            // echo "ok\n";
+            // echo "cleaning extraction dir... ";
+            // rrmdir($zip_dir);
+            // echo "ok\n";
+            return true;
+        } else {
+            // echo "failed\n";
+            // die();
+            return false;
+        }
+    }
 }
