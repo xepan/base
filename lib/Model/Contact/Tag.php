@@ -29,4 +29,10 @@ class Model_Contact_Tag extends \xepan\base\Model_ConfigJsonModel{
 			throw $this->exception('name already exists','ValidityCheck')->setField('name');
 		}
 	}
+
+	function getAllTag(){
+		$tag_model = $this->add('xepan\base\Model_Contact_Tag');
+		$all_tag = array_column($tag_model->config_data, 'name');
+		return $all_tag = array_combine($all_tag, $all_tag);
+	}
 }
