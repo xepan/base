@@ -18,5 +18,15 @@ class Model_Contact_Tag extends \xepan\base\Model_ConfigJsonModel{
 
 	function sanitize(){
 		$this['name'] = "`".str_replace('`', "", trim($this['name']))."`";
+
+		$tag = $this->add('xepan\base\Model_Contact_Tag');
+		$tag->addCondition('name',$this['name']);
+		if($this->loaded())
+			$tag->addCondition("id",'!=',$this->id);
+		$tag->tryLoadAny();
+		
+		if($tag->loaded()){
+			throw $this->exception('name already exists','ValidityCheck')->setField('name');
+		}
 	}
 }
