@@ -1,1 +1,1 @@
-ALTER TABLE `post` ADD COLUMN `order` Int;
+ALTER TABLE `contact` ADD COLUMN `tag` text;

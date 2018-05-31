@@ -63,6 +63,8 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->addField('related_with');
 		$this->addField('related_id')->type('int');
 
+		$this->addField('tag')->type('text')->display(['form'=>'DropDown']);
+
 		$this->add('xepan/filestore/Field_Image',['name'=>'image_id','deref_field'=>'thumb_url'])->allowHTML(true);
 
 		$this->addExpression('name')->set($this->dsql()->expr('CONCAT([0]," ",[1])',[$this->getElement('first_name'),$this->getElement('last_name')]))->sortable(true);
