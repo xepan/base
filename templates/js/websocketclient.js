@@ -54,6 +54,7 @@ $.each({
 		      };
 		      socket.onerror = function(err){
 		      	console.log('connection on error');
+		      	console.log(err);
 		      	return;
 		      };
 		  } catch (e) {
