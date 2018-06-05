@@ -19,6 +19,8 @@ class Model_ConfigJsonModel extends \Model{
 	public $application='base';
 	public $namespace='xepan\base';
 
+	public $sort_by=null;
+
 	public $acl_type=null;
 
 	public $acl=true;
@@ -51,6 +53,12 @@ class Model_ConfigJsonModel extends \Model{
 
 		$this->config_model = $this->app->epan->config;
 		$this->config_data = json_decode($this->config_model->getConfig($this->config_key,$this->application)?:'{}',true);
+
+		if($this->sort_by){
+			uasort($this->config_data, function ($a, $b) { 
+			    return ( $a[$this->sort_by] > $b[$this->sort_by] ? 1 : -1 ); 
+			});
+		}
 
 		$this->setSource("Array",$this->config_data);
 
