@@ -281,4 +281,21 @@ class Model_Document extends \xepan\base\Model_Table{
 
 	    return $string;
 	}
+
+	function page_other_info($page){
+		$other_fields_model = $page->add('xepan\base\Model_Config_DocumentOtherInfo');
+		$other_fields_model->addCondition('for',$this['type']);
+
+		$form = $page->add('Form');
+
+		foreach ($other_fields_model as $m) {
+			if(!$m['name']) continue;
+			$field = $form->addField($m['type'],$m['name']);
+			if($m['type']=='DropDown') $field->setValueList(array_combine(explode(",", $m['possible_values']), explode(",", $m['possible_values'])));
+			if($m['conditional_binding']){
+				$field->js(true)->univ()->bindConditionalShow(json_decode($m['conditional_binding'],true),'div.atk-form-row');
+			}
+		}
+
+	}
 }
