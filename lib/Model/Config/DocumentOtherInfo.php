@@ -21,6 +21,19 @@ class Model_Config_DocumentOtherInfo extends \xepan\base\Model_ConfigJsonModel{
 		$this->getElement('conditional_binding')->hint("Enter sperated lines for fields \n{'Value A':{'Field B', 'Field C','Field D'},'Value B':{'Field A', 'Field F'}}");
 		$this->getElement('possible_values')->hint('Comma Seperated Values For DropDown type');
 		$this->getElement('for')->hint('Document Type like Quotation/SalesOrde/SalesInvoice/PurhcaseOrder etc');
+
+		$this->addHook('beforeSave',function($m){
+			if($this['conditional_binding']){
+				json_decode($this['conditional_binding']);
+				if(json_last_error() !== JSON_ERROR_NONE){
+					throw $this->exception('Not a valid JSON','ValidityCheck')
+								->setField('conditional_binding')
+								->addMoreInfo('Error',json_last_error_msg());
+				}
+			}
+			$this['name'] = $this->app->normalizeName($this['name']);
+		},[],4);
+
 	}
 
 }
