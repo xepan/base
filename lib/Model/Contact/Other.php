@@ -18,13 +18,12 @@ class Model_Contact_Other extends Model_Contact_Info{
 	function init(){
 		parent::init();
 
-		$contact_other_info_config_m = $this->add('xepan\base\Model_Config_ContactOtherInfo');
-		if($this->for){
-			$contact_other_info_config_m->addCondition('for',$this->for);
-		}
-		$contact_other_info_config_m->tryLoadAny();
+		// $contact_other_info_config_m = $this->add('xepan\base\Model_Config_ContactOtherInfo');
+		// if($this->for){
+		// 	$contact_other_info_config_m->addCondition('for',$this->for);
+		// }
 			
-		$this->getElement('head')->enum(array_map('trim',explode(",",$contact_other_info_config_m['contact_other_info_fields'])));
+		$this->getElement('head');//->enum(array_map('trim',array_column($contact_other_info_config_m->getRows(),'name')));
 		$this->addCondition('type','Other');
 	}
 }
