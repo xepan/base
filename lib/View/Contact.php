@@ -94,8 +94,10 @@ class View_Contact extends \View{
 			$OtherContactInfos_m=$this->document_view->add('xepan\base\Model_Contact_Other',['for'=>$contact['type']])->addCondition('contact_id',$contact->id);
 			if($this->acl)
 				$OtherContactInfos_m->acl=$this->acl;
-			$OtherContactInfos = $this->document_view->addMany('OtherContactInfos',null,'OtherContactInfos',['view/addmanywithhead']);
+			$OtherContactInfos = $this->document_view->addMany('OtherContactInfos',['form_class'=>'xepan\base\Form_ContactOtherInfo'],'OtherContactInfos',['view/addmanywithhead']);
+
 			$OtherContactInfos->setModel($OtherContactInfos_m);
+			if(!$OtherContactInfos->isEditing()) $OtherContactInfos->add_button->set('Manage Other Info');
 			$OtherContactInfos->template->tryDel('Pannel');
 
 			$ims_m=$contact->ref('IMs');
