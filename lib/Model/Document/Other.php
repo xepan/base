@@ -18,6 +18,8 @@ class Model_Document_Other extends Model_Table{
 
 	public $for=null;
 
+	public $bypass_hook=false;
+
 	function init(){
 		parent::init();
 

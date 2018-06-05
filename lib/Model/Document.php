@@ -292,9 +292,32 @@ class Model_Document extends \xepan\base\Model_Table{
 			if(!$m['name']) continue;
 			$field = $form->addField($m['type'],$m['name']);
 			if($m['type']=='DropDown') $field->setValueList(array_combine(explode(",", $m['possible_values']), explode(",", $m['possible_values'])));
+
+			$existing = $this->add('xepan\base\Model_Document_Other')
+				->addCondition('document_id',$this->id)
+				->addCondition('head',$m['name'])
+				->tryLoadAny();
+			$field->set($existing['value']);
+
 			if($m['conditional_binding']){
 				$field->js(true)->univ()->bindConditionalShow(json_decode($m['conditional_binding'],true),'div.atk-form-row');
 			}
+		}
+
+		if($form->isSubmitted()){
+			foreach ($other_fields_model as $m) {
+				if(!$m['name']) continue;
+
+				$existing = $this->add('xepan\base\Model_Document_Other')
+					->addCondition('document_id',$this->id)
+					->addCondition('head',$m['name'])
+					->tryLoadAny();
+				$existing['value'] = $form[$m['name']];
+				$existing->save();
+			}
+
+			return $page->js()->univ()->closeDialog();
+
 		}
 
 	}
