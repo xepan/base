@@ -91,7 +91,7 @@ class View_Contact extends \View{
 			$phone->setModel($phone_m);
 			$phone->template->tryDel('Pannel');
 
-			$OtherContactInfos_m=$contact->ref('OtherContactInfos');
+			$OtherContactInfos_m=$this->document_view->add('xepan\base\Model_Contact_Other',['for'=>$contact['type']])->addCondition('contact_id',$contact->id);
 			if($this->acl)
 				$OtherContactInfos_m->acl=$this->acl;
 			$OtherContactInfos = $this->document_view->addMany('OtherContactInfos',null,'OtherContactInfos',['view/addmanywithhead']);
