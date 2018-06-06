@@ -286,12 +286,16 @@ class Model_Document extends \xepan\base\Model_Table{
 		$other_fields_model = $page->add('xepan\base\Model_Config_DocumentOtherInfo');
 		$other_fields_model->addCondition('for',$this['type']);
 
+
+		$has_field = false; // used for: when no one other info is added so display error
 		$form = $page->add('Form');
 
 		foreach ($other_fields_model as $m) {
 			if(!$m['name']) continue;
 			$field = $form->addField($m['type'],$m['name']);
 			if($m['type']=='DropDown') $field->setValueList(array_combine(explode(",", $m['possible_values']), explode(",", $m['possible_values'])));
+
+			$has_field = true;
 
 			$existing = $this->add('xepan\base\Model_Document_Other')
 				->addCondition('document_id',$this->id)
@@ -308,7 +312,11 @@ class Model_Document extends \xepan\base\Model_Table{
 			}
 		}
 
-		$form->addSubmit('Save')->addClass('btn btn-primary');
+		if($has_field)
+			$form->addSubmit('Save')->addClass('btn btn-primary');
+		else
+			$page->add('View_Error')->set('Please add first document other info');
+
 		if($form->isSubmitted()){
 			foreach ($other_fields_model as $m) {
 				if(!$m['name']) continue;
