@@ -302,8 +302,13 @@ class Model_Document extends \xepan\base\Model_Table{
 			if($m['conditional_binding']){
 				$field->js(true)->univ()->bindConditionalShow(json_decode($m['conditional_binding'],true),'div.atk-form-row');
 			}
+
+			if($m['is_mandatory']){
+				$field->validate('required');
+			}
 		}
 
+		$form->addSubmit('Save')->addClass('btn btn-primary');
 		if($form->isSubmitted()){
 			foreach ($other_fields_model as $m) {
 				if(!$m['name']) continue;
