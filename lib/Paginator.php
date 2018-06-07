@@ -30,7 +30,8 @@ class Paginator extends \CompleteLister {
 
     public $source=null;        // Set with setSource()
     public $base_page=null;     // let's redefine page nicely
-
+    
+    public $default_rows_per_page = null; // used when set rows not in dropdown list, 5,10,15,25,50
     function init(){
         parent::init();
 
@@ -43,6 +44,7 @@ class Paginator extends \CompleteLister {
     /** Set number of items displayed per page */
     function setRowsPerPage($rows) {
         $this->ipp = $rows;
+        if(!$this->default_rows_per_page) $this->default_rows_per_page = $rows;
         return $this;
     }
     // obsolete, should be removed in 4.4
@@ -65,7 +67,7 @@ class Paginator extends \CompleteLister {
         if($source instanceof \SQL_Model){
             $source = $source->_preexec();
         }
-
+        
         if($source instanceof \DB_dsql){
             $source->limit($this->ipp, $this->skip);
             $source->calcFoundRows();
@@ -81,8 +83,12 @@ class Paginator extends \CompleteLister {
     }
     function recursiveRender(){
 
-        if($ipp = $this->api->stickyGET($this->name.'_ipp'))
+        if($ipp = $this->api->stickyGET($this->name.'_ipp')){
             $this->ipp = $ipp;
+            if($ipp == null OR $ipp == "null"){
+                $this->setRowsPerPage($this->default_rows_per_page);
+            } 
+        }
 
         // get data source
         if (! $this->source) {
