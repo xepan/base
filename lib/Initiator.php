@@ -113,6 +113,17 @@ class Initiator extends \Controller_Addon {
         ->setBasePath($elfinder_addon_base_path)
         ->setBaseURL('../vendor/studio-42/elfinder/');
 
+        $this->app->page_top_right_button_set = $this->app->layout->add('ButtonSet',null,'page_top_right')->addClass('btn-group-sm');
+
+        $this->app->inConfigurationMode = false;
+        if($this->app->recall('configuration_mode',false)){
+            $this->app->inConfigurationMode = true;
+            $this->app->page_top_right_button_set->addButton('Running in Configuration Mode, Click To Exit to Application Mode')
+                ->addClass('btn btn-danger')
+                ->js('click')->univ()->location($this->app->url('xepan_base_configurationmode'));
+            ;
+        }
+
         $auth = $this->app->add('BasicAuth',['login_layout_class'=>'xepan\base\Layout_Login']);
         $auth->allowPage(['xepan_base_forgotpassword','xepan_base_resetpassword','xepan_base_registration']);
         if(in_array($this->app->page, $auth->getAllowedPages())){
@@ -134,12 +145,14 @@ class Initiator extends \Controller_Addon {
             else
                 $this->app->user_menu = new \Dummy;
 
-            if(!$this->app->getConfig('hidden_report_menu',false)) 
+            if(!$this->app->inConfigurationMode && !$this->app->getConfig('hidden_report_menu',false)) 
                 $this->app->report_menu = $this->app->top_menu->addMenu('Reports');
             else
                 $this->app->report_menu = new \Dummy;
 
         }
+
+
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
             $f = $p->add('Form',null,null,['form/minimal']);
@@ -207,6 +220,8 @@ class Initiator extends \Controller_Addon {
         if($auth->isLoggedIn() && strtotime(date('Y-m-d',strtotime($auth->model['last_login_date']))) != strtotime($this->app->today)){
             $auth->hook('loggedIn',[$auth->model,null]);
         }
+
+        $this->app->side_menu->addItem(['Configuration Mode','icon'=>' fa fa-cogs'],'xepan_base_configurationmode')->setAttr(['title'=>'Configuration Mode']);
                
         if(!$this->app->isAjaxOutput()) {
             $this->app->jui->addStaticInclude('pace.min');
@@ -235,8 +250,6 @@ class Initiator extends \Controller_Addon {
         });
 
         $this->app->layout->template->trySet('xepan_version',file_get_contents('../version'));
-
-        $this->app->page_top_right_button_set = $this->app->layout->add('ButtonSet',null,'page_top_right')->addClass('btn-group-sm');
 
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
