@@ -2,8 +2,8 @@
 
 namespace xepan\base;
 
-class page_wizard extends \Page {
-	public $title='Page Title';
+class page_wizard extends \xepan\base\Page {
+	public $title='Quick Setup Wizard';
 
 	function init(){
 		parent::init();
