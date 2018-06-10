@@ -118,6 +118,9 @@ class Initiator extends \Controller_Addon {
         $this->app->inConfigurationMode = false;
         if($this->app->recall('configuration_mode',false)){
             $this->app->inConfigurationMode = true;
+
+            $this->app->layout->template->trySet('configuration_mode','configuration_mode');
+
             $this->app->page_top_right_button_set->addButton('Running in Configuration Mode, Click To Exit to Application Mode')
                 ->addClass('btn btn-danger')
                 ->js('click')->univ()->location($this->app->url('xepan_base_configurationmode'));
