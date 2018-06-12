@@ -30,19 +30,17 @@ install:
 - echo "Using firefox version `firefox --version`"
 - sudo curl -LsS http://codeception.com/codecept.phar -o /usr/local/bin/codecept
 - sudo chmod a+x /usr/local/bin/codecept
-
 - sudo apt-get update
 - sudo apt-get install apache2 libapache2-mod-fastcgi
-
-# enable php-fpm
-- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf
+- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv
+  version-name)/etc/php-fpm.conf
+- sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default
+  ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf
 - sudo a2enmod rewrite actions fastcgi alias
 - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
 - sudo chown -R travis:travis /var/lib/apache2/fastcgi
-- ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-# configure apache virtual hosts
+- "~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm"
 - sudo cp -f tests/travis/build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
 - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
 - sudo service apache2 restart
@@ -50,7 +48,6 @@ install:
 - wget -P ~/Downloads https://github.com/mozilla/geckodriver/releases/download/v0.10.0/geckodriver-v0.10.0-linux64.tar.gz
 - tar -xf ~/Downloads/geckodriver-v0.10.0-linux64.tar.gz -C ~/Downloads
 - composer self-update
-# - COMPOSER=composer-$TRAVIS_BRANCH.json composer install --prefer-source --no-dev
 - composer install --prefer-source --no-dev
 - ulimit -c unlimited || true
 before_script:
@@ -68,5 +65,5 @@ script:
 env:
   global:
   - GITHUB_REPO: xavoctechnocratspvtltd/_xepan2
-  - REPORT_FOLDER: hr
-  - secure: j9lqABaeZ1ZUEc/IemLyu+8QMnSHxWhMbaMnSG7ix97WHf+1/UlKukaVQMdfODATR0rDjq5rCJF1Scft/GuWsUjAHKM0+ya56Gv96Yt0OXKBpkBujNtNheTEBSmA+kAISajpFT0po2ByDwdb2Lx4W0VohvD5h/KAi+rbuXV0OkD2PJ18/4ocZEQFilTC7AA5UfjSQlQLo+VwrOrQtIXOCRVzWqMMYShixD7QGdHxjtcXkzIen4Xt9mOgPQ+lgytFOwIm1QA8ahrcq5MbxeUSVyqeN9NA9+iIQXUrlwe8lLK0gaFv08s+UrwGfMC/3A4+BfUSMsQ/XhoYyWeZFsUtWEr+sncMczX7izDTjUPFBijmNN2aFf0kS1NrAI2eEJkTL3SwJCyNN7qGaZyIz/yKaWIVNYzVYFTpkQVSn4+SjNkGIKRmxk+jxqdQx92YIb8r2ym0wN6vLFJRYq3bpFcbIzHLVc4j1uk9xsam+CL1noJ3pO/ZsHpWPp/NGvh6FFCpQdnc26yevUlRad4g6sF3Et5EppkWSyGS7ud0NhFu7Qppt37/82FRNf2H3LK9XaHDAYEBD56K0wvGsMFCulrDaG5czVn6BqPeHIT9Fu6Uxbwhclsn28fE8sM9bPsn5h5NtZ4nrDFaZ/qfyR9tCMe7SXhhYKPg9tNkA6243w2w8bs=
+  - REPORT_FOLDER: base
+  - secure: F9AxMxvOY9lmWl/WORqvPyyEl37fbHv4Hz6MF8ii9ypMjecAzrsyYLnYjntIyRuvFzBq5ecBByUuv+LQxA+DwsVPyWD/cX1wW8ItS/BtwAZ79xTKl7GCvzHhRjPB3rgVFII3H6TStZUC3T32y5VGI9rcGT6KTGvB00NVzIlvKeqYkFGwHKJZHNN3fcgLIT1SSHVL7K5AlWIQ737MRSG1VGKVC+7xVwgF8D03z8UmhQJ+uRf7+ow5Cvzu+AXfH9/4a7OTo3RY+RuZPukI9wV68cA8iudoSTbqQ9Zv2lU9SekjG5EIlOu51iXhWp6wQ5CXv1qLzXpesEO4g8XLgwwhkfl2sENg4fc7IJWytpGR8hP59IoIwh7QgUXLpjZN443ElGJSZ3OTfFbLCSFN0aDDSOnafCrOFVADJ8SRgcNJp5Auji98S/llBdoNDw05gIsQKaQdwO1r3rRMbJO1EHdh7taOEO3oH0T/KFmrtbaN8TyvPUkRFMub+p22Q1EykZo23ZePZiK6GC9t/WVQaFcOZj9ghEFJAzOTeN/v7t81XttxXw6AfQlZFM2pbqKGVLjFZs9JCJW6RjDeEar+DqCIPL0tHKXQtjvWEWPzyIFD2PJ/K7z1R4fKtJMNaBrkodpuZ5ym/tCwDjit+3j5GgrMD/qI2DWjD4dx1eBoA1zh1Qg=
