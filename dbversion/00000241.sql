@@ -42,7 +42,7 @@ CREATE TABLE `testimonial` (
   KEY `fk_contact_id` (`contact_id`),
   KEY `fk_image_id` (`image_id`),
   KEY `fk_created_by_id` (`created_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE `wishlist` (
@@ -52,7 +52,7 @@ CREATE TABLE `wishlist` (
   `created_at` date DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `testimonialCategory`;
@@ -63,4 +63,4 @@ CREATE TABLE `testimonialCategory` (
   `created_by_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_created_by_id` (`created_by_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
