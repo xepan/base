@@ -18,7 +18,7 @@
         "reference": "origin/master"
     },
     "require": {
-        "xepan/atk4": "4.3",
+        "xepan/atk4": "4.3.x-dev",
         "xepan/filestore" : "dev-master",
         "nette/utils": "~2.4",
         "tecnickcom/tcpdf": "^6.2",
