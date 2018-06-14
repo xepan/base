@@ -99,8 +99,9 @@ class Model_Contact extends \xepan\base\Model_Table{
 		
 		if($this->addOtherInfo){
 			$emp_other_info_config_m = $this->add('xepan\base\Model_Config_ContactOtherInfo');
+			$emp_other_info_config_m->addCondition('for',$this['type']);
 			$emp_other_info_config_m->tryLoadAny();
-			$other_fields = explode(",",$emp_other_info_config_m['contact_other_info_fields']);
+			$other_fields = array_column($emp_other_info_config_m->getRows(), 'name');
 
 			foreach ($other_fields as $ot_fields) {
 				if(!trim($ot_fields)) continue;
