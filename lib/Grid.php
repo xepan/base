@@ -24,8 +24,8 @@ class Grid extends \Grid{
     public $skip_sno = false;
     public $order=null;
 
-    public $add_footable=true;
-    public $fixed_header=true;
+    public $add_footable=false;
+    public $fixed_header=false;
 
     public $sort_icons = array(
         ' fa fa-sort',
@@ -282,6 +282,24 @@ class Grid extends \Grid{
         return $this->buttonset
             ->add($class, 'gbtn'.count($this->elements))
             ->set($label);
+    }
+
+    function addIntro($intro){
+
+        foreach ($intro as $field => $intro) {
+            if($field=='add_button'){                   
+                if($this->add_button && $this->add_button !=null)
+                    $this->add_button->setAttr('data-intro',$intro);
+                continue;
+            }
+            if(!$this->grid->hasColumn($field)) {
+                if($field_elem = $this->grid->hasElement($field)){
+                    $field_elem->setAttr('data-intro',$intro);
+                }
+                continue;
+            }
+            $this->grid->addFormatter($field,'xepan\base\Intro',['intro'=>$intro]);
+        }
     }
 
     // function format_datetime($field)

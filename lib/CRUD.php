@@ -65,4 +65,23 @@ class CRUD extends \CRUD{
 			$this->grid->removeAttachment();
 	}
 
+	function addIntro($intro){
+		if(!$this->isEditing()) {
+			foreach ($intro as $field => $intro) {
+				if($field=='add_button'){					
+					if($this->add_button && $this->add_button !=null)
+						$this->add_button->setAttr('data-intro',$intro);
+					continue;
+				}
+				if(!$this->grid->hasColumn($field)) {
+					if($field_elem = $this->grid->hasElement($field)){
+						$field_elem->setAttr('data-intro',$intro);
+					}
+					continue;
+				}
+				$this->grid->addFormatter($field,'xepan\base\Intro',['intro'=>$intro]);
+			}
+		}
+	}
+
 }

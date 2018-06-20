@@ -105,6 +105,7 @@ class Controller_FLC extends \AbstractController {
 		$this->layout_array = $array;
 
 		$last=null;
+		$intro=[];
 		foreach ($array as $field => $detail) {
 
 			list($title,$column,$width,$collapsed,$field_hint) = explode("~", $detail);
@@ -134,9 +135,14 @@ class Controller_FLC extends \AbstractController {
 				}
 			}
 
-			if($field_hint){
-				$field_hints[$field] = $field_hint;
+			if($field_hint){				
+				$field_hint_arr = explode("||", $field_hint);
+				$field_hints[$field] = $field_hint_arr[0];
+				if(isset($field_hint_arr[1])) {					
+					$intro[$field] = $field_hint_arr[1];				
+				}
 			}
+
 
 		}
 
@@ -144,7 +150,10 @@ class Controller_FLC extends \AbstractController {
 		// print_r($rows);
 		// echo "</pre>";
 
-		$template_str="<div id='".$this->name."_p'>";
+		$template_str="<div id='".$this->name."_p'>";		
+		if(count($intro) !==0){
+			$template_str .= "<i class='fa fa-users' onclick='$.univ().runIntro(\"#".$this->name."_p\")'></i>";
+		}
 		foreach ($rows as $title => $row) {
 			$title_arr = explode("|", $title);
 			$title=$title_arr[0];
@@ -186,7 +195,7 @@ class Controller_FLC extends \AbstractController {
 							if($this->add_lables && $field_caption){
 								$template_str.= '<b>'.$field_caption.'</b><br/>';
 							}
-								$template_str.= '<div class="atk-form-field atk-form-row">{$'.$field.'}'.$field_hint.'</div>';
+								$template_str.= '<div class="atk-form-field atk-form-row" '.(isset($intro[$field])?' data-intro="'.$intro[$field].'" ':'').'>{$'.$field.'}'.$field_hint.'</div>';
 							if($this->add_lables){
 							}
 						}
