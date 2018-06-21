@@ -20,6 +20,10 @@ class Model_Document extends \xepan\base\Model_Table{
 	
 	public $status=[];
 	public $actions=[];
+	public $addOtherInfo=false;
+	public $otherInfoFields=[];
+
+	public $document_type=null;
 
 	function init(){
 		parent::init();
@@ -30,14 +34,42 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 		$this->addField('type')->mandatory(true);
+		if($this->document_type) $this->addCondition('type',$this->document_type);
 		$this->addField('sub_type')->system(true);
 
 		$this->hasMany('xepan\base\Document_Attachment','document_id',null,'Attachments');
+
 		$this->addExpression('attachments_count')->set($this->refSQL('Attachments')->count());
 		$this->addField('search_string')->type('text')->system(true)->defaultValue(null);
 
 		$this->addField('created_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
 		$this->addField('updated_at')->type('date')->defaultValue($this->app->now)->sortable(true)->system(true);
+
+		$this->hasMany('xepan\base\Document_Other','document_id',null,'OtherDocumentInfos');
+
+
+		if($this->addOtherInfo){
+
+			$other_info_config_m = $this->add('xepan\base\Model_Config_DocumentOtherInfo');
+			$other_info_config_m->addCondition('for','=',$this->document_type);
+			// todo check json model condition is not working
+			// $other_fields = array_column($other_info_config_m->config_data, 'name');	
+
+			foreach ($other_info_config_m->config_data as $data) {
+				if($data['for'] != $this->document_type) continue;
+
+				$ot_fields = $data['name'];
+				if(!trim($ot_fields)) continue;
+
+				$ot_fields = strtolower($ot_fields);
+				$normalize_name = $this->app->normalizeName($ot_fields);
+				$this->otherInfoFields[$normalize_name] = $ot_fields;
+
+				$this->addExpression($normalize_name)->set(function($m,$q)use($ot_fields){
+					return $m->refSQL('OtherDocumentInfos')->addCondition('head',$ot_fields)->fieldQuery('value');
+				});
+			}
+		}
 
 		$this->addHook('beforeDelete',[$this,'DeleteAttachements']);
 
@@ -315,7 +347,7 @@ class Model_Document extends \xepan\base\Model_Table{
 		if($has_field)
 			$form->addSubmit('Save')->addClass('btn btn-primary');
 		else
-			$page->add('View_Error')->set('Please add first document other info');
+			$page->add('View_Error')->set('Please configure other info related to '.$this->document_type);
 
 		if($form->isSubmitted()){
 			foreach ($other_fields_model as $m) {
