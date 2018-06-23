@@ -51,7 +51,7 @@ class Model_Document extends \xepan\base\Model_Table{
 		if($this->addOtherInfo){
 
 			$other_info_config_m = $this->add('xepan\base\Model_Config_DocumentOtherInfo');
-			$other_info_config_m->addCondition('for','=',$this->document_type);
+			$other_info_config_m->addCondition('for',$this->document_type);
 			// todo check json model condition is not working
 			// $other_fields = array_column($other_info_config_m->config_data, 'name');	
 
