@@ -54,9 +54,33 @@ class Page extends \Page {
 
 			$br = $this->app->layout->add('CompleteLister',null,'breadcrumb',['layout/cube','breadcrumb']);
 			$br->setSource($breadcrumbs);
-			
-			$this->js(true)->_load('intro.min')->_css('introjs.min')->_load('xintroJS');
-			$this->js('click',$this->js()->univ()->runIntro())->_selector('.run-page-intro');
+
+			$intro_vp = $this->app->add('VirtualPage');
+			$intro_vp->set(function($page){
+				if(!$doc=$this->app->getConfig('documentation/'.$this->app->page,false)){
+					$page->add('View_Error')->set('No Documentation is defined for this page yet ['.$this->app->page.']');
+					throw $this->exception('','StopInit');
+					return;
+				}
+
+				if(strpos($doc, 'http') ===0){
+					if(strpos($doc, 'youtube')){
+						$content= '<iframe width="560" height="315" src="'.$doc.'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+					}else{
+						$content = file_get_contents($doc);
+					}
+				}else{
+					$content = $doc;
+				}
+
+				$page->add('View')->setHTML($content);
+
+			});
+			if(!$this->app->isAjaxOutput()){
+				$this->js('click',$this->js()->univ()->frameURL('Documentation / Help',$intro_vp->getURL()))->_selector('.run-page-intro');
+			}
+			// $this->js(true)->_load('intro.min')->_css('introjs.min')->_load('xintroJS');
+			// $this->js('click',$this->js()->univ()->runIntro())->_selector('.run-page-intro');
 		}
 
 	}

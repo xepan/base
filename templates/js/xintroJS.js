@@ -21,9 +21,11 @@ $.each({
 		    ;
 		});
 
-		if(typeof object === undefined)
+		if(typeof object === undefined){
 			introJs().start();
-		else
+		}
+		else{
 			introJs(object).start();
+		}
 	}
 },$.univ._import);
