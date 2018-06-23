@@ -33,7 +33,7 @@ class View_User_ResetPassword extends \View{
 			$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
 		}
 
-		$form->addField('password','password')->validateNotNull();
+		$form->addField('password','password','New Password')->validateNotNull();
 		$form->addField('password','retype_password','Retype New Password')->validateNotNull();
 
 		if(!$this->options['show_forgotpassword_link']){
