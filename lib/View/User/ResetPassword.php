@@ -53,7 +53,7 @@ class View_User_ResetPassword extends \View{
 				$user->tryLoadAny();
 			}
 
-			if(!$this->app->auth->model->loaded()){
+			if($this->app->auth->model->loaded()){
 				// actually checking old password here
 				if(!$this->app->auth->verifyCredentials($f['email'],$f['secret_code']))
 					$f->displayError('secret_code','Password not match');
