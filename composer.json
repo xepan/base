@@ -19,6 +19,7 @@
     },
     "require": {
         "xepan/atk4": "4.3.x-dev",
+        "xepan/ai": "dev-master",
         "xepan/filestore" : "dev-master",
         "nette/utils": "~2.4",
         "tecnickcom/tcpdf": "^6.2",
