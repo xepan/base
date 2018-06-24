@@ -51,7 +51,7 @@ class Model_Document extends \xepan\base\Model_Table{
 		if($this->addOtherInfo){
 
 			$other_info_config_m = $this->add('xepan\base\Model_Config_DocumentOtherInfo');
-			$other_info_config_m->addCondition('for','=',$this->document_type);
+			$other_info_config_m->addCondition('for',$this->document_type);
 			// todo check json model condition is not working
 			// $other_fields = array_column($other_info_config_m->config_data, 'name');	
 
@@ -318,7 +318,6 @@ class Model_Document extends \xepan\base\Model_Table{
 		$other_fields_model = $page->add('xepan\base\Model_Config_DocumentOtherInfo');
 		$other_fields_model->addCondition('for',$this['type']);
 
-
 		$has_field = false; // used for: when no one other info is added so display error
 		$form = $page->add('Form');
 
@@ -364,6 +363,35 @@ class Model_Document extends \xepan\base\Model_Table{
 			return $page->js()->univ()->closeDialog();
 
 		}
+	}
 
+	function getDocumentOtherInfo($document_type,$document_id=null){
+		$info = [];
+		if(!$document_type) return $info;
+		
+		$other_fields_model = $this->add('xepan\base\Model_Config_DocumentOtherInfo');
+		$other_fields_model->addCondition('for',$document_type);
+
+		foreach ($other_fields_model as $m) {
+			if(!$m['name']) continue;
+
+			$info[$m['name']] = [
+									'type'=>$m['type'],
+									'possible_values'=>$m['possible_values'],
+									'is_mandatory'=>$m['is_mandatory'],
+									'conditional_binding'=>$m['conditional_binding'],
+									'value'=>null
+								];
+			if($document_id){
+				$existing = $this->add('xepan\base\Model_Document_Other')
+					->addCondition('document_id',$document_id)
+					->addCondition('head',$m['name'])
+					->tryLoadAny();
+				
+				$info[$m['name']] = $existing['value'];
+			}
+		}
+
+		return $info;
 	}
 }

@@ -105,7 +105,7 @@ class View_User_ForgotPassword extends \View{
 					}
 				}
 
-				return $form->js(null)->redirect($this->app->url('login',['layout'=>'login_view', 'message'=>$this->options['forgot_message']]))->execute();
+				return $form->js(null)->redirect($this->app->url(null,['layout'=>'reset_form', 'message'=>$this->options['forgot_message']]))->execute();
 			}
 		}
 	}

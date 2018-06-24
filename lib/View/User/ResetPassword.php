@@ -13,6 +13,12 @@ class View_User_ResetPassword extends \View{
 		$form = $this->add('Form');
 		$form->setLayout('view/tool/userpanel/form/xepanrestpassword');
 
+		if($message = $this->app->stickyGET('message')){
+   	 		$form->layout->template->trySet('message',$message);
+        }else{
+        	$form->layout->template->tryDel('message_wrapper');
+        }
+
 		$userfield = $form->addField('line','email','Username')
 				->validateNotNull();
 		if($this->app->auth->model->loaded()){
@@ -27,7 +33,7 @@ class View_User_ResetPassword extends \View{
 			$form->addField('line','secret_code','Activation Code')->set($_GET['secret_code'])->validateNotNull();
 		}
 
-		$form->addField('password','password')->validateNotNull();
+		$form->addField('password','password','New Password')->validateNotNull();
 		$form->addField('password','retype_password','Retype New Password')->validateNotNull();
 
 		if(!$this->options['show_forgotpassword_link']){
@@ -44,7 +50,11 @@ class View_User_ResetPassword extends \View{
 
 		$form->onSubmit(function($f){
 
-			$user = $this->app->auth->model;
+			$user = $this->add('xepan\base\Model_User');
+			$user->addCondition('status','Active');
+			if($this->app->auth->model->id){
+				$user->addCondition('id',$this->app->auth->model->id);
+			}
 			
 			if($user->loaded() && $user['username'] != $f['email']){
 				$f->displayError('email','username not match');
@@ -53,7 +63,7 @@ class View_User_ResetPassword extends \View{
 				$user->tryLoadAny();
 			}
 
-			if($this->app->auth->model->loaded()){
+			if($this->app->auth->model->id){
 				// actually checking old password here
 				if(!$this->app->auth->verifyCredentials($f['email'],$f['secret_code']))
 					$f->displayError('secret_code','Password not match');
@@ -137,7 +147,7 @@ class View_User_ResetPassword extends \View{
 			}
 
 			if($user->updatePassword($f['password'])){
-				return $f->js(null,$f->js()->redirect($this->app->url($this->options['login_success_url'],['layout'=>'login_view','message'=>"Password Changed Successfully"])))->univ()->successMessage('Password Changed Successfully');
+				return $f->js(null,$f->js()->redirect($this->app->url($this->options['login_page'],['layout'=>'login_view','message'=>"Password Changed Successfully"])))->univ()->successMessage('Password Changed Successfully');
 			}
 			// $user['password'] = $f['password'];
 			// $user->save();
