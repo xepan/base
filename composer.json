@@ -29,7 +29,7 @@
         "xepan/captcha": "dev-master",
         "nesbot/carbon": "^1.21",
         "backup-manager/backup-manager": "*",
-        "php": ">=5.3"
+        "php": ">=7.0"
     },
     "autoload": {
         "psr-0": { "autocomplete": "lib" }
