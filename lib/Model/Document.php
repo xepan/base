@@ -380,7 +380,8 @@ class Model_Document extends \xepan\base\Model_Table{
 									'possible_values'=>$m['possible_values'],
 									'is_mandatory'=>$m['is_mandatory'],
 									'conditional_binding'=>$m['conditional_binding'],
-									'value'=>null
+									'value'=>null,
+									'name'=>$m['name']
 								];
 			if($document_id){
 				$existing = $this->add('xepan\base\Model_Document_Other')
@@ -388,7 +389,7 @@ class Model_Document extends \xepan\base\Model_Table{
 					->addCondition('head',$m['name'])
 					->tryLoadAny();
 				
-				$info[$m['name']] = $existing['value'];
+				$info[$m['name']]['value'] = $existing['value'];
 			}
 		}
 
