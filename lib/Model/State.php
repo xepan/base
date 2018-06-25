@@ -29,6 +29,8 @@ class Model_State extends \xepan\base\Model_Table{
 		$this->addCondition('type','State');
 		$this->addHook('beforeDelete',$this);
 
+		$this->addExpression('country_status')->set($this->refSQL('country_id')->fieldQuery('status'));
+
 		$this->is([
 				'name|to_trim|required|unique_in_epan'
 			]);

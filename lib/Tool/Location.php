@@ -28,7 +28,7 @@ class Tool_Location extends \xepan\cms\View_Tool{
 							->setOrder('name','asc');
 
 		$state_model = $this->add('xepan\base\Model_State');
-		$state_model->addExpression('country_status')->set($state_model->refSQL('country_id')->fieldQuery('status'));
+		// $state_model->addExpression('country_status')->set($state_model->refSQL('country_id')->fieldQuery('status'));
 		$state_model->addCondition('status','Active');
 		$state_model->addCondition('country_status','Active');
 		$state_model->setOrder('name','asc');
