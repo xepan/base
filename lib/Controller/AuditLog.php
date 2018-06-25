@@ -26,7 +26,7 @@ class Controller_AuditLog extends \AbstractController{
 					if(in_array($dirty_field, $this->skip_fields)) continue;
 
 					if($old_m[$dirty_field] != $model[$dirty_field]){
-						if(strtolower($old_m->getElement($dirty_field)->type()) == 'datetime'){
+						if( $old_m->hasElement($dirty_field) && strtolower($old_m->getElement($dirty_field)->type()) == 'datetime'){
 							if(strtotime($old_m[$dirty_field]) == strtotime($model[$dirty_field])) continue;
 						}
 						$changes[$dirty_field]=array('from'=>$old_m[$dirty_field],'to'=>$model[$dirty_field]);
