@@ -49,7 +49,7 @@ class page_update extends \xepan\base\Page {
 			->set('Download Current Files System')
 			->js('click')->univ()->frameURL('Download FileSystem',$fs_vp->getURL());
 		
-		$this->add('Hr');
+		$this->add('HR');
 
 		$vp = $this->add('VirtualPage');
 		$vp->set([$this,'updateZip']);
