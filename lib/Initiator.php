@@ -22,9 +22,10 @@ class Initiator extends \Controller_Addon {
             die('No site found, forwarding to 404 service');
         }
 
+        $this->app->epan->config = $this->app->epan->ref('Configurations');
+        
         $this->runDBVersionUpdate();
 
-        $this->app->epan->config = $this->app->epan->ref('Configurations');
         $misc_m = $this->add('xepan\base\Model_Config_Misc');
 
         $misc_m->tryLoadAny();

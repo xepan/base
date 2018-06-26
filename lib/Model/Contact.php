@@ -20,8 +20,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 	public $status=[];
 	public $actions=[];
 	public $type = "Contact";
+	public $contact_type = "Contact";
 
 	public $addOtherInfo=false;
+	public $otherInfoFields=[];
 
 	function init(){
 		parent::init();
@@ -100,12 +102,20 @@ class Model_Contact extends \xepan\base\Model_Table{
 		if($this->addOtherInfo){
 			$emp_other_info_config_m = $this->add('xepan\base\Model_Config_ContactOtherInfo');
 			$emp_other_info_config_m->addCondition('for',$this['type']);
-			$emp_other_info_config_m->tryLoadAny();
-			$other_fields = array_column($emp_other_info_config_m->getRows(), 'name');
+			// $emp_other_info_config_m->tryLoadAny();
+			// $other_fields = array_column($emp_other_info_config_m->getRows(), 'name');
+			
+			foreach ($emp_other_info_config_m->config_data as $data) {
+				if($data['for'] != $this->contact_type) continue;
 
-			foreach ($other_fields as $ot_fields) {
+				$ot_fields = $data['name'];
 				if(!trim($ot_fields)) continue;
-				$this->addExpression($this->app->normalizeName($ot_fields))->set(function($m,$q)use($ot_fields){
+				
+				// $ot_fields = strtolower($ot_fields);
+				$normalize_name = $this->app->normalizeName($ot_fields);
+				$this->otherInfoFields[$normalize_name] = $ot_fields;
+
+				$this->addExpression($normalize_name)->set(function($m,$q)use($ot_fields){
 					return $m->refSQL('OtherContactInfos')->addCondition('head',$ot_fields)->fieldQuery('value');
 				});
 			}
