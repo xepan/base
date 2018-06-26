@@ -28,9 +28,11 @@ class page_update extends \xepan\base\Page {
 		ini_set('memory_limit', '2048M');
 		set_time_limit(0);
 
-		$this->add('H2')->set('IMPORTANT NOTICE: Please take backup first before proceedings, both database and filesystems');
+		$v = $this->add('View')->addClass('panel panel-warning')->addStyle('padding','10px');
+		$v->add('H2')->set('IMPORTANT NOTICE: Please take backup first before proceedings, both database and filesystems');
+		$v->add('H5')->set('"Backup Addon" is provided Free for now, Will be available as paid addon later');
 
-		$cols = $this->add('Columns');
+		$cols = $v->add('Columns');
 		$db_col = $cols->addColumn(6);
 		$fs_col = $cols->addColumn(6);
 
