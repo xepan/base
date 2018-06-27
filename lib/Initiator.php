@@ -182,6 +182,9 @@ class Initiator extends \Controller_Addon {
                     $employee->loadBy('user_id',$auth->model->id);
                     if($employee['allow_login_from_anywhere']) $allow_without_ip=true;
                 }
+                
+                if($auth->model['scope'] == 'SuperUser') $allow_without_ip = true;
+
                 if(!in_array($_SERVER['REMOTE_ADDR'],$allowed_ips) && !$allow_without_ip){                    
                     $this->app->auth->logout();
                     $this->app->redirect('/');
