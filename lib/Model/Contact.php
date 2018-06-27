@@ -527,4 +527,41 @@ class Model_Contact extends \xepan\base\Model_Table{
 
 		}	
 	}
+
+	function addOtherInfoToForm($form){
+    	// load contact other info configuration model for employee only
+    	// loop for all fields
+    		// check field type
+    			// if dropdown then add dropdown
+    			// if line then add line type field
+    			// if datePicker then add datepicker type field
+    			// if mandatory apply validation
+
+ 		$contact_other_info_config_m = $this->add('xepan\base\Model_Config_ContactOtherInfo');
+		$contact_other_info_config_m->addCondition('for',$this->contact_type);
+
+		foreach($contact_other_info_config_m->config_data as $of) {
+			if($of['for'] != $this->contact_type ) continue;
+
+			if(!$of['name']) continue;
+
+			$field_name = $this->app->normalizeName($of['name']);
+			$field = $form->addField($of['type'],$field_name,$of['name']);
+			if($of['type']== 'DropDown'){
+				$data_array = array_combine(explode(",", $of['possible_values']), explode(",", $of['possible_values']));
+				$data_array  = array_map('trim',$data_array);
+				$field->setValueList($data_array)->setEmptyText('Please Select');
+			}
+
+			if($of['conditional_binding']){
+				$field->js(true)->univ()->bindConditionalShow(json_decode($of['conditional_binding'],true),'div.atk-form-row');
+			}
+
+			if($of['is_mandatory']){
+				$field->validate('required');
+			}
+
+		}
+
+    }
 }
