@@ -20,7 +20,7 @@ class Model_Config_DocumentOtherInfo extends \xepan\base\Model_ConfigJsonModel{
 		$this->getElement('type')->enum(['Line','Text','DropDown','DatePicker']);
 		$this->getElement('conditional_binding')->hint('Enter sperated lines for fields \n{"Value A":["Field B", "Field C","Field D"],"Value B":["Field A", "Field F"]}');
 		$this->getElement('possible_values')->hint('Comma Seperated Values For DropDown type');
-		$this->getElement('for')->hint('Document Type like Quotation/SalesOrde/SalesInvoice/PurhcaseOrder etc');
+		$this->getElement('for')->setValueList(['Quotation'=>'Quotation','SalesOrder'=>'SalesOrder','SalesInvoice'=>'SalesInvoice','PurchaseOrder'=>'PurchaseOrder','PurchaseInvoice'=>'PurchaseInvoice']);
 
 		$this->addHook('beforeSave',function($m){
 			$this['conditional_binding'] = trim($this['conditional_binding']);
