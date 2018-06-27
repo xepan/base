@@ -176,7 +176,13 @@ class Initiator extends \Controller_Addon {
             if($config['admin_restricted_ip']){
                 $allowed_ips = explode(",",$config['admin_restricted_ip']);
                 $allowed_ips = array_map('trim', $allowed_ips);
-                if(!in_array($_SERVER['REMOTE_ADDR'],$allowed_ips)){
+                $allow_without_ip=false;
+                if($this->app->epan->isApplicationInstalled('xepan\hr')){
+                    $employee = $this->add('xepan\hr\Model_Employee');
+                    $employee->loadBy('user_id',$auth->model->id);
+                    if($employee['allow_login_from_anywhere']) $allow_without_ip=true;
+                }
+                if(!in_array($_SERVER['REMOTE_ADDR'],$allowed_ips) && !$allow_without_ip){                    
                     $this->app->auth->logout();
                     $this->app->redirect('/');
                 }
