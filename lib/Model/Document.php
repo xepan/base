@@ -72,12 +72,121 @@ class Model_Document extends \xepan\base\Model_Table{
 		}
 
 		$this->addHook('beforeDelete',[$this,'DeleteAttachements']);
+		$this->addHook('afterSave',[$this,'shootStatusAction']);
 
 		$this->is([
 				'created_at|required',
 				'type|to_trim|required'
 			]);
 
+	}
+
+	function shootStatusAction(){
+		if(!isset($this->wasDirty['status'])) return;
+
+		$status = $this['status'];
+		$model = $this->add('xepan\base\Model_Config_DocumentActionNotification');
+		$model->addCondition('for',$this->document_type);
+		$model->addCondition('on_status',$this['status']);
+		$model->tryLoadAny();
+		
+
+		// manage list of notification data
+		foreach ($model as $m) {
+			if($m['sms_content'] && $m['sms_send_from'] && ($m['sms_send_to_custom_mobile_no'] || $m['sms_send_to_related_contact']))
+				$this->shootSMSStatusAction($m);
+
+			if($m['email_subject'] && $m['email_send_from'] && ($m['email_send_to_custom_email_ids'] || $m['email_send_to_related_contact']))
+				$this->shootEmailStatusAction($m);
+		}
+	}
+
+	function shootEmailStatusAction($m){
+
+		$data_array = $this->data;
+
+		$email_settings = $this->add('xepan\communication\Model_Communication_EmailSetting')
+				->load($m['email_send_from']);
+
+		$mail = $this->add('xepan\communication\Model_Communication_Email_Sent');
+
+		$email_subject = $m['email_subject'];
+		$email_body = $m['email_body'];
+			
+		$temp = $this->add('GiTemplate');
+		$temp->loadTemplateFromString($email_body);
+
+		$subject_temp = $this->add('GiTemplate');
+		$subject_temp->loadTemplateFromString($email_subject);
+		$subject_v=$this->add('View',null,null,$subject_temp);
+		$subject_v->template->trySet($data_array);
+
+		$temp = $this->add('GiTemplate');
+		$temp->loadTemplateFromString($email_body);
+		$body_v=$this->add('View',null,null,$temp);
+		$body_v->template->trySet($data_array);					
+
+		$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
+
+		$email_array = explode(",",$m['email_send_to_custom_email_ids']);
+
+		if($m['email_send_to_related_contact'] && $m['related_contact_field']){
+			$temp = $this->ref($m['related_contact_field'])->getEmails();
+			$email_array = array_merge($email_array,$temp);
+			$mail['related_contact_id'] = $this[$m['related_contact_field']];
+		}
+
+		$email_array = array_unique($email_array);
+
+		foreach ($email_array as $email_id) {
+			if(!trim($email_id)) continue;
+			$mail->addTo($email_id);
+		}
+
+		$mail['status'] = "Outbox";
+		$mail->save();
+
+		if($m['send_document_as_attachment'] && $this->hasMethod('generatePDF')){
+			$file =	$this->add('xepan/filestore/Model_File',array('policy_add_new_type'=>true,'import_mode'=>'string','import_source'=>$this->generatePDF('return')));
+			$file['filestore_volume_id'] = $file->getAvailableVolumeID();
+			$file['original_filename'] =  strtolower($this['type']).'_'.$this['document_no_number'].'_'.$this->id.'.pdf';
+			$file->save();
+			$mail->addAttachment($file->id);
+		}
+
+		$mail->setSubject($subject_v->getHtml());
+		$mail->setBody($body_v->getHtml());
+		$mail->send($email_settings);
+	}
+
+	function shootSMSStatusAction($m){
+
+		$sms_setting = $this->add('xepan\communication\Model_Communication_SMSSetting')->load($m['sms_send_from']);
+
+		$temp = $this->add('GiTemplate');
+		$temp->loadTemplateFromString(trim($m['sms_content']));
+		$msg = $this->add('View',null,null,$temp);
+		$msg->template->trySet($this->data);
+
+		$phone_array = explode(",",$m['sms_send_to_custom_mobile_no']);
+
+		$sms_commu = $this->add('xepan\communication\Model_Communication_SMS');
+		$sms_commu->setBody($msg->getHtml());
+
+		if($m['sms_send_to_related_contact'] && $m['related_contact_field']){
+			$temp = $this->ref($m['related_contact_field'])->getPhones();
+			$phone_array = array_merge($phone_array,$temp);
+
+			$sms_commu['related_contact_id'] = $this[$m['related_contact_field']];
+		}
+
+		$phone_array = array_unique($phone_array);
+
+		foreach ($phone_array as $number) {
+			if(!$number) continue;
+			$sms_commu->addTo($number);
+		}
+		$sms_commu->send($sms_setting);
 	}
 
 	function DeleteAttachements(){

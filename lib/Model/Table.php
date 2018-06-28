@@ -40,5 +40,11 @@ class Model_Table extends \Model_Table{
 	  //           }
 			// });
 		// }
+
+		$this->addHook('beforeSave',function($m){
+			$m->wasDirty=$m->dirty;
+		});
 	}
+
+
 }
