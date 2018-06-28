@@ -63,17 +63,51 @@ class Page extends \Page {
 					return;
 				}
 
-				if(strpos($doc, 'http') ===0){
-					if(strpos($doc, 'youtube')){
-						$content= '<iframe width="560" height="315" src="'.$doc.'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
-					}else{
-						$content = file_get_contents($doc);
+				if(isset($doc['title'])) $page->add('H3')->set($doc['title']);
+				if(isset($doc['desc'])) $page->add('View')->set($doc['desc']);
+				$page->add('HR');
+
+				foreach ($doc['blocks'] as $title=>$block) {
+					$page->add('H5')->set($title);
+					$bg = $page->add('ButtonSet');
+					foreach ($block as $key=>$block_content) {
+						$b = $bg->addButton($key);
+						if(isset($block_content['xec_page'])){							
+								$b->js('click')->univ()->frameURL($this->app->url([$block_content['xec_page'],'admin_virtualpage'=>false]));
+						}else{
+							$vp = $b->add('VirtualPage');
+							$vp->set(function($page)use($block_content){
+								if(isset($block_content['video'])){
+									$content= '<iframe width="560" height="315" src="'.$block_content['video'].'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+								}
+								if(isset($block_content['url'])){
+									$content= file_get_contents($block_content['url']);
+								}
+
+								if(isset($block_content['file'])){
+									$content= file_get_contents($block_content['file']);
+								}
+
+								$page->add('View')->setHTML($content);
+
+							});
+
+							$b->js('click')->univ()->frameURL($key,$vp->getURL());
+						}
 					}
-				}else{
-					$content = $doc;
 				}
 
-				$page->add('View')->setHTML($content);
+				// if(strpos($doc, 'http') ===0){
+				// 	if(strpos($doc, 'youtube')){
+				// 		$content= '<iframe width="560" height="315" src="'.$doc.'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+				// 	}else{
+				// 		$content = file_get_contents($doc);
+				// 	}
+				// }else{
+				// 	$content = $doc;
+				// }
+
+				// $page->add('View')->setHTML($content);
 
 			});
 			if(!$this->app->isAjaxOutput()){
