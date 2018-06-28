@@ -67,27 +67,34 @@ class Page extends \Page {
 				if(isset($doc['desc'])) $page->add('View')->set($doc['desc']);
 				$page->add('HR');
 
-				$bg = $page->add('ButtonSet');
-				foreach ($doc['blocks'] as $key=>$block_content) {
-					$b = $bg->addButton($key);
-					$vp = $b->add('VirtualPage');
-					$vp->set(function($page)use($block_content){
-						if(isset($block_content['video'])){
-							$content= '<iframe width="560" height="315" src="'.$block_content['video'].'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+				foreach ($doc['blocks'] as $title=>$block) {
+					$page->add('H5')->set($title);
+					$bg = $page->add('ButtonSet');
+					foreach ($block as $key=>$block_content) {
+						$b = $bg->addButton($key);
+						if(isset($block_content['xec_page'])){							
+								$b->js('click')->univ()->frameURL($this->app->url([$block_content['xec_page'],'admin_virtualpage'=>false]));
+						}else{
+							$vp = $b->add('VirtualPage');
+							$vp->set(function($page)use($block_content){
+								if(isset($block_content['video'])){
+									$content= '<iframe width="560" height="315" src="'.$block_content['video'].'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+								}
+								if(isset($block_content['url'])){
+									$content= file_get_contents($block_content['url']);
+								}
+
+								if(isset($block_content['file'])){
+									$content= file_get_contents($block_content['file']);
+								}
+
+								$page->add('View')->setHTML($content);
+
+							});
+
+							$b->js('click')->univ()->frameURL($key,$vp->getURL());
 						}
-						if(isset($block_content['url'])){
-							$content= file_get_contents($block_content['url']);
-						}
-
-						if(isset($block_content['file'])){
-							$content= file_get_contents($block_content['file']);
-						}
-
-						$page->add('View')->setHTML($content);
-
-					});
-
-					$b->js('click')->univ()->frameURL($key,$vp->getURL());
+					}
 				}
 
 				// if(strpos($doc, 'http') ===0){
