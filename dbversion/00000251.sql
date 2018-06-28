@@ -1,1 +1,1 @@
-ALTER TABLE `xepan2`.`activity` CHANGE COLUMN `notify_to` `notify_to` text DEFAULT 'NULL';
+ALTER TABLE `activity` CHANGE COLUMN `notify_to` `notify_to` text DEFAULT "";
