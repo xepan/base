@@ -27,6 +27,11 @@ class View_ModelPopup extends \View{
 				->addClass('btn btn-default');
 	}
 
+	function saveButtonLable($label){
+		$this->options['save_button_label']=$label;
+		return $this;
+	}
+
 	function addSaveButton(){
 		$save_btn = $this->add('Button',null,'save_button');
 		$save_btn->set($this->options['save_button_label'])
