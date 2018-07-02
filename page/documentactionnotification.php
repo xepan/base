@@ -63,7 +63,7 @@ class page_documentactionnotification extends \Page {
 			$form = $crud->form;
 			if($crud->isEditing('edit') && !isset($_GET['document_for'])){
 				$selected_for = $crud->model['for'];
-				$field_list->set(implode(", ", $this->datalist[$selected_for]['fields']));
+				$field_view->set(implode(", ", $this->datalist[$selected_for]['fields']));
 			}
 
 			// $form->getElement('send_to_employees')->enableMultiSelect();
