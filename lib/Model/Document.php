@@ -138,10 +138,14 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		$email_array = array_unique($email_array);
 
+		$total_email_id = 0;
 		foreach ($email_array as $email_id) {
 			if(!trim($email_id)) continue;
 			$mail->addTo($email_id);
+			$total_email_id += 1;
 		}
+
+		if(!$total_email_id) return;
 
 		$mail['status'] = "Outbox";
 		$mail->save();
@@ -182,10 +186,15 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		$phone_array = array_unique($phone_array);
 
+		$total_phone_no = 0;
 		foreach ($phone_array as $number) {
 			if(!$number) continue;
 			$sms_commu->addTo($number);
+
+			$total_phone_no += 1;
 		}
+
+		if(!$total_phone_no) continue;
 		$sms_commu->send($sms_setting);
 	}
 
