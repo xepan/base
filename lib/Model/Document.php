@@ -194,7 +194,7 @@ class Model_Document extends \xepan\base\Model_Table{
 			$total_phone_no += 1;
 		}
 
-		if(!$total_phone_no) continue;
+		if(!$total_phone_no) return;
 		$sms_commu->send($sms_setting);
 	}
 
