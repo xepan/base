@@ -156,6 +156,9 @@ class Initiator extends \Controller_Addon {
 
         }
 
+        $this->app->top_menu_array=[];
+        $this->app->my_menu_array=[];
+
 
         $auth->addHook('createForm',function($a,$p){
             $this->app->loggingin=true;            
@@ -214,7 +217,7 @@ class Initiator extends \Controller_Addon {
         $auth->usePasswordEncryption('md5');
         $auth->setModel($user,'username','password');
         
-        if($_GET['access_token']){    
+        if($_GET['access_token']){
             $u = $this->add('xepan\base\Model_User_Active');
             $u->addCondition('access_token',$_GET['access_token']);
             $u->addCondition('access_token_expiry','>',$this->app->now);
@@ -267,6 +270,12 @@ class Initiator extends \Controller_Addon {
         // Adding all other installed applications
         $this->setup_xepan_apps('admin');
         // throw new \Exception($this->app->employee->id, 1);
+
+        if(!$this->app->inConfigurationMode){
+            $this->app->addHook('post-init',function($app){
+                $this->setUpApplicationMenus();
+            });
+        }
 
         $this->app->addMethod('normalizeSlugUrl',function($app,$name){
             return strtolower(str_replace("_", "-", $this->app->normalizeName($name)));
@@ -393,6 +402,66 @@ class Initiator extends \Controller_Addon {
             $func = 'setup_post_'.$side;
             if($addon_obj->hasMethod($func)){
                 $addon_obj->$func();
+            }
+        }
+    }
+
+    function setUpApplicationMenus(){
+        /*
+            if(!empty($this->app->top_menu_array)) {
+                draw menus
+                return;
+            }
+
+            tryLoad XEC Default Menus
+
+            if(loaded) {
+                draw menus;
+                return;
+            }
+
+            collect application menus from all apps 
+            create default XEC menus in config
+            save and reload page to cactch by above condition
+
+        */
+
+        if(count($this->app->top_menu_array)>0){
+            $this->drawMenus($this->app->top_menu_array);
+            return;
+        }
+
+        $menu_config = $this->add('xepan\base\Model_Config_Menus')
+                        ->addCondition('name','XEC_DEFAULT')
+                        ->tryLoadAny();
+        if($menu_config->loaded()){
+            $this->drawMenus(json_decode($menu_config['value'],true));
+            return;
+        }
+
+        foreach($this->app->xepan_app_initiators as $app_namespace =>$app_inits){
+            if($this->app->getConfig('hidden_'.str_replace("\\", "_", $app_namespace),false)){
+                continue;
+            }
+            if($app_inits->hasMethod('getTopApplicationMenu')){
+                $arr = $app_inits->getTopApplicationMenu();
+                $this->app->top_menu_array = array_merge($this->app->top_menu_array,$arr);
+            }
+        }
+
+        $menu_config['name']='XEC_DEFAULT';
+        $menu_config['value']=json_encode($this->app->top_menu_array);
+        $menu_config->save();
+
+        $this->app->redirect($this->app->url(null));
+    }
+
+    function drawMenus($app_menu_array,$menu_object=null){
+        if(!$menu_object) $menu_object = $this->app->top_menu;
+        foreach ($app_menu_array as $top_menu_name => $menu_array) {
+            $m = $menu_object->addMenu($top_menu_name);
+            foreach ($menu_array as $menu) {
+                $m->addItem([$menu['name'],'icon'=>$menu['icon']],$this->app->url($menu['url'],isset($menu['url_param'])?$menu['url_param']:null));
             }
         }
     }
