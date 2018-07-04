@@ -28,7 +28,8 @@ class page_documentactionnotification extends \Page {
 		$model = $this->add('xepan\base\Model_Config_DocumentActionNotification');
 		$model->getElement('for')->enum(array_keys($this->datalist));
 		$this->crud = $crud = $this->add('xepan\hr\CRUD');
-		
+
+
 		if($crud->isEditing()){
 			$form = $crud->form;
 			$form->add('xepan\base\Controller_FLC')
@@ -52,10 +53,9 @@ class page_documentactionnotification extends \Page {
 						// 'send_to_employees'=>'c9~8'
 					]);
 
-			$field_list = $form->add('View');
+			$field_view = $form->add('View');
 		}
 		$crud->setModel($model);
-
 
 		if($crud->isEditing()){
 
@@ -63,7 +63,7 @@ class page_documentactionnotification extends \Page {
 			$form = $crud->form;
 			if($crud->isEditing('edit') && !isset($_GET['document_for'])){
 				$selected_for = $crud->model['for'];
-				$field_list->set(implode(", ", $this->datalist[$selected_for]['fields']));
+				$field_view->set(implode(", ", $this->datalist[$selected_for]['fields']));
 			}
 
 			// $form->getElement('send_to_employees')->enableMultiSelect();
@@ -73,7 +73,12 @@ class page_documentactionnotification extends \Page {
 			if(isset($this->datalist[$selected_for]['related_contact_field']))
 				$related_contact_field = $form->getElement('related_contact_field')->set($this->datalist[$selected_for]['related_contact_field']);
 
-			$for_field->js('change',$form->js()->atk4_form('reloadField','on_status',[$this->app->url(null,['cut_object'=>$status_field->name]),'document_for'=>$for_field->js()->val()]));
+			$for_field->js('change',
+				[
+					$form->js()->atk4_form('reloadField','on_status',[$this->app->url(null,['cut_object'=>$status_field->name]),'document_for'=>$for_field->js()->val()]),
+					$field_view->js()->reload(['document_for'=>$for_field->js()->val()])
+				]
+			);
 			// $for_field->js('change',[$this->js(null,[$status_field->js()->select2('destroy')])->reload(null,null,[$this->app->url(null,['cut_object'=>$status_field->name]),'document_for'=>$for_field->js()->val()])]);
 			
 			if($selected_for){
@@ -81,7 +86,7 @@ class page_documentactionnotification extends \Page {
 				if(isset($this->datalist[$selected_for]['status'])) $status_array = $this->datalist[$selected_for]['status'];
 				$status_field->setValueList(array_combine($status_array,$status_array));
 				
-				$field_list->set(implode(", ", $this->datalist[$selected_for]['fields']));
+				$field_view->set(implode(", ", $this->datalist[$selected_for]['fields']));
 			}
 
 		}
