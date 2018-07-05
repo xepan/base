@@ -7,8 +7,7 @@ class Model_Config_Menus extends \xepan\base\Model_ConfigJsonModel{
 	public $fields =[
 						'value'=>'Text',
 						'name'=>'Line',
-						'related_with'=>'Line',
-						'related_with_id'=>'Line',
+						'is_set'=>'CheckBox'
 					];
 	public $config_key = 'CustomMenuSystem';
 	public $application='base';
@@ -18,7 +17,7 @@ class Model_Config_Menus extends \xepan\base\Model_ConfigJsonModel{
 
 		// XEC_DEFAULT is a reserve system name not alowed for custom menus
 		// DEFAULT can only be saved just once (name should be unique anyway)
-		// related_with/id can be used mostly by post_id if acceced from HR 
+		// is_set defined if a menu is collection of other menus
 
 	}
 
