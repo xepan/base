@@ -450,7 +450,7 @@ class Initiator extends \Controller_Addon {
         }
 
         $menu_config['name']='XEC_DEFAULT';
-        $menu_config['is_set']=1;
+        $menu_config['is_set']=true;
         $menu_config['value']=json_encode($this->app->top_menu_array);
         $menu_config->save();
 
@@ -462,7 +462,8 @@ class Initiator extends \Controller_Addon {
         foreach ($app_menu_array as $top_menu_name => $menu_array) {
             $m = $menu_object->addMenu($top_menu_name);
             foreach ($menu_array as $menu) {
-                $m->addItem([$menu['name'],'icon'=>$menu['icon']],$this->app->url($menu['url'],isset($menu['url_param'])?$menu['url_param']:null));
+                if(!is_array($menu['url_param'])) unset($menu['url_param']);
+                $m->addItem([$menu['caption']?:$menu['name'],'icon'=>$menu['icon']],$this->app->url($menu['url'],isset($menu['url_param'])?$menu['url_param']:null));
             }
         }
     }

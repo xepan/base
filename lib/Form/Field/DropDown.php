@@ -33,6 +33,11 @@ class Form_Field_DropDown extends \Form_Field_ValueList {
         return $output;
     }
 
+    function enableMultiSelect(){
+        $this->setAttr('multiple',true);
+        return $this;
+    }
+
     function validateValidItem(){
         if($this->validate_values) return parent::validateValidItem();
         return true;
