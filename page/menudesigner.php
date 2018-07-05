@@ -25,7 +25,7 @@ class page_menudesigner extends \xepan\base\Page{
 			
 
 		$crud = $this->add('xepan\hr\CRUD');
-		$crud->setModel($this->model,['id','name']);
+		$crud->setModel($this->model,['id','name','is_set']);
 		$crud->grid->addColumn('Button','design');
 
 		if($_GET['design']){
@@ -50,7 +50,7 @@ class page_menudesigner extends \xepan\base\Page{
         }
 
         $v = $this->add('View');
-        $v->js(true)->_load('menudesigner')->menudesigner(['designing_menu'=>$this->model['name'],'available_menus'=>$available_menus,'saved_menus'=>['1']]);
+        $v->js(true)->_load('menudesigner')->menudesigner(['designing_menu'=>$this->model['name'],'available_menus'=>$available_menus,'saved_menus'=>[]]);
 
 	}
 }

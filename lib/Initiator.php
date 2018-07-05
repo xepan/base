@@ -450,6 +450,7 @@ class Initiator extends \Controller_Addon {
         }
 
         $menu_config['name']='XEC_DEFAULT';
+        $menu_config['is_set']=1;
         $menu_config['value']=json_encode($this->app->top_menu_array);
         $menu_config->save();
 
