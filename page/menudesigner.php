@@ -49,7 +49,7 @@ class page_menudesigner extends \xepan\base\Page{
 		if($crud_set->isEditing()){
 
 			$c_model = $this->add("xepan\base\Model_Config_Menus");
-			$c_model->addCondition('is_set','!=',1);
+			$c_model->addCondition('is_set','!=',true);
 			$c_model->tryLoadAny();
 			$menu_names=[];
 
@@ -60,13 +60,14 @@ class page_menudesigner extends \xepan\base\Page{
 			$crud_set->form->getElement('sub_menus')
 						->enableMultiSelect()
 						->setValueList(array_combine($menu_names, $menu_names))
-						->setEmptyText('Default');
+						;
 			if($crud_set->isEditing('edit')){
 				$crud_set->form->getElement('sub_menus')
-							->set(explode(",",$crud_set->form->model['sub_menus']));
+					->set(explode(",",$crud_set->form->model['sub_menus']));
 			}
 		}
 		$crud_set->grid->removeColumn('id');
+		// $crud_set->grid->removeColumn('value');
 	}
 
 	function page_design(){
@@ -105,9 +106,8 @@ class page_menudesigner extends \xepan\base\Page{
 	function page_save(){
 		$menulist = $_POST['menulist'];
 		
-		$menu_name = $_POST['menuname'];
-
-		$this->model->addCondition('name',$menu_name);
+		$menu_name = urldecode($_POST['menuname']);
+		$this->model->addCondition('name','=',$menu_name);
 		$this->model->tryLoadAny();
 
 		$this->model['value'] = $menulist;
