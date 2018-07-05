@@ -38,6 +38,7 @@ jQuery.widget("ui.menudesigner",{
 
 		this.right_panel_menu_name = $(menu_name_field).appendTo(this.right_panel);
 		this.right_panel_ui = $('<ul class="saved_menus dd-list" style="min-height:100px;border:1px dashed #2980b9;background:#E9FDFB;"></ul>').appendTo(this.right_panel);
+		$('<span>Drop list from left panel in above section</span>').appendTo(this.right_panel);
 
 		$('.xepanp-menu-save-button').click(function(){
 			self.saveMenu();
@@ -46,6 +47,11 @@ jQuery.widget("ui.menudesigner",{
 
 	saveMenu: function(){
 		var self = this;
+
+		if($('.saved_menus li').length == 0){
+			$.univ().errorMessage('cannot save, first drop menus from left side');
+			return;
+		} 
 
 		var save_list = {};
 		var top_menu_caption = $('.top-menu-caption').val().trim();
@@ -92,8 +98,12 @@ jQuery.widget("ui.menudesigner",{
 			var heading = $('<div class="xepan-app-menu-wrapper"><h4>'+MainMenu+'</h4></div>').appendTo(self.left_panel);
 			var ul = $('<ul class="dd-list"></ul>').appendTo(heading);
 			$.each(SubMenus, function(index, menu) {
-				var list_html = '<li class="dd-item dd-handle available_menu" data-name="'+menu.name+'" data-caption="'+menu.name+'" data-url="'+menu.url+'" data-icon="'+menu.icon+'">'+
-								menu.name+
+				var list_html = '<li class="dd-item dd-item-list dd-handle available_menu" data-name="'+menu.name+'" data-caption="'+menu.name+'" data-url="'+menu.url+'" data-icon="'+menu.icon+'">'+
+								'<span class="menu-name">'+menu.name+'</span>'+
+								'<div class="nested-links" style="display:none;">'+
+									'<span style="color:gray;">Double click to change caption &nbsp;</span>'+
+									'<span style="color:red;cursor:pointer;" class="remove-menu-single-list-btn" href="#"><i class="fa fa-trash"></i></span>'+
+								'</div>'+
 							'</li>';
 			 	var li = $(list_html).appendTo(ul).attr('data-url_param',JSON.stringify(menu.url_param));
 			 	// console.log($(li).attr('urlparam'));
@@ -108,9 +118,7 @@ jQuery.widget("ui.menudesigner",{
 						start: function(event,ui){
 						},
 						stop: function(event,ui){
-						},
-						revert: 'invalid',
-						tolerance: 'pointer'
+						}
 					});
 	},
 
@@ -120,10 +128,17 @@ jQuery.widget("ui.menudesigner",{
 		$.each(self.options.saved_menus, function(index, SubMenus) {
 			$.each(SubMenus, function(index, menu) {
 				var list_html = '<li class="dd-item dd-handle available_menu" data-name="'+menu.name+'" data-caption="'+menu.caption+'" data-url="'+menu.url+'" data-icon="'+menu.icon+'">';
+					list_html += '<span class="menu-name">';
 					if(menu.caption != menu.name) 
 						list_html += menu.caption+ ' : ( ' + menu.name + ' )';
 					else
 						list_html += menu.name;
+					list_html += "</span>";
+
+					list_html += '<div class="nested-links" style="display:none;">'+
+									'<span style="color:gray;">Double click to change caption &nbsp;</span>'+
+									'<span style="color:red;cursor:pointer;" class="remove-menu-single-list-btn" ><i class="fa fa-trash"></i></span>'+
+								'</div>';
 					list_html +='</li>';
 			 	var li = $(list_html).appendTo(self.right_panel_ui).attr('data-url_param',JSON.stringify(menu.url_param));
 			});
@@ -133,10 +148,23 @@ jQuery.widget("ui.menudesigner",{
 			$(this).dblclick(function(){
 				var caption = prompt("Menu Caption", $(this).attr('data-caption'));
 				if (caption != null) {
-					$(this).attr('data-caption',caption).text(caption+" : ( "+$(this).data('name')+" ) ");
-				} 
+					$(this).attr('data-caption',caption).find('.menu-name').text(caption+" : ( "+$(this).data('name')+" ) ");
+				}
+			});
+
+			$(this).hover(function(){
+				$(this).find('.nested-links').show();
+			},function(){
+				$(this).find('.nested-links').hide();
+			});
+
+
+			$(this).find('.remove-menu-single-list-btn').click(function(){
+				$(this).closest('li').remove();
 			});
 		});
+
+
 
 		$(self.right_panel_ui).sortable({
 									appendTo:'body',
