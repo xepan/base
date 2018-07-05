@@ -17,6 +17,7 @@ class Model_Config_Menus extends \xepan\base\Model_ConfigJsonModel{
 		parent::init();
 
 		// XEC_DEFAULT is a reserve system name not alowed for custom menus
+		// DEFAULT can only be saved just once (name should be unique anyway)
 		// related_with/id can be used mostly by post_id if acceced from HR 
 
 	}

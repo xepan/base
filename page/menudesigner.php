@@ -14,13 +14,18 @@ namespace xepan\base;
 class page_menudesigner extends \xepan\base\Page{
 	public $title='Menu Designer';
 
+	function init(){
+		parent::init();
+		
+		$this->model = $this->add("xepan\base\Model_Config_Menus");
+		$this->model->tryLoadAny();
+	}
+
 	function page_index(){
 			
-		$model = $this->add("xepan\base\Model_Config_Menus");
-		$model->tryLoadAny();
 
 		$crud = $this->add('xepan\hr\CRUD');
-		$crud->setModel($model,['id','name']);
+		$crud->setModel($this->model,['id','name']);
 		$crud->grid->addColumn('Button','design');
 
 		if($_GET['design']){
@@ -30,6 +35,7 @@ class page_menudesigner extends \xepan\base\Page{
 
 	function page_design(){
 		$id = $this->app->stickyGET('designid');
+		$this->model->load($id);
 		
 		$available_menus = [];
 		foreach($this->app->xepan_app_initiators as $app_namespace =>$app_inits){
@@ -44,7 +50,7 @@ class page_menudesigner extends \xepan\base\Page{
         }
 
         $v = $this->add('View');
-        $this->js(true)->_load('menudesigner')->univ()->menudesigner($v);
+        $v->js(true)->_load('menudesigner')->menudesigner(['designing_menu'=>$this->model['name'],'available_menus'=>$available_menus,'saved_menus'=>['1']]);
 
 	}
 }
