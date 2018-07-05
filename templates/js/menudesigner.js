@@ -4,33 +4,99 @@ jQuery.widget("ui.menudesigner",{
 	options:{
 		designing_menu:'',
 		available_menus:{},
-		saved_menus:{}
+		saved_menus:{},
+		top_menu_caption:''
 	},
 
 	_create: function(){
 		var self=this;
+
+		console.log(self.options);
+
 		self.createUI();
 		self.createAvailableMenus();
 		self.createSavedMenus();
-		console.log(self.options);
 	},
 
 	createUI: function(){
 		var self = this;
+
 		this.widgetui = $('<div class="row"></div>').appendTo(this.element);
-		this.left_panel = $('<div class="col-md-6"></div>').appendTo(this.widgetui);
-		this.save_button = $('<button>SAVE</button>').appendTo(this.widgetui);
-		this.right_panel = $('<div class="col-md-6"></div>').appendTo(this.widgetui).html(self.options.designing_menu);
-		this.right_panel_ui = $('<ul class="saved_menus"></ul>').appendTo(this.right_panel);
+		this.left_panel = $('<div class="col-md-6" style="max-height:500px;overflow-y:auto;"></div>').appendTo(this.widgetui);
+		this.right_panel = $('<div class="col-md-6"></div>').appendTo(this.widgetui);
+
+		// this.save_button = $('<button>SAVE</button>').appendTo(this.widgetui);
+		var menu_name_field = '<div class="input-group">'+
+			'<span class="input-group-btn">'+
+				'<button class="btn btn-primary" type="button">'+self.options.designing_menu+'</button>'+
+			'</span>'+
+			'<input placeholder="Top Menu Caption " class="form-control top-menu-caption" type="line" value="'+self.options.top_menu_caption+'">'+
+			'<span class="input-group-btn">'+
+				'<button class="btn btn-primary xepanp-menu-save-button" type="button">Save Menu</button>'+
+			'</span>'+
+		'</div>';
+
+		this.right_panel_menu_name = $(menu_name_field).appendTo(this.right_panel);
+		this.right_panel_ui = $('<ul class="saved_menus dd-list" style="min-height:100px;border:1px dashed #2980b9;background:#E9FDFB;"></ul>').appendTo(this.right_panel);
+
+		$('.xepanp-menu-save-button').click(function(){
+			self.saveMenu();
+		});
+	},
+
+	saveMenu: function(){
+		var self = this;
+
+		var save_list = {};
+		var top_menu_caption = $('.top-menu-caption').val().trim();
+		if(top_menu_caption.length == 0) top_menu_caption = self.options.designing_menu;
+		save_list[top_menu_caption] = [];
+
+		$('.saved_menus li').each(function(index,menu){
+
+			var t_p = "";
+			if( $(menu)[0].hasAttribute('data-url_param') && $(menu).attr('data-url_param').length)
+				var t_p = $.parseJSON($(menu).attr('data-url_param'));
+
+			save_list[top_menu_caption].push({
+					'name':$(menu).attr('data-name'),
+					'url':$(menu).attr('data-url'),
+					'url_param':t_p,
+					'caption':$(menu).attr('data-caption'),
+					'icon':$(menu).attr('data-icon'),
+				});
+
+		});
+
+		$.ajax({
+			url: "index.php?page=xepan_base_menudesigner_save&cut_page=1",
+			type: 'POST',
+			data: {
+					menulist: JSON.stringify(save_list),
+					menuname: self.options.designing_menu,
+				},
+		})
+		.done(function(ret) {
+			eval(ret);
+		})
+		.fail(function(ret) {
+			eval(ret);
+			$.univ().errorMessage('failed, not saved');
+		});
 	},
 
 	createAvailableMenus: function(){
 		var self=this;
 		
 		$.each(self.options.available_menus, function(MainMenu, SubMenus) {
-			var ul = $('<ul></ul>').appendTo(self.left_panel).html(MainMenu);
+			var heading = $('<div class="xepan-app-menu-wrapper"><h4>'+MainMenu+'</h4></div>').appendTo(self.left_panel);
+			var ul = $('<ul class="dd-list"></ul>').appendTo(heading);
 			$.each(SubMenus, function(index, menu) {
-			 	$('<li class="available_menu"></li>').appendTo(ul).html(menu.name);
+				var list_html = '<li class="dd-item dd-handle available_menu" data-name="'+menu.name+'" data-caption="'+menu.name+'" data-url="'+menu.url+'" data-icon="'+menu.icon+'">'+
+								menu.name+
+							'</li>';
+			 	var li = $(list_html).appendTo(ul).attr('data-url_param',JSON.stringify(menu.url_param));
+			 	// console.log($(li).attr('urlparam'));
 			});
 		});
 
@@ -50,9 +116,25 @@ jQuery.widget("ui.menudesigner",{
 
 	createSavedMenus: function(){
 		var self=this;
+
 		$.each(self.options.saved_menus, function(index, SubMenus) {
 			$.each(SubMenus, function(index, menu) {
-			 	$('<li class="saved_menu"></li>').appendTo(self.right_panel_ui).html(menu.name);
+				var list_html = '<li class="dd-item dd-handle available_menu" data-name="'+menu.name+'" data-caption="'+menu.caption+'" data-url="'+menu.url+'" data-icon="'+menu.icon+'">';
+					if(menu.caption != menu.name) 
+						list_html += menu.caption+ ' : ( ' + menu.name + ' )';
+					else
+						list_html += menu.name;
+					list_html +='</li>';
+			 	var li = $(list_html).appendTo(self.right_panel_ui).attr('data-url_param',JSON.stringify(menu.url_param));
+			});
+		});
+
+		$('.saved_menus li').livequery(function(){ 
+			$(this).dblclick(function(){
+				var caption = prompt("Menu Caption", $(this).attr('data-caption'));
+				if (caption != null) {
+					$(this).attr('data-caption',caption).text(caption+" : ( "+$(this).data('name')+" ) ");
+				} 
 			});
 		});
 
