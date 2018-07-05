@@ -439,20 +439,7 @@ class Initiator extends \Controller_Addon {
             return;
         }
 
-        foreach($this->app->xepan_app_initiators as $app_namespace =>$app_inits){
-            if($this->app->getConfig('hidden_'.str_replace("\\", "_", $app_namespace),false)){
-                continue;
-            }
-            if($app_inits->hasMethod('getTopApplicationMenu')){
-                $arr = $app_inits->getTopApplicationMenu();
-                $this->app->top_menu_array = array_merge($this->app->top_menu_array,$arr);
-            }
-        }
-
-        $menu_config['name']='XEC_DEFAULT';
-        $menu_config['is_set']=true;
-        $menu_config['value']=json_encode($this->app->top_menu_array);
-        $menu_config->save();
+       $this->generateXECDefaultMenus();
 
         $this->app->redirect($this->app->url(null));
     }
@@ -466,6 +453,29 @@ class Initiator extends \Controller_Addon {
                 $m->addItem([$menu['caption']?:$menu['name'],'icon'=>$menu['icon']],$this->app->url($menu['url'],isset($menu['url_param'])?$menu['url_param']:null));
             }
         }
+    }
+
+    function generateXECDefaultMenus(){
+        $menu_config = $this->add('xepan\base\Model_Config_Menus')
+                        ->addCondition('name','XEC_DEFAULT')
+                        ->tryLoadAny();
+         foreach($this->app->xepan_app_initiators as $app_namespace =>$app_inits){
+            if($this->app->getConfig('hidden_'.str_replace("\\", "_", $app_namespace),false)){
+                continue;
+            }
+            if($app_inits->hasMethod('getTopApplicationMenu')){
+                $arr = $app_inits->getTopApplicationMenu();
+                if(in_array(array_keys($arr)[0], array_keys($this->app->top_menu_array)))
+                    $this->app->top_menu_array[array_keys($arr)[0]] = array_merge($this->app->top_menu_array[array_keys($arr)[0]],$arr[array_keys($arr)[0]]);
+                else
+                    $this->app->top_menu_array = array_merge($this->app->top_menu_array,$arr);
+            }
+        }
+
+        $menu_config['name']='XEC_DEFAULT';
+        $menu_config['is_set']=true;
+        $menu_config['value']=json_encode($this->app->top_menu_array);
+        $menu_config->save();
     }
 
     function exportWidgets($app,&$array){

@@ -13,6 +13,8 @@ class Model_Config_Menus extends \xepan\base\Model_ConfigJsonModel{
 	public $config_key = 'CustomMenuSystem';
 	public $application='base';
 
+	public $actions=['All'=>['edit','delete','view']];
+
 	function init(){
 		parent::init();
 

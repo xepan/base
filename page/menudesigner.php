@@ -14,6 +14,8 @@ namespace xepan\base;
 class page_menudesigner extends \xepan\base\Page{
 	public $title='Menu Designer';
 
+	public $breadcrumb=['Dashboard'=>'index','Menu Manager'=>'xepan_base_menudesigner'];
+
 	function init(){
 		parent::init();
 		
@@ -32,7 +34,7 @@ class page_menudesigner extends \xepan\base\Page{
 		$menu = $tab->addTab('Menu');
 		$menu_set = $tab->addTab('Menu Set');
 
-		$crud = $menu->add('xepan\base\CRUD');
+		$crud = $menu->add('xepan\hr\CRUD');
 		$this->model->addCondition('is_set','!=',true);
 		$crud->setModel($this->model,['id','name']);
 		$crud->grid->addColumn('Button','design');
@@ -40,11 +42,21 @@ class page_menudesigner extends \xepan\base\Page{
 			$this->app->redirect($this->app->url('./design',['designid'=>$_GET['design']]));
 		}
 		$crud->grid->removeColumn('id');
+		$crud->noAttachment();
+		$crud->grid->removeColumn('action');
 
-		$crud_set = $menu_set->add('xepan\base\CRUD');
+
+		$crud_set = $menu_set->add('xepan\hr\CRUD');
 		$model_set = $this->add('xepan\base\Model_Config_Menus');
 		$model_set->addCondition('is_set','=',true);
-		$model_set->getElement('is_set')->defaultValue(1);
+		$model_set->getElement('is_set')->defaultValue(true);
+
+		$model_set->addHook('beforeSave',function($m){
+			if($m['name']=='XEC_DEFAULT') throw $this->exception('XEC_DEFAULT is not allowed to edit');
+		},[],2);
+		
+
+
 		$crud_set->setModel($model_set,['id','name','sub_menus','is_set']);
 		if($crud_set->isEditing()){
 
@@ -66,8 +78,17 @@ class page_menudesigner extends \xepan\base\Page{
 					->set(explode(",",$crud_set->form->model['sub_menus']));
 			}
 		}
+
+		$xec_def_btn = $menu_set->add('Button')->set('Re-Genrate XEC DEfault Menu')->addClass('btn btn-primary');
+		
+		if($xec_def_btn->isClicked()){
+			$this->app->xepan_app_initiators['xepan\base']->generateXECDefaultMenus();
+			$this->js()->univ()->successMessage('XEC Default Menus Re-Updted')->execute();
+		}
+		
 		$crud_set->grid->removeColumn('id');
-		// $crud_set->grid->removeColumn('value');
+		$crud_set->noAttachment();
+		$crud_set->grid->removeColumn('action');
 	}
 
 	function page_design(){
