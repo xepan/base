@@ -28,15 +28,45 @@ class page_menudesigner extends \xepan\base\Page{
 
 	function page_index(){
 		
+		$tab = $this->add('Tabs');
+		$menu = $tab->addTab('Menu');
+		$menu_set = $tab->addTab('Menu Set');
 
-		$crud = $this->add('xepan\base\CRUD');
-		$crud->setModel($this->model,['id','name','is_set']);
+		$crud = $menu->add('xepan\base\CRUD');
+		$this->model->addCondition('is_set','!=',true);
+		$crud->setModel($this->model,['id','name']);
 		$crud->grid->addColumn('Button','design');
-
 		if($_GET['design']){
 			$this->app->redirect($this->app->url('./design',['designid'=>$_GET['design']]));
 		}
 		$crud->grid->removeColumn('id');
+
+		$crud_set = $menu_set->add('xepan\base\CRUD');
+		$model_set = $this->add('xepan\base\Model_Config_Menus');
+		$model_set->addCondition('is_set','=',true);
+		$model_set->getElement('is_set')->defaultValue(1);
+		$crud_set->setModel($model_set,['id','name','sub_menus','is_set']);
+		if($crud_set->isEditing()){
+
+			$c_model = $this->add("xepan\base\Model_Config_Menus");
+			$c_model->addCondition('is_set','!=',1);
+			$c_model->tryLoadAny();
+			$menu_names=[];
+
+			foreach ($c_model as $m) {
+				$menu_names[] = $m['name'];
+			}
+
+			$crud_set->form->getElement('sub_menus')
+						->enableMultiSelect()
+						->setValueList(array_combine($menu_names, $menu_names))
+						->setEmptyText('Default');
+			if($crud_set->isEditing('edit')){
+				$crud_set->form->getElement('sub_menus')
+							->set(explode(",",$crud_set->form->model['sub_menus']));
+			}
+		}
+		$crud_set->grid->removeColumn('id');
 	}
 
 	function page_design(){
