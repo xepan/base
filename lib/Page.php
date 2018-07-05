@@ -27,7 +27,8 @@ class Page extends \Page {
 
 		}
 
-		if(	!$this->app->auth->model->isSuperUser() && 
+		if(	$this->app->getConfig('allowed_menu_based_acl_check',true) &&
+			// !$this->app->auth->model->isSuperUser() && 
 			!$this->app->isAjaxOutput() && 
 			!$this->app->inConfigurationMode && 
 			!in_array($this->app->page,[
