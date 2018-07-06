@@ -450,7 +450,9 @@ class Initiator extends \Controller_Addon {
             $m = $menu_object->addMenu($top_menu_name);
             foreach ($menu_array as $menu) {
                 if(!is_array($menu['url_param'])) unset($menu['url_param']);
-                $m->addItem([$menu['caption']?:$menu['name'],'icon'=>$menu['icon']],$this->app->url($menu['url'],isset($menu['url_param'])?$menu['url_param']:null));
+                $url = $this->app->url($menu['url'],isset($menu['url_param'])?$menu['url_param']:null);
+                if(!isset($menu['url_param'])) $url->arguments=[];
+                $m->addItem([$menu['caption']?:$menu['name'],'icon'=>$menu['icon']],$url);
             }
         }
     }
