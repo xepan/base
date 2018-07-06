@@ -465,6 +465,12 @@ class Initiator extends \Controller_Addon {
             }
             if($app_inits->hasMethod('getTopApplicationMenu')){
                 $arr = $app_inits->getTopApplicationMenu();
+                foreach ($arr as $key => &$menus) {
+                    foreach ($menus as $index => &$menu) {
+                        if(isset($menu['skip_default']))
+                            unset($arr[$key][$index]);
+                    }
+                }
                 if(in_array(array_keys($arr)[0], array_keys($this->app->top_menu_array)))
                     $this->app->top_menu_array[array_keys($arr)[0]] = array_merge($this->app->top_menu_array[array_keys($arr)[0]],$arr[array_keys($arr)[0]]);
                 else

@@ -79,13 +79,15 @@ class page_menudesigner extends \xepan\base\Page{
 			}
 		}
 
-		$xec_def_btn = $menu_set->add('Button')->set('Re-Genrate XEC DEfault Menu')->addClass('btn btn-primary');
+		$bottom_btn_set= $this->add('ButtonSet');
+		$xec_def_btn = $bottom_btn_set->add('Button')->set('Re-Genrate XEC DEfault Menu')->addClass('btn btn-primary');
+		$bottom_btn_set->add('Button')->set('Manage Posts')->addClass('btn btn-primary')->js('click')->univ()->location($this->app->url('xepan_hr_post'));
 		
 		if($xec_def_btn->isClicked()){
 			$this->app->xepan_app_initiators['xepan\base']->generateXECDefaultMenus();
 			$this->js()->univ()->successMessage('XEC Default Menus Re-Updted')->execute();
 		}
-		
+
 		$crud_set->grid->removeColumn('id');
 		$crud_set->noAttachment();
 		$crud_set->grid->removeColumn('action');
