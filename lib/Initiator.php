@@ -10,7 +10,7 @@ class Initiator extends \Controller_Addon {
 
         // $this->app->forget($this->app->current_website_name.'_epan');
 
-        $this->addAppDateFunctions();
+        $this->addAppFunctions();
 
         if(!($this->app->epan = $this->app->recall($this->app->current_website_name.'_epan',false))){
             $this->app->epan = $this->add('xepan\base\Model_Epan')->tryLoadBy('name',$this->app->current_website_name);
@@ -712,7 +712,7 @@ class Initiator extends \Controller_Addon {
     //     $contact_grid->grid->template->trySet('grid_title','Recent Contacts');
     // }
 
-    function addAppdateFunctions(){
+    function addAppFunctions(){
 
         $this->app->addMethod('print_r',function($app,$arr,$die=false){
             echo "<pre>";
@@ -877,6 +877,28 @@ class Initiator extends \Controller_Addon {
                     "seconds_total" => $diff_secs,
                     "seconds" => (int) date("s", $diff)
                 ];
+        });
+
+        $this->app->addMethod('byte2human',function($app,$bytes, $decimals = 2){
+            $size = array('b','Kb','Mb','Gb','Tb','Pb','Eb','Zb','Yb');
+            $factor = floor((strlen($bytes) - 1) / 3);
+            return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+        });
+
+        $this->app->addMethod('human2byte',function($app,$value){
+              $result =  preg_replace_callback('/^\s*(\d*\.?\d+)\s*(?:([kmgtpy]?)b?)?\s*$/i', function ($m) {
+                switch (strtolower($m[2])) {
+                  case 'y': $m[1] *= 1024;
+                  case 'p': $m[1] *= 1024;
+                  case 't': $m[1] *= 1024;
+                  case 'g': $m[1] *= 1024;
+                  case 'm': $m[1] *= 1024;
+                  case 'k': $m[1] *= 1024;
+                }
+                return $m[1];
+              }, $value);
+
+              return round($result,0);
         });
 
     }

@@ -20,6 +20,8 @@ class page_adminelconnector extends \xepan\base\Page {
 
 		$path_asset = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/assets';
 		$path_www = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/www';
+		$path_upload = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/upload';
+		$path_backup = $this->app->pathfinder->base_location->base_path.'/websites/'.$this->app->current_website_name.'/backup';
 		
 		\elFinder::$netDrivers['ftp'] = 'FTP';
 		\elFinder::$netDrivers['dropbox'] = 'Dropbox';
@@ -56,6 +58,48 @@ class page_adminelconnector extends \xepan\base\Page {
 		            'path'   => $path_www,
 		            'URL'    => 'websites/'.$this->app->current_website_name.'/www',
 		            'uploadMaxSize'=>'20M',
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
+		        ),
+		        array(
+		            'driver' => 'LocalFileSystem',
+		            'path'   => $path_upload,
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/upload',
+		            'uploadMaxSize'=>'20M',
+		            'attributes' => array(
+						array(
+							'pattern' => '/.*/', //You can also set permissions for file types by adding, for example, .jpg inside pattern.
+							'read'    => true,
+							'write'   => false,
+							'locked'  => true
+						)
+					),
+		            'plugin' => array(
+		                'Sanitizer' => array(
+		                    'enable' => true,
+		                    'targets'  => array('\\','/',':','*','?','"','<','>','|',' '), // target chars
+		                    'replace'  => '_'    // replace to this
+		                )
+		            )
+		        ),
+		        array(
+		            'driver' => 'LocalFileSystem',
+		            'path'   => $path_backup,
+		            'URL'    => 'websites/'.$this->app->current_website_name.'/backup',
+		            'uploadMaxSize'=>'20M',
+		            'attributes' => array(
+						array(
+							'pattern' => '/.*/', //You can also set permissions for file types by adding, for example, .jpg inside pattern.
+							'read'    => true,
+							'write'   => false,
+							'locked'  => true
+						)
+					),
 		            'plugin' => array(
 		                'Sanitizer' => array(
 		                    'enable' => true,
