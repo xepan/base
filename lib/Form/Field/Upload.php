@@ -103,6 +103,21 @@ class Form_Field_Upload extends \Form_Field {
 
         $this->max_file_size = min($max_upload, $max_post);
 
+        $folder = getcwd().'/websites/'.$this->app->epan['name'].'/';
+        $folder=str_replace('admin/', '', $folder);
+        $size = $this->uf_getDirSize($folder,'b');
+
+        if($size){
+            $extra_info = $this->app->recall('epan_extra_info_array',false);        
+            if(isset($extra_info ['specification']['Storage Limit']) && $extra_info ['specification']['Storage Limit'])
+                $total_storage_limit = $extra_info ['specification']['Storage Limit'];
+            else
+                $total_storage_limit = $this->app->byte2human(disk_free_space("/"));
+
+            $this->max_file_size = min($this->max_file_size,($this->app->human2byte($total_storage_limit)-$this->app->human2byte($size)));
+        }else{
+            // Might be windows, we are not yet ready for windows serves and this majorly need to be checked on hosted services ... so its okay to skip here
+        }
         /*
            if($_POST[$this->name.'_token']){
            $t=json_decode(stripslashes($_POST[$this->name.'_token']));
@@ -113,6 +128,23 @@ class Form_Field_Upload extends \Form_Field {
            }
          */
     }
+
+    function uf_getDirSize($dir, $unit = 'g'){
+        // $dir = trim($dir, '/');
+        // if (!is_dir($dir)) {
+        //     trigger_error("{$dir} not a folder/dir/path.", E_USER_WARNING);
+        //     return false;
+        // }
+        // if (!function_exists('exec')) {
+        //     trigger_error('The function exec() is not available.', E_USER_WARNING);
+        //     return false;
+        // }
+        $output = exec('du -sh ' . $dir);
+        $filesize = str_replace($dir, '', $output);
+        return $filesize;
+    }
+
+
     function allowMultiple($multiple=50){
         // Allow no more than $multiple files to be present in the table
         $this->multiple=$multiple;

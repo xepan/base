@@ -158,7 +158,10 @@ class Model_Contact extends \xepan\base\Model_Table{
 			return $m->refSQL('user_id')->fieldQuery('scope');
 		});
 
-		$this->addHook('beforeSave',function($m){$m['updated_at']=$this->app->now;});
+		$this->addHook('beforeSave',function($m){
+			$m['updated_at']=$this->app->now;
+			if($m->isDirty('assign_to_id')) $m['assign_at'] = $this->app->now;
+		});
 
 		$this->addHook('beforeDelete',[$this,'memoriseUserID']);
 		$this->addHook('afterDelete',[$this,'removeAssociatedUser']);
