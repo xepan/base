@@ -33,7 +33,7 @@ class Model_Epan_InstalledApplication extends \xepan\base\Model_Table{
 		$this->hasMany('xepan\hr\EmployeeDepartmentalAclAssociation','installed_app_id');
 		$this->addField('is_hidden')->type('boolean')->defaultValue(false); // TODO set based on actual condition, FREE, TIME BASED, LICENSE VALID etc.
 		$this->addExpression('is_valid')->set(true); // TODO set based on actual condition, FREE, TIME BASED, LICENSE VALID etc.
-		$this->add('dynamic_model\Controller_AutoCreator');
+		// $this->add('dynamic_model\Controller_AutoCreator');
 
 	}
 }
