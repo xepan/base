@@ -19,7 +19,7 @@ class page_backup extends \Page {
 
 		$model = $this->add('xepan\base\Model_Backup');
 		
-		$crud = $this->add('xepan\hr\CRUD',['allow_edit'=>false]);
+		$crud = $this->add('xepan\hr\CRUD',['allow_edit'=>false,'pass_acl'=>true]);
 		$crud->setModel($model,['name']);
 
 
