@@ -21,6 +21,8 @@ class Model_RuleGroup extends \xepan\base\Model_Table
 
 		$this->addField('name');
 
+		$this->hasOne('xepan\base\Contact','created_by_id');
+
 		$this->hasMany('xepan\base\Rules','rulegroup_id');
 
 		$this->addHook('beforeDelet',[$this,'checkRulesInGroup']);
