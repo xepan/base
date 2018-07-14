@@ -10,14 +10,20 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 
 	function init(){
 		parent::init();
-
+		
 		if(!$this->owner instanceof \SQL_Model)
 			throw $this->exception('Please add SideBarStatusFilter Controller on main model of page only')
 						->addMoreInfo('current_owner',$this->owner);
 
-		if($this->app->isAjaxOutput()) return;
+		$status = $this->api->stickyGET('status');
 
-		$status=$this->api->stickyGET('status');
+		if($this->app->isAjaxOutput()){
+			if($status){
+				$this->owner->addCondition('status','in',explode(",",$status));
+			}
+			return;
+		} 
+
 
 		$count_m = $this->owner->owner->add(get_class($this->owner));
 		if($this->extra_conditions) {
