@@ -16,12 +16,13 @@ class Model_Rules extends \xepan\base\Model_Table
 		'InActive'=>['view','edit','delete','activate']
 	];
 
-	public $acl_type='Rules';
+	public $acl_type='xepan\base\Model_Rules';
 	
 	function init()
 	{
 		parent::init();
 
+		$this->hasOne('xepan\base\Contact','created_by_id');
 		$this->hasOne('xepan\base\RuleGroup','rulegroup_id');
 
 		$this->addField('name');
