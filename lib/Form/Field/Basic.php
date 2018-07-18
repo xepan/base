@@ -1,7 +1,18 @@
 <?php
+
 /**
  * Addon  for converting hasOne field into auto-complete
  */
+
+// reload fields syntax 
+// $inv_field = reload field
+// $customer_field = based on field valu
+    // $inv_field->send_other_fields = [$customer_field]
+// apply condition after reload
+    // if($customer_id = $_GET['o_'.$customer_field->name]){
+    //     $inv_field->getModel()->addCondition('contact_id',$customer_id);
+    // }
+
 namespace xepan\base;
 
 class Form_Field_Basic extends \Form_Field_Hidden
