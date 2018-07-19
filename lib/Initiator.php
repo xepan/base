@@ -458,15 +458,29 @@ class Initiator extends \Controller_Addon {
     }
 
     function generateXECDefaultMenus(){
-        $menu_config = $this->add('xepan\base\Model_Config_Menus')
-                        ->addCondition('name','XEC_DEFAULT')
-                        ->tryLoadAny();
+        
          foreach($this->app->xepan_app_initiators as $app_namespace =>$app_inits){
             if($this->app->getConfig('hidden_'.str_replace("\\", "_", $app_namespace),false)){
                 continue;
             }
             if($app_inits->hasMethod('getTopApplicationMenu')){
                 $arr = $app_inits->getTopApplicationMenu();
+                $sub_menus=$this->add('xepan\base\Model_Config_Menus')
+                    ->addCondition('name',array_keys($arr)[0])
+                    ->addCondition('is_set',false)
+                    ->tryLoadAny();
+
+                foreach ($arr as &$m1) {
+                    foreach ($m1 as &$m2) {
+                        if(!isset($m2['caption'])) $m2['caption']=$m2['name'];
+                    }
+                }
+
+                $sub_menus['name']=array_keys($arr)[0];
+                $sub_menus['is_set']=false;
+                $sub_menus['value']=json_encode($arr);
+                $sub_menus->save();
+
                 foreach ($arr as $key => &$menus) {
                     foreach ($menus as $index => &$menu) {
                         if(isset($menu['skip_default']))
@@ -479,6 +493,10 @@ class Initiator extends \Controller_Addon {
                     $this->app->top_menu_array = array_merge($this->app->top_menu_array,$arr);
             }
         }
+
+        $menu_config = $this->add('xepan\base\Model_Config_Menus')
+            ->addCondition('name','XEC_DEFAULT')
+            ->tryLoadAny();
 
         $menu_config['name']='XEC_DEFAULT';
         $menu_config['is_set']=true;
