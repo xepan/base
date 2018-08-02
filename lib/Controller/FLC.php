@@ -186,7 +186,7 @@ class Controller_FLC extends \AbstractController {
 				$template_str .="<div class='row panel-body $collapse_in' id='$id'>";
 			}
 				foreach ($row as $col) {
-					$template_str.="<div class='flc-atk-form-row col-md-".$col['width']."' col-sm-12 col-xs-12>";
+					$template_str.="<div class='flc-atk-form-row col-sm-12 col-xs-12 col-md-".$col['width']."'>";
 						foreach ($col['fields'] as $field) {
 							$field_hint = isset($field_hints[$field])?'<small class="text-muted">'.$field_hints[$field].'</small>':'';
 							$field_arr=explode("~", $field);
