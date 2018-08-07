@@ -34,6 +34,7 @@ class Model_Contact extends \xepan\base\Model_Table{
 		$this->hasOne('xepan\base\User',null,'username');
 		$this->hasOne('xepan\base\Country','country_id')->display(array('form' => 'xepan\base\Country'));
 		$this->hasOne('xepan\base\State','state_id')->display(array('form' => 'xepan\base\State'));
+		$this->hasOne('xepan\base\Branch','branch_id')->defaultValue(@$this->app->branch->id);
 
 		$this->addField('type');
 		$this->getElement('type')->defaultValue($this->type);

@@ -22,7 +22,7 @@ class View_Contact extends \View{
 
 	function init(){
 		parent::init();
-
+		
 		$page_url = $this->api->url();
 		$this->vp = $this->add('VirtualPage');
 		$this->vp->set(function($p)use($page_url){
@@ -43,7 +43,7 @@ class View_Contact extends \View{
 
 	function setModel(Model_Contact $contact){
 		parent::setModel($contact);
-		$this->document_view->setModel($this->model,null,['first_name','last_name','address','city','state_id','country_id','pin_code','organization','post','website']);
+		$this->document_view->setModel($this->model,null,['first_name','branch_id','last_name','address','city','state_id','country_id','pin_code','organization','post','website']);
 		if($this->action=='edit')
 			$this->document_view->form->layout->add('xepan\base\Controller_Avatar',['extra_classes'=>'profile-img center-block','options'=>['size'=>200,'display'=>'block','margin'=>'auto'],'float'=>null,'model'=>$this->model]);
 		else

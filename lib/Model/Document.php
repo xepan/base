@@ -31,6 +31,7 @@ class Model_Document extends \xepan\base\Model_Table{
 		// $this->hasOne('xepan\base\Epan');
 		$this->hasOne('xepan\base\Contact','created_by_id')->system(true);
 		$this->hasOne('xepan\base\Contact','updated_by_id')->system(true);
+		$this->hasOne('xepan\base\Branch','branch_id')->system(true)->defaultValue(@$this->app->branch->id);
 
 		$this->addField('status')->enum($this->status)->mandatory(true)->system(true);
 		$this->addField('type')->mandatory(true);
