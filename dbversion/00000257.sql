@@ -9,3 +9,4 @@ CREATE TABLE `branch` (
 
 ALTER TABLE `document` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
 ALTER TABLE `contact` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
+ALTER TABLE `project` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
