@@ -13,3 +13,4 @@ ALTER TABLE `project` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
 ALTER TABLE `ledger` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
 ALTER TABLE `account_transaction` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
 ALTER TABLE `store_transaction` ADD COLUMN `branch_id` int(11) DEFAULT NULL;
+ALTER TABLE `acl` ADD COLUMN `is_branch_restricted` tinyint(4) DEFAULT 0;
