@@ -29,7 +29,11 @@ class page_menudesigner extends \xepan\base\Page{
 	}
 
 	function page_index(){
-		
+		if(!$this->app->auth->model->isSuperUser()){
+			// $this->add('View_Error')->set('You are not authorized, only super user can do..');
+			return;
+		}
+
 		$tab = $this->add('Tabs');
 		$menu = $tab->addTab('Menu');
 		$menu_set = $tab->addTab('Menu Set');
