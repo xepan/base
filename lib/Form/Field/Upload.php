@@ -281,7 +281,15 @@ class Form_Field_Upload extends \Form_Field {
     function formatFiles($data){
         // echo $this->app->recall('browser_page').'<br/>';
         $this->js(true)->atk4_uploader('addFiles',$data);
-        $o = $this->add('GiTemplate')->loadTemplate($this->format_files_template)->trySet('page_url',$this->app->url())->render();
+        $url = $this->app->url();
+
+        foreach ($url->arguments as $key => $value){
+            if(strpos($key,'_virtual') !== false){
+                unset($url->arguments[$key]);
+            } 
+        }
+        
+        $o = $this->add('GiTemplate')->loadTemplate($this->format_files_template)->trySet('page_url',$url)->render();
         return $o;
     }
 
