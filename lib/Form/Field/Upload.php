@@ -89,8 +89,14 @@ class Form_Field_Upload extends \Form_Field {
     public $debug=false;
     public $format_files_template="view/uploaded_files";
 
+    public $run_original ="";
+
     function init(){
         parent::init();
+
+        if($this->app->is_admin) $this->run_original='_original';
+        $this->format_files_template = $this->format_files_template.$this->run_original;
+        
         if(!$this->owner instanceof \Form)
             $this->owner->owner->template->set('enctype', "enctype=\"multipart/form-data\"");
         else
@@ -273,6 +279,7 @@ class Form_Field_Upload extends \Form_Field {
         }
     }
     function formatFiles($data){
+        // echo $this->app->recall('browser_page').'<br/>';
         $this->js(true)->atk4_uploader('addFiles',$data);
         $o = $this->add('GiTemplate')->loadTemplate($this->format_files_template)->trySet('page_url',$this->app->url())->render();
         return $o;
