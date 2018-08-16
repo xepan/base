@@ -10,6 +10,7 @@ class View_User_LoginPanel extends \View{
 
         $f = $this->add('Form',null,null,['form/minimal']);
         $f->setLayout('view/tool/userpanel/form/login');
+
         if($message = $this->app->stickyGET('message')){
    	 		$f->layout->template->trySet('message',$message);
         }else{
@@ -33,7 +34,13 @@ class View_User_LoginPanel extends \View{
         }
 
 
-        $f->addField('Line','username');
+        $this->registration_mode = $this->options['registration_mode'];
+
+        if(strtolower($this->registration_mode) == "sms")
+    	    $f->addField('Line','username','Mobile Number');
+        else
+    	    $f->addField('Line','username','Email Id');
+
         $f->addField('Password','password','Password');
  		
         if($f->isSubmitted()){
