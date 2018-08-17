@@ -1,6 +1,5 @@
 <?php
 
-
 namespace xepan\base;
 
 class Controller_TopBarStatusFilter extends \AbstractController{
@@ -27,17 +26,23 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 
 		$count_m = $this->owner->owner->add(get_class($this->owner));
 		if($this->extra_conditions) {
-			$count_m->addCondition($this->extra_conditions);			
+			$count_m->addCondition($this->extra_conditions);
 		}
+
+		if($this->app->branch->id AND $count_m->hasElement('branch_id')){
+			$count_m->addCondition('branch_id',$this->app->branch->id);
+		}
+
 		$counts = $count_m->_dsql()->del('fields')->field('status')->field('count(*) counts')->group('Status')->get();
-		$counts_redefined =[];
-		$total=0;
+		$counts_redefined = [];
+		$total = 0;
 		foreach ($counts as $cnt) {
 			$counts_redefined[$cnt['status']] = $cnt['counts'];
 			$total += $cnt['counts'];
 		}
+
 		$icon_array = $this->app->status_icon;
-		$model_class=get_class($this->owner);
+		$model_class = get_class($this->owner);
 		if($this->add_all){
 			$class='primary';
 			if(!$status) $class='success';
