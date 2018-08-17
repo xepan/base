@@ -15,7 +15,7 @@ class View_User_VerifyAccount extends \View{
 		$form->addField('line','activation_code')->set($secret_code);
 		
 		if($message = $this->app->stickyGET('message')){
-   	 		$form->layout->template->trySet('message',$message);
+   	 		$form->layout->template->trySetHtml('message',$message);
         }else{
         	$form->layout->template->tryDel('message_wrapper');
         }

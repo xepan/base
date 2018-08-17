@@ -12,7 +12,7 @@ class View_User_LoginPanel extends \View{
         $f->setLayout('view/tool/userpanel/form/login');
 
         if($message = $this->app->stickyGET('message')){
-   	 		$f->layout->template->trySet('message',$message);
+   	 		$f->layout->template->trySetHtml('message',$message);
         }else{
         	$f->layout->template->tryDel('message_wrapper');
         }
