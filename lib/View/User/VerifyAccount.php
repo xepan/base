@@ -14,6 +14,12 @@ class View_User_VerifyAccount extends \View{
 		$form->addField('line','email','User name')->set($activate_email);	
 		$form->addField('line','activation_code')->set($secret_code);
 		
+		if($message = $this->app->stickyGET('message')){
+   	 		$form->layout->template->trySet('message',$message);
+        }else{
+        	$form->layout->template->tryDel('message_wrapper');
+        }
+
 		$form->onSubmit(function($f){
 
 			$user = $this->add('xepan\base\Model_User');	
