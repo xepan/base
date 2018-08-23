@@ -49,7 +49,7 @@ class View_User_LoginPanel extends \View{
 			$auth->setModel('xepan\base\Model_User','username','password');
 			$auth->usePasswordEncryption('md5');
 
-			if(!$credential = $auth->verifyCredentials($f['username'],$f['password'])){
+			if(!$credential = $auth->verifyCredentials(trim($f['username']),trim($f['password']))){
 				$f->displayError($f->getElement('password'),'Wrong credentials');
 			}
 					
