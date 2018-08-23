@@ -20,7 +20,7 @@ class View_User_Registration extends \View{
 					$username_field->validate('required|number');
 			}else{
 				$username_field = $f->addField('line','username','Email Id');
-				$username_field->validate('required|email');
+				$username_field->validate('required|to_trim|email');
 			}
 
 			$f->addField('password','password')->validate('required');
