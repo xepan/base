@@ -58,7 +58,7 @@ class View_User_LoginPanel extends \View{
 			if($user['status']=='InActive')
 				$f->displayError('username','Please Activate Your Account First, check email (Including Spam/Junk folders)');
 			
-			$this->app->auth->login($f['username']);
+			$this->app->auth->login(trim($f['username']));
 			$this->app->hook('login_panel_user_loggedin',[$auth->model]);
 
 			if($next_url = $this->app->recall('next_url'))
