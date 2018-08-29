@@ -8,7 +8,7 @@ class View_User_VerifyAgain extends \View{
 
 		$form=$this->add('Form',null,null,['form/empty']);
 		$form->setLayout('view/tool/userpanel/form/xepanverifyagain');
-		$form->addField('line','username');
+		$form->addField('line','username')->validate('required');
 		
 		$form->onSubmit(function($f){
 			$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
@@ -41,7 +41,7 @@ class View_User_VerifyAgain extends \View{
 				$user->addCondition('username',$f['username']);
 				$user->tryLoadAny();
 
-				if(!$user->loaded()) throw $this->exception('username is not registered','ValidityCheck')->setField('email');
+				if(!$user->loaded()) throw $this->exception('username is not registered','ValidityCheck')->setField('username');
 
 				$contact=$user->ref('Contacts');
 				
