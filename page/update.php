@@ -57,7 +57,7 @@ class page_update extends \xepan\base\Page {
 		$vp->set([$this,'updateZip']);
 
 		$btn = $this->add('Button')->addClass('btn btn-danger btn-block')->set('UPDATE XEPAN AND ALL APPLICATIONS');
-		$btn->js('click')->univ()->frameURL('UPDATE RUNNNING, DO NO CLOSE THIS WINDOW',$vp->getURL());
+		$btn->js('click')->univ()->frameURL('UPDATE RUNNNING, DO NOT CLOSE THIS WINDOW',$vp->getURL());
 	}
 
 	function updateZip($page){
