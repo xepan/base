@@ -25,7 +25,7 @@
                     // loop each td cell of the row
                     if ($(this).find("td").length > 0) {
                         $(this).find("td").each(function () {
-                            csv += sep + settings.quotes + $(this).text() + settings.quotes;
+                            csv += sep + settings.quotes + $(this).text().trim() + settings.quotes;
                             sep = settings.separator;
                         });
                         csv += settings.newline;                
@@ -33,7 +33,7 @@
                     // loop each th cell of the row
                     else if ($(this).find("th").length > 0) {
                         $(this).find("th").each(function () {
-                            csv += sep + settings.quotes + $(this).text() + settings.quotes;
+                            csv += sep + settings.quotes + $(this).text().trim() + settings.quotes;
                             sep = settings.separator;
                         });
                         csv += settings.newline;                
