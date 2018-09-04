@@ -1,1 +1,1 @@
-ALTER TABLE `employee` ADD COLUMN `last_location` varchar(255) DEFAULT 0;
+ALTER TABLE `employee` ADD COLUMN `last_location` varchar(255) DEFAULT NULL;
