@@ -84,7 +84,7 @@ class page_menudesigner extends \xepan\base\Page{
 		}
 
 		$bottom_btn_set= $this->add('ButtonSet');
-		$xec_def_btn = $bottom_btn_set->add('Button')->set('Re-Genrate XEC DEfault Menu')->addClass('btn btn-primary');
+		$xec_def_btn = $bottom_btn_set->add('Button')->set('Re-Genrate XEC Default Menu')->addClass('btn btn-primary');
 		$bottom_btn_set->add('Button')->set('Manage Posts')->addClass('btn btn-primary')->js('click')->univ()->location($this->app->url('xepan_hr_post'));
 		
 		if($xec_def_btn->isClicked()){
@@ -109,10 +109,18 @@ class page_menudesigner extends \xepan\base\Page{
 
             if($app_inits->hasMethod('getTopApplicationMenu')){
                 $arr = $app_inits->getTopApplicationMenu();
-                $available_menus = array_merge($available_menus,$arr);
+
+                foreach ($arr as $menu_name => $menu_array) {
+                	if(!isset($available_menus[$menu_name])) $available_menus[$menu_name]=[];
+                	
+                	foreach ($menu_array as $key => $menu) {
+                		$available_menus[$menu_name][] = $menu;
+                	}
+                }
+                // $available_menus = array_merge($available_menus,$arr);
             }
         }
-
+        
         $saved_menus = json_decode($this->model['value'],true);
         $top_menu_caption = $this->model['name'];
 

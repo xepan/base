@@ -463,34 +463,46 @@ class Initiator extends \Controller_Addon {
             if($this->app->getConfig('hidden_'.str_replace("\\", "_", $app_namespace),false)){
                 continue;
             }
+
             if($app_inits->hasMethod('getTopApplicationMenu')){
                 $arr = $app_inits->getTopApplicationMenu();
-                $sub_menus=$this->add('xepan\base\Model_Config_Menus')
-                    ->addCondition('name',array_keys($arr)[0])
-                    ->addCondition('is_set',false)
-                    ->tryLoadAny();
 
-                foreach ($arr as &$m1) {
-                    foreach ($m1 as &$m2) {
+                foreach ($arr as $menu_name=>&$m1){
+                    $sub_menus = $this->add('xepan\base\Model_Config_Menus')
+                        ->addCondition('name',$menu_name)
+                        ->addCondition('is_set',false)
+                        ->tryLoadAny();
+                    foreach ($m1 as &$m2){
                         if(!isset($m2['caption'])) $m2['caption']=$m2['name'];
                     }
-                }
 
-                $sub_menus['name']=array_keys($arr)[0];
-                $sub_menus['is_set']=false;
-                $sub_menus['value']=json_encode($arr);
-                $sub_menus->save();
-
-                foreach ($arr as $key => &$menus) {
-                    foreach ($menus as $index => &$menu) {
-                        if(isset($menu['skip_default']))
-                            unset($arr[$key][$index]);
+                    foreach($m1 as $index => &$m2){
+                        if(isset($m2['skip_default']))
+                            unset($m1[$index]);
                     }
+
+                    if(in_array($menu_name, array_keys($this->app->top_menu_array))){
+                        $this->app->top_menu_array[$menu_name] = array_merge($this->app->top_menu_array[$menu_name],$arr[$menu_name]);
+                    }else
+                        $this->app->top_menu_array = array_merge($this->app->top_menu_array,[$menu_name=>$m1]);
+                    
+                    $sub_menus['name']=$menu_name;
+                    $sub_menus['is_set']=false;
+                    $sub_menus['value']=json_encode([$menu_name=>$this->app->top_menu_array[$menu_name]]);
+                    $sub_menus->save();
                 }
-                if(in_array(array_keys($arr)[0], array_keys($this->app->top_menu_array)))
-                    $this->app->top_menu_array[array_keys($arr)[0]] = array_merge($this->app->top_menu_array[array_keys($arr)[0]],$arr[array_keys($arr)[0]]);
-                else
-                    $this->app->top_menu_array = array_merge($this->app->top_menu_array,$arr);
+
+                // foreach ($arr as $key => &$menus) {
+                //     foreach ($menus as $index => &$menu) {
+                //         if(isset($menu['skip_default']))
+                //             unset($arr[$key][$index]);
+                //     }
+                // }
+
+                // if(in_array($menu_name, array_keys($this->app->top_menu_array)))
+                //     $this->app->top_menu_array[$menu_name] = array_merge($this->app->top_menu_array[$menu_name],$arr[$menu_name]);
+                // else
+                //     $this->app->top_menu_array = array_merge($this->app->top_menu_array,$arr);
             }
         }
 
