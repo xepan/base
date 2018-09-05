@@ -29,7 +29,7 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 			$count_m->addCondition($this->extra_conditions);
 		}
 
-		if($this->app->branch->id AND $count_m->hasElement('branch_id')){
+		if(@$this->app->branch->id AND $count_m->hasElement('branch_id')){
 			$count_m->addCondition('branch_id',$this->app->branch->id);
 		}
 
