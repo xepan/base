@@ -46,7 +46,7 @@ class Initiator extends \Controller_Addon {
         $this->app->addHook('entity_collection',[$this,'exportEntities']);
 
         // updates
-        if($this->app->page !='index'){
+        if($this->app->getConfig('company_support_on_all_pages',false) && $this->app->page !='index'){
             try{
                 $updates = file_get_contents($this->app->getConfig('epan_api_base_path')."/updates");
                 $this->app->layout->add('View',null,'page_top_center')->setHtml($updates);
