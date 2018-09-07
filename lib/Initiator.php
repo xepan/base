@@ -160,7 +160,8 @@ class Initiator extends \Controller_Addon {
                 $this->app->user_menu = new \Dummy;
 
             if(!$this->app->inConfigurationMode && !$this->app->getConfig('hidden_report_menu',false)) 
-                $this->app->report_menu = $this->app->top_menu->addMenu('Reports');
+                $this->app->report_menu = new \Dummy;
+                // $this->app->report_menu = $this->app->top_menu->addMenu('Reports');
             else
                 $this->app->report_menu = new \Dummy;
 
