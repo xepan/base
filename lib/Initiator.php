@@ -766,6 +766,22 @@ class Initiator extends \Controller_Addon {
             if($die) die();
         });
 
+        $this->app->addMethod('getYear',function($app,$date){
+            $date = \DateTime::createFromFormat("Y-m-d", $date);
+            return $date->format("Y");
+        });
+        $this->app->addMethod('getMonth',function($app,$date){
+            $date = \DateTime::createFromFormat("Y-m-d", $date);
+            return $date->format("m");
+        });
+        $this->app->addMethod('getDay',function($app,$date){
+            $date = \DateTime::createFromFormat("Y-m-d", $date);
+            return $date->format("d");
+        });
+        $this->app->addMethod('getDaysInMonth',function($app,$date){
+            return $days = cal_days_in_month(CAL_GREGORIAN, $this->app->getMonth($date), $this->app->getYear($date));
+        });
+
         $this->app->addMethod('nextDate',function($app,$date=null){
             
             if(!$date) $date = $this->api->today;
