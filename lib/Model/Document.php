@@ -94,11 +94,21 @@ class Model_Document extends \xepan\base\Model_Table{
 
 		// manage list of notification data
 		foreach ($model as $m) {
-			if($m['sms_content'] && $m['sms_send_from'] && ($m['sms_send_to_custom_mobile_no'] || $m['sms_send_to_related_contact']))
-				$this->shootSMSStatusAction($m);
+			if($m['sms_content'] && $m['sms_send_from'] && ($m['sms_send_to_custom_mobile_no'] || $m['sms_send_to_related_contact'])){
+				try{
+					$this->shootSMSStatusAction($m);
+				}catch(\Exception $e){
+					
+				}
+			}
 
-			if($m['email_subject'] && $m['email_send_from'] && ($m['email_send_to_custom_email_ids'] || $m['email_send_to_related_contact']))
-				$this->shootEmailStatusAction($m);
+			if($m['email_subject'] && $m['email_send_from'] && ($m['email_send_to_custom_email_ids'] || $m['email_send_to_related_contact'])){
+				try{
+					$this->shootEmailStatusAction($m);
+				}catch(\Exception $e){
+					
+				}
+			}
 		}
 	}
 
