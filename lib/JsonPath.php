@@ -9,6 +9,7 @@ namespace xepan\base;
 
 // syntax ect are available at ...
 // http://goessner.net/articles/JsonPath/
+// https://www.w3resource.com/JSON/JSONPath-with-PHP.php
 
 // API function 
 function jsonPath($obj, $expr, $args=null) {

@@ -55,7 +55,8 @@ class View_Contact extends \View{
 		if($this->app->stickyGET('country_id'))
 			$state_field->getModel()->addCondition('country_id',$_GET['country_id'])->setOrder('name','asc');
 
-		$country_field->js('change',$state_field->js()->reload(null,null,[$this->app->url(null,['cut_object'=>$state_field->name]),'country_id'=>$country_field->js()->val()]));
+		$state_field->dependsOn($country_field);
+		// $country_field->js('change',$state_field->js()->reload(null,null,[$this->app->url(null,['cut_object'=>$state_field->name]),'country_id'=>$country_field->js()->val()]));
 
 		if($this->model->loaded()){
 
