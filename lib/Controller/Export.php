@@ -18,7 +18,7 @@ class Controller_Export extends \AbstractController {
 
 	function init(){
 		parent::init();
-		if(!$this->fields) $this->fields = $grid->model->getActualFields();
+		if(!$this->fields) $this->fields = $this->owner->model->getActualFields();
 		// $this->addHook("output", array($this, "output"));
 		if(!$this->model) $this->model= $this->owner->model;
 		if($_GET[$this->name]){
