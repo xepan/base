@@ -35,7 +35,7 @@ class View_User_ForgotPassword extends \View{
 				}elseif(filter_var($username,FILTER_VALIDATE_EMAIL)){
 					$username_is_email = true;
 				}else{
-					$f->displayError('email','username must be either mobile no or email id');
+					$form->displayError('email','username must be either mobile no or email id');
 				} 
 			}
 
