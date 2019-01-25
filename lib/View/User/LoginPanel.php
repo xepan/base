@@ -38,7 +38,9 @@ class View_User_LoginPanel extends \View{
 
         if(strtolower($this->registration_mode) == "sms")
     	    $f->addField('Line','username','Mobile Number');
-        else
+    	elseif($this->registration_mode == "all"){
+    	    $f->addField('Line','username','Username');
+    	}else
     	    $f->addField('Line','username','Email Id');
 
         $f->addField('Password','password','Password');

@@ -5,7 +5,7 @@ class View_User_Registration extends \View{
 
 	function init(){
 		parent::init();
-			
+
 			$this->registration_mode = $this->options['registration_mode'];
 			
 			$f=$this->add('Form',null,null,['form/empty']);
@@ -18,6 +18,12 @@ class View_User_Registration extends \View{
 				$username_field = $f->addField('line','username','Mobile No');
 				if(!$this->options['username_validation_regular_expression'])
 					$username_field->validate('required|number');
+
+			}elseif ($this->registration_mode === "all"){
+				$f->layout->template->trySet('username_icon','fa-user');
+				$username_field = $f->addField('line','username');
+				$username_field->validate('required');
+
 			}else{
 				$username_field = $f->addField('line','username','Email Id');
 				$username_field->validate('required|to_trim|email');
@@ -116,28 +122,48 @@ class View_User_Registration extends \View{
 			$f->onSubmit(function($f){
 				
 				$form_data = $f->get();
+				$username = trim($f['username']);
+
 				if($this->registration_mode === "sms" && !isset($form_data['mobile_no']))
 					$form_data['mobile_no'] = $form_data['username'];
 
-				if($this->options['show_tnc'] && !$f['tnc']){
-					$f->js()->univ()->alert('Accept TnC')->execute();
-				}
-
-				if($f['password']!= $f['retype_password']){
-					$f->displayError($f->getElement('retype_password'),'Password did not match');			
-				}
-
-				if($this->registration_mode === "email"){
-					if(!filter_var(trim($f['username']), FILTER_VALIDATE_EMAIL))
-						$f->displayError($f->getElement('username'),'not a valid email address');
-				}
-
 				if($this->registration_mode === "sms" && $reg = $this->options['username_validation_regular_expression']){
-					$validate = preg_match($reg,$f['username']);
+					$validate = preg_match($reg,$username);
 					if(!$validate)
 						$f->displayError($f->getElement('username'),'Please input a valid mobile number');
 				}
+
+				if($this->registration_mode === "email"){
+					if(!filter_var($username, FILTER_VALIDATE_EMAIL))
+						$f->displayError($f->getElement('username'),'not a valid email address');
+				}
 				
+				// if registration mode is all
+				// first check number is numeric then it must be mobile no
+				// if varchar then check must be email address
+				// username either mobile no or email id must required
+				$username_is_mobile = false;
+				$username_is_email = false;
+
+				if($this->registration_mode === "all"){
+					if(is_numeric($username) && strlen($username) == 10){
+						$username_is_mobile = true;
+						$form_data['mobile_no'] = $username;
+					}elseif(filter_var($username,FILTER_VALIDATE_EMAIL)){
+						$username_is_email = true;
+					}else{
+						$f->displayError($f->getElement('username'),'username must be either mobile no or email id');
+					} 
+				}
+
+				if($f['password']!= $f['retype_password']){
+					$f->displayError($f->getElement('retype_password'),'Password did not match');
+				}
+
+				if($this->options['show_tnc'] && !$f['tnc']){
+					$f->displayError($f->getElement('tnc'),'you must agree with our terms and condition');
+				}
+
 				$user=$this->add('xepan\base\Model_User');
 				$this->add('BasicAuth')
 				->usePasswordEncryption('md5')
@@ -198,7 +224,8 @@ class View_User_Registration extends \View{
 					$merge_model_array = array_merge($merge_model_array,$user->get());
 					$merge_model_array = array_merge($merge_model_array,$contact->get());
 
-					if($this->registration_mode === "email"){
+					
+					if($this->registration_mode === "email" OR $username_is_email){
 						$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')
 							->addCondition('is_active',true)
 							->tryLoadAny();
@@ -234,7 +261,7 @@ class View_User_Registration extends \View{
 						$mail->send($email_settings);
 					}
 
-					if($this->registration_mode === "sms"){
+					if($this->registration_mode === "sms" OR $username_is_mobile){
 						if($message = $frontend_config_m['registration_sms_content']){
 							$temp = $this->add('GiTemplate');
 							$temp->loadTemplateFromString($message);

@@ -49,11 +49,14 @@ class Model_User extends \xepan\base\Model_Table{
 				'status|required'
 			]);
 
+		// deprecated code
 		if($this->app->getConfig('username_is_email',true)){
 			$this->is([
 					'username|email'
 				]);
 		}
+		// end here
+		
 		// $this->app->auth->addEncryptionHook($this);
 
 

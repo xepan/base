@@ -11,7 +11,7 @@ class View_User_VerifyAccount extends \View{
 		
 		$form=$this->add('Form',null,null,['form/empty']);
 		$form->setLayout('view/tool/userpanel/form/xepanverify');
-		$form->addField('line','email','User name')->set($activate_email);	
+		$form->addField('line','email','Username')->set($activate_email);
 		$form->addField('line','activation_code')->set($secret_code);
 		
 		if($message = $this->app->stickyGET('message')){
@@ -21,9 +21,22 @@ class View_User_VerifyAccount extends \View{
         }
 
 		$form->onSubmit(function($f){
+			$username = trim($f['email']);
 
-			$user = $this->add('xepan\base\Model_User');	
-			$user->addCondition('username',$f['email']);
+			$username_is_mobile = false;
+			$username_is_email = false;
+			if($this->options['registration_mode'] === "all"){
+				if(is_numeric($username) && strlen($username) == 10){
+					$username_is_mobile = true;
+				}elseif(filter_var($username,FILTER_VALIDATE_EMAIL)){
+					$username_is_email = true;
+				}else{
+					$f->displayError('email','username must be either mobile no or email id');
+				} 
+			}
+
+			$user = $this->add('xepan\base\Model_User');
+			$user->addCondition('username',$username);
 			$user->tryLoadAny();
 			
 			if(!$user->loaded())
@@ -64,7 +77,7 @@ class View_User_VerifyAccount extends \View{
 				$f->displayError('activation_code','Activation code did not match');
 
 
-			if($this->options['registration_mode'] === "email"){
+			if($this->options['registration_mode'] === "email" OR $username_is_email){
 
 				$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
@@ -90,7 +103,7 @@ class View_User_VerifyAccount extends \View{
 				$mail->send($email_settings);
 			}
 
-			if($this->options['registration_mode'] === "sms"){
+			if($this->options['registration_mode'] === "sms" or $username_is_mobile){
 				if($message = $frontend_config_m['verification_sms_content']){
 					$temp = $this->add('GiTemplate');
 					$temp->loadTemplateFromString($message);

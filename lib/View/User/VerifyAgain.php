@@ -11,6 +11,20 @@ class View_User_VerifyAgain extends \View{
 		$form->addField('line','username')->validate('required');
 		
 		$form->onSubmit(function($f){
+			$username_is_mobile = false;
+			$username_is_email = false;
+
+			$username = trim($f['username']);
+			if($this->options['registration_mode'] === "all"){
+				if(is_numeric($username) && strlen($username) == 10){
+					$username_is_mobile = true;
+				}elseif(filter_var($username,FILTER_VALIDATE_EMAIL)){
+					$username_is_email = true;
+				}else{
+					$f->displayError('username','username must be either mobile no or email id');
+				} 
+			}
+
 			$frontend_config_m = $this->add('xepan\base\Model_ConfigJsonModel',
 				[
 					'fields'=>[
@@ -37,7 +51,7 @@ class View_User_VerifyAgain extends \View{
 
 			try {
 
-				$user=$this->add('xepan\base\Model_User');
+				$user = $this->add('xepan\base\Model_User');
 				$user->addCondition('username',$f['username']);
 				$user->tryLoadAny();
 
@@ -45,13 +59,11 @@ class View_User_VerifyAgain extends \View{
 
 				$contact=$user->ref('Contacts');
 				
-				$merge_model_array=[];
+				$merge_model_array = [];
 				$merge_model_array = array_merge($merge_model_array,$user->get());
-				$merge_model_array = array_merge($merge_model_array,$contact->get());	
-				
+				$merge_model_array = array_merge($merge_model_array,$contact->get());
 
-
-				if($this->options['registration_mode'] === "email" ){
+				if($this->options['registration_mode'] === "email" OR $username_is_email){
 
 					$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')->tryLoadAny();
 					$mail = $this->add('xepan\communication\Model_Communication_Email');
@@ -86,19 +98,19 @@ class View_User_VerifyAgain extends \View{
 					// echo $temp->render();
 					// exit;		
 					$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
-					$mail->addTo($f['email']);
+					$mail->addTo($user['username']);
 					$mail->setSubject($subject_v->getHtml());
 					$mail->setBody($body_v->getHtml());
 					$mail->send($email_settings);
 				}
 
-				if($this->options['registration_mode'] === "sms"){
+				if($this->options['registration_mode'] === "sms" OR $username_is_mobile){
 					if($message = $frontend_config_m['registration_sms_content']){
 						$temp = $this->add('GiTemplate');
 						$temp->loadTemplateFromString($message);
 						$msg = $this->add('View',null,null,$temp);
 						$msg->template->trySet($merge_model_array);
-						$this->add('xepan\communication\Controller_Sms')->sendMessage($f['username'],$msg->getHtml());
+						$this->add('xepan\communication\Controller_Sms')->sendMessage($user['username'],$msg->getHtml());
 					}
 				}
 

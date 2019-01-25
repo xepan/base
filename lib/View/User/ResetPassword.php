@@ -49,6 +49,19 @@ class View_User_ResetPassword extends \View{
         }
 
 		$form->onSubmit(function($f){
+			$username = trim($f['email']);
+
+			$username_is_mobile = false;
+			$username_is_email = false;
+			if($this->options['registration_mode'] === "all"){
+				if(is_numeric($username) && strlen($username) == 10){
+					$username_is_mobile = true;
+				}elseif(filter_var($username,FILTER_VALIDATE_EMAIL)){
+					$username_is_email = true;
+				}else{
+					$f->displayError('email','username must be either mobile no or email id');
+				} 
+			}
 
 			$user = $this->add('xepan\base\Model_User');
 			$user->addCondition('status','Active');
@@ -108,7 +121,7 @@ class View_User_ResetPassword extends \View{
 			$merge_model_array = array_merge($merge_model_array,$user->get());
 			$merge_model_array = array_merge($merge_model_array,$contact->get());
 			
-			if($this->options['registration_mode'] === "email"){
+			if($this->options['registration_mode'] === "email" OR $username_is_email){
 
 				$email_settings = $this->add('xepan\communication\Model_Communication_DefaultEmailSetting')->tryLoadAny();
 				$mail = $this->add('xepan\communication\Model_Communication_Email');
@@ -136,7 +149,7 @@ class View_User_ResetPassword extends \View{
 				$mail->send($email_settings);
 			}
 
-			if($this->options['registration_mode'] === "sms"){
+			if($this->options['registration_mode'] === "sms" OR $username_is_mobile){
 				if($message = $frontend_config_m['update_sms_content']){
 					$temp = $this->add('GiTemplate');
 					$temp->loadTemplateFromString($message);
