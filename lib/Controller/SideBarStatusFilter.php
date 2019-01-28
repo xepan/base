@@ -7,6 +7,7 @@ class Controller_SideBarStatusFilter extends \AbstractController{
 
 	public $add_all_menu = true;
 	public $add_status_to_sidebar = []; // if empty then all staus
+	public $apply_acl_condition = true;
 
 	function init(){
 		parent::init();
@@ -18,6 +19,9 @@ class Controller_SideBarStatusFilter extends \AbstractController{
 		$this->add_status_to_sidebar = array_combine($this->add_status_to_sidebar, $this->add_status_to_sidebar);
 
 		$count_model = $this->owner->owner->add(get_class($this->owner));
+		if($this->apply_acl_condition)
+			$count_model->add('xepan\hr\Controller_ACL');
+
 		$counts = $count_model->_dsql()->del('fields')->field('status')->field('count(*) counts')->group('status')->get();
 		$counts_redefined =[];
 		$total=0;
