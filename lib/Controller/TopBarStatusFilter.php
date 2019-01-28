@@ -6,6 +6,7 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 	public $add_all=true;
 
 	public $extra_conditions=null;
+	public $apply_acl_condition = true;
 
 	function init(){
 		parent::init();
@@ -25,6 +26,8 @@ class Controller_TopBarStatusFilter extends \AbstractController{
 
 
 		$count_m = $this->owner->owner->add(get_class($this->owner));
+		if($this->apply_acl_condition)
+			$count_m->add('xepan\hr\Controller_ACL');
 		if($this->extra_conditions) {
 			$count_m->addCondition($this->extra_conditions);
 		}
