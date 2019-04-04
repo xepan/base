@@ -142,11 +142,15 @@ class View_User_ResetPassword extends \View{
 				$body_v=$this->add('View',null,null,$temp);
 				$body_v->template->trySet($merge_model_array);					
 
-				$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
-				$mail->addTo($f['email']);
-				$mail->setSubject($subject_v->getHtml());
-				$mail->setBody($body_v->getHtml());
-				$mail->send($email_settings);
+				try{
+					$mail->setfrom($email_settings['from_email'],$email_settings['from_name']);
+					$mail->addTo($f['email']);
+					$mail->setSubject($subject_v->getHtml());
+					$mail->setBody($body_v->getHtml());
+					$mail->send($email_settings);
+				}catch(\Exception $e){
+
+				}
 			}
 
 			if($this->options['registration_mode'] === "sms" OR $username_is_mobile){
@@ -155,7 +159,11 @@ class View_User_ResetPassword extends \View{
 					$temp->loadTemplateFromString($message);
 					$msg = $this->add('View',null,null,$temp);
 					$msg->template->trySet($merge_model_array);
-					$this->add('xepan\communication\Controller_Sms')->sendMessage($f['username'],$msg->getHtml());
+					try{
+						$this->add('xepan\communication\Controller_Sms')->sendMessage($f['username'],$msg->getHtml());
+					}catch(\Exception $e){
+						
+					}
 				}
 			}
 
