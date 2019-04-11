@@ -16,7 +16,7 @@ class View_User_ForgotPassword extends \View{
 		}elseif($this->options['registration_mode'] === "all"){
 			$form->layout->template->tryDel('sms_wrapper');
 			$form->layout->template->tryDel('email_wrapper');
-			$email_field = $form->addField('line','email','Username')->validate('required');
+			$email_field = $form->addField('line','email','Mobile Number or Email ID')->validate('required');
 			$form->layout->template->trySetHtml('sub_heading','<p>Please enter your registered mobile number or email id</p>');
 		}else{
 			$form->layout->template->tryDel('sms_wrapper');

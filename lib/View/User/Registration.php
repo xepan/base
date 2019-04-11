@@ -21,7 +21,7 @@ class View_User_Registration extends \View{
 
 			}elseif ($this->registration_mode === "all"){
 				$f->layout->template->trySet('username_icon','fa-user');
-				$username_field = $f->addField('line','username');
+				$username_field = $f->addField('line','username','Mobile Number or Email ID');
 				$username_field->validate('required');
 
 			}else{
