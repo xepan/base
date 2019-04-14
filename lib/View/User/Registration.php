@@ -18,7 +18,7 @@ class View_User_Registration extends \View{
 				$username_field = $f->addField('line','username','Mobile No');
 				if(!$this->options['username_validation_regular_expression'])
 					$username_field->validate('required|number');
-
+				
 			}elseif ($this->registration_mode === "all"){
 				$f->layout->template->trySet('username_icon','fa-user');
 				$username_field = $f->addField('line','username','Mobile Number or Email ID');
@@ -277,7 +277,7 @@ class View_User_Registration extends \View{
 					return $f->js(null,
 						$f->js()->redirect(
 							$this->app->url($this->options['registration_success_url'],
-										['message'=>$this->options['registration_message']]
+										['message'=>$this->options['registration_message'],'activate_email'=>$f['username']]
 									)
 							));
 				}

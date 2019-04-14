@@ -43,9 +43,9 @@ class Tool_UserPanel extends \xepan\cms\View_Tool{
 				'username_validation_regular_expression'=>'',
 				// TO IMPLEMENT, DELETE WRAPPER SPOTS IN FORM TEMPLATES OF RESPECTIVE VIEWS 
 				'verify_message'=>'Your account is validated. Login with your username and password to enjoy our services.',
-				'registration_message'=>'Registration mail sent. Check your email address linked to the account.',
-				'forgot_message'=>'We have sent you a password recovery mail. Check your e-mail address linked to the account.',
-				'reactive_message'=>'Verification mail sent. Check your e-mail address linked to the account.'
+				'registration_message'=>'Account Activation OTP sent. Check your email/mobile linked to the account.',
+				'forgot_message'=>'We have sent you a password recovery OTP. Check your email/mobile linked to the account.',
+				'reactive_message'=>'Verification OTP sent. Check your email/mobile address linked to the account.'
 			];	
 	public $active_view=null;
 
