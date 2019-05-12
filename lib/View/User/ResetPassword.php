@@ -64,7 +64,6 @@ class View_User_ResetPassword extends \View{
 			}
 
 			$user = $this->add('xepan\base\Model_User');
-			$user->addCondition('status','Active');
 			if($this->app->auth->model->id){
 				$user->addCondition('id',$this->app->auth->model->id);
 			}

@@ -111,6 +111,7 @@ class Model_User extends \xepan\base\Model_Table{
 			->addEncryptionHook($this);
 		
 		$this['password'] = $new_password;
+		$this['status'] = "Active";
 		$this->save();
 		return $this;
 	}
